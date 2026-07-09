@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend vs Backend: The Dashboard & The Engine — Melex InfoTech</title>
+    <meta name="description" content="Confused about the difference between Frontend and Backend development? We explain the two sides of web development using a simple car analogy.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/frontend-vs-backend">
+    <meta name="author" content="Melalew Mengistu">
+    <meta name="keywords" content="Frontend vs Backend, Web Development, Client Side, Server Side, Full Stack">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Frontend vs Backend: The Dashboard & The Engine">
+    <meta property="og:description" content="Confused about the difference between Frontend and Backend development? We explain the two sides of web development using a simple car analogy.">
+    <meta property="og:url" content="https://melextech.dev/post/frontend-vs-backend">
+    <meta property="og:image" content="https://melextech.dev/guide/img/frontend-vs-backend.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Melex InfoTech">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Tech Education">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="Frontend">
+    <meta property="article:tag" content="Backend">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Frontend vs Backend: The Dashboard & The Engine">
+    <meta name="twitter:description" content="Confused about the difference between Frontend and Backend development? We explain the two sides of web development using a simple car analogy.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/frontend-vs-backend.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Frontend vs Backend: The Dashboard & The Engine",
+        "description": "Confused about the difference between Frontend and Backend development? We explain the two sides of web development using a simple car analogy.",
+        "image": "https://melextech.dev/guide/img/frontend-vs-backend.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Melex InfoTech",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/frontend-vs-backend"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Which is easier to learn: Frontend or Backend?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Frontend is often considered easier to start because you can see changes instantly in your browser. Backend involves setting up servers and databases, which can feel more abstract initially."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is a Full Stack Developer?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A Full Stack developer is someone who is comfortable working with both the Frontend (what the user sees) and the Backend (how the system works)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I be a designer and a Frontend dev?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely. UI/UX design and Frontend development go hand-in-hand. Knowing how to code helps you design things that are actually possible to build."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Frontend vs Backend", "item": "https://melextech.dev/post/frontend-vs-backend"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+
+    <!-- FIX #1: <style> moved INSIDE <head> where it belongs -->
+    <style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.audience-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.audience-box .audience-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{display:flex;flex-direction:column;gap:6px}
+.audience-box li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:20px;position:relative}
+.audience-box li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:600}
+
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+
+.fix-block{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.fix-block:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fix-header{margin-bottom:6px}
+.fix-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fix-tag.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.fix-tag.deeper{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.fix-tag.deepest{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.fix-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--dark);letter-spacing:-.02em;line-height:1.35;margin:0;padding:0;border:none}
+.fix-reason{font-size:.86rem;color:var(--fg-light);line-height:1.75;margin:10px 0 0}
+
+.effect-note{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:var(--radius-sm);margin:16px 0;font-size:.82rem;line-height:1.7}
+.effect-note.neutral{background:var(--surface-2);border:1px solid var(--border);color:var(--fg-sub)}
+.effect-note.caution{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{width:16px;height:16px;flex-shrink:0;margin-top:2px}
+
+.help-ending{text-align:center;padding:36px 24px;background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1px solid var(--border);border-radius:var(--radius);margin-top:40px}
+.help-ending .help-ending-icon{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.help-ending .help-ending-icon svg{width:22px;height:22px;color:var(--accent)}
+.help-ending h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;border:none;padding:0}
+.help-ending>p{font-size:.85rem;color:var(--fg-light);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto}
+.help-ending .help-reassure{font-size:.82rem;color:var(--fg-muted);margin-top:16px;line-height:1.6}
+
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.steps{margin-bottom:0}
+.steps-intro{font-size:.88rem;color:var(--fg-light);margin-bottom:24px;line-height:1.7}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent-hover);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+.step p:last-child{margin-bottom:0}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.comparison{margin:32px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.promo-card{border-radius:var(--radius);padding:24px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;font-size:.84rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s;background:var(--accent);color:#fff}
+.mobile-cta .cta-btn:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+}
+/* FIX #2: Added the missing closing brace for this media query */
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .help-ending{padding:28px 20px}
+    .comparison{overflow-x:auto}
+    .table-wrapper{overflow-x:auto}
+    .comparison table{min-width:680px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-2);
+    color: var(--accent-hover);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+    </style>
+
+    <!-- FIX #1b: Theme init script also inside <head> to prevent flash -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Theme toggle click handler: placed in body so DOM is available -->
+<script>
+    document.getElementById('themeToggleBtn').addEventListener('click', function() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+</script>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Frontend vs Backend</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">TECH CONCEPTS EXPLAINED</p>
+                <h1 itemprop="headline">Frontend vs Backend: The Dashboard & The Engine</h1>
+                <p class="problem" itemprop="description">Every website you use has two halves that work together. One runs in your browser, the other runs on a remote server. Understanding the difference matters whether you're picking a career path or managing a development team.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        June 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>Last month a startup founder asked me why she needed two separate developers for what she thought was "just a website." Her frontend developer had built a polished interface — dropdowns, animations, a clean checkout form. But nothing actually worked. No data was being saved, no payments were processing, no emails were being sent. She needed a backend developer to connect the dashboard to the engine.</p>
+                <p>This distinction trips up a lot of people outside of development. It's not about "pretty vs. ugly" or "easy vs. hard." It's about two fundamentally different problems that both need to be solved for a web application to function.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The Core Distinction
+                </div>
+                <p><strong>Frontend</strong> code runs on the user's device in their browser. It determines what they see on screen, how they interact with the page, and how the interface responds to their actions. The user can inspect it, modify it, and experience it directly.</p>
+                <p><strong>Backend</strong> code runs on a server that the user never accesses directly. It handles data storage, business logic, authentication, payments, and all the processing that happens after a user clicks a button but before a result appears on screen.</p>
+                <p>The two communicate through APIs — the frontend sends requests, the backend sends responses. Neither can function as a complete application without the other (for anything beyond a static page).</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    At a Glance
+                </div>
+                <ul class="qs-list">
+                    <li><strong>Frontend:</strong> Runs in the browser. Handles layout, interaction, and visual presentation. Uses HTML, CSS, and JavaScript.</li>
+                    <li><strong>Backend:</strong> Runs on a server. Handles data, security, and business logic. Uses languages like Python, Node.js, Java, or Go with databases.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Is For
+                </div>
+                <ul class="audience-list">
+                    <li>Students deciding between frontend and backend as a specialization.</li>
+                    <li>Product managers and founders who need to communicate effectively with dev teams.</li>
+                    <li>Hiring managers writing job descriptions and evaluating candidates.</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    What We'll Cover
+                </div>
+                <p>Each section below explains what these developers actually do day-to-day, what tools they use, and what misconceptions exist about each role.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>Frontend development: what it involves beyond making things look good.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>Backend development: what happens after the user clicks submit.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>Full stack: what it actually means in practice versus what job postings say.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Table of Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">1. Frontend Development</a>
+                    <a href="#fix-2" class="toc-link">2. Backend Development</a>
+                    <a href="#fix-3" class="toc-link">3. Full Stack Development</a>
+                    <a href="#comparison" class="toc-link">4. Side-by-Side Comparison</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div itemprop="articleBody">
+
+                <div class="fix-block" id="fix-1">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Concept 1</span>
+                        <h2>Frontend Development (The Dashboard)</h2>
+                    </div>
+                    <p class="fix-reason">Frontend development is the practice of building everything a user directly interacts with in a web browser. It encompasses structure (HTML), presentation (CSS), and behavior (JavaScript) but modern frontend work goes well beyond these three technologies.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>What frontend developers actually build</h3>
+                            </div>
+                            <p>Navigation menus, form validations, page layouts, image carousels, responsive designs that adapt to different screen sizes, and the interactive elements that respond to clicks, scrolls, and keyboard input. When you filter a product list without the page reloading, that's frontend JavaScript making a request to the backend and updating the display.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>The modern frontend toolkit</h3>
+                            </div>
+                            <p>Professional frontend work rarely involves writing raw HTML files. Teams use frameworks like <strong>React</strong>, <strong>Vue</strong>, or <strong>Angular</strong> to manage complex interfaces. They use <strong>TypeScript</strong> instead of plain JavaScript for type safety. Build tools like <strong>Vite</strong> or <strong>Webpack</strong> bundle and optimize code. Styling often involves <strong>Tailwind CSS</strong>, <strong>CSS Modules</strong>, or component libraries like <strong>Shadcn</strong>.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Performance and accessibility</h3>
+                            </div>
+                            <p>A significant part of frontend work is non-visual. Optimizing load times (lazy loading images, code splitting), ensuring the site works with screen readers, handling slow network conditions gracefully, and testing across browsers and devices. A frontend developer who only focuses on how things look is missing half the job.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout info">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Common misconception:</strong> "Frontend is just making things pretty." In reality, frontend developers spend a large portion of their time on data handling, state management, error handling, and integration with backend APIs. The visual styling is often a smaller fraction of the work than people assume.</p>
+                        </div>
+                    </div>
+
+                    <div class="effect-note neutral">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span><strong>Limitation of frontend-only work:</strong> A frontend developer can build a complete-looking interface with fake data. But without a backend, nothing persists — no user accounts, no saved preferences, no real transactions. It's a prototype, not a product.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-2">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Concept 2</span>
+                        <h2>Backend Development (The Engine)</h2>
+                    </div>
+                    <p class="fix-reason">Backend development is the practice of building the server-side logic that powers an application. The user never sees backend code directly — they only see its results. When you log in, the backend verifies your credentials against a database. When you submit a payment, the backend processes the transaction through a payment gateway.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>What backend developers actually build</h3>
+                            </div>
+                            <p>APIs that accept and return data, database schemas that organize information, authentication systems that manage user sessions, background jobs that process data asynchronously (like sending welcome emails or generating reports), and the business rules that determine what's allowed to happen in the application.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>The backend technology landscape</h3>
+                            </div>
+                            <p>Unlike frontend, where React dominates, the backend has no single winner. <strong>Python</strong> (Django, FastAPI) is common for data-heavy applications. <strong>Node.js</strong> (Express, NestJS) appeals to teams already using JavaScript on the frontend. <strong>Java</strong> (Spring Boot) and <strong>C#</strong> (.NET) dominate enterprise environments. <strong>Go</strong> is gaining traction for high-performance services. Databases range from <strong>PostgreSQL</strong> and <strong>MySQL</strong> (relational) to <strong>MongoDB</strong> and <strong>Redis</strong> (NoSQL/caching).</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Security, scaling, and reliability</h3>
+                            </div>
+                            <p>Backend developers carry the bulk of security responsibility preventing SQL injection, managing API authentication tokens, encrypting sensitive data, and implementing rate limiting. They also handle scaling decisions: when should you add caching, when do you need a message queue, when does a database need read replicas. These decisions have direct financial consequences for the business.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Common mistake:</strong> Treating the backend as "just CRUD" (create, read, update, delete). Simple apps might be mostly CRUD, but real-world backends handle concurrent users, data consistency across services, third-party integrations, and failure recovery. The complexity is often hidden from the frontend.</p>
+                        </div>
+                    </div>
+
+                    <div class="effect-note neutral">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span><strong>Limitation of backend-only work:</strong> A backend developer can build a perfectly functioning API, but without a frontend, no user can access it directly. Internal tools sometimes use simple backends with minimal UIs, but any customer-facing product needs both.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-3">
+                    <div class="fix-header">
+                        <span class="fix-tag deepest">Concept 3</span>
+                        <h2>Full Stack Development (The Whole Car)</h2>
+                    </div>
+                    <p class="fix-reason">"Full stack developer" is one of the most misunderstood titles in the industry. It doesn't mean someone who is equally expert in every frontend and backend technology. It means someone who can build a functional application end-to-end and understands how the two layers connect.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>What full stack actually looks like in practice</h3>
+                            </div>
+                            <p>A full stack developer typically picks one frontend framework (say, React) and one backend stack (say, Node.js with PostgreSQL) and builds complete features across both. They might build the form in React, write the API endpoint in Express, create the database migration, and wire it all together. They're not switching between Python and Java and Go they have a primary stack they know deeply.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>When full stack makes sense</h3>
+                            </div>
+                            <p>Early-stage startups, solo projects, prototyping, and small teams where specialization is a luxury. A full stack developer can ship a feature without waiting for another team member. At companies with more than 10-15 engineers, most teams specialize — the overhead of context-switching between frontend and backend code on a large codebase slows people down.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>The trade-off</h3>
+                            </div>
+                            <p>Depth versus breadth. A specialist frontend developer will have deeper knowledge of browser performance, accessibility patterns, and animation techniques than a full stack developer who splits their attention. A specialist backend developer will know more about database optimization, distributed systems, and infrastructure. Full stack developers trade that depth for the ability to ship independently. Neither approach is universally better — it depends on the team size and project stage.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="callout-content">
+                            <p><strong>If you're choosing a path:</strong> Start with frontend if you want immediate visual feedback while learning — it keeps motivation high. Start with backend if you're more interested in data, logic, and system design. You can always add the other side later. Most professional developers end up learning both over time regardless of their title.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison" id="comparison">
+                    <h2>Frontend vs Backend: Direct Comparison</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspect</th>
+                                    <th>Frontend</th>
+                                    <th>Backend</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Runs on</strong></td>
+                                    <td>User's browser (client)</td>
+                                    <td>Remote server</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Core languages</strong></td>
+                                    <td>HTML, CSS, JavaScript/TypeScript</td>
+                                    <td>Python, JavaScript, Java, Go, C#, PHP</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Key frameworks</strong></td>
+                                    <td>React, Vue, Angular, Svelte</td>
+                                    <td>Django, Express, Spring Boot, .NET, FastAPI</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Databases</strong></td>
+                                    <td>Browser storage, IndexedDB (minimal)</td>
+                                    <td>PostgreSQL, MySQL, MongoDB, Redis</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Main concerns</strong></td>
+                                    <td>Layout, interactivity, performance, accessibility, responsiveness</td>
+                                    <td>Data integrity, security, scaling, API design, business logic</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Feedback loop</strong></td>
+                                    <td><span class="badge green">Instant</span> — refresh the browser</td>
+                                    <td><span class="badge yellow">Delayed</span> — start server, make request, check response</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Visible to user</strong></td>
+                                    <td><span class="badge green">Yes</span> — everything on screen</td>
+                                    <td><span class="badge red">No</span> — only through API responses</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Learning curve entry</strong></td>
+                                    <td><span class="badge green">Lower</span> — results are visual and immediate</td>
+                                    <td><span class="badge yellow">Higher</span> — concepts are abstract (servers, databases, APIs)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="callout info">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Why the table matters:</strong> Notice that neither column is "better." Frontend has a lower barrier to entry but involves its own complex challenges (cross-browser compatibility, state management at scale). Backend has a steeper start but offers more predictable debugging server logs don't lie, while browser behavior can vary wildly between users.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="share-bar" aria-label="Share this article">
+                <span>Share</span>
+                <button class="share-btn copy" id="copyLinkBtn" aria-label="Copy link">
+                    <span id="copyLinkText">COPY LINK</span>
+                </button>
+                <a class="share-btn" href="https://twitter.com/intent/tweet?text=Frontend%20vs%20Backend%3A%20The%20Dashboard%20%26%20The%20Engine&url=https://melextech.dev/post/frontend-vs-backend" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://melextech.dev/post/frontend-vs-backend" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                </a>
+                <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://melextech.dev/post/frontend-vs-backend&title=Frontend%20vs%20Backend%3A%20The%20Dashboard%20%26%20The%20Engine" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </a>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar">
+                    <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                </div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <section class="faq-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Which is easier to learn: Frontend or Backend?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>Frontend is often considered easier to start because you can see changes instantly in your browser. Backend involves setting up servers and databases, which can feel more abstract initially. That said, frontend becomes genuinely difficult at scale managing application state, handling real-time updates, and optimizing render performance require serious engineering. The "easier" label only applies to the first few weeks of learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>What is a Full Stack Developer?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>A Full Stack developer is someone who is comfortable working with both the Frontend (what the user sees) and the Backend (how the system works). In practice, this usually means they have one primary frontend framework and one primary backend stack they use to build complete features independently. It doesn't mean they know every technology it means they understand how the two layers connect and can ship without depending on another specialist.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Can I be a designer and a Frontend dev?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>Absolutely. UI/UX design and Frontend development go hand-in-hand. Knowing how to code helps you design things that are actually possible to build, and knowing design principles makes your code produce better interfaces. Many small teams specifically look for this combination because it eliminates the handoff friction between designer and developer. The trade-off is that you're splitting your learning time between two disciplines instead of going deep into one.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Do frontend developers need to know any backend?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>They need to understand how to consume APIs what a REST endpoint is, how to handle authentication tokens, what status codes mean, and how to structure request bodies. They don't need to know how to build the API itself, but they need enough backend literacy to debug issues that aren't on their side. A frontend developer who can't tell whether a problem is in their code or the API response will waste a lot of time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Which pays more: Frontend or Backend?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>At junior levels, they're roughly equal. At senior levels, backend tends to pay slightly more on average, partly because backend skills transfer to higher-paying fields like data engineering and infrastructure. But the gap is small and depends more on the company, location, and individual skill than on the title. A senior React developer at a well-funded startup will outearn a mid-level backend developer at a non-tech company.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="help-ending">
+                <div class="help-ending-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <h2>Still deciding?</h2>
+                <p>If you're choosing between frontend and backend as a career path, the best approach is to try building something small with each. You'll know within a few weeks which side feels more natural.</p>
+                <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer" style="display:inline-flex">
+                    <span>Ask on Telegram</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </a>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col" aria-label="Sidebar">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">1. Frontend Development</a>
+                    <a href="#fix-2" class="toc-link">2. Backend Development</a>
+                    <a href="#fix-3" class="toc-link">3. Full Stack Development</a>
+                    <a href="#comparison" class="toc-link">4. Side-by-Side Comparison</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="promo-card aff">
+                <div class="promo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <h3>Recommended Hosting</h3>
+                <p>Reliable cloud hosting for your backend and database projects.</p>
+                <a href="https://my.yegara.com/index.php?aff=19198" class="promo-btn">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn">
+        <span>Recommended Tools</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+ // Scroll progress bar
+    window.addEventListener('scroll', function() {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById('scrollProgress').style.width = scrolled + '%';
+
+        // Scroll to top button visibility
+        var stp = document.getElementById('scrollToTop');
+        if (winScroll > 600) {
+            stp.classList.add('vis');
+        } else {
+            stp.classList.remove('vis');
+        }
+    });
+
+    // Scroll to top click
+    document.getElementById('scrollToTop').addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var item = this.parentElement;
+            var answer = item.querySelector('.faq-a');
+            var isOpen = item.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+                openItem.classList.remove('open');
+                openItem.querySelector('.faq-a').style.maxHeight = null;
+            });
+
+            // Open clicked (if it was closed)
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+
+    // TOC active state on scroll
+    var tocLinks = document.querySelectorAll('.toc-link');
+    var sections = [];
+    tocLinks.forEach(function(link) {
+        var id = link.getAttribute('href');
+        if (id && id.startsWith('#')) {
+            var el = document.querySelector(id);
+            if (el) sections.push({ el: el, link: link });
+        }
+    });
+
+    if (sections.length) {
+        window.addEventListener('scroll', function() {
+            var scrollY = window.scrollY + 100;
+            var active = sections[0];
+            for (var i = 0; i < sections.length; i++) {
+                if (sections[i].el.offsetTop <= scrollY) {
+                    active = sections[i];
+                }
+            }
+            tocLinks.forEach(function(l) { l.classList.remove('active'); });
+            if (active) active.link.classList.add('active');
+        });
+    }
+
+    // Mobile CTA visibility on scroll
+    var mobileCta = document.querySelector('.mobile-cta');
+    if (mobileCta) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                mobileCta.classList.add('vis');
+            } else {
+                mobileCta.classList.remove('vis');
+            }
+        });
+    }
+
+    // Copy link button
+    document.querySelectorAll('.share-btn.copy').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                btn.classList.add('copied');
+                btn.textContent = 'COPIED!';
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btn.textContent = 'COPY LINK';
+                }, 2000);
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

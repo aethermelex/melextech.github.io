@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is React Server Components? A Clear Explanation — MELEX IT</title>
+    <meta name="description" content="React Server Components are not server-side rendering. They are a completely new primitive. This guide explains what they are, how they work under the hood, and when to actually use them.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/what-is-react-server-components">
+    <meta name="author" content="MELEX IT">
+    <meta name="keywords" content="react server components, RSC, react server components explained, use client, use server, next.js app router, react performance">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What Is React Server Components? A Clear Explanation">
+    <meta property="og:description" content="Most explanations of React Server Components miss the point. Here is what they actually are, how the serialization works, and why the mental model matters.">
+    <meta property="og:url" content="https://melextech.dev/post/what-is-react-server-components">
+    <meta property="og:image" content="https://melextech.dev/guide/img/react-server-components.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Frontend Engineering">
+    <meta property="article:tag" content="React">
+    <meta property="article:tag" content="Server Components">
+    <meta property="article:tag" content="Next.js">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What Is React Server Components? A Clear Explanation">
+    <meta name="twitter:description" content="Most explanations of React Server Components miss the point. Here is what they actually are.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/react-server-components.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "What Is React Server Components? A Clear Explanation",
+        "description": "A deep technical explanation of React Server Components covering the serialization protocol, server vs client boundaries, streaming, server actions, and practical migration guidance.",
+        "image": "https://melextech.dev/guide/img/react-server-components.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/what-is-react-server-components"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Are React Server Components the same as server-side rendering?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Server-side rendering (SSR) generates HTML on the server and sends it to the browser, then React hydrates that HTML to make it interactive. Server Components never send JavaScript to the browser at all. They run on the server and serialize their output into a special format that React on the client can stream into the existing component tree. SSR is about the initial page load. RSC is about which components execute where throughout the entire application lifecycle."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can Server Components use useState or useEffect?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Server Components cannot use useState, useEffect, useReducer, useContext, or any hook that relies on client-side React state or lifecycle. They also cannot use browser APIs like window, document, or localStorage. If a component needs interactivity, state, effects, or browser APIs, it must be a Client Component marked with 'use client' at the top of the file."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do Server Components improve SEO?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Server Components contribute to SEO because their output is rendered into HTML on the server, meaning search engine crawlers can see the content without executing JavaScript. However, this is not unique to Server Components. Traditional SSR and static site generation also solve this. The SEO benefit of RSC is real but it is a side effect, not the primary design goal. The main goals are reducing JavaScript bundle size and enabling direct server-side data access."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use Server Components without Next.js?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Technically yes, but it is not practical yet. React Server Components are a React feature, not a Next.js feature. However, you need a runtime that understands the RSC wire format, can split the component tree into server and client parts, and can serve the serialized output. Next.js App Router provides this runtime. Other frameworks like Remix are exploring RSC support. Building your own RSC runtime from scratch is possible but represents weeks of engineering work for questionable benefit."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What happens if I put 'use client' on every component?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your application will work, but you will lose essentially all benefits of Server Components. Every component will be included in the JavaScript bundle sent to the browser. Data fetching will need to happen on the client side or through separate API routes. You will effectively be running a traditional React SPA with extra overhead from the RSC serialization layer. The 'use client' directive should be used as sparingly as possible, pushed down to the leaf components that actually need interactivity."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "Frontend Engineering", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "What Is React Server Components", "item": "https://melextech.dev/post/what-is-react-server-components"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:300px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+.audience-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.audience-box .audience-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{display:flex;flex-direction:column;gap:6px}
+.audience-box li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:20px;position:relative}
+.audience-box li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-weight:600}
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+.ad-block{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:32px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px;background:var(--surface-2)}
+.ad-block.in-content{margin:32px 0}
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+.pick-pros{margin:14px 0 0}
+.pick-pros h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-pros ul{display:flex;flex-direction:column;gap:4px}
+.pick-pros li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-pros li::before{content:'\2713';position:absolute;left:0;color:#22c55e;font-weight:700}
+.pick-cons{margin:10px 0 0}
+.pick-cons h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-cons ul{display:flex;flex-direction:column;gap:4px}
+.pick-cons li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-cons li::before{content:'\2717';position:absolute;left:0;color:#ef4444;font-weight:700}
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+.promo-card{border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+.code-block{background:#0F172A;border:1px solid #1E293B;border-radius:var(--radius);margin:20px 0;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid #1E293B}
+.code-lang{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748B}
+.code-copy{font-size:.72rem;font-weight:600;color:#64748B;padding:4px 10px;border-radius:var(--radius-xs);border:1px solid #334155;transition:all .15s;cursor:pointer;background:none}
+.code-copy:hover{border-color:#475569;color:#94A3B8}
+.code-copy.copied{color:#22C55E;border-color:#22C55E}
+.code-block pre{padding:16px 20px;overflow-x:auto;font-size:.8rem;line-height:1.75;font-family:'SF Mono',Consolas,monospace;color:#E2E8F0;margin:0;white-space:pre}
+.code-block code{background:none;padding:0;border-radius:0;font-size:inherit;color:inherit}
+.arch-diagram{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:20px 0;overflow-x:auto}
+.arch-flow{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.arch-node{padding:10px 16px;border-radius:var(--radius-sm);font-size:.76rem;font-weight:600;white-space:nowrap;text-align:center}
+.arch-node.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.arch-node.process{background:var(--info);color:var(--info-text);border:1px solid #BFDBFE}
+.arch-node.decision{background:var(--warn);color:var(--warn-text);border:1px solid #FDE68A}
+.arch-node.end{background:var(--surface);color:var(--fg-sub);border:1px solid var(--border-2)}
+.arch-node.tool{background:#F3E8FF;color:#7C3AED;border:1px solid #DDD6FE}
+.arch-arrow{font-size:1.1rem;color:var(--fg-faint);flex-shrink:0;font-weight:700}
+.arch-arrow.bidir{color:var(--accent)}
+.arch-stack{display:flex;flex-direction:column;align-items:center;gap:4px}
+.arch-label{font-size:.66rem;color:var(--fg-muted);text-align:center;margin-top:4px}
+.verdict-card{border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;transition:border-color .15s}
+.verdict-card:hover{border-color:var(--border-2)}
+.verdict-card .verdict-tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.verdict-card .verdict-tag.teal{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.verdict-card .verdict-tag.amber{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.verdict-card .verdict-tag.rose{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.verdict-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin:0 0 6px;line-height:1.35}
+.verdict-card p{font-size:.85rem;color:var(--fg-sub);line-height:1.7;margin:0}
+.theme-toggle-btn{background:transparent;border:1px solid var(--border);color:var(--fg);width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease}
+.theme-toggle-btn:hover{border-color:var(--accent);background:var(--surface-2);color:var(--accent-hover)}
+.theme-toggle-btn svg{width:20px;height:20px}
+[data-theme="dark"] .sun-icon{display:block}
+[data-theme="dark"] .moon-icon{display:none}
+html:not([data-theme="dark"]) .sun-icon{display:none}
+html:not([data-theme="dark"]) .moon-icon{display:block}
+[data-theme="dark"]{--bg:#0B0F19;--bg-alt:#131A2B;--surface:#0F1623;--surface-2:#151D2E;--surface-3:#1A2338;--fg:#E2E8F0;--fg-sub:#CBD5E1;--fg-light:#94A3B8;--fg-muted:#8B9AB5;--fg-faint:#5A6A82;--dark:#F1F5F9;--border:#1A2336;--border-2:#263044;--border-3:#374460;--dark-card:rgba(255,255,255,0.04);--dark-border:rgba(255,255,255,0.08);--dark-muted:#7B8DA4;--accent-soft:rgba(45,212,191,0.1);--accent-border:rgba(45,212,191,0.25);--warn:rgba(245,158,11,0.08);--warn-border:#F59E0B;--warn-text:#FCD34D;--warn-strong:#FBBF24;--tip:rgba(34,197,94,0.08);--tip-border:#22C55E;--tip-text:#86EFAC;--tip-strong:#4ADE80;--info:rgba(59,130,246,0.08);--info-border:#60A5FA;--info-text:#93C5FD;--info-strong:#60A5FA;--danger:rgba(239,68,68,0.08);--danger-border:#EF4444;--danger-text:#FCA5A5;--danger-strong:#F87171;--story-warm:rgba(194,113,58,0.06);--story-warm-border:rgba(194,113,58,0.2);--story-warm-accent:#D97706;color-scheme:dark}
+html,body,header,.nav{transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease}
+[data-theme="dark"] .header{background:rgba(15,22,35,0.85)!important}
+[data-theme="dark"] .logo-text{color:#F1F5F9!important}
+[data-theme="dark"] .nav-link{color:#94A3B8}
+[data-theme="dark"] .nav-link:hover,[data-theme="dark"] .nav-link.active{color:#F1F5F9;background:rgba(255,255,255,0.06)}
+[data-theme="dark"] .menu-line{background:#F1F5F9}
+[data-theme="dark"] .theme-toggle-btn{border-color:#263044;color:#E2E8F0}
+[data-theme="dark"] .theme-toggle-btn:hover{border-color:var(--accent);background:rgba(45,212,191,0.1);color:var(--accent)}
+[data-theme="dark"] .mobile-cta{background:rgba(15,22,35,0.95)!important;border-top-color:#1A2336!important}
+[data-theme="dark"] .breadcrumb{color:#5A6A82}
+[data-theme="dark"] .breadcrumb a{color:#7B8DA4}
+[data-theme="dark"] .breadcrumb svg{color:#374460}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4{color:#F1F5F9!important}
+[data-theme="dark"] .content-col strong{color:#F1F5F9}
+[data-theme="dark"] .content-col code{background:#1E293B;color:#E2E8F0;border:1px solid #263044}
+[data-theme="dark"] .content-col p{color:#CBD5E1}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{color:#CBD5E1}
+[data-theme="dark"] .content-col h2{border-bottom-color:#1A2336}
+[data-theme="dark"] .hero .reassure{color:#5A6A82}
+[data-theme="dark"] .hero .problem{color:#94A3B8}
+[data-theme="dark"] .hero .meta{color:#5A6A82}
+[data-theme="dark"] .story-opener p{color:#D4C4B0}
+[data-theme="dark"] .story-opener::before{color:#D97706;opacity:.25}
+[data-theme="dark"] .explain-block{border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .quick-summary{background:linear-gradient(135deg,rgba(45,212,191,0.05),rgba(56,189,248,0.05))}
+[data-theme="dark"] .quick-summary li{color:#CBD5E1}
+[data-theme="dark"] .quick-summary li strong{color:#F1F5F9}
+[data-theme="dark"] .audience-box{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .audience-box li{color:#CBD5E1}
+[data-theme="dark"] .approach-overview{border-color:#1A2336}
+[data-theme="dark"] .approach-overview p{color:#CBD5E1}
+[data-theme="dark"] .approach-item{color:#CBD5E1}
+[data-theme="dark"] .approach-num{background:rgba(45,212,191,0.1);border-color:rgba(45,212,191,0.25)}
+[data-theme="dark"] .approach-num.deep{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:#FBBF24}
+[data-theme="dark"] .table-wrapper{border-color:#1A2336}
+[data-theme="dark"] .comparison thead{background:#151D2E}
+[data-theme="dark"] .comparison th{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison td{color:#CBD5E1;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison tbody tr:last-child td{border-bottom:none}
+[data-theme="dark"] .comparison tbody tr:hover{background:#151D2E}
+[data-theme="dark"] .comparison .badge.green{background:rgba(34,197,94,0.15);color:#86EFAC}
+[data-theme="dark"] .comparison .badge.yellow{background:rgba(245,158,11,0.15);color:#FCD34D}
+[data-theme="dark"] .comparison .badge.red{background:rgba(239,68,68,0.15);color:#FCA5A5}
+[data-theme="dark"] .comparison .badge.blue{background:rgba(59,130,246,0.15);color:#93C5FD}
+[data-theme="dark"] .faq-item{border-color:#1A2336}
+[data-theme="dark"] .faq-item.open{border-color:rgba(45,212,191,0.3)}
+[data-theme="dark"] .faq-q{color:#F1F5F9}
+[data-theme="dark"] .faq-q:hover{background:#151D2E}
+[data-theme="dark"] .faq-q svg{color:#5A6A82}
+[data-theme="dark"] .faq-item.open .faq-q svg{color:var(--accent)}
+[data-theme="dark"] .faq-a-inner{color:#CBD5E1}
+[data-theme="dark"] .share-bar{border-top-color:#1A2336;border-bottom-color:#1A2336}
+[data-theme="dark"] .share-bar span{color:#5A6A82}
+[data-theme="dark"] .share-btn{background:#151D2E;border-color:#263044}
+[data-theme="dark"] .share-btn:hover{border-color:#374460;background:#1E293B}
+[data-theme="dark"] .share-btn svg{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy.copied{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#86EFAC}
+[data-theme="dark"] .author-bio{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .author-avatar{background:#1E293B}
+[data-theme="dark"] .help{border-top-color:#1A2336}
+[data-theme="dark"] .help-btn{border-color:#263044;color:#CBD5E1}
+[data-theme="dark"] .help-btn:hover{border-color:#374460;background:#151D2E}
+[data-theme="dark"] .promo-card{background:#0F1623;border-color:#1A2336}
+[data-theme="dark"] .promo-card:hover{border-color:#263044}
+[data-theme="dark"] .promo-card.aff .promo-icon{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .promo-card.aff .promo-icon svg{stroke:#94A3B8}
+[data-theme="dark"] .promo-card.aff .promo-btn{background:var(--accent)}
+[data-theme="dark"] .ad-block{border-color:#263044;background:#131A2B;color:#374460}
+[data-theme="dark"] .stp{background:#1E293B;border-color:#263044}
+[data-theme="dark"] .stp:hover{background:#263044;border-color:#374460}
+[data-theme="dark"] .stp svg{color:#94A3B8}
+[data-theme="dark"] .footer{background:#080C14!important}
+[data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,0.06);color:#374460}
+[data-theme="dark"] .footer-bottom a{color:#5A6A82}
+[data-theme="dark"] .code-block{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .code-header{background:rgba(255,255,255,0.03);border-bottom-color:#1A2336}
+[data-theme="dark"] .arch-diagram{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .arch-node.process{background:rgba(59,130,246,0.08);border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .arch-node.decision{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)}
+[data-theme="dark"] .arch-node.tool{background:rgba(124,58,237,0.08);border-color:rgba(124,58,237,0.2)}
+[data-theme="dark"] .verdict-card{border-color:#1A2336;background:#0F1623}
+[data-theme="dark"] .verdict-card:hover{border-color:#263044}
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .arch-flow{flex-wrap:wrap;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>React Server Components</span>
+</nav>
+
+<main class="page-layout">
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">Frontend Engineering &middot; React Deep Dive</p>
+                <h1 itemprop="headline">What Is React Server Components? A Clear Explanation</h1>
+                <p class="problem" itemprop="description">Most explanations confuse Server Components with server-side rendering. They are not the same thing. Here is what React Server Components actually are, how the wire format works under the hood, and how to think about them correctly.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="story-opener">
+                <p>A team I worked with last year migrated their React dashboard from the Pages Router to the App Router. They spent two weeks fixing hydration errors, another week debugging why half their components were not rendering interactively, and ultimately ended up putting "use client" at the top of nearly every file. The migration cost them a month, and the result was functionally identical to what they had before. The problem was not the framework. The problem was that nobody on the team actually understood what Server Components are.</p>
+                <p>The React team introduced Server Components in December 2020. Five years later, the majority of React developers I talk to still cannot accurately explain the difference between a Server Component and server-side rendering. Not because they are not smart. Because most explanations, including some official ones, bury the concept under abstractions before making the core idea concrete. This article does the opposite.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The One-Sentence Definition
+                </div>
+                <p>A React Server Component is a component that <strong>runs exclusively on the server, renders to a special serialized format instead of HTML, and sends zero JavaScript to the browser</strong>. Its output is streamed into the client-side React tree, where it becomes part of the UI without any client-side execution of the component's code.</p>
+                <p>That is the entire concept. Everything else follows from this definition.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>Server Components</strong> run on the server and send no JavaScript to the client. They can directly access databases, file systems, and environment variables.</li>
+                    <li><strong>Client Components</strong> are the React components you already know. They run in the browser, can use hooks, and ship their JavaScript in the bundle.</li>
+                    <li>The boundary between server and client is defined by the <code>"use client"</code> directive at the top of a file.</li>
+                    <li>Server Components are <strong>not</strong> the same as server-side rendering. SSR generates HTML. RSC generates a serialized component tree.</li>
+                    <li>The practical benefit is smaller JavaScript bundles and direct server-side data access without API routes.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Guide Is For
+                </div>
+                <ul class="audience-list">
+                    <li>React developers moving from Pages Router to App Router who need to understand what changed</li>
+                    <li>Frontend engineers who have used Server Components but feel uncertain about why they work</li>
+                    <li>Teams evaluating whether to adopt the App Router for existing or new projects</li>
+                    <li>Anyone who has been confused by hydration errors after adding "use client" everywhere</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    How This Guide Is Structured
+                </div>
+                <p>We start with what you already know, then introduce Server Components as a precise answer to specific problems, then go deep into the mechanics.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>The problems React had before Server Components existed</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>How Server Components solve those problems, with code and diagrams</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>The wire format, streaming, server actions, and practical decision-making</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="the-problems-server-components-solve">The Problems Server Components Solve</h2>
+
+            <p>To understand why Server Components exist, you need to feel the pain they were designed to eliminate. If you have built substantial React applications, you have hit all of these problems even if you did not name them.</p>
+
+            <h3>Problem 1: Every Component Ships JavaScript</h3>
+
+            <p>In traditional React, every component you write becomes part of the JavaScript bundle sent to the browser. A <code>&lt;ProductCard /&gt;</code> component that just displays a name, price, and image still requires its JavaScript to be parsed, compiled, and executed on the client. For a page with 200 components, that is a lot of JavaScript for components that do nothing interactive. They render once and never change.</p>
+
+            <p>The cost is real. Larger bundles mean slower parsing, more memory usage, and longer time-to-interactive. On mid-range mobile devices, which represent the majority of global web traffic, the difference between a 200KB bundle and a 80KB bundle is the difference between a page that feels responsive and one that feels sluggish.</p>
+
+            <h3>Problem 2: Data Fetching Requires Plumbing</h3>
+
+            <p>In a traditional React SPA, components cannot directly access your database. They run in the browser, so you need a separate API layer. A dashboard component needs to call <code>fetch('/api/dashboard-data')</code>, which hits a server route, which queries the database, which returns JSON, which the component then processes.</p>
+
+            <p>This means you are maintaining two things: the component and the API endpoint. If the data shape changes, you update the query, the API route, and the component. If you want to add caching, you add it to the API layer. If you want to handle errors, you handle them in the API route and again in the component. The indirection is not just code, it is cognitive overhead that slows down every feature change.</p>
+
+            <h3>Problem 3: The Waterfall Problem</h3>
+
+            <p>In a client-side React app, data fetching often creates waterfalls. The page loads. A layout component fetches user data. Once that resolves, a child component knows which organization to fetch. Once that resolves, a grandchild component fetches the organization's projects. Each step waits for the previous one. You can parallelize some of these, but the orchestration logic itself becomes complex and fragile.</p>
+
+            <h3>Problem 4: Bundle Size Grows Unboundedly</h3>
+
+            <p>Every library you import for server-side operations ends up in the client bundle. If you use a markdown parsing library to render blog posts, a date formatting library, a database query builder, or an ORM, all of that code ships to the browser even though it only runs on the server. Tree-shaking helps, but many server-side libraries are not designed with tree-shaking in mind, and the leftover code is surprisingly large.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>Why SSR does not solve these problems:</strong> Server-side rendering generates HTML on the server, which helps with initial load and SEO. But after hydration, the browser still needs the JavaScript for every component to handle updates, interactivity, and client-side navigation. SSR reduces time-to-first-byte but does not reduce the JavaScript bundle. Server Components do reduce the bundle, because the component code simply never ships to the client.</p></div>
+            </div>
+
+            <h2 id="what-server-components-actually-are">What Server Components Actually Are</h2>
+
+            <p>A Server Component is a React component that is <strong>never executed in the browser</strong>. Its code runs on the server during the request. Instead of sending its JavaScript to the client, React serializes the component's rendered output into a streamable format, sends that to the browser, and the client-side React renderer incorporates the output into the existing component tree.</p>
+
+            <p>Think of it like this: a Client Component is a recipe that the browser follows to build a piece of UI. A Server Component is a finished dish that arrives ready to serve. The browser does not need the recipe. It just needs the dish.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node start">Request</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Server Component</div>
+                        <div class="arch-label">Runs on server</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node tool">RSC Wire Format</div>
+                        <div class="arch-label">Serialized tree</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node decision">Client React</div>
+                        <div class="arch-label">Merges into tree</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node end">UI on Screen</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The key insight is that Server Components are not a rendering strategy. They are a <strong>component type</strong>, just like function components and class components are component types. React now has two kinds of components: Server Components (the default in the App Router) and Client Components (opted in with <code>"use client"</code>).</p>
+
+            <h3>What Server Components Can Do</h3>
+            <ul>
+                <li>Access databases directly using any Node.js-compatible library</li>
+                <li>Read files from the filesystem</li>
+                <li>Access environment variables without exposing them to the client</li>
+                <li>Use heavy server-only dependencies without increasing the client bundle</li>
+                <li>Render other Server Components and Client Components as children</li>
+                <li>Perform async operations at the component level using <code>async/await</code></li>
+            </ul>
+
+            <h3>What Server Components Cannot Do</h3>
+            <ul>
+                <li>Use <code>useState</code>, <code>useReducer</code>, or any state hook</li>
+                <li>Use <code>useEffect</code>, <code>useLayoutEffect</code>, or any effect hook</li>
+                <li>Use <code>useContext</code> (because context is a client-side concept)</li>
+                <li>Listen to browser events like <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code></li>
+                <li>Use browser APIs like <code>window</code>, <code>document</code>, <code>localStorage</code></li>
+                <li>Use any hook that depends on the client-side React runtime</li>
+            </ul>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content"><p><strong>The mental model:</strong> If your component needs to react to user input, animate, manage local state, or use a browser API, it must be a Client Component. If your component only receives data and renders it, it should probably be a Server Component. This is not about complexity. A simple counter needs to be a Client Component. A complex data table with pagination, sorting, and filtering can be a Server Component if the interactivity is handled by a Client Component wrapper.</p></div>
+            </div>
+
+            <h2 id="server-vs-client-the-directives">Server vs Client: The Directives</h2>
+
+            <p>React uses two directives to mark the boundary between server and client code. These are not imports. They are not function calls. They are string literals that the bundler recognizes and uses to split the module graph.</p>
+
+            <h3>"use client"</h3>
+
+            <p>When you put <code>"use client"</code> at the top of a file, you are telling the bundler: "This module and everything it imports that is also marked 'use client' should be included in the client JavaScript bundle." The directive creates a boundary. The file itself and its client-side dependencies ship to the browser. But Server Components can still render this component and pass props to it.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="client-comp">Copy</button>
+                </div>
+                <pre><code id="client-comp">"use client"
+
+import { useState } from "react"
+
+export default function LikeButton({ postId }) {
+    const [liked, setLiked] = useState(false)
+    const [count, setCount] = useState(0)
+
+    async function handleLike() {
+        setLiked(true)
+        setCount(c => c + 1)
+        await fetch("/api/like", {
+            method: "POST",
+            body: JSON.stringify({ postId }),
+        })
+    }
+
+    return (
+        &lt;button
+            onClick={handleLike}
+            style={{ color: liked ? "#ef4444" : "#6b7280" }}
+        &gt;
+            {liked ? "Liked" : "Like"} ({count})
+        &lt;/button&gt;
+    )
+}</code></pre>
+            </div>
+
+            <p>This component uses <code>useState</code> and <code>onClick</code>, so it must be a Client Component. The <code>"use client"</code> directive makes that explicit. Notice that the component still receives <code>postId</code> as a prop. That prop can come from a Server Component parent. The data flows from server to client through props, but the component's code runs in the browser.</p>
+
+            <h3>"use server"</h3>
+
+            <p>The <code>"use server"</code> directive marks a function as a Server Action. This is different from marking a component. A Server Action is a function that runs on the server but can be called from a Client Component without manually writing a fetch request. It is the mechanism that replaces API routes for form submissions and mutations.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="server-action">Copy</button>
+                </div>
+                <pre><code id="server-action">"use server"
+
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+
+export async function createPost(formData) {
+    const title = formData.get("title")
+    const content = formData.get("content")
+
+    if (!title || title.length < 3) {
+        return { error: "Title must be at least 3 characters" }
+    }
+
+    await db.post.create({
+        data: { title, content, publishedAt: new Date() },
+    })
+
+    revalidatePath("/posts")
+    redirect("/posts")
+}</code></pre>
+            </div>
+
+            <p>A Server Action can be defined inline in a Client Component file or in a separate file with the <code>"use server"</code> directive at the top. When defined in a separate file, the entire file becomes a server-only module. When defined inline, only that specific function is treated as a Server Action. The function itself never ships to the client. React creates a thin reference that the client can call, and the framework routes the call to the server.</p>
+
+            <h2 id="how-the-tree-works">How the Component Tree Works</h2>
+
+            <p>The most important thing to understand about Server Components is how the component tree is split between server and client. This is where most confusion comes from.</p>
+
+            <p>In the App Router, <strong>all components are Server Components by default</strong>. There is no directive to mark a component as a Server Component. You only use a directive when you need to opt into client behavior. This inversion is deliberate: the safe, zero-bundle-cost default is server-side, and you explicitly opt into client-side execution where needed.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow" style="flex-direction:column;align-items:flex-start;gap:12px;width:100%;max-width:420px">
+                    <div class="arch-node process" style="width:100%;text-align:left">
+                        &lt;Page /&gt; &mdash; Server Component
+                    </div>
+                    <div style="padding-left:24px;display:flex;flex-direction:column;gap:12px;width:100%">
+                        <div class="arch-node process" style="width:100%;text-align:left">
+                            &lt;Header /&gt; &mdash; Server Component
+                        </div>
+                        <div class="arch-node process" style="width:100%;text-align:left">
+                            &lt;PostList /&gt; &mdash; Server Component (async)
+                        </div>
+                        <div style="padding-left:24px;display:flex;flex-direction:column;gap:12px;width:100%">
+                            <div class="arch-node process" style="width:100%;text-align:left">
+                                &lt;PostCard /&gt; &mdash; Server Component
+                            </div>
+                            <div class="arch-node tool" style="width:100%;text-align:left">
+                                &lt;LikeButton /&gt; &mdash; Client Component
+                            </div>
+                            <div class="arch-node tool" style="width:100%;text-align:left">
+                                &lt;CommentForm /&gt; &mdash; Client Component
+                            </div>
+                        </div>
+                        <div class="arch-node process" style="width:100%;text-align:left">
+                            &lt;Footer /&gt; &mdash; Server Component
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The <code>&lt;LikeButton /&gt;</code> and <code>&lt;CommentForm /&gt;</code> are Client Components marked with <code>"use client"</code>. Everything else is a Server Component. The tree is not split at the page level. It is split at the component level, wherever you need interactivity.</p>
+
+            <p>This means a single page can have both Server Components and Client Components interleaved at any depth. A Server Component can render a Client Component as a child. A Client Component can receive Server Component output as children through the <code>children</code> prop. But a Client Component cannot import and render a Server Component directly. Once you cross into client territory, you stay there.</p>
+
+            <div class="callout danger">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                <div class="callout-content"><p><strong>Common mistake:</strong> Importing a Server Component from a Client Component file. If <code>LikeButton.jsx</code> has <code>"use client"</code> at the top, and it imports <code>PostCard</code> (a Server Component), then <code>PostCard</code> becomes part of the client bundle too. The <code>"use client"</code> boundary applies to the entire module graph reachable from that file. To pass Server Component output into a Client Component, use the <code>children</code> prop pattern instead of importing.</p></div>
+            </div>
+
+            <h2 id="the-wire-format">The Wire Format: What Actually Travels Over the Network</h2>
+
+            <p>Understanding the serialization format that React uses to send Server Component output to the client is the key to truly understanding how this works. You do not need to read this format manually, but knowing its structure prevents an entire class of misconceptions.</p>
+
+            <p>When React renders a Server Component tree, it does not produce HTML directly. It produces a tree of serialized elements that looks something like this (simplified):</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Text</span>
+                    <button class="code-copy" data-code="wire-format">Copy</button>
+                </div>
+                <pre><code id="wire-format">0:"$L1",null,null
+1:"$L2",["children","$L3"],null
+2:{"name":"PostCard","module":"./PostCard.js"}
+3:{"title":"Understanding RSC","body":"..."}
+4:"$L4",null,{"postId":"abc123"}
+5:{"name":"LikeButton","module":"./LikeButton.js"}
+6:"$L5",null,null
+7:{"name":"Footer","module":"./Footer.js"}</code></pre>
+            </div>
+
+            <p>This is the React Server Components Wire Format. Each line is a reference in a flat array. The prefixes have specific meanings: <code>$L</code> is a lazy reference to a client component module. The numbers are indices into this array. React streams this format to the client, where the client-side renderer processes each reference, loads the necessary client component modules, and reconstructs the tree.</p>
+
+            <p>Notice what is <strong>not</strong> in this format: the source code of Server Components. The server executed <code>PostCard</code> and <code>Footer</code> and only sent their rendered output. The client receives references to <code>LikeButton</code> because it is a Client Component and the browser needs its code to make it interactive. But <code>PostCard</code>'s code never leaves the server.</p>
+
+            <p>This is fundamentally different from SSR. With SSR, the server generates HTML strings, sends them to the browser, and then the browser downloads all the component JavaScript and re-executes everything to hydrate. With RSC, the server sends a structured description of what to render, and the client only downloads JavaScript for the Client Components.</p>
+
+            <h2 id="data-fetching-in-server-components">Data Fetching in Server Components</h2>
+
+            <p>One of the most immediate practical benefits of Server Components is that you can fetch data directly inside the component. No <code>useEffect</code>. No custom data fetching hooks. No loading state management for the initial fetch. You write <code>async</code> components and use <code>await</code> at the top level.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="data-fetch">Copy</button>
+                </div>
+                <pre><code id="data-fetch">import { db } from "@/lib/db"
+import { notFound } from "next/navigation"
+import PostCard from "./PostCard"
+import CommentSection from "./CommentSection"
+
+export default async function PostPage({ params }) {
+    const post = await db.post.findUnique({
+        where: { slug: params.slug },
+        include: {
+            author: { select: { name: true, avatar: true } },
+            tags: true,
+        },
+    })
+
+    if (!post) notFound()
+
+    const relatedPosts = await db.post.findMany({
+        where: {
+            tags: { some: { id: { in: post.tags.map(t => t.id) } } },
+            id: { not: post.id },
+        },
+        take: 3,
+        orderBy: { publishedAt: "desc" },
+    })
+
+    return (
+        &lt;article&gt;
+            &lt;PostCard post={post} /&gt;
+            &lt;section&gt;
+                &lt;h2&gt;Related Posts&lt;/h2&gt;
+                {relatedPosts.map(p => (
+                    &lt;PostCard key={p.id} post={p} compact /&gt;
+                ))}
+            &lt;/section&gt;
+            &lt;CommentSection postId={post.id} /&gt;
+        &lt;/article&gt;
+    )
+}</code></pre>
+            </div>
+
+            <p>Two database queries execute on the server during the request. The <code>PostCard</code> component is a Server Component that receives the data as props. The <code>CommentSection</code> is a Client Component (because it handles user input for writing comments) that receives <code>postId</code> as a prop and fetches its own data on the client side.</p>
+
+            <p>The data fetching happens in parallel with the rendering. React does not wait for one query to finish before starting to render the parts of the tree that do not depend on that query. The Next.js App Router also deduplicates requests: if multiple Server Components in the same render pass request the same data, the framework only executes the query once.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>Best practice:</strong> Fetch data as close to where it is used as possible. Do not fetch everything in the page component and pass it down through five layers of props. Let each Server Component fetch its own data. This keeps components self-contained, enables parallel fetching, and makes the code easier to move and refactor.</p></div>
+            </div>
+
+            <h2 id="streaming-and-suspense">Streaming and Suspense</h2>
+
+            <p>Server Components unlock a powerful pattern when combined with React Suspense: streaming. Instead of waiting for the entire page to be ready before sending anything, the server can start sending the rendered output as soon as each component resolves.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="suspense">Copy</button>
+                </div>
+                <pre><code id="suspense">import { Suspense } from "react"
+import PostContent from "./PostContent"
+import CommentSection from "./CommentSection"
+import Sidebar from "./Sidebar"
+
+function PostLoading() {
+    return &lt;div className="animate-pulse h-96 bg-gray-100
+                         rounded-lg" /&gt;
+}
+
+function CommentsLoading() {
+    return &lt;div className="animate-pulse h-48 bg-gray-100
+                         rounded-lg mt-8" /&gt;
+}
+
+export default function PostPage({ params }) {
+    return (
+        &lt;div className="grid grid-cols-3 gap-8"&gt;
+            &lt;div className="col-span-2"&gt;
+                &lt;Suspense fallback={&lt;PostLoading /&gt;}&gt;
+                    &lt;PostContent slug={params.slug} /&gt;
+                &lt;/Suspense&gt;
+                &lt;Suspense fallback={&lt;CommentsLoading /&gt;}&gt;
+                    &lt;CommentSection slug={params.slug} /&gt;
+                &lt;/Suspense&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;Suspense
+                    fallback={&lt;div className="animate-pulse
+                        h-64 bg-gray-100 rounded-lg" /&gt;}
+                &gt;
+                    &lt;Sidebar /&gt;
+                &lt;/Suspense&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    )
+}</code></pre>
+            </div>
+
+            <p>Each <code>Suspense</code> boundary creates an independent streaming unit. If <code>PostContent</code> resolves in 200ms but <code>CommentSection</code> takes 800ms, the post content starts appearing on the user's screen while comments are still loading. The user sees progressive content instead of a blank page followed by everything at once.</p>
+
+            <p>This is not the same as loading UI in a Client Component. In a Client Component, you need <code>useEffect</code>, a loading state variable, and conditional rendering. With Server Components and Suspense, the loading state is handled by the framework. You just declare where the fallback should go and what it should look like. The framework manages the rest.</p>
+
+            <h2 id="server-actions-in-practice">Server Actions in Practice</h2>
+
+            <p>Server Actions deserve attention because they change how you handle form submissions and mutations in the App Router. Instead of writing a client-side event handler that calls <code>fetch</code> to hit an API route, you pass a Server Action directly to a form's <code>action</code> prop.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="server-action-form">Copy</button>
+                </div>
+                <pre><code id="server-action-form">"use client"
+
+import { useActionState } from "react"
+import { createComment } from "./actions"
+
+export default function CommentForm({ postId }) {
+    const [state, formAction, isPending] = useActionState(
+        createComment,
+        { error: null }
+    )
+
+    return (
+        &lt;form action={formAction}&gt;
+            &lt;input type="hidden" name="postId" value={postId} /&gt;
+            &lt;textarea
+                name="body"
+                placeholder="Write a comment..."
+                rows={4}
+                required
+                className="w-full border rounded-lg p-3
+                           text-sm resize-none"
+            /&gt;
+            {state.error &amp;&amp; (
+                &lt;p className="text-red-600 text-sm mt-2"&gt;
+                    {state.error}
+                &lt;/p&gt;
+            )}
+            &lt;button
+                type="submit"
+                disabled={isPending}
+                className="mt-3 px-5 py-2 bg-teal-600
+                           text-white rounded-lg text-sm
+                           font-medium disabled:opacity-50"
+            &gt;
+                {isPending ? "Posting..." : "Post Comment"}
+            &lt;/button&gt;
+        &lt;/form&gt;
+    )
+}</code></pre>
+            </div>
+
+            <p>The <code>createComment</code> function lives in a file marked with <code>"use server"</code>. The client never sees its implementation. React serializes the form data, sends it to the server, executes the function, and returns the result. The <code>useActionState</code> hook manages the pending state and the return value automatically.</p>
+
+            <p>This eliminates an entire category of boilerplate. No <code>onSubmit</code> handler. No <code>fetch</code> call. No manual loading state. No CSRF token management in most cases, because the framework handles it. The form just works with progressive enhancement: if JavaScript has not loaded yet, the form still submits via a standard HTTP POST.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>When to use Server Actions vs API routes:</strong> Use Server Actions for mutations triggered by the UI: form submissions, button clicks, toggle actions. Use API routes for external consumers: mobile apps, third-party integrations, webhooks. Server Actions are not a replacement for all API routes. They are a replacement for the pattern of "Client Component calls internal API route to mutate data."</p></div>
+            </div>
+
+            <div class="ad-block in-content" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <h2 id="rsc-vs-ssr-vs-static">Server Components vs SSR vs Static Generation</h2>
+
+            <p>The confusion between these three concepts is the single biggest source of misunderstanding about Server Components. They solve different problems and can even be combined.</p>
+
+            <div class="comparison">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dimension</th>
+                                <th>Server Components</th>
+                                <th>SSR</th>
+                                <th>Static Generation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>What it produces</strong></td>
+                                <td>Serialized component tree</td>
+                                <td>HTML string</td>
+                                <td>HTML file at build time</td>
+                            </tr>
+                            <tr>
+                                <td><strong>When it runs</strong></td>
+                                <td>On every request</td>
+                                <td>On every request</td>
+                                <td>At build time</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Client JS impact</strong></td>
+                                <td>Reduces bundle (no RSC code ships)</td>
+                                <td>No bundle reduction</td>
+                                <td>No bundle reduction</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interactivity</strong></td>
+                                <td>Not directly (needs Client Components)</td>
+                                <td>After hydration</td>
+                                <td>After hydration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data fetching</strong></td>
+                                <td>Direct in component</td>
+                                <td>In getServerSideProps or page function</td>
+                                <td>In getStaticProps or at build time</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Streaming</strong></td>
+                                <td>Native with Suspense</td>
+                                <td>Possible but manual</td>
+                                <td>Not applicable</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revalidation</strong></td>
+                                <td>ISR with revalidatePath</td>
+                                <td>Not applicable (always fresh)</td>
+                                <td>ISR with revalidate option</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p>In the App Router, these are not mutually exclusive. A Server Component page can be statically generated at build time and then revalidated on demand. The page is still rendered using Server Components. The fact that it was pre-rendered does not change the component model. Server Components describe <strong>where code executes</strong>. Static generation describes <strong>when rendering happens</strong>. They are orthogonal concerns.</p>
+
+            <h2 id="common-mistakes">Common Mistakes and How to Avoid Them</h2>
+
+            <p>After reviewing dozens of App Router codebases, the same patterns of misunderstanding appear repeatedly.</p>
+
+            <h3>Mistake 1: Putting "use client" on Everything</h3>
+
+            <p>This is the most common mistake and it completely negates the benefits of Server Components. If every file has <code>"use client"</code>, every component ships JavaScript to the browser, data fetching must happen on the client or through API routes, and you have essentially rebuilt a Pages Router application with extra steps.</p>
+
+            <p>The fix is to start from Server Components and only add <code>"use client"</code> when a specific component needs it. Push the directive down as far as possible. If only a button within a card needs interactivity, the button should be the Client Component, not the card, not the section, not the page.</p>
+
+            <h3>Mistake 2: Importing Server Components from Client Components</h3>
+
+            <p>If <code>DashboardClient.jsx</code> has <code>"use client"</code> and imports <code>&lt;StatsCard /&gt;</code> (a Server Component), then <code>StatsCard</code> and everything it imports becomes part of the client bundle. The fix is to use the children pattern: the parent Server Component renders <code>StatsCard</code> and passes the result as <code>children</code> to <code>DashboardClient</code>.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">JSX</span>
+                    <button class="code-copy" data-code="children-pattern">Copy</button>
+                </div>
+                <pre><code id="children-pattern">import DashboardShell from "./DashboardShell"
+import StatsCard from "./StatsCard"
+import ActivityFeed from "./ActivityFeed"
+
+export default function DashboardPage() {
+    return (
+        &lt;DashboardShell&gt;
+            &lt;StatsCard /&gt;
+            &lt;ActivityFeed /&gt;
+        &lt;/DashboardShell&gt;
+    )
+}
+
+// DashboardShell.jsx
+"use client"
+
+export default function DashboardShell({ children }) {
+    const [sidebarOpen, setSidebarOpen] = useState(true)
+
+    return (
+        &lt;div className="flex"&gt;
+            &lt;Sidebar open={sidebarOpen}
+                     onToggle={() =&gt; setSidebarOpen(!sidebarOpen)} /&gt;
+            &lt;main className="flex-1"&gt;{children}&lt;/main&gt;
+        &lt;/div&gt;
+    )
+}</code></pre>
+            </div>
+
+            <p>Here, <code>StatsCard</code> and <code>ActivityFeed</code> remain Server Components. They render on the server and their output is passed to <code>DashboardShell</code> as children. <code>DashboardShell</code> is the only Client Component, and it only contains the sidebar toggle logic. The server components never enter the client bundle.</p>
+
+            <h3>Mistake 3: Using Client-Side Data Fetching in Server Components</h3>
+
+            <p>This sounds contradictory but happens more than you would expect. Developers create a Server Component but then use a data fetching library designed for the client (like React Query or SWR) inside it. These libraries depend on hooks, which require a client-side React runtime. The fix is to use direct <code>async/await</code> in Server Components and reserve client-side fetching libraries for Client Components that need real-time updates or client-side caching.</p>
+
+            <h3>Mistake 4: Storing Secrets in Client Components</h3>
+
+            <p>Even though Server Components can safely access environment variables, Client Components cannot. Any variable accessed in a Client Component is included in the JavaScript bundle and visible to anyone who inspects the network tab. If you have an API key that needs to stay secret, the code that uses it must run in a Server Component or a Server Action, never in a Client Component.</p>
+
+            <h2 id="when-to-use-which">When to Use Server vs Client Components</h2>
+
+            <p>The decision is simpler than most people make it. Use this framework:</p>
+
+            <div class="verdict-card">
+                <span class="verdict-tag teal">Server Component (default)</span>
+                <h3>Use when the component only displays data</h3>
+                <p>Headers, footers, navigation, content sections, data tables (without inline editing), blog posts, product cards, image galleries, sidebar widgets, SEO metadata components. If the component receives data and renders it without any user interaction, it should be a Server Component. This is the majority of components in most applications.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag amber">Client Component</span>
+                <h3>Use when the component needs interactivity or browser APIs</h3>
+                <p>Forms with real-time validation, modals and dialogs, dropdowns, tooltips, carousels, drag-and-drop interfaces, maps, charts with hover interactions, date pickers, rich text editors, notification toasts, tabs that toggle without a URL change. If the component manages state, responds to events, or calls browser APIs, it must be a Client Component.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag rose">Hybrid Pattern</span>
+                <h3>Use when a mostly-static section has a small interactive part</h3>
+                <p>A product page that is entirely static except for an "Add to Cart" button. A blog post that is static except for a like button. A settings page that is static except for toggle switches. In these cases, keep the parent as a Server Component and extract only the interactive element into a Client Component. Pass data through props, not through imports.</p>
+            </div>
+
+            <h2 id="performance-impact">Performance Impact: What Actually Changes</h2>
+
+            <p>The performance benefits of Server Components are real, but they depend on your application's characteristics. Here is an honest breakdown of what changes and what does not.</p>
+
+            <p><strong>JavaScript bundle size.</strong> This is the clearest win. In a typical content-heavy application (blogs, dashboards, admin panels), 60-80% of components can be Server Components. Removing their code from the bundle can reduce JavaScript size by 30-50% compared to an equivalent client-side React app. The exact number depends on how many heavy dependencies your Server Components use that would otherwise ship to the client.</p>
+
+            <p><strong>Time to interactive.</strong> Because the browser has less JavaScript to parse and compile, TTI improves. On a fast connection with a powerful device, the difference might be 200-500ms. On a slow 3G connection with a budget phone, the difference can be 2-4 seconds. This is where Server Components have the most impact: on the devices and networks that need it most.</p>
+
+            <p><strong>Time to first byte.</strong> Server Components do not significantly change TTFB compared to traditional SSR. The server still needs to execute the components and produce output. In some cases, TTFB can be slightly worse because the server is producing the RSC wire format instead of raw HTML, though the difference is usually negligible.</p>
+
+            <p><strong>What does not change.</strong> Server Components do not make your LLM API calls faster. They do not optimize your database queries. They do not reduce the size of images or fonts. They solve a specific problem: unnecessary JavaScript in the browser. If your performance bottleneck is API latency or unoptimized images, Server Components will not help.</p>
+
+            <h2 id="rsc-and-nextjs-app-router">RSC and the Next.js App Router</h2>
+
+            <p>The App Router is currently the most mature implementation of the RSC spec. It provides the runtime that understands the wire format, the build system that splits the component graph, the caching and revalidation layer, and the development tooling. Understanding how the App Router uses Server Components helps you use it correctly.</p>
+
+            <p>Every file inside the <code>app/</code> directory is a Server Component by default. The <code>layout.tsx</code>, <code>page.tsx</code>, <code>loading.tsx</code>, <code>error.tsx</code>, and <code>not-found.tsx</code> files are all Server Components unless they explicitly opt into client behavior. Special files like <code>loading.tsx</code> and <code>error.tsx</code> must be Client Components because they use hooks like <code>useEffect</code> for error tracking, but Next.js handles this automatically.</p>
+
+            <p>The <code>page.tsx</code> file can be an <code>async</code> function. This is not available in the Pages Router and is a direct consequence of Server Components: because the component runs on the server, it can be async without blocking the browser. The framework suspends the rendering of that part of the tree while the async operation completes, and the Suspense boundary shows a fallback in the meantime.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>Caching in the App Router:</strong> Next.js aggressively caches Server Component output by default. A <code>fetch()</code> call inside a Server Component is cached across requests unless you explicitly opt out with <code>cache: 'no-store'</code>. Database queries through Prisma or Drizzle are also cached unless you use <code>unstable_noStore()</code> or configure revalidation. This caching is separate from Server Components themselves but is enabled by them, because the framework knows the rendering happens on the server and can safely cache the result.</p></div>
+            </div>
+
+            <h2 id="migration-thought-process">Migration: A Thought Process, Not a Checklist</h2>
+
+            <p>Migrating from the Pages Router to the App Router is not a mechanical process. You cannot just move files and add directives. You need to rethink which components do what.</p>
+
+            <p>The most effective migration strategy I have seen starts with a question: <strong>"Does this component need to run in the browser?"</strong> Go through your component tree component by component and answer this question honestly. You will find that most of your components do not need to run in the browser. They render data. They layout sections. They compose other components. Only a small fraction truly need client-side execution.</p>
+
+            <p>For those that do need client-side execution, ask a second question: <strong>"Can I extract just the interactive part into a smaller Client Component?"</strong> Often the answer is yes. A table component might seem like it needs to be a Client Component because it has sortable columns, but you can make the table body a Server Component and wrap just the sort controls in a Client Component that updates the URL, triggering a server-side re-render with the new sort order.</p>
+
+            <p>The goal is not to minimize the number of <code>"use client"</code> directives as a vanity metric. The goal is to have each directive be there for a clear, defensible reason. If you can point to a specific hook, event handler, or browser API that requires it, the directive belongs there. If you added it because something broke and you were not sure why, that is a sign to investigate rather than blanket-apply.</p>
+
+            <h2 id="future-of-server-components">The Future of Server Components</h2>
+
+            <p>Server Components are not a temporary experiment. They represent a fundamental shift in how React applications are architected, and the ecosystem is moving toward them as the default.</p>
+
+            <p><strong>Framework adoption.</strong> Next.js App Router is the reference implementation. Remix is exploring RSC support. Other meta-frameworks will follow. The React team has made it clear that Server Components are a first-class part of React's future, not an optional add-on.</p>
+
+            <p><strong>Partial hydration.</strong> Current implementations ship Client Component bundles as JavaScript modules. Future optimizations may include partial hydration, where only the specific interactive parts of a Client Component are hydrated, and the rest of the component remains as static DOM. React's research into "selective hydration" and "islands architecture" overlaps with this direction.</p>
+
+            <p><strong>Improved tooling.</strong> The ability to see which components are server vs client in a visual tree, measure the bundle size impact of adding <code>"use client"</code> to a file, and get warnings when a Server Component accidentally imports a client-only dependency, are all improvements that are coming or already arriving in Next.js and React DevTools.</p>
+
+            <p><strong>Server-first libraries.</strong> The ecosystem is slowly adapting. UI libraries are beginning to offer Server Component versions of their components where the static parts render on the server and only the interactive parts ship JavaScript. This will make the "push the client boundary down" pattern easier to apply with off-the-shelf components.</p>
+
+            <h2 id="final-verdict">Final Verdict</h2>
+
+            <p>React Server Components are a solution to a real problem: React applications ship too much JavaScript to the browser for components that do not need to run there. The mechanism is elegant: components that run only on the server, serialize their output into a streamable format, and integrate into the client-side tree without shipping their code.</p>
+
+            <p>The mental model shift required is real but not as large as it feels at first. You already know how to write components that receive props and return JSX. Server Components are exactly that, with the addition of async data fetching and the removal of hooks and event handlers. The <code>"use client"</code> boundary is a simple, mechanical concept once you understand that it defines a split in the module graph, not in the component tree.</p>
+
+            <p>The practical advice is straightforward. Default to Server Components. Add <code>"use client"</code> only when a component needs hooks, event handlers, or browser APIs. Push the directive as deep into the tree as possible. Use the children pattern to pass Server Component output into Client Components. Use Server Actions for form submissions instead of API routes. Use Suspense for streaming.</p>
+
+            <p>Server Components are not a silver bullet. They do not fix bad database queries, slow APIs, or unoptimized images. They solve one specific problem well, and that problem happens to be one of the most impactful performance bottlenecks in modern React applications. Understanding them correctly, rather than cargo-culting directives, is what separates teams that benefit from the App Router from teams that fight it.</p>
+
+            <div class="faq-section">
+                <h2 id="faq">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Are React Server Components the same as server-side rendering?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>No. Server-side rendering generates HTML on the server and sends it to the browser, then React hydrates that HTML to make it interactive. Server Components never send JavaScript to the browser at all. They run on the server and serialize their output into a special format that React on the client can stream into the existing component tree. SSR is about the initial page load. RSC is about which components execute where throughout the entire application lifecycle. In practice, the App Router uses both together: Server Components produce the RSC wire format, and that format is also used to generate the initial HTML for SSR.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Can Server Components use useState or useEffect?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>No. Server Components cannot use useState, useEffect, useReducer, useContext, or any hook that relies on client-side React state or lifecycle. They also cannot use browser APIs like window, document, or localStorage. If a component needs interactivity, state, effects, or browser APIs, it must be a Client Component marked with "use client" at the top of the file.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Do Server Components improve SEO?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Server Components contribute to SEO because their output is rendered into HTML on the server, meaning search engine crawlers can see the content without executing JavaScript. However, this is not unique to Server Components. Traditional SSR and static site generation also solve this. The SEO benefit of RSC is real but it is a side effect, not the primary design goal. The main goals are reducing JavaScript bundle size and enabling direct server-side data access.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Can I use Server Components without Next.js?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Technically yes, but it is not practical yet. React Server Components are a React feature, not a Next.js feature. However, you need a runtime that understands the RSC wire format, can split the component tree into server and client parts, and can serve the serialized output. Next.js App Router provides this runtime. Other frameworks like Remix are exploring RSC support. Building your own RSC runtime from scratch is possible but represents weeks of engineering work for questionable benefit.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">What happens if I put "use client" on every component?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Your application will work, but you will lose essentially all benefits of Server Components. Every component will be included in the JavaScript bundle sent to the browser. Data fetching will need to happen on the client side or through separate API routes. You will effectively be running a traditional React SPA with extra overhead from the RSC serialization layer. The "use client" directive should be used as sparingly as possible, pushed down to the leaf components that actually need interactivity.</p></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on X" onclick="window.open('https://x.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent('What React Server Components actually are, explained properly'),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </button>
+                <button class="share-btn copy" id="copyLinkBtn">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar"><img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52"></div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="similar">
+                <h2>Continue Reading</h2>
+                <ul>
+                    <li><a href="/guide/nextjs-app-router-migration"><span>Migrating to the App Router Without Losing Your Mind</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <li><a href="/guide/react-performance-patterns"><span>React Performance Patterns That Actually Matter in 2025</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <li><a href="/guide/server-actions-guide"><span>Server Actions: The Complete Guide to Form Handling in Next.js</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                </ul>
+            </div>
+
+            <div class="help">
+                <h2>Still Confused About RSC?</h2>
+                <p>Join our community and ask anything. No question is too basic.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Telegram
+                    </a>
+                    <a href="/guide" class="help-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        More Guides
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+            <div class="toc-card sidebar-toc" id="tocSidebar">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#the-problems-server-components-solve" class="toc-link">Problems RSC Solve</a>
+                    <a href="#what-server-components-actually-are" class="toc-link">What They Actually Are</a>
+                    <a href="#server-vs-client-the-directives" class="toc-link">The Directives</a>
+                    <a href="#how-the-tree-works" class="toc-link">How the Tree Works</a>
+                    <a href="#the-wire-format" class="toc-link">The Wire Format</a>
+                    <a href="#data-fetching-in-server-components" class="toc-link">Data Fetching</a>
+                    <a href="#streaming-and-suspense" class="toc-link">Streaming and Suspense</a>
+                    <a href="#server-actions-in-practice" class="toc-link">Server Actions</a>
+                    <a href="#rsc-vs-ssr-vs-static" class="toc-link">RSC vs SSR vs Static</a>
+                    <a href="#common-mistakes" class="toc-link">Common Mistakes</a>
+                    <a href="#when-to-use-which" class="toc-link">When to Use Which</a>
+                    <a href="#performance-impact" class="toc-link">Performance Impact</a>
+                    <a href="#rsc-and-nextjs-app-router" class="toc-link">RSC and App Router</a>
+                    <a href="#migration-thought-process" class="toc-link">Migration Strategy</a>
+                    <a href="#future-of-server-components" class="toc-link">Future of RSC</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#the-problems-server-components-solve" class="toc-link">Problems RSC Solve</a>
+                    <a href="#what-server-components-actually-are" class="toc-link">What They Actually Are</a>
+                    <a href="#server-vs-client-the-directives" class="toc-link">The Directives</a>
+                    <a href="#how-the-tree-works" class="toc-link">How the Tree Works</a>
+                    <a href="#the-wire-format" class="toc-link">The Wire Format</a>
+                    <a href="#data-fetching-in-server-components" class="toc-link">Data Fetching</a>
+                    <a href="#streaming-and-suspense" class="toc-link">Streaming and Suspense</a>
+                    <a href="#server-actions-in-practice" class="toc-link">Server Actions</a>
+                    <a href="#rsc-vs-ssr-vs-static" class="toc-link">RSC vs SSR vs Static</a>
+                    <a href="#common-mistakes" class="toc-link">Common Mistakes</a>
+                    <a href="#when-to-use-which" class="toc-link">When to Use Which</a>
+                    <a href="#performance-impact" class="toc-link">Performance Impact</a>
+                    <a href="#rsc-and-nextjs-app-router" class="toc-link">RSC and App Router</a>
+                    <a href="#migration-thought-process" class="toc-link">Migration Strategy</a>
+                    <a href="#future-of-server-components" class="toc-link">Future of RSC</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+        </div>
+    </aside>
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <button class="cta-btn secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        Top
+    </button>
+    <a href="https://t.me/melexit" class="cta-btn primary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Join Us
+    </a>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script>
+(function(){
+    var scrollProg = document.getElementById('scrollProgress');
+    var stpBtn = document.getElementById('scrollToTop');
+    var mobileCta = document.getElementById('mobileCta');
+    var themeToggleBtn = document.getElementById('themeToggleBtn');
+    var copyLinkBtn = document.getElementById('copyLinkBtn');
+    var faqItems = document.querySelectorAll('.faq-item');
+    var allTocLinks = document.querySelectorAll('.toc-link');
+    var sections = [];
+    var codeCopyBtns = document.querySelectorAll('.code-copy');
+
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (el) sections.push({id: id, el: el, links: []});
+    });
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        for (var i = 0; i < sections.length; i++) {
+            if (sections[i].id === id) {
+                sections[i].links.push(link);
+                break;
+            }
+        }
+    });
+
+    function onScroll() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        scrollProg.style.width = progress + '%';
+
+        if (scrollTop > 600) {
+            stpBtn.classList.add('vis');
+        } else {
+            stpBtn.classList.remove('vis');
+        }
+
+        if (scrollTop > 800) {
+            mobileCta.classList.add('vis');
+        } else {
+            mobileCta.classList.remove('vis');
+        }
+
+        var current = '';
+        for (var i = 0; i < sections.length; i++) {
+            var rect = sections[i].el.getBoundingClientRect();
+            if (rect.top <= 120) {
+                current = sections[i].id;
+            }
+        }
+        allTocLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    onScroll();
+
+    stpBtn.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href).then(function() {
+                    copyLinkBtn.textContent = 'COPIED';
+                    copyLinkBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyLinkBtn.textContent = 'COPY LINK';
+                        copyLinkBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    }
+
+    faqItems.forEach(function(item) {
+        var btn = item.querySelector('.faq-q');
+        var answer = item.querySelector('.faq-a');
+        var inner = item.querySelector('.faq-a-inner');
+        btn.addEventListener('click', function() {
+            var isOpen = item.classList.contains('open');
+            faqItems.forEach(function(other) {
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+                other.querySelector('.faq-a').style.maxHeight = '0';
+            });
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = inner.scrollHeight + 20 + 'px';
+            }
+        });
+    });
+
+    codeCopyBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var codeId = btn.getAttribute('data-code');
+            var codeEl = document.getElementById(codeId);
+            if (codeEl && navigator.clipboard) {
+                navigator.clipboard.writeText(codeEl.textContent).then(function() {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    });
+
+})();
+</script>
+</body>
+</html>

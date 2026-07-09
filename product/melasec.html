@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MelaSec – Password Intelligence Analyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #060a14;
+  --bg-card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.07);
+  --fg: #e8ecf4;
+  --fg-muted: #6b7a99;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #00ff88;
+  --danger: #ff4757;
+  --warning: #ffb800;
+  --orange: #ff9f43;
+  --radius: 16px;
+  --font-ui: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Atmospheric background — zero JS cost */
+.bg-atmosphere {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,212,255,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(124,58,237,0.03) 0%, transparent 60%),
+    linear-gradient(rgba(0,212,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.012) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+}
+
+.app { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+
+/* Header */
+header { text-align: center; padding: 2.5rem 0 2rem; }
+header h1 {
+  font-size: clamp(2.4rem, 5.5vw, 3.6rem); font-weight: 700; letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+header .subtitle { font-size: clamp(0.95rem, 2vw, 1.15rem); color: var(--fg-muted); margin-top: 0.4rem; font-weight: 300; }
+.privacy-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem; padding: 0.35rem 0.9rem;
+  background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.12);
+  border-radius: 999px; font-size: 0.72rem; color: var(--accent3); font-weight: 500;
+}
+.privacy-badge i { font-size: 0.6rem; }
+
+/* Input */
+.input-section { max-width: 620px; margin: 0 auto 2.5rem; }
+.input-wrapper {
+  position: relative; display: flex; align-items: center;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; backdrop-filter: blur(20px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-wrapper:focus-within {
+  border-color: rgba(0,212,255,0.35);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.06), 0 0 30px rgba(0,212,255,0.06);
+}
+.input-wrapper input {
+  flex: 1; background: none; border: none; outline: none;
+  padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: 1rem;
+  color: var(--fg); letter-spacing: 0.02em;
+}
+.input-wrapper input::placeholder { color: var(--fg-muted); font-family: var(--font-ui); font-size: 0.88rem; }
+.input-wrapper button {
+  background: none; border: none; color: var(--fg-muted); cursor: pointer;
+  padding: 0 0.9rem; font-size: 0.95rem; transition: color 0.2s;
+}
+.input-wrapper button:hover { color: var(--accent); }
+.input-wrapper button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+
+/* Dashboard grid */
+.dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+/* Card */
+.card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(20px);
+  overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover { border-color: rgba(255,255,255,0.1); box-shadow: 0 4px 24px rgba(0,0,0,0.25); }
+.card-head {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.9rem 1.15rem 0.4rem;
+}
+.card-head i { color: var(--accent); font-size: 0.85rem; width: 18px; text-align: center; }
+.card-head h2 { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted); }
+.card-body { padding: 0.4rem 1.15rem 1.15rem; }
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 2.2rem 1rem; gap: 0.6rem; color: var(--fg-muted); text-align: center;
+}
+.empty-state i { font-size: 1.3rem; opacity: 0.25; }
+.empty-state p { font-size: 0.78rem; opacity: 0.45; }
+.card-content { display: none; animation: fadeUp 0.35s ease-out; }
+.card-content.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Strength */
+.strength-row { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 0.7rem; }
+.score-num { font-family: var(--font-mono); font-size: 2.8rem; font-weight: 700; line-height: 1; transition: color 0.4s; }
+.score-label { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.4s; }
+.entropy-line { font-size: 0.72rem; color: var(--fg-muted); margin-bottom: 0.6rem; font-family: var(--font-mono); }
+.strength-bar { height: 8px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+.strength-bar-fill {
+  height: 100%; border-radius: 999px; width: 0%;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1), background 0.4s;
+  position: relative; overflow: hidden;
+}
+.strength-bar-fill::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.1) 5px, rgba(255,255,255,0.1) 10px);
+  animation: stripe 0.7s linear infinite;
+}
+@keyframes stripe { to { transform: translateX(14px); } }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.85rem; }
+.tag {
+  padding: 0.18rem 0.55rem; border-radius: 5px; font-size: 0.68rem; font-weight: 500;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); color: var(--fg-muted);
+  transition: all 0.3s;
+}
+.tag.on { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.25); color: var(--accent); }
+.tag.off { opacity: 0.4; }
+.penalties { margin-top: 0.7rem; }
+.penalty-item {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0;
+  font-size: 0.72rem; color: var(--fg-muted);
+}
+.penalty-item i { width: 14px; text-align: center; font-size: 0.65rem; }
+.penalty-item .pts { font-family: var(--font-mono); font-weight: 600; margin-left: auto; }
+
+/* Fingerprint */
+.fp-code {
+  font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700;
+  letter-spacing: 0.12em; margin: 0.8rem 0 0.4rem;
+}
+.fp-profile {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+  margin-top: 0.3rem;
+}
+.fp-note { font-size: 0.68rem; color: var(--fg-muted); margin-top: 0.6rem; line-height: 1.45; }
+
+/* Timeline */
+.timeline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; }
+.tl-item {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 0.85rem; text-align: center; transition: border-color 0.3s;
+}
+.tl-item:hover { border-color: rgba(255,255,255,0.12); }
+.tl-icon { font-size: 1rem; margin-bottom: 0.4rem; color: var(--fg-muted); }
+.tl-name { font-size: 0.72rem; font-weight: 600; color: var(--fg); margin-bottom: 0.15rem; }
+.tl-time { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; margin-bottom: 0.35rem; word-break: break-word; }
+.tl-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; margin-bottom: 0.4rem; }
+.tl-bar-fill { height: 100%; border-radius: 999px; transition: width 0.7s cubic-bezier(0.4,0,0.2,1), background 0.4s; }
+.tl-desc { font-size: 0.65rem; color: var(--fg-muted); line-height: 1.35; }
+
+/* DNA */
+.dna-bars { display: flex; flex-direction: column; gap: 0.55rem; }
+.dna-row { display: flex; align-items: center; gap: 0.65rem; }
+.dna-label { font-size: 0.72rem; color: var(--fg-muted); width: 80px; flex-shrink: 0; }
+.dna-track { flex: 1; height: 7px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+.dna-fill { height: 100%; border-radius: 999px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+.dna-val { font-family: var(--font-mono); font-size: 0.72rem; width: 36px; text-align: right; flex-shrink: 0; }
+.dna-summary { display: flex; gap: 1.2rem; margin-top: 0.85rem; flex-wrap: wrap; }
+.dna-stat { text-align: center; }
+.dna-stat-val { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; }
+.dna-stat-label { font-size: 0.62rem; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.dna-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.85rem; }
+.dna-badge {
+  padding: 0.2rem 0.6rem; border-radius: 5px; font-size: 0.68rem; font-weight: 500;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.dna-badge.good { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.18); color: var(--accent3); }
+.dna-badge.warn { background: rgba(255,184,0,0.07); border: 1px solid rgba(255,184,0,0.18); color: var(--warning); }
+.dna-badge.bad { background: rgba(255,71,87,0.07); border: 1px solid rgba(255,71,87,0.2); color: var(--danger); }
+
+/* Heatmap */
+.heatmap-legend { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 0.85rem; }
+.legend-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; color: var(--fg-muted); }
+.legend-dot { width: 9px; height: 9px; border-radius: 3px; }
+.legend-dot.g { background: var(--accent3); } .legend-dot.y { background: var(--warning); }
+.legend-dot.o { background: var(--orange); } .legend-dot.r { background: var(--danger); }
+.heatmap-grid { display: flex; flex-wrap: wrap; gap: 3px; }
+.hm-tile {
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  border-radius: 5px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+  cursor: default; position: relative; transition: transform 0.15s, box-shadow 0.15s;
+  animation: tileIn 0.25s ease-out both;
+}
+.hm-tile:hover { transform: scale(1.3); z-index: 5; }
+.hm-tile[data-c="g"] { background: rgba(0,255,136,0.13); color: var(--accent3); box-shadow: 0 0 6px rgba(0,255,136,0.08); }
+.hm-tile[data-c="g"]:hover { box-shadow: 0 0 14px rgba(0,255,136,0.25); }
+.hm-tile[data-c="y"] { background: rgba(255,184,0,0.13); color: var(--warning); box-shadow: 0 0 6px rgba(255,184,0,0.08); }
+.hm-tile[data-c="y"]:hover { box-shadow: 0 0 14px rgba(255,184,0,0.25); }
+.hm-tile[data-c="o"] { background: rgba(255,159,67,0.13); color: var(--orange); box-shadow: 0 0 6px rgba(255,159,67,0.08); }
+.hm-tile[data-c="o"]:hover { box-shadow: 0 0 14px rgba(255,159,67,0.25); }
+.hm-tile[data-c="r"] { background: rgba(255,71,87,0.13); color: var(--danger); box-shadow: 0 0 6px rgba(255,71,87,0.08); }
+.hm-tile[data-c="r"]:hover { box-shadow: 0 0 14px rgba(255,71,87,0.25); }
+.hm-tile::after {
+  content: attr(data-r); position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%);
+  padding: 0.25rem 0.55rem; background: rgba(8,12,22,0.95); border: 1px solid var(--border);
+  border-radius: 5px; font-size: 0.62rem; color: var(--fg); white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.15s; font-family: var(--font-ui); font-weight: 400;
+}
+.hm-tile:hover::after { opacity: 1; }
+@keyframes tileIn { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+
+/* Typing */
+.typing-top { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
+.typing-metrics { display: flex; flex-direction: column; gap: 0.6rem; }
+.tp-row { display: flex; align-items: center; gap: 0.55rem; }
+.tp-label { font-size: 0.7rem; color: var(--fg-muted); width: 105px; flex-shrink: 0; }
+.tp-track { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+.tp-fill { height: 100%; border-radius: 999px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+.tp-val { font-family: var(--font-mono); font-size: 0.7rem; width: 40px; text-align: right; flex-shrink: 0; }
+.mini-kb { display: flex; flex-direction: column; gap: 2px; align-items: center; }
+.kb-row { display: flex; gap: 2px; }
+.kb-key {
+  width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  border-radius: 3px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.5rem; font-family: var(--font-mono); font-weight: 500; color: rgba(255,255,255,0.2);
+  transition: all 0.25s;
+}
+.kb-key.kl { background: rgba(0,212,255,0.15); border-color: rgba(0,212,255,0.35); color: var(--accent); box-shadow: 0 0 6px rgba(0,212,255,0.1); }
+.kb-key.kr { background: rgba(124,58,237,0.15); border-color: rgba(124,58,237,0.35); color: var(--accent2); box-shadow: 0 0 6px rgba(124,58,237,0.1); }
+.hand-bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin-top: 0.85rem; background: rgba(255,255,255,0.03); }
+.hand-l { background: var(--accent); transition: width 0.5s; border-radius: 999px 0 0 999px; }
+.hand-r { background: var(--accent2); transition: width 0.5s; border-radius: 0 999px 999px 0; }
+.hand-labels { display: flex; justify-content: space-between; margin-top: 0.2rem; }
+.hand-labels span { font-size: 0.62rem; color: var(--fg-muted); }
+
+/* Evolution */
+.evo-steps { display: flex; flex-direction: column; }
+.evo-step {
+  display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.55rem 0;
+  position: relative; animation: fadeUp 0.25s ease-out both;
+}
+.evo-step:not(:last-child)::after {
+  content: ''; position: absolute; left: 13px; top: 34px; bottom: -2px; width: 2px;
+  background: linear-gradient(to bottom, var(--border), transparent);
+}
+.evo-dot {
+  width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 700; flex-shrink: 0;
+  background: rgba(255,255,255,0.03); border: 2px solid var(--border); color: var(--fg-muted);
+  transition: all 0.3s;
+}
+.evo-step.final .evo-dot { border-color: var(--accent3); color: var(--accent3); background: rgba(0,255,136,0.07); }
+.evo-info { flex: 1; min-width: 0; }
+.evo-lbl { font-size: 0.62rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.08rem; }
+.evo-text { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; word-break: break-all; color: var(--fg); }
+.evo-reason { font-size: 0.68rem; color: var(--fg-muted); margin-top: 0.1rem; }
+
+/* Footer */
+footer {
+  position: fixed; bottom: 0; left: 0; right:0; z-index: 10;
+  background: linear-gradient(to top, var(--bg) 60%, transparent);
+  padding: 0.9rem; text-align: center; pointer-events: none;
+}
+.privacy-notice {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.3rem 0.9rem; background: rgba(0,212,255,0.05);
+  border: 1px solid rgba(0,212,255,0.1); border-radius: 999px;
+  font-size: 0.7rem; color: var(--accent); font-weight: 500;
+  pointer-events: auto;
+}
+.privacy-notice i { font-size: 0.6rem; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard { grid-template-columns: repeat(2, 1fr); }
+  .span-3 { grid-column: span 2; }
+  .timeline-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .app { padding: 1rem 0.7rem 4.5rem; }
+  header { padding: 1.8rem 0 1.3rem; }
+  .dashboard { grid-template-columns: 1fr; }
+  .span-2, .span-3 { grid-column: span 1; }
+  .timeline-grid { grid-template-columns: 1fr 1fr; }
+  .typing-top { grid-template-columns: 1fr; }
+  .mini-kb { display: none; }
+  .score-num { font-size: 2.2rem; }
+  .fp-code { font-size: 1.15rem; letter-spacing: 0.08em; }
+  .hm-tile { width: 28px; height: 28px; font-size: 0.62rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-atmosphere" aria-hidden="true"></div>
+
+<div class="app">
+  <header>
+    <h1>MelaSec</h1>
+    <p class="subtitle">Understand your password — not just its strength.</p>
+    <span class="privacy-badge"><i class="fas fa-circle-check"></i> 100% Local &bull; Nothing Stored &bull; No Network Calls</span>
+  </header>
+
+  <section class="input-section" role="search" aria-label="Password analysis">
+    <div class="input-wrapper">
+      <input type="password" id="pwd" placeholder="Enter a password to analyze..." autocomplete="off" spellcheck="false" aria-label="Password input">
+      <button id="btn-eye" aria-label="Toggle visibility" type="button"><i class="fas fa-eye"></i></button>
+      <button id="btn-clear" aria-label="Clear" type="button"><i class="fas fa-xmark"></i></button>
+    </div>
+  </section>
+
+  <main class="dashboard" id="dash">
+
+    <div class="card span-2" id="c-str">
+      <div class="card-head"><i class="fas fa-shield-halved"></i><h2>Password Strength</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-shield-halved"></i><p>Enter a password to see strength analysis</p></div>
+        <div class="card-content" id="d-str"></div>
+      </div>
+    </div>
+
+    <div class="card" id="c-fp">
+      <div class="card-head"><i class="fas fa-fingerprint"></i><h2>Fingerprint</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-fingerprint"></i><p>Awaiting input</p></div>
+        <div class="card-content" id="d-fp"></div>
+      </div>
+    </div>
+
+    <div class="card span-3" id="c-tl">
+      <div class="card-head"><i class="fas fa-clock"></i><h2>Crack Time Estimates</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-clock"></i><p>Estimates appear here</p></div>
+        <div class="card-content" id="d-tl"></div>
+      </div>
+    </div>
+
+    <div class="card span-2" id="c-dna">
+      <div class="card-head"><i class="fas fa-dna"></i><h2>Password DNA</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-dna"></i><p>Character breakdown awaits</p></div>
+        <div class="card-content" id="d-dna"></div>
+      </div>
+    </div>
+
+    <div class="card span-3" id="c-hm">
+      <div class="card-head"><i class="fas fa-table-cells"></i><h2>Character Heatmap</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-table-cells"></i><p>Per-character weakness map</p></div>
+        <div class="card-content" id="d-hm"></div>
+      </div>
+    </div>
+
+    <div class="card span-2" id="c-evo">
+      <div class="card-head"><i class="fas fa-arrow-trend-up"></i><h2>Evolution Path</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-arrow-trend-up"></i><p>Step-by-step improvement</p></div>
+        <div class="card-content" id="d-evo"></div>
+      </div>
+    </div>
+
+    <div class="card" id="c-tp">
+      <div class="card-head"><i class="fas fa-keyboard"></i><h2>Typing Analysis</h2></div>
+      <div class="card-body">
+        <div class="empty-state"><i class="fas fa-keyboard"></i><p>QWERTY layout analysis</p></div>
+        <div class="card-content" id="d-tp"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="privacy-notice"><i class="fas fa-lock"></i> Everything runs locally. No passwords are ever transmitted or stored.</div>
+</footer>
+
+<script>
+/* ==============================================
+   MELASEC — Password Intelligence Analyzer
+   Self-contained. Zero network calls after load.
+   ============================================== */
+
+// ─── Dictionary (common passwords/words) ─────
+const DICT = new Set([
+  'password','admin','user','login','welcome','hello','monkey','dragon','master',
+  'qwerty','abc','test','pass','root','love','god','secret','shadow','sunshine',
+  'princess','football','baseball','soccer','hockey','batman','superman','trustno',
+  'iloveyou','letmein','access','flower','charlie','robert','daniel','thomas',
+  'matrix','starwars','whatever','computer','internet','service','canada','ranger',
+  'summer','winter','spring','autumn','apple','orange','banana','cherry','mango',
+  'peach','plum','grape','hunter','michael','jennifer','jessica','ashley','amanda',
+  'nicole','password1','password123','admin123','letmein1','welcome1','hunter2',
+  '123456','12345678','123456789','1234567890','111111','000000','qwerty123'
+]);
+
+const LEET = {a:'@',e:'3',i:'1',o:'0',s:'$',t:'7',l:'1',b:'8',g:'9'};
+
+// QWERTY positions [col, row] for distance calculations
+const KP = {
+  '`':[0,0],'1':[1,0],'2':[2,0],'3':[3,0],'4':[4,0],'5':[5,0],
+  '6':[6,0],'7':[7,0],'8':[8,0],'9':[9,0],'0':[10,0],
+  'q':[1,1],'w':[2,1],'e':[3,1],'r':[4,1],'t':[5,1],
+  'y':[6,1],'u':[7,1],'i':[8,1],'o':[9,1],'p':[10,1],
+  'a':[1.5,2],'s':[2.5,2],'d':[3.5,2],'f':[4.5,2],'g':[5.5,2],
+  'h':[6.5,2],'j':[7.5,2],'k':[8.5,2],'l':[9.5,2],
+  'z':[2,3],'x':[3,3],'c':[4,3],'v':[5,3],'b':[6,3],
+  'n':[7,3],'m':[8,3],',':[9,3],'.':[10,3],'/':[11,3]
+};
+
+// Finger: 0-3 left (pinky→index), 4-7 right (index→pinky)
+const FM = {};
+'`1qaz'.split('').forEach(c => FM[c]=0);
+'2wsx'.split('').forEach(c => FM[c]=1);
+'3edc'.split('').forEach(c => FM[c]=2);
+'4rfv5tgb'.split('').forEach(c => FM[c]=3);
+'6yhn7ujm'.split('').forEach(c => FM[c]=4);
+'8ik,'.split('').forEach(c => FM[c]=5);
+'9ol.'.split('').forEach(c => FM[c]=6);
+"0p;/-=[']\\".split('').forEach(c => FM[c]=7);
+
+const KB_ROWS = [
+  ['q','w','e','r','t','y','u','i','o','p'],
+  ['a','s','d','f','g','h','j','k','l'],
+  ['z','x','c','v','b','n','m']
+];
+
+// ─── Helpers ─────────────────────────────────
+const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
+
+function animNum(el, target, dur=450) {
+  const s = parseInt(el.textContent) || 0;
+  if (s === target) return;
+  const t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.round(s + (target - s) * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+function scoreColor(s) {
+  if (s < 20) return 'var(--danger)';
+  if (s < 40) return 'var(--orange)';
+  if (s < 60) return 'var(--warning)';
+  if (s < 80) return 'var(--accent3)';
+  return 'var(--accent)';
+}
+
+function scoreLabel(s) {
+  if (s <= 0) return 'None';
+  if (s < 20) return 'Weak';
+  if (s < 40) return 'Fair';
+  if (s < 60) return 'Good';
+  if (s < 80) return 'Strong';
+  return 'Excellent';
+}
+
+function barGrad(s) {
+  if (s < 20) return 'linear-gradient(90deg,#ff4757,#ff6b81)';
+  if (s < 40) return 'linear-gradient(90deg,#ff9f43,#feca57)';
+  if (s < 60) return 'linear-gradient(90deg,#feca57,#ffeaa7)';
+  if (s < 80) return 'linear-gradient(90deg,#00b894,#00ff88)';
+  return 'linear-gradient(90deg,#00d4ff,#00ff88)';
+}
+
+function fmtTime(sec) {
+  if (sec < 0.001) return 'Instant';
+  if (sec < 1) return '< 1 second';
+  if (sec < 60) return `${Math.round(sec)}s`;
+  if (sec < 3600) return `${Math.round(sec/60)}m`;
+  if (sec < 86400) return `${Math.round(sec/3600)}h`;
+  const d = sec / 86400;
+  if (d < 365) return `${Math.round(d)}d`;
+  const y = d / 365.25;
+  if (y < 1e3) return `${Math.round(y)}y`;
+  if (y < 1e6) return `${(y/1e3).toFixed(1)}K y`;
+  if (y < 1e9) return `${(y/1e6).toFixed(1)}M y`;
+  if (y < 1e12) return `${(y/1e9).toFixed(1)}B y`;
+  return 'Centuries+';
+}
+
+function timeProg(sec) {
+  if (sec < 0.001) return 2;
+  if (sec >= 1e15) return 100;
+  return clamp(((Math.log10(Math.max(sec, 0.001))) / 15) * 100, 2, 100);
+}
+
+function show(id) {
+  const c = document.getElementById(id);
+  c.querySelector('.empty-state').style.display = 'none';
+  c.querySelector('.card-content').classList.add('active');
+}
+function hide(id) {
+  const c = document.getElementById(id);
+  c.querySelector('.empty-state').style.display = 'flex';
+  c.querySelector('.card-content').classList.remove('active');
+}
+
+// ─── Analysis Engine ─────────────────────────
+
+function findSeq(pwd) {
+  let n = 0;
+  for (let i = 0; i < pwd.length - 2; i++) {
+    const a = pwd.charCodeAt(i), b = pwd.charCodeAt(i+1), c = pwd.charCodeAt(i+2);
+    if (b-a===1 && c-b===1) n++;
+    if (a-b===1 && b-c===1) n++;
+  }
+  return n;
+}
+
+// Detect keyboard walk patterns (e.g. "qwerty", "asdf", "zxcv")
+function findKBWalks(pwd) {
+  const lower = pwd.toLowerCase();
+  let walks = 0;
+  const walkSets = ['qwerty','asdf','zxcv','qazwsx','qwert','asdfg','zxcvb','poiuy','lkjhg','mnbvc'];
+  for (const w of walkSets) {
+    if (lower.includes(w)) walks++;
+  }
+  return walks;
+}
+
+// Detect date patterns (e.g. "1990", "2024", "0101")
+function findDates(pwd) {
+  let n = 0;
+  for (let i = 0; i <= pwd.length - 4; i++) {
+    const s = pwd.slice(i, i+4);
+    if (/^\d{4}$/.test(s)) {
+      const y = parseInt(s);
+      if (y >= 1900 && y <= 2099) n++;
+    }
+    if (/^\d{2}[01]\d[0-3]\d$/.test(s)) n++;
+  }
+  return n;
+}
+
+function findDict(pwd) {
+  const lower = pwd.toLowerCase();
+  const found = [];
+  for (const w of DICT) {
+    if (lower.includes(w)) found.push(w);
+  }
+  return found;
+}
+
+function analyze(pwd) {
+  if (!pwd) return null;
+  const len = pwd.length;
+  const hasU = /[A-Z]/.test(pwd);
+  const hasL = /[a-z]/.test(pwd);
+  const hasD = /[0-9]/.test(pwd);
+  const hasS = /[^A-Za-z0-9]/.test(pwd);
+  const types = [hasU, hasL, hasD, hasS].filter(Boolean).length;
+
+  // Charset size
+  let cs = 0;
+  if (hasL) cs += 26;
+  if (hasU) cs += 26;
+  if (hasD) cs += 10;
+  if (hasS) cs += 33;
+  const entropy = len * Math.log2(Math.max(cs, 1));
+
+  // Build score
+  let score = 0;
+
+  // Length: 0-30 points (diminishing returns after 16)
+  score += Math.min(30, len * 2.2);
+
+  // Character variety: 0-25 points
+  score += types * 6.25;
+
+  // Unique ratio: 0-15 points
+  const uniq = new Set(pwd).size;
+  const uniqR = len > 0 ? uniq / len : 0;
+  score += uniqR * 15;
+
+  // Effective entropy: 0-30 points (capped contribution)
+  score += Math.min(30, entropy / 4);
+
+  // Penalties (deducted from max possible)
+  const repeats = (pwd.match(/(.)\1+/g) || []).length;
+  const seqs = findSeq(pwd);
+  const kbWalks = findKBWalks(pwd);
+  const dates = findDates(pwd);
+  const dictW = findDict(pwd);
+
+  score -= repeats * 4;
+  score -= seqs * 6;
+  score -= kbWalks * 10;
+  score -= dates * 8;
+  score -= dictW.length * 7;
+
+  // Heavy repeat penalty (aaa111)
+  const heavyRepeats = (pwd.match(/(.)\1{2,}/g) || []).length;
+  score -= heavyRepeats * 8;
+
+  score = clamp(Math.round(score), 0, 100);
+
+  const upC = (pwd.match(/[A-Z]/g) || []).length;
+  const loC = (pwd.match(/[a-z]/g) || []).length;
+  const diC = (pwd.match(/[0-9]/g) || []).length;
+  const syC = (pwd.match(/[^A-Za-z0-9]/g) || []).length;
+
+  return {
+    score, label: scoreLabel(score),
+    hasU, hasL, hasD, hasS, types,
+    entropy: Math.round(entropy * 10) / 10,
+    len, uniq, uniqR,
+    upC, loC, diC, syC,
+    repeats, seqs, kbWalks, dates, dictW
+  };
+}
+
+function calcTimeline(a) {
+  if (!a) return null;
+  const guesses = Math.pow(2, Math.max(a.entropy, 0)) / 2;
+  const scenarios = [
+    { name:'Casual Attacker', icon:'fa-user', desc:'Manual guessing, low effort', speed:10 },
+    { name:'Gaming PC', icon:'fa-desktop', desc:'CPU brute force, ~10K/s', speed:1e4 },
+    { name:'GPU Rig', icon:'fa-microchip', desc:'Single GPU, ~1B/s', speed:1e9 },
+    { name:'Botnet', icon:'fa-server', desc:'Distributed cluster, ~100B/s', speed:1e11 }
+  ];
+  return scenarios.map(s => {
+    const sec = Math.max(0, guesses / s.speed);
+    return { ...s, time: sec, fmt: fmtTime(sec), prog: timeProg(sec) };
+  });
+}
+
+function calcHeatmap(pwd, a) {
+  if (!pwd || !a) return [];
+  const lower = pwd.toLowerCase();
+  const result = [];
+  // Build a set of positions covered by dictionary words
+  const dictRanges = [];
+  for (const w of a.dictW) {
+    let idx = lower.indexOf(w);
+    while (idx !== -1) {
+      dictRanges.push({ start: idx, end: idx + w.length });
+      idx = lower.indexOf(w, idx + 1);
+    }
+  }
+
+  for (let i = 0; i < pwd.length; i++) {
+    const ch = pwd[i];
+    let score = 100, reason = 'Strong character', color = 'g';
+
+    // Sequential check
+    let inSeq = false;
+    if (i >= 2) {
+      const a2 = pwd.charCodeAt(i-2), b = pwd.charCodeAt(i-1), c = pwd.charCodeAt(i);
+      if ((b-a2===1&&c-b===1)||(a2-b===1&&b-c===1)) inSeq = true;
+    }
+    if (inSeq) { score = 5; reason = 'Sequential pattern'; color = 'r'; }
+    else if (i > 0 && ch === pwd[i-1]) { score = 15; reason = 'Repeated character'; color = 'o'; }
+    else if (LEET[lower[i]] && ch === LEET[lower[i]]) { score = 45; reason = 'Leet substitution'; color = 'y'; }
+    else if (dictRanges.some(r => i >= r.start && i < r.end)) { score = 25; reason = 'Inside common word'; color = 'o'; }
+    else if (/[a-z]/.test(ch)) { score = 65; reason = 'Lowercase letter'; color = 'y'; }
+    else if (/[0-9]/.test(ch)) { score = 60; reason = 'Numeric digit'; color = 'y'; }
+    // Uppercase, symbol, or non-mapped = strong
+    result.push({ ch, score, reason, color });
+  }
+  return result;
+}
+
+function calcFingerprint(pwd) {
+  let h1 = 5381, h2 = 52711;
+  for (let i = 0; i < pwd.length; i++) {
+    const c = pwd.charCodeAt(i);
+    h1 = ((h1 << 5) + h1 + c) | 0;
+    h2 = ((h2 << 5) + h2 + c * 3) | 0;
+  }
+  const hex = [
+    Math.abs(h1).toString(16).toUpperCase().padStart(4,'0').slice(0,2),
+    Math.abs(h1 >> 8).toString(16).toUpperCase().padStart(2,'0'),
+    Math.abs(h2).toString(16).toUpperCase().padStart(4,'0').slice(0,2),
+    Math.abs(h2 >> 8).toString(16).toUpperCase().padStart(2,'0')
+  ].join('-');
+
+  const profiles = ['Fortress','Sentinel','Cipher','Titan','Guardian','Quantum','Architect','Vanguard'];
+  return { code: hex, profile: profiles[Math.abs(h1 ^ h2) % profiles.length] };
+}
+
+function calcTyping(pwd) {
+  const lower = pwd.toLowerCase();
+  let lC = 0, rC = 0, alt = 0, sameF = 0, travel = 0;
+  const used = new Set();
+  let rowJumps = 0, prevRow = -1;
+
+  for (let i = 0; i < pwd.length; i++) {
+    const ch = lower[i];
+    const f = FM[ch];
+    if (f === undefined) continue;
+    used.add(ch);
+    if (f < 4) lC++; else rC++;
+
+    const pos = KP[ch];
+    if (pos) {
+      if (prevRow >= 0 && Math.abs(pos[1] - prevRow) > 1) rowJumps++;
+      prevRow = pos[1];
+    }
+
+    if (i > 0) {
+      const pc = lower[i-1];
+      const pf = FM[pc];
+      if (pf !== undefined) {
+        if ((pf < 4) !== (f < 4)) alt++;
+        if (pf === f) sameF++;
+        const p1 = KP[pc], p2 = KP[ch];
+        if (p1 && p2) {
+          travel += Math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2);
+        }
+      }
+    } else if (pos) {
+      prevRow = pos[1];
+    }
+  }
+
+  const total = lC + rC;
+  const lPct = total ? Math.round(lC / total * 100) : 50;
+  const rPct = 100 - lPct;
+  const pairs = Math.max(pwd.length - 1, 1);
+  const altPct = Math.round(alt / pairs * 100);
+
+  // Efficiency: alternation is king, penalize same-finger and row jumps
+  let eff = altPct * 0.45
+    + (100 - clamp(sameF / pairs * 100, 0, 100)) * 0.25
+    + (100 - Math.abs(lPct - 50) * 1.5) * 0.15
+    + (100 - clamp(rowJumps / pairs * 80, 0, 100)) * 0.15;
+  eff = clamp(Math.round(eff), 0, 100);
+
+  return { lPct, rPct, altPct, travel: Math.round(travel * 10) / 10, eff, sameF, used, rowJumps };
+}
+
+function calcEvolution(pwd) {
+  if (!pwd) return [];
+  const steps = [];
+  let cur = pwd;
+
+  steps.push({ text: cur, label: 'Original', reason: 'Starting point', final: false });
+
+  // Capitalize
+  if (cur[0] && /[a-z]/.test(cur[0])) {
+    cur = cur[0].toUpperCase() + cur.slice(1);
+    steps.push({ text: cur, label: 'Capitalize', reason: 'Adds uppercase variety', final: false });
+  }
+
+  // Replace common word with leet
+  let subbed = false;
+  for (const [from, to] of Object.entries(LEET)) {
+    const idx = cur.toLowerCase().indexOf(from);
+    if (idx !== -1 && cur[idx].toLowerCase() === from) {
+      cur = cur.slice(0, idx) + to + cur.slice(idx + 1);
+      steps.push({ text: cur, label: 'Leet Sub', reason: `'${from}' → '${to}' breaks dictionary match`, final: false });
+      subbed = true; break;
+    }
+  }
+
+  // Append numbers if none
+  if (!/\d/.test(cur)) {
+    cur = cur + '!9z';
+    steps.push({ text: cur, label: 'Append Code', reason: 'Adds numbers + symbol layer', final: false });
+  }
+
+  // Trailing symbol
+  if (!/[^A-Za-z0-9]$/.test(cur)) {
+    cur = cur + '#';
+    steps.push({ text: cur, label: 'Seal', reason: 'Trailing symbol caps entropy', final: false });
+  }
+
+  const final = analyze(cur);
+  steps.push({ text: `${final.label} (${final.score}/100)`, label: 'Result', reason: `Entropy: ${final.entropy} bits`, final: true });
+  return steps;
+}
+
+// ─── Renderers ───────────────────────────────
+
+function renderStrength(a) {
+  show('c-str');
+  const el = document.getElementById('d-str');
+  const col = scoreColor(a.score);
+
+  // Build penalty list
+  let penHtml = '';
+  if (a.repeats > 0) penHtml += `<div class="penalty-item"><i class="fas fa-clone" style="color:var(--orange)"></i>Repeated chars <span class="pts" style="color:var(--orange)">-${a.repeats*4}</span></div>`;
+  if (a.seqs > 0) penHtml += `<div class="penalty-item"><i class="fas fa-arrow-right-long" style="color:var(--danger)"></i>Sequential patterns <span class="pts" style="color:var(--danger)">-${a.seqs*6}</span></div>`;
+  if (a.kbWalks > 0) penHtml += `<div class="penalty-item"><i class="fas fa-keyboard" style="color:var(--danger)"></i>Keyboard walks <span class="pts" style="color:var(--danger)">-${a.kbWalks*10}</span></div>`;
+  if (a.dates > 0) penHtml += `<div class="penalty-item"><i class="fas fa-calendar" style="color:var(--orange)"></i>Date patterns <span class="pts" style="color:var(--orange)">-${a.dates*8}</span></div>`;
+  if (a.dictW.length > 0) penHtml += `<div class="penalty-item"><i class="fas fa-book" style="color:var(--orange)"></i>Dictionary words (${a.dictW.slice(0,3).join(', ')}${a.dictW.length>3?'...':''}) <span class="pts" style="color:var(--orange)">-${a.dictW.length*7}</span></div>`;
+
+  el.innerHTML = `
+    <div class="strength-row">
+      <span class="score-num" id="sn" style="color:${col}">0</span>
+      <span class="score-label" style="color:${col}">${a.label}</span>
+    </div>
+    <div class="entropy-line">${a.entropy} bits of entropy &middot; ${a.len} characters &middot; ${a.uniq} unique</div>
+    <div class="strength-bar"><div class="strength-bar-fill" id="sb" style="background:${barGrad(a.score)}"></div></div>
+    <div class="tags">
+      <span class="tag ${a.hasU?'on':'off'}">A-Z</span>
+      <span class="tag ${a.hasL?'on':'off'}">a-z</span>
+      <span class="tag ${a.hasD?'on':'off'}">0-9</span>
+      <span class="tag ${a.hasS?'on':'off'}">Symbols</span>
+    </div>
+    ${penHtml ? '<div class="penalties">' + penHtml + '</div>' : ''}
+  `;
+  // Animate after DOM insert
+  requestAnimationFrame(() => {
+    animNum(document.getElementById('sn'), a.score);
+    document.getElementById('sb').style.width = a.score + '%';
+  });
+}
+
+function renderFingerprint(pwd) {
+  show('c-fp');
+  const fp = calcFingerprint(pwd);
+  const el = document.getElementById('d-fp');
+  const pCol = scoreColor(analyze(pwd).score);
+  el.innerHTML = `
+    <div class="fp-code" style="color:${pCol}">${fp.code}</div>
+    <div class="fp-profile" style="background:${pCol.replace('var(','rgba(').replace(')','')};background:color-mix(in srgb, ${pCol} 12%, transparent);border:1px solid color-mix(in srgb, ${pCol} 25%, transparent);color:${pCol}">
+      <i class="fas fa-shield-halved"></i> ${fp.profile}
+    </div>
+    <p class="fp-note">Deterministic hash derived from character codes. Same password always produces the same fingerprint.</p>
+  `;
+}
+
+function renderTimeline(tl) {
+  show('c-tl');
+  const el = document.getElementById('d-tl');
+  el.innerHTML = `<div class="timeline-grid">${tl.map(t => {
+    const col = t.prog > 70 ? 'var(--accent3)' : t.prog > 40 ? 'var(--warning)' : t.prog > 15 ? 'var(--orange)' : 'var(--danger)';
+    return `<div class="tl-item">
+      <div class="tl-icon"><i class="fas ${t.icon}"></i></div>
+      <div class="tl-name">${t.name}</div>
+      <div class="tl-time" style="color:${col}">${t.fmt}</div>
+      <div class="tl-bar"><div class="tl-bar-fill" style="width:${t.prog}%;background:${col}"></div></div>
+      <div class="tl-desc">${t.desc}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderDNA(a) {
+  show('c-dna');
+  const el = document.getElementById('d-dna');
+  const pcts = [
+    { label:'Uppercase', val: a.upC, pct: a.len?Math.round(a.upC/a.len*100):0, col:'var(--accent)' },
+    { label:'Lowercase', val: a.loC, pct: a.len?Math.round(a.loC/a.len*100):0, col:'var(--accent3)' },
+    { label:'Digits', val: a.diC, pct: a.len?Math.round(a.diC/a.len*100):0, col:'var(--warning)' },
+    { label:'Symbols', val: a.syC, pct: a.len?Math.round(a.syC/a.len*100):0, col:'var(--accent2)' }
+  ];
+
+  let badges = '';
+  if (a.uniqR > 0.8) badges += '<span class="dna-badge good"><i class="fas fa-check"></i>High uniqueness</span>';
+  else if (a.uniqR < 0.5) badges += '<span class="dna-badge bad"><i class="fas fa-xmark"></i>Low uniqueness</span>';
+  if (a.types >= 4) badges += '<span class="dna-badge good"><i class="fas fa-check"></i>All 4 types</span>';
+  if (a.repeats === 0) badges += '<span class="dna-badge good"><i class="fas fa-check"></i>No repeats</span>';
+  else badges += `<span class="dna-badge warn"><i class="fas fa-exclamation"></i>${a.repeats} repeat${a.repeats>1?'s':''}</span>`;
+  if (a.seqs > 0) badges += `<span class="dna-badge bad"><i class="fas fa-xmark"></i>${a.seqs} sequence${a.seqs>1?'s':''}</span>`;
+
+  el.innerHTML = `
+    <div class="dna-bars">${pcts.map(p => `
+      <div class="dna-row">
+        <span class="dna-label">${p.label}</span>
+        <div class="dna-track"><div class="dna-fill" style="width:${p.pct}%;background:${p.col}"></div></div>
+        <span class="dna-val">${p.val}</span>
+      </div>`).join('')}
+    </div>
+    <div class="dna-summary">
+      <div class="dna-stat"><div class="dna-stat-val" style="color:var(--accent)">${a.entropy}</div><div class="dna-stat-label">Entropy (bits)</div></div>
+      <div class="dna-stat"><div class="dna-stat-val" style="color:var(--accent3)">${a.uniqR*100|0}%</div><div class="dna-stat-label">Uniqueness</div></div>
+      <div class="dna-stat"><div class="dna-stat-val" style="color:var(--warning)">${a.types}/4</div><div class="dna-stat-label">Char Types</div></div>
+    </div>
+    <div class="dna-badges">${badges}</div>
+  `;
+}
+
+function renderHeatmap(hm) {
+  show('c-hm');
+  const el = document.getElementById('d-hm');
+  el.innerHTML = `
+    <div class="heatmap-legend">
+      <div class="legend-item"><div class="legend-dot g"></div>Strong</div>
+      <div class="legend-item"><div class="legend-dot y"></div>Moderate</div>
+      <div class="legend-item"><div class="legend-dot o"></div>Weak</div>
+      <div class="legend-item"><div class="legend-dot r"></div>Critical</div>
+    </div>
+    <div class="heatmap-grid">${hm.map((h, i) => {
+      const display = h.ch === ' ' ? '&#x2423;' : h.ch.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return `<div class="hm-tile" data-c="${h.color}" data-r="${h.reason}" style="animation-delay:${i*25}ms">${display}</div>`;
+    }).join('')}</div>
+  `;
+}
+
+function renderEvolution(steps) {
+  show('c-evo');
+  const el = document.getElementById('d-evo');
+  el.innerHTML = `<div class="evo-steps">${steps.map((s, i) => `
+    <div class="evo-step ${s.final?'final':''}" style="animation-delay:${i*60}ms">
+      <div class="evo-dot">${i + 1}</div>
+      <div class="evo-info">
+        <div class="evo-lbl">${s.label}</div>
+        <div class="evo-text">${s.text.replace(/</g,'&lt;')}</div>
+        <div class="evo-reason">${s.reason}</div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function renderTyping(pwd, tp) {
+  show('c-tp');
+  const el = document.getElementById('d-tp');
+  const effCol = tp.eff > 70 ? 'var(--accent3)' : tp.eff > 40 ? 'var(--warning)' : 'var(--danger)';
+
+  // Build mini keyboard
+  let kbHtml = '<div class="mini-kb">';
+  for (const row of KB_ROWS) {
+    kbHtml += '<div class="kb-row">';
+    for (const k of row) {
+      const cls = tp.used.has(k) ? (FM[k] < 4 ? ' kl' : ' kr') : '';
+      kbHtml += `<div class="kb-key${cls}">${k}</div>`;
+    }
+    kbHtml += '</div>';
+  }
+  kbHtml += '</div>';
+
+  el.innerHTML = `
+    <div class="typing-top">
+      <div class="typing-metrics">
+        <div class="tp-row">
+          <span class="tp-label">Hand Balance</span>
+          <div class="tp-track"><div class="tp-fill" style="width:${Math.min(tp.lPct,tp.rPct)*2}%;background:var(--accent)"></div></div>
+          <span class="tp-val" style="color:var(--accent)">${tp.lPct}/${tp.rPct}</span>
+        </div>
+        <div class="tp-row">
+          <span class="tp-label">Alternation</span>
+          <div class="tp-track"><div class="tp-fill" style="width:${tp.altPct}%;background:var(--accent3)"></div></div>
+          <span class="tp-val" style="color:var(--accent3)">${tp.altPct}%</span>
+        </div>
+        <div class="tp-row">
+          <span class="tp-label">Same Finger</span>
+          <div class="tp-track"><div class="tp-fill" style="width:${Math.min(tp.sameF/(Math.max(pwd.length-1,1))*100,100)}%;background:var(--danger)"></div></div>
+          <span class="tp-val" style="color:var(--danger)">${tp.sameF}</span>
+        </div>
+        <div class="tp-row">
+          <span class="tp-label">Efficiency</span>
+          <div class="tp-track"><div class="tp-fill" style="width:${tp.eff}%;background:${effCol}"></div></div>
+          <span class="tp-val" style="color:${effCol}">${tp.eff}%</span>
+        </div>
+      </div>
+      ${kbHtml}
+    </div>
+    <div class="hand-bar">
+      <div class="hand-l" style="width:${tp.lPct}%"></div>
+      <div class="hand-r" style="width:${tp.rPct}%"></div>
+    </div>
+    <div class="hand-labels"><span>Left hand</span><span>Right hand</span></div>
+  `;
+}
+
+// ─── Main Controller ─────────────────────────
+
+const cards = ['c-str','c-fp','c-tl','c-dna','c-hm','c-evo','c-tp'];
+const input = document.getElementById('pwd');
+let debounce = null;
+
+function runAnalysis(pwd) {
+  if (!pwd) {
+    cards.forEach(hide);
+    return;
+  }
+
+  const a = analyze(pwd);
+  if (!a) { cards.forEach(hide); return; }
+
+  renderStrength(a);
+  renderFingerprint(pwd);
+  renderTimeline(calcTimeline(a));
+  renderDNA(a);
+  renderHeatmap(calcHeatmap(pwd, a));
+  renderEvolution(calcEvolution(pwd));
+  renderTyping(pwd, calcTyping(pwd));
+}
+
+input.addEventListener('input', () => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => runAnalysis(input.value), 80);
+});
+
+// Toggle visibility
+document.getElementById('btn-eye').addEventListener('click', () => {
+  const isPass = input.type === 'password';
+  input.type = isPass ? 'text' : 'password';
+  document.querySelector('#btn-eye i').className = isPass ? 'fas fa-eye-slash' : 'fas fa-eye';
+});
+
+// Clear
+document.getElementById('btn-clear').addEventListener('click', () => {
+  input.value = '';
+  input.type = 'password';
+  document.querySelector('#btn-eye i').className = 'fas fa-eye';
+  cards.forEach(hide);
+  input.focus();
+});
+
+// Keyboard shortcut: Escape to clear
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    input.value = '';
+    cards.forEach(hide);
+  }
+});
+</script>
+</body>
+</html>

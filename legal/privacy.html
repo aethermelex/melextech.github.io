@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — MelexTech</title>
+    <meta name="description" content="Privacy Policy for MelexTech. Learn how we collect, use, and protect your personal information.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/privacy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+    <style>
+        :root {
+            --bg: #FAFAFA;
+            --bg-alt: #F3F4F6;
+            --surface: #FFFFFF;
+            --fg: #334155;
+            --fg-light: #64748B;
+            --accent: #2DD4BF;
+            --accent-dark: #14B8A6;
+            --accent-soft: #CCFBF1;
+            --border: #F1F5F9;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --radius: 24px;
+            --radius-sm: 12px;
+            --nav-height: 65px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1E293B;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.2s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent), #60A5FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .btn svg { width: 18px; height: 18px; }
+
+        .btn-primary { background: var(--accent); color: #fff; }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 5px rgba(45, 212, 191, 0.4);
+        }
+
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 8px 0;
+            background: white;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .header.scrolled {
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .logo { display: flex; align-items: center; z-index: 10; }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+        .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+
+        .nav { display: flex; gap: 4px; }
+
+        .nav-link {
+            padding: 6px 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--fg-light);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover { color: var(--fg); background: var(--bg-alt); }
+
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 110;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-line {
+            width: 24px; height: 2px;
+            background: var(--fg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .about-hero {
+            padding: 140px 0 80px;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                url('../img/bgeer.webp');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .hero-grid-dots {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.05;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .hero-content-center {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .badge-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+        }
+
+        .about-hero-title {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .about-hero-desc {
+            font-size: 1.125rem;
+            color: #94A3B8;
+            margin: 0;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .breadcrumb a { color: rgba(255,255,255,0.5); }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb svg { width: 14px; height: 14px; opacity: 0.5; }
+
+        .hero-fade {
+            position: relative;
+            z-index: 3;
+            height: 60px;
+            margin-top: -60px;
+            pointer-events: none;
+        }
+
+        .legal-section {
+            padding: 40px 0 100px;
+            position: relative;
+            z-index: 2;
+            background: var(--bg);
+        }
+
+        .legal-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .legal-toc {
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
+            max-height: calc(100vh - var(--nav-height) - 48px);
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .legal-toc::-webkit-scrollbar { display: none; }
+
+        .toc-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--fg-light);
+            margin-bottom: 16px;
+        }
+
+        .toc-list { display: flex; flex-direction: column; gap: 2px; }
+
+        .toc-list a {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--fg-light);
+            padding: 8px 14px;
+            border-radius: 8px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .toc-list a:hover { color: var(--fg); background: var(--bg-alt); }
+
+        .toc-list a.active {
+            color: var(--accent-dark);
+            border-left-color: var(--accent);
+            background: var(--accent-soft);
+            font-weight: 600;
+        }
+
+        .legal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 52px 56px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .legal-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #60A5FA);
+        }
+
+        .legal-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: var(--accent-soft);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-dark);
+            margin-bottom: 36px;
+        }
+
+        .legal-updated svg { width: 14px; height: 14px; }
+
+        .legal-content > p {
+            font-size: 0.95rem;
+            color: var(--fg-light);
+            line-height: 1.85;
+            margin-bottom: 24px;
+        }
+
+        .legal-content h2 {
+            font-size: 1.35rem;
+            margin: 48px 0 16px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .legal-content h2:first-of-type { margin-top: 0; }
+
+        .legal-content h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            border-radius: 4px;
+            background: linear-gradient(180deg, var(--accent), #60A5FA);
+            flex-shrink: 0;
+        }
+
+        .legal-content h3 {
+            font-size: 1.05rem;
+            margin: 28px 0 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .legal-content ul { margin: 12px 0 28px; }
+
+        .legal-content ul li {
+            position: relative;
+            padding: 7px 0 7px 26px;
+            font-size: 0.92rem;
+            color: var(--fg-light);
+            line-height: 1.75;
+        }
+
+        .legal-content ul li::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 16px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.5;
+        }
+
+        .legal-content strong { color: var(--fg); font-weight: 600; }
+
+        .legal-content a {
+            color: var(--accent-dark);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .legal-content a:hover { border-bottom-color: var(--accent-dark); }
+
+        .legal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, var(--accent-soft), #E0E7FF);
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            margin: 24px 0;
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent-dark);
+        }
+
+        .info-card-header svg { width: 16px; height: 16px; }
+        .info-card p { margin-bottom: 0 !important; color: var(--fg) !important; font-weight: 500; }
+
+        .cookie-grid { display: grid; gap: 12px; margin: 20px 0 28px; }
+
+        .cookie-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 22px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cookie-item:hover {
+            border-color: rgba(45, 212, 191, 0.3);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .cookie-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cookie-icon.essential { background: var(--accent-soft); color: var(--accent-dark); }
+        .cookie-icon.ads { background: #EDE9FE; color: #8B5CF6; }
+        .cookie-icon svg { width: 18px; height: 18px; }
+
+        .cookie-text strong { display: block; font-size: 0.9rem; margin-bottom: 3px; }
+        .cookie-text span { font-size: 0.85rem; color: var(--fg-light); line-height: 1.5; }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 12px;
+            margin: 20px 0 28px;
+        }
+
+        .right-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            color: var(--fg-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .right-item:hover {
+            border-color: rgba(45, 212, 191, 0.3);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .right-item svg { width: 18px; height: 18px; stroke: var(--accent-dark); flex-shrink: 0; }
+
+        .legal-contact-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .legal-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+
+        .legal-contact-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateX(4px);
+        }
+
+        .legal-contact-icon {
+            width: 36px; height: 36px;
+            background: var(--accent-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .legal-contact-icon svg { width: 18px; height: 18px; stroke: var(--accent-dark); }
+        .legal-contact-item span { font-size: 0.92rem; font-weight: 500; color: #1E293B; }
+
+        .footer { background: #1E293B; color: #fff; padding: 80px 0 40px; position: relative; z-index: 2; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+        .footer-tagline { color: #94A3B8; margin: 16px 0 24px; max-width: 300px; line-height: 1.6; }
+        .social-links { display: flex; gap: 12px; }
+        .social-link { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: var(--radius-sm); transition: all 0.2s; }
+        .social-link:hover { background: var(--accent); transform: translateY(-3px); }
+        .social-link svg { width: 20px; height: 20px; fill: #fff; }
+        .footer-title { font-size: 1rem; margin-bottom: 24px; font-weight: 600; color: #fff; }
+        .footer-links ul { display: flex; flex-direction: column; gap: 16px; }
+        .footer-links a { color: #94A3B8; font-size: 0.95rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; color: #64748B; font-size: 0.9rem; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 32px; right: 32px;
+            width: 48px; height: 48px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(16px);
+            transition: all 0.3s;
+            z-index: 90;
+        }
+
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-4px); }
+        .back-to-top svg { width: 22px; height: 22px; stroke: var(--fg); }
+
+        .animate-fade-up {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .legal-layout { grid-template-columns: 1fr; gap: 32px; }
+            .legal-toc { position: static; max-height: none; }
+            .toc-list { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+            .toc-list a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 14px; font-size: 0.8rem; white-space: nowrap; }
+            .toc-list a.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+            .legal-content { padding: 36px 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .header-actions .btn { display: none; }
+            .mobile-menu-btn { display: flex; }
+
+            .nav {
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                padding: 100px 24px 40px;
+                background: var(--surface);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--shadow-lg);
+                height: 100vh;
+                z-index: 105;
+            }
+
+            .nav.active { transform: translateY(0); opacity: 1; visibility: visible; }
+            .nav-link { width: 100%; font-size: 1.25rem; padding: 16px 20px; border-radius: 8px; }
+            .about-hero { padding: 120px 0 60px; min-height: auto; }
+            .legal-content { padding: 28px 22px; }
+            .legal-content h2 { font-size: 1.15rem; margin: 36px 0 14px; }
+            .legal-content h3 { font-size: 0.98rem; }
+            .cookie-grid { grid-template-columns: 1fr; }
+            .rights-grid { grid-template-columns: 1fr; }
+            .legal-contact-item:hover { transform: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand { display: flex; flex-direction: column; align-items: center; }
+            .social-links { justify-content: center; }
+            .footer-tagline { margin: 16px auto 24px; }
+            .legal-updated { font-size: 0.75rem; padding: 6px 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* --- Theme Toggle Button Styling --- */
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--fg);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent);
+            background: var(--bg-alt);
+            color: var(--accent-dark);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Toggle visibility of icons depending on active theme */
+        [data-theme="dark"] .sun-icon { display: block; }
+        [data-theme="dark"] .moon-icon { display: none; }
+        html:not([data-theme="dark"]) .sun-icon { display: none; }
+        html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+        /* --- Dark Mode Color Overrides --- */
+        [data-theme="dark"] {
+            --bg: #0B0F19;
+            --bg-alt: #1E293B;
+            --surface: #111827;
+            --fg: #F1F5F9;
+            --fg-light: #94A3B8;
+            --accent-soft: rgba(45, 212, 191, 0.15);
+            --border: #1F2937;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Ensure smooth background transition changes globally */
+        html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Overriding hardcoded light colors for dark theme consistency */
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4 {
+            color: #F8FAFC !important;
+        }
+
+        [data-theme="dark"] .header {
+            background: rgba(17, 24, 39, 0.8) !important;
+        }
+
+        [data-theme="dark"] .header.scrolled {
+            background: rgba(11, 15, 25, 0.95) !important;
+        }
+
+        [data-theme="dark"] .features,
+        [data-theme="dark"] .products {
+            background: #0F172A !important;
+        }
+
+        /* Adjust mobile layout styling for dark mode */
+        @media (max-width: 768px) {
+            [data-theme="dark"] .nav {
+                background: var(--surface) !important;
+            }
+            .theme-toggle-btn {
+                margin-right: 4px;
+            }
+        }
+    </style>
+</head>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                let newTheme = 'light';
+                
+                if (currentTheme === 'light') {
+                    newTheme = 'dark';
+                }
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        }
+    });
+</script>
+<body>
+
+    <header id="header" class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../logo.webp" alt="MelexTech Logo">
+                </div>
+                <span class="logo-text">MELEX IT</span>
+            </a>
+
+            <nav id="nav" class="nav">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../about.html" class="nav-link">About</a>
+                <a href="../services.html" class="nav-link">Services</a>
+                <a href="../guide" class="nav-link">Guides</a>
+                <a href="terms.html" class="nav-link">Terms</a>
+            </nav>
+
+            <div class="header-actions">
+                <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <a href="../contact.html" class="btn btn-primary">
+                    <span>Get Help</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <div class="hero-grid-dots"></div>
+            <div class="container">
+                <div class="hero-content-center animate-fade-up">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        Legal Document
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span>Privacy Policy</span>
+                    </div>
+                    <h1 class="about-hero-title">Privacy <span class="text-gradient">Policy</span></h1>
+                    <p class="about-hero-desc">How we collect, use, and protect your personal information when you use our services.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="hero-fade"></div>
+
+        <section class="legal-section">
+            <div class="container">
+                <div class="legal-layout">
+
+                    <aside class="legal-toc animate-fade-up">
+                        <div class="toc-label">On This Page</div>
+                        <ul class="toc-list">
+                            <li><a href="#intro" class="active">Introduction</a></li>
+                            <li><a href="#info-collect">Information We Collect</a></li>
+                            <li><a href="#how-use">How Information Is Used</a></li>
+                            <li><a href="#cookies">Cookies</a></li>
+                            <li><a href="#advertising">Future Advertising</a></li>
+                            <li><a href="#affiliate">Affiliate Links</a></li>
+                            <li><a href="#ai-content">AI-Assisted Content</a></li>
+                            <li><a href="#third-party">Third-Party Services</a></li>
+                            <li><a href="#security">Data Security</a></li>
+                            <li><a href="#rights">Your Rights</a></li>
+                            <li><a href="#children">Children's Privacy</a></li>
+                            <li><a href="#changes">Changes to This Policy</a></li>
+                            <li><a href="#contact">Contact Information</a></li>
+                        </ul>
+                    </aside>
+
+                    <div class="legal-content animate-fade-up" style="transition-delay: 100ms;">
+                        <div class="legal-updated">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            Last updated: June 5, 2026
+                        </div>
+
+                        <h2 id="intro">Introduction</h2>
+                        <p>This website is operated by MelexTech, an independent educational technology website and online platform. This Privacy Policy explains how we collect, use, and protect information when you visit melextech.dev (the "Website").</p>
+                        <p>By using this Website, you agree to the collection and use of information as described in this policy. If you do not agree with the terms of this Privacy Policy, please do not use the Website.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="info-collect">Information We Collect</h2>
+                        <p>The only personal information we collect is what you voluntarily provide through our Contact page:</p>
+                        <ul>
+                            <li>Name</li>
+                            <li>Email address</li>
+                            <li>Message content</li>
+                        </ul>
+                        <p>We do not require accounts, login systems, passwords, or user profiles. We do not collect comments or additional personal information beyond what is listed above.</p>
+                        
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                About Our Tools
+                            </div>
+                            <p>Our SaaS tools (unit converters, password strength checker, regex learning tools, and other educational browser tools) run entirely in your browser. They do not transmit your input to any server.</p>
+                        </div>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="how-use">How Information Is Used</h2>
+                        <p>We use the information collected through the Contact page solely to respond to your inquiries. We do not use your information for marketing, newsletters, or any other purpose without your explicit consent.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="cookies">Cookies</h2>
+                        <p>Currently, this Website uses minimal cookies necessary for basic functionality. If we implement Google AdSense in the future, Google may use cookies to serve ads based on your prior visits to this or other websites.</p>
+                        
+                        <div class="cookie-grid">
+                            <div class="cookie-item">
+                                <div class="cookie-icon essential">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="cookie-text">
+                                    <strong>Essential Cookies</strong>
+                                    <span>Required for basic website functionality</span>
+                                </div>
+                            </div>
+                            <div class="cookie-item">
+                                <div class="cookie-icon ads">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                </div>
+                                <div class="cookie-text">
+                                    <strong>Advertising Cookies</strong>
+                                    <span>May be used in the future if Google AdSense is enabled</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="advertising">Future Advertising</h2>
+                        <p>We plan to use Google AdSense to display advertisements on this Website. If Google AdSense is enabled, Google may use cookies and similar technologies to serve ads based on your browsing history.</p>
+                        <p>You can control ad personalization through <a href="https://www.google.com/settings/ads" rel="noopener noreferrer" target="_blank">Google's Ad Settings</a>. You can also opt out of personalized advertising by visiting <a href="https://www.google.com/tools/feedback/ads/" rel="noopener noreferrer" target="_blank">Google's Ads Preferences Manager</a>.</p>
+                        <p>For more information about how Google uses data, please review <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">Google's Privacy Policy</a>.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="affiliate">Affiliate Links</h2>
+                        <p>This Website may include affiliate links for hosting providers and similar technology services. If you click on these links and make a purchase, we may receive a commission at no additional cost to you. We only include affiliate links for products and services we believe provide value to our readers.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="ai-content">AI-Assisted Content</h2>
+                        <p>Some articles on this Website may be created or assisted using artificial intelligence. All content, including AI-assisted content, is reviewed and edited by our team before publication to ensure accuracy and quality.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="third-party">Third-Party Services</h2>
+                        <p>This Website uses the following third-party services:</p>
+                        <ul>
+                            <li><strong>Netlify:</strong> For website hosting</li>
+                            <li><strong>Web3Forms:</strong> For contact form submission processing</li>
+                        </ul>
+                        <p>These services may collect information as described in their respective privacy policies. We encourage you to review their privacy policies to understand how they handle your information.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="security">Data Security</h2>
+                        <p>We implement reasonable security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security of your information.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="rights">Your Rights</h2>
+                        <p>Depending on your jurisdiction, you may have certain rights regarding your personal data, including:</p>
+
+                        <div class="rights-grid">
+                            <div class="right-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span>Right to Access</span>
+                            </div>
+                            <div class="right-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <span>Right to Rectify</span>
+                            </div>
+                            <div class="right-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                <span>Right to Erasure</span>
+                            </div>
+                            <div class="right-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                <span>Right to Object</span>
+                            </div>
+                        </div>
+
+                        <p>To exercise any of these rights regarding your personal information, please contact us using the information provided below.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="children">Children's Privacy</h2>
+                        <p>This Website is intended for users aged 14 and above. It is not directed toward children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us so we can take appropriate action to remove such information.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="changes">Changes to This Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. Your continued use of the Website after any changes constitutes your acceptance of the updated Policy.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="contact">Contact Information</h2>
+                        <p>If you have any questions about this Privacy Policy or how we handle your information, please reach out to us:</p>
+
+                        <div class="legal-contact-row">
+                            <div class="legal-contact-item">
+                                <div class="legal-contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                </div>
+                                <span>contact@melextech.dev</span>
+                            </div>
+                            <div class="legal-contact-item">
+                                <div class="legal-contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                </div>
+                                <a href="../contact.html">melextech.dev/contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <div class="logo-icon">
+                            <img src="../logo.webp" alt="MelexTech Logo">
+                        </div>
+                        <span class="logo-text" style="color:#fff;">MELEXTECH</span>
+                    </a>
+                    <p class="footer-tagline">Precise knowledge for the modern digital era.</p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/@MELEXTECH" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+
+                        <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                        </a>
+                        
+                        <a href="https://www.instagram.com/MELEXTECH" class="social-link" aria-label="Instagram" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Solutions</h4>
+                    <ul>
+                        <li><a href="../guide?search=Android">Android</a></li>
+                        <li><a href="../guide?search=Programming">Programming</a></li>
+                        <li><a href="../guide?search=Linux">Linux</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul>
+                        <li><a href="../guide">Guides</a></li>
+                        <li><a href="../services.html">Services</a></li>
+                        <li><a href="../product">Products</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 MelexTech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"></path></svg>
+    </button>
+
+    <script>
+        var header = document.getElementById('header');
+        var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        var nav = document.getElementById('nav');
+        var backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        mobileMenuBtn.addEventListener('click', function() {
+            var isActive = nav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', isActive);
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+
+        var navLinks = nav.querySelectorAll('.nav-link');
+        for (var i = 0; i < navLinks.length; i++) {
+            navLinks[i].addEventListener('click', function() {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        var tocLinks = document.querySelectorAll('.toc-list a');
+        var sections = [];
+
+        for (var k = 0; k < tocLinks.length; k++) {
+            var id = tocLinks[k].getAttribute('href').substring(1);
+            var section = document.getElementById(id);
+            if (section) {
+                sections.push({ link: tocLinks[k], section: section });
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            
+            for (var j = sections.length - 1; j >= 0; j--) {
+                var sectionTop = sections[j].section.offsetTop - 120;
+                if (scrollPos >= sectionTop) {
+                    for (var m = 0; m < tocLinks.length; m++) {
+                        tocLinks[m].classList.remove('active');
+                    }
+                    sections[j].link.classList.add('active');
+                    break;
+                }
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>

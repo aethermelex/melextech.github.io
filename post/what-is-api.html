@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is API? The Middleman Explained — Melex InfoTech</title>
+    <meta name="description" content="Confused by the term API? We explain Application Programming Interfaces using the classic 'Restaurant & Waiter' analogy to help you understand how software communicates.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/what-is-api">
+    <meta name="author" content="Melalew Mengistu">
+    <meta name="keywords" content="What is API, Application Programming Interface, REST API, JSON, How APIs Work, Web Development">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What is API? The Middleman Explained">
+    <meta property="og:description" content="Confused by the term API? We explain Application Programming Interfaces using the classic 'Restaurant & Waiter' analogy.">
+    <meta property="og:url" content="https://melextech.dev/post/what-is-api">
+    <meta property="og:image" content="https://melextech.dev/guide/img/what-is-an-api.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Melex InfoTech">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Tech Education">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="API">
+    <meta property="article:tag" content="Coding Basics">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What is API? The Middleman Explained">
+    <meta name="twitter:description" content="Confused by the term API? We explain Application Programming Interfaces using the classic 'Restaurant & Waiter' analogy.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/what-is-an-api.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "What is API? The Middleman Explained",
+        "description": "Confused by the term API? We explain Application Programming Interfaces using the classic 'Restaurant & Waiter' analogy.",
+        "image": "https://melextech.dev/guide/img/what-is-an-api.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Melex InfoTech",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/what-is-api"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is an API a software or a hardware?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "An API is software. It is a set of rules and code that allows different applications to communicate with each other. It is not a physical device."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the most common type of API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "REST (Representational State Transfer) is the most common architectural style for web APIs. It uses standard HTTP methods like GET, POST, PUT, and DELETE."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to code to use an API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "To use an API in your own app, you generally need to know how to code (usually JavaScript or Python). However, many no-code tools allow you to connect APIs without writing raw code."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between API and REST API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "API is a general term for any interface that allows software to communicate. REST API is a specific style of API that follows REST principles — using HTTP methods, stateless requests, and standard formats like JSON. All REST APIs are APIs, but not all APIs are REST."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does JSON mean in the context of APIs?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "JSON (JavaScript Object Notation) is the most common data format APIs use to send and receive information. It organizes data as key-value pairs, making it easy for both humans to read and machines to parse."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "What is API?", "item": "https://melextech.dev/post/what-is-api"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#F0FDFA;--accent-border:#CCFBF1;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,#14B8A6,var(--accent));z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{
+    background:var(--story-warm);
+    border:1px solid var(--story-warm-border);
+    border-radius:var(--radius);
+    padding:28px 28px 24px;
+    margin-bottom:36px;
+    position:relative;
+    overflow:hidden;
+}
+.story-opener::before{
+    content:'\201C';
+    position:absolute;
+    top:-8px;left:16px;
+    font-size:5rem;
+    font-family:Georgia,serif;
+    color:var(--story-warm-accent);
+    opacity:.15;
+    line-height:1;
+}
+.story-opener p{
+    font-size:.92rem;
+    color:#5C4A3A;
+    line-height:1.85;
+    margin-bottom:12px;
+    position:relative;
+}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{
+    background:var(--info);
+    border:1px solid #BFDBFE;
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin-bottom:36px;
+}
+.explain-block .explain-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--info-border);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{
+    font-size:.88rem;
+    color:var(--info-text);
+    line-height:1.85;
+    margin-bottom:10px;
+}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.quick-summary{background:linear-gradient(135deg,#F0FDFA,#ECFDF5);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){
+    .toc-card#tocInline{display:none}
+    .toc-card.sidebar-toc{display:block}
+}
+@media(max-width:900px){
+    .toc-card#tocInline{display:block}
+    .toc-card.sidebar-toc{display:none!important}
+}
+
+.fix-block{
+    margin-bottom:40px;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--border);
+}
+.fix-block:last-of-type{
+    border-bottom:none;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+.fix-header{
+    margin-bottom:6px;
+}
+.fix-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:3px 10px;
+    border-radius:100px;
+    font-size:.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:10px;
+}
+.fix-tag.start{
+    background:var(--accent-soft);
+    color:var(--accent);
+    border:1px solid var(--accent-border);
+}
+.fix-tag.deeper{
+    background:#FEF3C7;
+    color:#B45309;
+    border:1px solid #FDE68A;
+}
+.fix-tag.deepest{
+    background:#FEE2E2;
+    color:#B91C1C;
+    border:1px solid #FECACA;
+}
+.fix-header h2{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1.15rem;
+    font-weight:700;
+    color:var(--dark);
+    letter-spacing:-.02em;
+    line-height:1.35;
+    margin:0;
+    padding:0;
+    border:none;
+}
+.fix-reason{
+    font-size:.86rem;
+    color:var(--fg-light);
+    line-height:1.75;
+    margin:10px 0 0;
+}
+
+.effect-note{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 16px;
+    border-radius:var(--radius-sm);
+    margin:16px 0;
+    font-size:.82rem;
+    line-height:1.7;
+}
+.effect-note.neutral{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--fg-sub);
+}
+.effect-note.caution{
+    background:var(--warn);
+    border-left:3px solid var(--warn-border);
+    color:var(--warn-text);
+}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{
+    background:var(--tip);
+    border-left:3px solid var(--tip-border);
+    color:var(--tip-text);
+}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+    margin-top:2px;
+}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.steps{margin-bottom:0}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+
+.aff-card{display:flex;gap:16px;padding:18px;border:1px solid var(--border);border-radius:var(--radius);transition:all .2s;background:var(--surface);position:relative}
+.aff-card:hover{border-color:var(--border-2);box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateY(-1px)}
+.aff-thumb{width:80px;height:80px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--border);overflow:hidden;flex-shrink:0}
+.aff-thumb img{width:100%;height:100%;object-fit:cover}
+.aff-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.aff-body h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);line-height:1.3}
+.aff-rating{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--fg-muted)}
+.aff-rating .stars{color:#F59E0B;letter-spacing:1px;font-size:.7rem}
+.aff-body p{font-size:.78rem;color:var(--fg-light);margin:0;line-height:1.5}
+.aff-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.aff-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--dark)}
+.aff-price .old{font-size:.78rem;font-weight:400;color:var(--fg-muted);text-decoration:line-through;margin-left:6px}
+.aff-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;font-size:.78rem;font-weight:600;background:var(--dark);color:#fff;border-radius:var(--radius-xs);transition:background .15s}
+.aff-btn:hover{background:#1E293B}
+.aff-btn svg{width:12px;height:12px}
+.aff-badge{position:absolute;top:12px;right:12px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:100px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border)}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em; width: 100px}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.ad-space{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:80px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;min-height:260px;display:flex;align-items:center;justify-content:center}
+
+.promo-card.aff{background:var(--surface);border-color:var(--border);border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card.aff:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn.secondary{background:var(--surface);border:1px solid var(--border-2);color:var(--fg-sub)}
+.mobile-cta .cta-btn.secondary:hover{background:var(--surface-2)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .ad-space{display:none}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .aff-card{flex-direction:column;align-items:flex-start}
+    .aff-thumb{width:100%;height:120px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+    .mobile-cta{gap:8px;padding:8px 14px}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="#" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>What is API?</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">TECH CONCEPTS SIMPLIFIED</p>
+                <h1 itemprop="headline">What Is an API? A Direct Explanation Without the Jargon</h1>
+                <p class="problem" itemprop="description">API stands for Application Programming Interface. Strip away the acronyms and it means: a defined way for one piece of software to ask another piece of software for something, and get a structured answer back.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>Last week, a non-technical founder asked me why their mobile app couldn't "just read" the customer data from their WordPress site. The data was right there on the page. Why did they need to pay a developer to build an API?</p>
+                <p>The answer: because a browser renders HTML for humans, but an app needs structured data it can parse programmatically. That's the specific problem APIs solve they serve data in a format machines can process, not just display.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The Core Idea
+                </div>
+                <p>Most software doesn't live in isolation. Your phone's weather app doesn't generate weather data it requests it from a remote server. That server doesn't send a web page with formatting, fonts, and images. It sends <strong>raw data</strong> in a structured format (usually JSON), and your app decides how to display it.</p>
+                <p>The API is the contract between these two systems. It defines: what data you can ask for, how you ask for it, what format the answer comes in, and what happens when something goes wrong.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>API:</strong> A defined set of rules that lets software systems communicate.</li>
+                    <li><strong>Request:</strong> One system asks for data or an action.</li>
+                    <li><strong>Response:</strong> The other system returns structured data (usually JSON).</li>
+                    <li><strong>Endpoint:</strong> The specific URL where a request is sent.</li>
+                </ul>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">How a Request Actually Works</a>
+                    <a href="#fix-2" class="toc-link">What Comes Back: Responses and JSON</a>
+                    <a href="#fix-3" class="toc-link">HTTP Methods: The Vocabulary of APIs</a>
+                    <a href="#fix-4" class="toc-link">Authentication: Proving You Belong</a>
+                    <a href="#fix-5" class="toc-link">Real APIs You Use Every Day</a>
+                    <a href="#fix-6" class="toc-link">Types of APIs Beyond REST</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div itemprop="articleBody">
+
+                <div class="fix-block" id="fix-1">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Mechanics</span>
+                        <h2>How a Request Actually Works</h2>
+                    </div>
+                    <p class="fix-reason">Every API interaction follows the same pattern: a client sends a request to a server, the server processes it, and returns a response. The details of what happens in between depend on the API's design.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>The Client Makes a Request</h3>
+                            </div>
+                            <p>When you open a weather app, the app sends an HTTP request to a URL like <code>https://api.weather.com/v1/forecast?city=London</code>. This URL is called an <strong>endpoint</strong>. The path (<code>/v1/forecast</code>) tells the server which data you want, and the query parameter (<code>city=London</code>) provides specifics.</p>
+                            <p>The request also includes an HTTP method (usually GET for retrieving data), headers with metadata like content type and authentication, and sometimes a body with additional data.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>The Server Processes It</h3>
+                            </div>
+                            <p>The receiving server parses the request, checks if the client has permission, validates the input, queries the database or runs the necessary logic, and constructs a response. If anything goes wrong bad input, missing permissions, server error it returns an error code instead of data.</p>
+                            <p>This processing typically takes 50-500 milliseconds for well-designed APIs. If it takes longer, the API is either doing heavy computation or something is poorly optimized.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>The Response Arrives</h3>
+                            </div>
+                            <p>The server sends back an HTTP status code (200 for success, 404 for not found, 500 for server error) along with the data. For web APIs, this data is almost always JSON a lightweight format that organizes information as key-value pairs.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout info">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Why not just scrape the website?</strong> You could parse HTML from a web page, but HTML is designed for visual layout it changes when the site redesigns, includes navigation and ads you don't need, and is harder to parse reliably. APIs give you exactly the data you need, in a consistent format, without the extra noise.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-2">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Data Format</span>
+                        <h2>What Comes Back: Responses and JSON</h2>
+                    </div>
+                    <p class="fix-reason">JSON (JavaScript Object Notation) became the default format for web APIs because it's readable by humans, parseable by every programming language, and lighter than XML the format it largely replaced.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>What JSON Looks Like</h3>
+                            </div>
+                            <p>A weather API might return something like this: <code>{"city": "London", "temp_c": 18, "condition": "Partly Cloudy", "humidity": 65}</code>. Each piece of data has a key (like <code>"temp_c"</code>) and a value (like <code>18</code>). Your app reads the keys it needs and ignores the rest.</p>
+                            <p>Real API responses are usually more complex nested objects, arrays of items, pagination metadata. But the structure is always the same: keys and values, organized hierarchically.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Status Codes Tell You What Happened</h3>
+                            </div>
+                            <p>Every API response includes an HTTP status code. The ones you'll see most often: <strong>200</strong> (success), <strong>201</strong> (created something new was saved), <strong>400</strong> (bad request you sent invalid data), <strong>401</strong> (unauthorized missing or wrong credentials), <strong>404</strong> (not found the endpoint or resource doesn't exist), and <strong>500</strong> (server error something broke on their end).</p>
+                            <p>Well-designed APIs also return error details in the response body, not just the status code. A 400 error might include a message like <code>{"error": "city is required"}</code> so you know exactly what to fix.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Common mistake:</strong> Writing code that only handles the success case. In production, APIs fail regularly rate limits get hit, servers go down, network requests time out. Always handle error responses and implement timeouts (usually 5-10 seconds for a single request). Code that assumes a 200 response will eventually break.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-3">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Vocabulary</span>
+                        <h2>HTTP Methods: The Vocabulary of APIs</h2>
+                    </div>
+                    <p class="fix-reason">When you send a request, you specify an HTTP method that tells the server what you want to do. Most web APIs rely on four methods.</p>
+
+                    <section class="comparison">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Purpose</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>GET</strong></td>
+                                        <td>Read data</td>
+                                        <td><code>GET /users/42</code> — fetch user #42's profile</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>POST</strong></td>
+                                        <td>Create something new</td>
+                                        <td><code>POST /users</code> — create a new user</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PUT</strong></td>
+                                        <td>Replace existing data</td>
+                                        <td><code>PUT /users/42</code> — update all of user #42's info</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>DELETE</strong></td>
+                                        <td>Remove data</td>
+                                        <td><code>DELETE /users/42</code> — delete user #42</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <p>There's also <strong>PATCH</strong>, which updates part of a resource (unlike PUT, which replaces the whole thing). Most modern APIs use PATCH for updates because sending the entire object just to change one field is wasteful.</p>
+
+                    <div class="effect-note neutral">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span><strong>Rule of thumb:</strong> GET requests should never change data on the server. If calling the same endpoint twice produces different results on the server, it shouldn't be a GET. This matters for caching, browser behavior, and idempotency a concept that becomes important when you start building APIs yourself.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-4">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Security</span>
+                        <h2>Authentication: Proving You Belong</h2>
+                    </div>
+                    <p class="fix-reason">Most APIs aren't public. They require some form of authentication to verify that the calling application has permission to access the data.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>API Keys</h3>
+                            </div>
+                            <p>The simplest form. You sign up, get a unique string (like <code>sk_live_abc123...</code>), and include it in every request, usually in the header. The server checks the key against its database. If it's valid, the request proceeds.</p>
+                            <p>API keys are easy to implement but have limitations they can't easily distinguish between different users of your app, they're hard to revoke without breaking all requests, and if they leak (committed to GitHub, for example), anyone can use them.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>OAuth 2.0 and Bearer Tokens</h3>
+                            </div>
+                            <p>More sophisticated. The user logs in through a provider (like "Sign in with Google"), and your app receives a temporary token. That token goes in the request header as <code>Authorization: Bearer &lt;token&gt;</code>. Tokens expire after a set time, limiting the damage if one is stolen.</p>
+                            <p>Most serious APIs use OAuth. If you've ever connected an app to your Google account or Slack workspace, you've gone through an OAuth flow. The API never sees your password it just gets a token that says "this user granted this app permission to read their data."</p>
+                        </div>
+                    </div>
+
+                    <div class="callout danger">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Never put API keys in frontend code.</strong> Anything in your JavaScript, HTML, or mobile app binary can be extracted by anyone. API keys that appear in client-side code should be restricted to non-sensitive operations (like public read access). For anything that costs money or accesses private data, authenticate through a backend server that holds the credentials securely.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-5">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Examples</span>
+                        <h2>Real APIs You Use Every Day</h2>
+                    </div>
+                    <p class="fix-reason">APIs aren't abstract they're running constantly behind the scenes of practically every app you interact with.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Payment Processing</h3>
+                            </div>
+                            <p>When you buy something online, the checkout page sends your card details (through a secure token, not raw numbers) to the Stripe or PayPal API. The API validates the card, processes the charge, and returns a success or failure response. The e-commerce site never directly handles the payment logic it just sends a request and reacts to the response.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Maps and Location</h3>
+                            </div>
+                            <p>Google Maps, ride-hailing apps, and food delivery apps all use mapping APIs. When Uber shows you nearby drivers, your app sends your GPS coordinates to Uber's API, which returns a list of drivers with their locations, names, and ratings. The app then plots them on a map. Without the API, the app would have no way to know where drivers are.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Social Media Integrations</h3>
+                            </div>
+                            <p>When you see a Twitter feed embedded in a news article, that's Twitter's API at work. The news site requests the tweet data, and Twitter returns the text, images, like count, and metadata. The news site formats it however it wants. If Twitter changes its design, the embedded tweet still works because the API response format stays consistent.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>No-Code Tools</h3>
+                            </div>
+                            <p>Tools like Zapier, Make, and n8n are essentially API orchestration platforms. When you set up a rule like "when a new row is added to Google Sheets, send a Slack message," Zapier is calling the Google Sheets API to detect changes and the Slack API to post the message. You never see the requests, but that's what's happening underneath.</p>
+                        </div>
+                    </div>
+
+                    <div class="effect-note good">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span><strong>Why this matters:</strong> If you understand what APIs do, you can connect almost any two services together. That's the skill that turns someone from "I use apps" into "I can build automated workflows." It's one of the highest-leverage concepts in tech.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-6">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Broader View</span>
+                        <h2>Types of APIs Beyond REST</h2>
+                    </div>
+                    <p class="fix-reason">REST is the most common style you'll encounter, but it's not the only option. Understanding the alternatives helps when you encounter them in documentation or job requirements.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>REST APIs</h3>
+                            </div>
+                            <p>Uses standard HTTP methods and URLs. Each URL represents a resource (like <code>/users/42</code>). Stateless each request contains everything the server needs. Simple, widely supported, and works well for most web and mobile applications. This is what 80%+ of public web APIs use.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>GraphQL</h3>
+                            </div>
+                            <p>Created by Meta. Instead of multiple endpoints for different data, you send a single query that specifies exactly which fields you want. One request can fetch a user, their posts, and their followers instead of making three separate API calls. Used by GitHub, Shopify, and many modern platforms. The trade-off: more complex to set up on the server side, and caching is harder than with REST.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>WebSocket APIs</h3>
+                            </div>
+                            <p>Regular APIs follow a request-response pattern: you ask, they answer. WebSockets keep a persistent connection open, allowing the server to push data to the client without being asked. Used for chat applications, live sports scores, stock tickers, and multiplayer games anything that needs real-time updates.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>Webhook APIs</h3>
+                            </div>
+                            <p>Reverse direction instead of you calling the API, the API calls you. You give a service a URL, and when something happens (a payment succeeds, a form is submitted), they send an HTTP request to your URL with the event data. Used by Stripe, GitHub, and Slack for event notifications.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Learning path:</strong> If you're just starting, learn REST first. It teaches you the fundamentals HTTP methods, status codes, JSON, authentication that apply to all other types. Move to GraphQL or WebSockets once you're comfortable with REST and have a specific use case that justifies them.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="faq" class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Is an API a software or a hardware?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>An API is software specifically, a set of defined rules and code that allows two applications to communicate. It has no physical component. You can't touch an API, but you interact with it every time an app fetches data from the internet.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What is the most common type of API?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>REST (Representational State Transfer) is by far the most common. It uses standard HTTP methods (GET, POST, PUT, DELETE), works over URLs, and returns JSON. If you read API documentation from a random company, it's almost certainly REST. The main alternatives GraphQL and gRPC are growing but still less common.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Do I need to code to use an API?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>To use an API directly in your own application, yes you'll typically write code in JavaScript, Python, or another language to make HTTP requests and parse the response. However, no-code tools like Zapier, Make, and Bubble let you connect to APIs through visual interfaces. You're still using the API; the tool just writes the code for you.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What is the difference between API and REST API?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>API is the general concept any defined way for software to communicate. REST API is a specific style that follows REST principles: stateless requests, standard HTTP methods, URL-based resources, and usually JSON responses. All REST APIs are APIs, but not all APIs are REST. For example, a SOAP API is an API that uses XML instead of JSON and has a different set of rules.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What does JSON mean in the context of APIs?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>JSON (JavaScript Object Notation) is the data format most web APIs use to send and receive information. It organizes data as key-value pairs in curly braces, like <code>{"name": "Ada", "age": 30}</code>. It's popular because it's lightweight (less text than XML), readable by humans, and natively supported by every modern programming language.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Can an API work offline?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>Web APIs that communicate over HTTP require an internet connection. However, some systems use local APIs — for example, your operating system has APIs that let applications access the camera, file system, or Bluetooth hardware. These work offline because the "server" is your own device. The term "API" applies to both remote (internet-based) and local (on-device) interfaces.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href)+'&text='+encodeURIComponent(document.title),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </button>
+                <button class="share-btn copy" aria-label="Copy link" id="copyLinkBtn">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar">
+                    <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                </div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <nav class="similar" aria-label="Related articles">
+                <h2>Continue Reading</h2>
+                <ul>
+                    <li>
+                        <a href="rest-api-design.html">
+                            <span>REST API Design: How to Structure Endpoints That Don't Suck</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="test-api-without-code.html">
+                            <span>How to Test Any API Without Writing Code</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="frontend-vs-backend.html">
+                            <span>Frontend vs Backend</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="help">
+                <h2>Still Confused About APIs?</h2>
+                <p>Ask the community anything we'll explain it in plain language.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Our Community
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">How a Request Actually Works</a>
+                    <a href="#fix-2" class="toc-link">Responses and JSON</a>
+                    <a href="#fix-3" class="toc-link">HTTP Methods</a>
+                    <a href="#fix-4" class="toc-link">Authentication</a>
+                    <a href="#fix-5" class="toc-link">Real APIs You Use Daily</a>
+                    <a href="#fix-6" class="toc-link">Types Beyond REST</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="ad-space" aria-hidden="true">Advertisement</div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        View Course
+    </a>
+    <a href="https://t.me/melexit" class="cta-btn secondary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Ask Us
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var sp=document.getElementById('scrollProgress');
+    var stp=document.getElementById('scrollToTop');
+    var mcb=document.getElementById('mobileMenuBtn');
+    var mn=document.getElementById('mobileNav');
+    var mcta=document.getElementById('mobileCta');
+    var clb=document.getElementById('copyLinkBtn');
+
+    window.addEventListener('scroll',function(){
+        var s=document.documentElement.scrollTop;
+        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        if(h>0){sp.style.width=(s/h*100)+'%';}
+        if(s>400){stp.classList.add('vis');}else{stp.classList.remove('vis');}
+        if(s>1200){mcta.classList.add('vis');}else{mcta.classList.remove('vis');}
+    },{passive:true});
+
+    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+    mcb.addEventListener('click',function(){
+        var open=mn.classList.toggle('open');
+        mcb.classList.toggle('active');
+        mcb.setAttribute('aria-expanded',open);
+        mn.setAttribute('aria-hidden',!open);
+        document.body.style.overflow=open?'hidden':'';
+    });
+
+    document.querySelectorAll('.faq-q').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            var item=this.parentElement;
+            var wasOpen=item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(function(i){
+                i.classList.remove('open');
+                i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                i.querySelector('.faq-a').setAttribute('aria-hidden','true');
+                i.querySelector('.faq-a').style.maxHeight=null;
+            });
+            if(!wasOpen){
+                item.classList.add('open');
+                this.setAttribute('aria-expanded','true');
+                var a=item.querySelector('.faq-a');
+                a.setAttribute('aria-hidden','false');
+                a.style.maxHeight=a.scrollHeight+'px';
+            }
+        });
+    });
+
+    var tocLinks=document.querySelectorAll('.toc-link');
+    var sections=[];
+    tocLinks.forEach(function(l){
+        var id=l.getAttribute('href').slice(1);
+        var el=document.getElementById(id);
+        if(el)sections.push({link:l,el:el});
+    });
+
+    function updateToc(){
+        var st=window.scrollY;
+        var active=null;
+        for(var i=sections.length-1;i>=0;i--){
+            if(sections[i].el.getBoundingClientRect().top<=120){active=sections[i];break;}
+        }
+        tocLinks.forEach(function(l){l.classList.remove('active');});
+        if(active)active.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+
+    if (clb) {
+    clb.addEventListener("click", async function () {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(window.location.href);
+            } else {
+                // Fallback for older browsers
+                const input = document.createElement("input");
+                input.value = window.location.href;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand("copy");
+                document.body.removeChild(input);
+            }
+
+            clb.textContent = "COPIED";
+            clb.classList.add("copied");
+
+            setTimeout(() => {
+                clb.textContent = "COPY LINK";
+                clb.classList.remove("copied");
+            }, 2000);
+
+        } catch (err) {
+            console.error("Copy failed:", err);
+            alert("Unable to copy the link.");
+        }
+    });
+}
+})();
+</script>
+
+</body>
+</html>

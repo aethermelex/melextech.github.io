@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELEX IT — Career Assessment</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['Outfit','sans-serif'],body:['DM Sans','sans-serif']}}}}
+</script>
+<style>
+:root{--bg:#0C0C0E;--bg2:#16161A;--card:#1C1C21;--card-hover:#222228;--fg:#F5F5F4;--fg2:#A8A29E;--muted:#6B6B6B;--accent:#14B8A6;--accent-h:#0D9488;--accent-light:rgba(20,184,166,0.12);--accent-glow:rgba(20,184,166,0.1);--warm:#F59E0B;--warm-light:rgba(245,158,11,0.1);--border:#2A2A30;--shadow:0 1px 3px rgba(0,0,0,0.3);--shadow-lg:0 10px 40px rgba(0,0,0,0.4);--radius:16px;--radius-sm:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4,h5,h6{font-family:'Outfit',sans-serif}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;animation:fadeIn .5s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.animate-slide-up{animation:slideUp .6s ease both}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}
+.bg-blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;z-index:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);transition:all .25s ease}
+.card:hover{box-shadow:var(--shadow-lg)}
+.btn-primary{background:var(--accent);color:#fff;border:none;padding:14px 32px;border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--accent-h);transform:translateY(-1px);box-shadow:0 4px 20px var(--accent-glow)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-secondary{background:var(--bg2);color:var(--fg);border:1px solid var(--border);padding:14px 32px;border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:8px}
+.btn-secondary:hover{background:var(--border)}
+.btn-secondary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:40px;border:1.5px solid var(--border);background:var(--card);color:var(--fg2);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s ease;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.chip.selected{border-color:var(--accent);background:var(--accent);color:#fff}
+.chip.selected:hover{background:var(--accent-h)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.option-card{padding:18px 22px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .25s ease;display:flex;align-items:center;gap:14px}
+.option-card:hover{border-color:var(--accent);background:var(--accent-light)}
+.option-card.selected{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 1px var(--accent)}
+.option-card .icon-wrap{width:42px;height:42px;border-radius:10px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--fg2);transition:all .25s ease;flex-shrink:0}
+.option-card.selected .icon-wrap{background:var(--accent);color:#fff}
+.option-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type="text"],input[type="number"],textarea,select{width:100%;padding:14px 18px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--card);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.4;transition:all .2s ease;outline:none;appearance:none;-webkit-appearance:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+textarea{resize:vertical;min-height:110px}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236B7280' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6.5 6.5 6.5-6.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+.slider-container{position:relative;width:100%;padding:8px 0;touch-action:none}
+.slider-track{position:relative;height:8px;border-radius:4px;background:var(--bg2)}
+.slider-fill{position:absolute;left:0;top:0;height:100%;border-radius:4px;background:var(--accent);transition:width .05s ease}
+.slider-thumb{position:absolute;top:50%;width:24px;height:24px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.4);transform:translate(-50%,-50%);cursor:grab;transition:transform .15s ease}
+.slider-thumb:hover{transform:translate(-50%,-50%) scale(1.15)}
+.slider-thumb:active{cursor:grabbing;transform:translate(-50%,-50%) scale(1.05)}
+.slider-thumb:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.rating-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);gap:16px}
+.rating-item:last-child{border-bottom:none}
+.rating-dots{display:flex;gap:6px;flex-shrink:0}
+.rating-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--card);cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent}
+.rating-dot:hover{border-color:var(--accent);background:var(--accent-light)}
+.rating-dot.filled{border-color:var(--accent);background:var(--accent);color:#fff}
+.rating-dot:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:var(--bg2);z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--warm));transition:width .5s cubic-bezier(.4,0,.2,1);border-radius:0 2px 2px 0}
+.top-bar{position:fixed;top:3px;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:99;background:var(--bg)}
+.section-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s ease;cursor:pointer}
+.section-dot.active{background:var(--accent);width:24px;border-radius:4px}
+.section-dot.done{background:var(--accent);opacity:.5}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--fg);color:var(--bg);padding:14px 28px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;z-index:200;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.score-bar{height:8px;border-radius:4px;background:var(--bg2);overflow:hidden}
+.score-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1);width:0%}
+.lang-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;background:var(--warm-light);color:var(--warm);font-size:13px;font-weight:600}
+.toggle-wrap{width:52px;height:28px;border-radius:14px;background:var(--border);cursor:pointer;position:relative;transition:background .2s ease;flex-shrink:0}
+.toggle-wrap.on{background:var(--accent)}
+.toggle-knob{width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform .2s ease;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-wrap.on .toggle-knob{transform:translateX(24px)}
+.toggle-wrap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.prompt-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-height:400px;overflow-y:auto;font-family:'DM Sans',monospace;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;color:var(--fg2)}
+.prompt-box::-webkit-scrollbar{width:6px}
+.prompt-box::-webkit-scrollbar-track{background:transparent}
+.prompt-box::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.contradiction-card{background:var(--warm-light);border:1px solid var(--warm);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start}
+.contradiction-card i{color:var(--warm);margin-top:2px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:12px}
+.insight-card h4{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.insight-card p,.insight-card li{font-size:13px;color:var(--fg2);line-height:1.6}
+.trait-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:40px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;margin:0 6px 6px 0}
+.category-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:10px;background:var(--card)}
+.category-card .cat-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.category-card .cat-score{font-size:12px;color:var(--accent);font-weight:600}
+.category-card .cat-examples{font-size:13px;color:var(--fg2);margin-top:6px;line-height:1.5}
+@media(max-width:640px){.screen{padding:16px}.top-bar{padding:0 12px}.option-card{padding:14px 16px}.chip{padding:8px 14px;font-size:13px}.skip-label{display:none}.back-label{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="bg-blob" style="width:500px;height:500px;background:var(--accent);top:-150px;right:-100px"></div>
+<div class="bg-blob" style="width:400px;height:400px;background:var(--warm);bottom:-100px;left:-100px"></div>
+
+<div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<div class="top-bar" id="topBar" style="display:none">
+  <div style="display:flex;align-items:center;gap:12px;width:100%">
+    <button class="btn-secondary" style="padding:8px 14px;font-size:13px;flex-shrink:0" id="backBtn" aria-label="Go back">
+      <i class="fa-solid fa-arrow-left" style="font-size:12px"></i> <span class="back-label">Back</span>
+    </button>
+    <div style="flex:1;display:flex;gap:6px;align-items:center;justify-content:center;overflow:hidden" id="sectionDots"></div>
+    <button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;font-weight:500;padding:8px 12px;border-radius:8px;transition:all .2s;flex-shrink:0;white-space:nowrap" id="skipBtn" aria-label="Skip this step">
+      Skip <span class="skip-label" style="margin-left:2px"><i class="fa-solid fa-forward" style="font-size:10px"></i></span>
+    </button>
+  </div>
+</div>
+
+<!-- WELCOME -->
+<div class="screen active" id="screen-welcome">
+  <div style="max-width:560px;text-align:center;position:relative;z-index:1">
+    <div class="animate-slide-up" style="margin-bottom:32px">
+      <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:40px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;margin-bottom:28px">
+        <i class="fa-solid fa-bolt"></i> MELEX IT
+      </div>
+      <h1 style="font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px">
+        Let's find your<br><span style="color:var(--accent)">perfect career</span> path
+      </h1>
+      <p style="font-size:17px;color:var(--fg2);line-height:1.7;max-width:440px;margin:0 auto 12px">
+        This isn't a quiz. Think of it as a conversation with a career strategist who actually listens — whatever field you're drawn to.
+      </p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:8px">
+        Takes about 10-15 minutes. Everything is saved automatically.
+      </p>
+    </div>
+    <div class="animate-slide-up delay-2" style="margin-bottom:32px">
+      <div class="lang-badge" style="margin-bottom:16px;justify-content:center">
+        <i class="fa-solid fa-language"></i> You may answer in English or Amharic (አማርኛ)
+      </div>
+    </div>
+    <div class="animate-slide-up delay-3" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+      <button class="btn-primary" style="font-size:17px;padding:16px 48px" id="startBtn">
+        Begin the Conversation <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <button class="btn-secondary" style="padding:12px 24px;font-size:14px;display:none" id="resumeBtn">
+        <i class="fa-solid fa-rotate-left"></i> Continue where you left off
+      </button>
+    </div>
+    <div class="animate-slide-up delay-4" style="margin-top:40px;display:flex;justify-content:center;gap:32px;color:var(--muted);font-size:13px">
+      <span><i class="fa-solid fa-shield-halved" style="margin-right:4px"></i> Private</span>
+      <span><i class="fa-solid fa-floppy-disk" style="margin-right:4px"></i> Auto-saved</span>
+      <span><i class="fa-solid fa-globe" style="margin-right:4px"></i> Every career field</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION -->
+<div class="screen" id="screen-question">
+  <div style="max-width:620px;width:100%;position:relative;z-index:1;margin-top:40px">
+    <div id="questionContent"></div>
+    <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:28px" id="questionActions"></div>
+  </div>
+</div>
+
+<!-- ANALYSIS -->
+<div class="screen" id="screen-analysis">
+  <div style="max-width:620px;width:100%;position:relative;z-index:1;text-align:center">
+    <div style="margin-bottom:40px">
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:32px;color:var(--accent)">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </div>
+      <h2 style="font-size:28px;font-weight:700;margin-bottom:12px">Analyzing your profile</h2>
+      <p style="color:var(--fg2);font-size:15px">Building your readiness scores and crafting your personalized prompt...</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:360px;margin:0 auto" id="analysisItems"></div>
+  </div>
+</div>
+
+<!-- READINESS -->
+<div class="screen" id="screen-readiness">
+  <div style="max-width:640px;width:100%;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:36px">
+      <h2 style="font-size:28px;font-weight:700;margin-bottom:8px">Your Readiness Profile</h2>
+      <p style="color:var(--fg2);font-size:15px">Here's how prepared you are across key dimensions</p>
+    </div>
+    <div id="readinessScores" style="display:flex;flex-direction:column;gap:20px;margin-bottom:32px"></div>
+
+    <div style="margin-bottom:8px">
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:12px"><i class="fa-solid fa-dna" style="margin-right:6px;color:var(--accent)"></i>Your Career DNA</h3>
+      <p style="font-size:13px;color:var(--fg2);margin-bottom:14px">Your strongest traits, calculated from your answers — not tied to any single job title.</p>
+    </div>
+    <div id="traitScores" style="display:flex;flex-direction:column;gap:16px;margin-bottom:32px"></div>
+
+    <div id="contradictions" style="margin-bottom:16px"></div>
+    <div style="display:flex;justify-content:center">
+      <button class="btn-primary" id="generateBtn">Generate Your Prompt <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="screen-result">
+  <div style="max-width:760px;width:100%;position:relative;z-index:1;margin-top:20px">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:40px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;margin-bottom:16px">
+        <i class="fa-solid fa-check-circle"></i> Assessment Complete
+      </div>
+      <h2 style="font-size:28px;font-weight:700;margin-bottom:8px">Your Career Snapshot</h2>
+      <p style="color:var(--fg2);font-size:15px;max-width:520px;margin:0 auto">A quick summary before you dive into the full AI-generated roadmap below</p>
+    </div>
+
+    <div id="resultInsights" style="margin-bottom:32px"></div>
+
+    <div style="text-align:center;margin-bottom:16px">
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:6px">Your Personalized AI Prompt</h3>
+      <p style="color:var(--fg2);font-size:14px;max-width:500px;margin:0 auto">This prompt contains everything ChatGPT needs to give you deeply personalized career guidance</p>
+    </div>
+    <div class="prompt-box" id="promptOutput"></div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px">
+      <button class="btn-primary" style="justify-content:center;width:100%;padding:16px" id="copyBtn">
+        <i class="fa-regular fa-copy"></i> Copy AI Analysis Prompt
+      </button>
+      <button class="btn-secondary" style="justify-content:center;width:100%;padding:16px" id="chatgptBtn">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Analyze with ChatGPT
+      </button>
+      <button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:8px;text-align:center;margin:0 auto" id="restartBtn">Start Over</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- STATIC QUESTION DATA -->
+<script type="application/json" id="questionData">
+{
+  "countries": ["Afghanistan","Albania","Algeria","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahrain","Bangladesh","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"],
+  "languages": ["Amharic","Arabic","Bengali","Burmese","Chinese (Mandarin)","Chinese (Cantonese)","Dutch","English","Farsi/Persian","French","German","Greek","Gujarati","Hausa","Hindi","Indonesian","Italian","Japanese","Javanese","Korean","Kurdish","Malay","Marathi","Nepali","Oromo","Pashto","Polish","Portuguese","Punjabi","Romanian","Russian","Somali","Spanish","Swahili","Swedish","Tagalog/Filipino","Tamil","Telugu","Thai","Turkish","Ukrainian","Urdu","Vietnamese","Yoruba","Other"],
+  "sections": [
+    {
+      "id": "personal",
+      "name": "Personal",
+      "icon": "fa-user",
+      "questions": [
+        {"id":"name","type":"text","label":"What should we call you?","sub":"Optional — but it makes this feel more personal.","placeholder":"Your first name or nickname","optional":true},
+        {"id":"age","type":"number","label":"How old are you?","sub":"This helps us tailor timeline expectations.","placeholder":"e.g. 24","optional":true},
+        {"id":"gender","type":"select","label":"What's your gender?","sub":"Optional — helps us understand your context.","options":["Prefer not to say","Male","Female","Non-binary","Other"],"optional":true},
+        {"id":"country","type":"search","label":"Which country do you live in?","sub":"This affects job markets, opportunities, and recommendations.","placeholder":"Search countries...","dataSource":"countries","optional":true},
+        {"id":"city","type":"text","label":"Which city?","sub":"Optional — but helpful for local opportunities.","placeholder":"e.g. Addis Ababa","optional":true},
+        {"id":"nativeLang","type":"search","label":"What is your native language?","sub":"This helps us understand your communication strengths.","placeholder":"Search languages...","dataSource":"languages","optional":true},
+        {"id":"prefLang","type":"select","label":"Which language do you prefer for your results?","sub":"Your generated prompt will instruct ChatGPT to respond in this language.","options":["English","አማርኛ (Amharic)"]}
+      ]
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "icon": "fa-graduation-cap",
+      "questions": [
+        {"id":"eduStatus","type":"cards","label":"What best describes your education?","sub":"There's no wrong answer here — every path is valid.","options":[
+          {"v":"still-school","i":"fa-school","t":"Still in school"},{"v":"hs-student","i":"fa-book","t":"High school student"},
+          {"v":"hs-graduate","i":"fa-award","t":"High school graduate"},{"v":"college-student","i":"fa-university","t":"College/university student"},
+          {"v":"college-graduate","i":"fa-user-graduate","t":"College/university graduate"},{"v":"vocational","i":"fa-toolbox","t":"Vocational/trade training"},
+          {"v":"self-taught","i":"fa-book-open-reader","t":"Self-taught"},{"v":"no-formal","i":"fa-road","t":"No formal education"},
+          {"v":"other-edu","i":"fa-ellipsis","t":"Other"}
+        ]},
+        {"id":"eduGrade","type":"text","label":"What grade or year are you in?","sub":"Leave blank if not applicable.","placeholder":"e.g. 10th grade, 2nd year","optional":true,"showIf":{"eduStatus":["still-school","hs-student","college-student"]}},
+        {"id":"eduDegree","type":"select","label":"What degree or qualification did you pursue (or are pursuing)?","sub":"Leave blank if not applicable.","options":["","Associate","Bachelor's","Master's","PhD / Doctorate","Diploma","Professional certificate","Trade/vocational certificate","Other"],"optional":true,"showIf":{"eduStatus":["college-student","college-graduate","vocational"]}},
+        {"id":"eduField","type":"text","label":"What's your field of study?","sub":"Leave blank if not applicable. Any field — medicine, law, art, engineering, business, trades, etc.","placeholder":"e.g. Nursing, Fine Art, Accounting, Electrical Trade","optional":true,"showIf":{"eduStatus":["college-student","college-graduate","vocational"]}},
+        {"id":"eduYear","type":"text","label":"Year of graduation (or expected)?","sub":"Leave blank if not applicable.","placeholder":"e.g. 2024","optional":true,"showIf":{"eduStatus":["hs-graduate","college-graduate","vocational"]}}
+      ]
+    },
+    {
+      "id": "situation",
+      "name": "Current Situation",
+      "icon": "fa-briefcase",
+      "questions": [
+        {"id":"workStatus","type":"cards","label":"What best describes your current situation?","sub":"Be honest — this shapes realistic recommendations.","options":[
+          {"v":"student","i":"fa-book-open","t":"Student"},{"v":"full-time","i":"fa-building","t":"Employed full-time"},
+          {"v":"part-time","i":"fa-clock","t":"Employed part-time"},{"v":"freelancer","i":"fa-laptop","t":"Self-employed / Freelancer"},
+          {"v":"business","i":"fa-store","t":"Business owner"},{"v":"looking","i":"fa-magnifying-glass","t":"Looking for work"},
+          {"v":"unemployed","i":"fa-circle-xmark","t":"Unemployed"},{"v":"break","i":"fa-umbrella-beach","t":"Career break"},
+          {"v":"retired","i":"fa-couch","t":"Retired"},{"v":"other-work","i":"fa-ellipsis","t":"Other"}
+        ]},
+        {"id":"jobTitle","type":"text","label":"What's your current job title or role?","sub":"Leave blank if not applicable.","placeholder":"e.g. Teacher, Sales Associate, Nurse Assistant","optional":true,"showIf":{"workStatus":["full-time","part-time","freelancer","business"]}},
+        {"id":"industry","type":"text","label":"Which field or industry is this in?","sub":"Leave blank if not applicable. Any field — healthcare, education, retail, construction, agriculture, arts, etc.","placeholder":"e.g. Healthcare, Retail, Construction","optional":true,"showIf":{"workStatus":["full-time","part-time","freelancer","business"]}},
+        {"id":"enjoyWork","type":"slider","label":"How much do you enjoy your current work?","sub":"1 = dread going to work, 10 = love every minute.","min":1,"max":10,"step":1,"showIf":{"workStatus":["full-time","part-time","freelancer","business"]}},
+        {"id":"whyChange","type":"textarea","label":"Why do you want a career change or shift (or why stay)?","sub":"Be specific — the more honest you are, the better the advice.","placeholder":"Tell us what's driving this decision...","optional":true,"showIf":{"workStatus":["full-time","part-time","freelancer","business","looking","unemployed","break"]}}
+      ]
+    },
+    {
+      "id": "experience",
+      "name": "Experience",
+      "icon": "fa-clock-rotate-left",
+      "questions": [
+        {"id":"yearsExp","type":"slider","label":"How many years of work experience do you have?","sub":"Include all types of work — jobs, internships, apprenticeships, family business, volunteering.","min":0,"max":40,"step":1,"unit":"years"},
+        {"id":"pastRoles","type":"textarea","label":"What jobs, internships, or major projects have you done so far?","sub":"A quick list is fine — doesn't need to be formal.","placeholder":"e.g. Farm work, retail cashier, tutoring younger students, family shop...","optional":true},
+        {"id":"proudAchievement","type":"text","label":"What's something you've done that you're proud of?","sub":"Work-related or not — anything that shows your strengths.","placeholder":"e.g. Organized a community event, fixed a broken engine, wrote a play","optional":true},
+        {"id":"leadershipExp","type":"toggle","label":"Have you ever led a team, project, or group?","sub":"Formal or informal — captaining a team, running a club, managing siblings' chores counts too."}
+      ]
+    },
+    {
+      "id": "interests",
+      "name": "Interests",
+      "icon": "fa-heart",
+      "questions": [
+        {"id":"interestAreas","type":"chips","label":"Which subjects or fields genuinely interest you?","sub":"Select as many as you like — this is one of the biggest signals for a good match.","multi":true,"options":[
+          "Science","Technology","Business & Finance","Medicine & Health","Engineering","Education","Law & Justice","Politics & Government",
+          "Agriculture","Animals","Environment & Nature","Sports & Fitness","History & Culture","Languages","Psychology","Music",
+          "Art & Design","Gaming","Construction & Trades","Fashion","Travel","Space","Research","Writing & Journalism","Media & Entertainment"
+        ]}
+      ]
+    },
+    {
+      "id": "skills",
+      "name": "Skills",
+      "icon": "fa-layer-group",
+      "questions": [
+        {"id":"skillRatings","type":"rating","label":"Rate your confidence in these skills","sub":"1 = never really done it, 5 = I could teach it. Be honest — overestimating hurts your results.","max":5,"items":[
+          {"id":"sk_creative","n":"Creative Thinking"},{"id":"sk_business","n":"Business Acumen"},{"id":"sk_comm","n":"Communication"},
+          {"id":"sk_lead","n":"Leadership"},{"id":"sk_ps","n":"Problem Solving"},{"id":"sk_ct","n":"Critical Thinking"},
+          {"id":"sk_research","n":"Research"},{"id":"sk_techuse","n":"Technology Use"},{"id":"sk_digital","n":"Digital Literacy"},
+          {"id":"sk_teach","n":"Teaching / Mentoring"},{"id":"sk_writing","n":"Writing"},{"id":"sk_sales","n":"Sales & Persuasion"},
+          {"id":"sk_math","n":"Mathematics"},{"id":"sk_design","n":"Design"},{"id":"sk_org","n":"Organization"},
+          {"id":"sk_team","n":"Teamwork"},{"id":"sk_adapt","n":"Adaptability"},{"id":"sk_projm","n":"Project Management"},
+          {"id":"sk_negotiate","n":"Negotiation"},{"id":"sk_speak","n":"Public Speaking"},{"id":"sk_data","n":"Data Analysis"},
+          {"id":"sk_manual","n":"Manual / Hands-on Skills"},{"id":"sk_innovate","n":"Innovation"}
+        ]}
+      ]
+    },
+    {
+      "id": "personality",
+      "name": "Personality",
+      "icon": "fa-brain",
+      "questions": [
+        {"id":"persProblem","type":"slider","label":"I enjoy solving difficult problems.","sub":"1 = strongly disagree, 10 = strongly agree.","min":1,"max":10,"step":1},
+        {"id":"persHelp","type":"slider","label":"I enjoy helping people.","min":1,"max":10,"step":1},
+        {"id":"persTeach","type":"slider","label":"I enjoy teaching or explaining things to others.","min":1,"max":10,"step":1},
+        {"id":"persLead","type":"slider","label":"I enjoy leading and taking charge.","min":1,"max":10,"step":1},
+        {"id":"persDesign","type":"slider","label":"I enjoy designing or creating things.","min":1,"max":10,"step":1},
+        {"id":"persAnalyze","type":"slider","label":"I enjoy analyzing information and finding patterns.","min":1,"max":10,"step":1},
+        {"id":"persNumbers","type":"slider","label":"I enjoy working with numbers.","min":1,"max":10,"step":1},
+        {"id":"persOrganize","type":"slider","label":"I enjoy organizing and planning.","min":1,"max":10,"step":1},
+        {"id":"persBuild","type":"slider","label":"I enjoy building things with my hands or from scratch.","min":1,"max":10,"step":1},
+        {"id":"persRisk","type":"slider","label":"I enjoy taking risks.","min":1,"max":10,"step":1},
+        {"id":"persRoutine","type":"slider","label":"I enjoy routine and predictability.","sub":"1 = I need variety, 10 = I love a steady routine.","min":1,"max":10,"step":1},
+        {"id":"persLearn","type":"slider","label":"I enjoy learning new things.","min":1,"max":10,"step":1},
+        {"id":"persSpeak","type":"slider","label":"I enjoy public speaking.","min":1,"max":10,"step":1},
+        {"id":"persTeam","type":"slider","label":"I enjoy working as part of a team.","min":1,"max":10,"step":1},
+        {"id":"persPersist","type":"slider","label":"I keep going even when something is difficult.","min":1,"max":10,"step":1},
+        {"id":"persInnovate","type":"slider","label":"I enjoy coming up with new ideas or approaches.","min":1,"max":10,"step":1}
+      ]
+    },
+    {
+      "id": "workstyle",
+      "name": "Work Preferences",
+      "icon": "fa-compass",
+      "questions": [
+        {"id":"workNature","type":"chips","label":"What type of work excites you most?","sub":"Select all that resonate.","multi":true,"options":[
+          "Working alone","Working in teams","Managing/leading people","Building products or systems","Helping and caring for people",
+          "Research and investigation","Creative and artistic work","Business and strategy","Technical/specialized work",
+          "Physical/manual work","Field work (outdoors or on-site)","Office-based work"
+        ]},
+        {"id":"workMode","type":"chips","label":"What work mode do you prefer?","sub":"Select all that are acceptable.","multi":true,"options":["Remote","In-person / on-site","Hybrid","Freelance / contract","Running my own business"]},
+        {"id":"workEnv","type":"chips","label":"What kind of organization appeals to you?","sub":"Select all that interest you.","multi":true,"options":[
+          "Startup (small, fast-paced)","Large company / corporation","Government / public sector","Non-profit / NGO",
+          "Academic / research institution","Hospital or clinical setting","Creative studio","My own business"
+        ]},
+        {"id":"teamSize","type":"select","label":"What team size do you prefer?","sub":"Some people thrive in small teams, others in large organizations.","options":["Solo — just me","Tiny team (2-5 people)","Small team (5-15 people)","Medium team (15-50 people)","Large organization (50+ people)","No preference"],"optional":true}
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "name": "Lifestyle",
+      "icon": "fa-house-chimney",
+      "questions": [
+        {"id":"canRelocate","type":"select","label":"Are you open to relocating for work?","sub":"This opens up many more opportunities.","options":["Yes, anywhere","Yes, within my country","Yes, but only to specific places","No, I need to stay where I am","Unsure"],"optional":true},
+        {"id":"travelPref","type":"select","label":"How do you feel about work-related travel?","sub":"Some careers require more travel than others.","options":["Love it — send me anywhere","Open to occasional travel","Prefer minimal travel","Avoid travel if possible","Cannot travel (personal reasons)"],"optional":true},
+        {"id":"supportFamily","type":"toggle","label":"Are you financially supporting family members?","sub":"This significantly impacts your career flexibility."},
+        {"id":"dailyHours","type":"slider","label":"How many hours per day can you dedicate to career growth or learning?","sub":"Be realistic — consistency beats intensity.","min":0,"max":12,"step":0.5,"unit":"hours/day"},
+        {"id":"workLifeBalance","type":"slider","label":"How important is work-life balance to you?","sub":"1 = career comes first, 10 = balance matters most.","min":1,"max":10,"step":1}
+      ]
+    },
+    {
+      "id": "learning",
+      "name": "Learning Style",
+      "icon": "fa-lightbulb",
+      "questions": [
+        {"id":"learnStyle","type":"chips","label":"How do you learn best?","sub":"Pick all that apply — most people are a mix.","multi":true,"options":["Hands-on practice","Reading books/articles","Watching video tutorials","Structured courses or classes","Having a mentor","Reading instructions/documentation","Repetition and drilling","Learning with a community or group","Teaching others","Podcasts & audio","Learning on the job"]},
+        {"id":"learnPace","type":"select","label":"What's your preferred learning pace?","sub":"No judgment — everyone's different.","options":["Slow and thorough — I don't move on until I fully understand","Moderate — I balance depth and progress","Fast — I like the big picture then fill in details","Very fast — I skim and learn by doing","It depends on the topic"],"optional":true},
+        {"id":"learnChallenge","type":"select","label":"How do you feel about challenging material?","sub":"When something is really hard to understand or master.","options":["I love it — that's when I learn most","I don't mind it if I see the point","I tolerate it but it's not fun","I tend to avoid it and find easier paths","I get frustrated and give up easily"],"optional":true}
+      ]
+    },
+    {
+      "id": "goals",
+      "name": "Goals",
+      "icon": "fa-bullseye",
+      "questions": [
+        {"id":"shortGoal","type":"textarea","label":"What are your top 1-3 short-term goals? (next 6 months)","sub":"Be as specific as you can.","placeholder":"e.g. Finish a certification, get a part-time job, save some money","optional":true},
+        {"id":"longGoal","type":"textarea","label":"What are your top 1-3 long-term goals? (next 3-5 years)","sub":"Think bigger picture.","placeholder":"e.g. Land a stable job in my field, open my own business, get a degree","optional":true},
+        {"id":"incomeGoal","type":"text","label":"What's your income goal?","sub":"Be specific about amount and timeline if possible.","placeholder":"e.g. $2,000/month within 2 years","optional":true},
+        {"id":"learnGoal","type":"text","label":"What's your #1 learning goal right now?","sub":"The one skill or knowledge area you're most focused on.","placeholder":"e.g. A trade certification, a language, a professional license","optional":true},
+        {"id":"otherGoals","type":"textarea","label":"Any other goals? (family, health, travel, custom)","sub":"Anything else that matters to your career planning.","placeholder":"List any other goals that are important to you...","optional":true}
+      ]
+    },
+    {
+      "id": "financial",
+      "name": "Financial Situation",
+      "icon": "fa-wallet",
+      "questions": [
+        {"id":"learnBudget","type":"select","label":"What's your monthly budget for training, courses, or tools?","sub":"This helps us recommend free vs. paid resources.","options":["$0 — I need free resources only","$1–$10","$11–$30","$31–$50","$51–$100","$101–$300","$300+","Not sure"],"optional":true},
+        {"id":"needIncome","type":"toggle","label":"Do you need to earn income immediately?","sub":"This affects whether we can recommend longer training paths."},
+        {"id":"hasSavings","type":"select","label":"Do you have savings you can use?","sub":"Roughly — no exact numbers needed.","options":["No savings","Less than 1 month of expenses","1–3 months of expenses","3–6 months of expenses","6–12 months","More than 12 months","Prefer not to say"],"optional":true}
+      ]
+    },
+    {
+      "id": "motivation",
+      "name": "Motivation",
+      "icon": "fa-fire",
+      "questions": [
+        {"id":"whyCareer","type":"textarea","label":"Why do you want this career path?","sub":"The real reason — not what sounds good. Be raw.","placeholder":"e.g. I'm tired of being broke, I want to help people like my family helped me...","optional":true},
+        {"id":"motivFactors","type":"chips","label":"What motivates you most?","sub":"Pick your top 3-5 drivers.","multi":true,"options":["Money / Financial freedom","Freedom / Independence","Making an impact","Recognition / Status","Passion for the work","Helping my family","Travel opportunities","Building a company","Innovation / Creating new things","Job security","Learning new things","Proving people wrong","Creative expression","Helping my community"]},
+        {"id":"motivTrigger","type":"text","label":"What triggered this career interest or change?","sub":"A specific moment, person, event, or realization?","placeholder":"e.g. I got laid off, a mentor inspired me, I watched a documentary...","optional":true}
+      ]
+    },
+    {
+      "id": "challenges",
+      "name": "Challenges",
+      "icon": "fa-triangle-exclamation",
+      "questions": [
+        {"id":"obstacles","type":"chips","label":"What obstacles are you facing?","sub":"Select all that apply — being honest helps us help you.","multi":true,"options":["No computer or device","Slow or no internet","Lack of money","Limited English","Not enough time","Low confidence","Family obligations","Fear of failure","Mental health challenges","Physical health issues","No mentor or guidance","No clear roadmap","Procrastination","Don't know where to start","Living somewhere with few opportunities","Age discrimination concerns","Other"]},
+        {"id":"biggestChallenge","type":"textarea","label":"What's your single biggest challenge right now?","sub":"If you could solve just one thing, what would it be?","placeholder":"Describe it in detail...","optional":true},
+        {"id":"pastFailure","type":"textarea","label":"Have you tried pursuing a career path before? What happened?","sub":"Understanding past attempts helps us avoid repeating mistakes.","placeholder":"e.g. I started training but stopped because...","optional":true}
+      ]
+    },
+    {
+      "id": "decision",
+      "name": "Decision Making",
+      "icon": "fa-scale-balanced",
+      "questions": [
+        {"id":"decisionStyle","type":"select","label":"How do you usually make big decisions?","options":["I research extensively before deciding","I go with my gut feeling","I ask others for advice","I make pros/cons lists","I tend to procrastinate on big decisions","I decide quickly and adjust as I go"],"optional":true},
+        {"id":"planningHorizon","type":"select","label":"How far ahead do you typically plan?","options":["I plan far ahead (years)","I plan a few months ahead","I plan week to week","I mostly live day to day"],"optional":true},
+        {"id":"comfortUncertainty","type":"slider","label":"How comfortable are you with uncertainty and the unknown?","sub":"1 = I need clear plans, 10 = I thrive in ambiguity.","min":1,"max":10,"step":1}
+      ]
+    },
+    {
+      "id": "exposure",
+      "name": "Career Exposure",
+      "icon": "fa-binoculars",
+      "questions": [
+        {"id":"exploredOptions","type":"toggle","label":"Have you researched or explored specific careers before?","sub":"Reading about them, watching videos, comparing paths."},
+        {"id":"talkedToPros","type":"toggle","label":"Have you talked to people working in fields you're interested in?","sub":"Informational interviews, family, friends, mentors."},
+        {"id":"hadExperience","type":"chips","label":"Have you had any of these kinds of exposure?","sub":"Select all that apply.","multi":true,"options":["Internship","Part-time job in a field of interest","Volunteer work","Job shadowing","Online courses related to a career","Personal projects","None yet"]},
+        {"id":"exposureGap","type":"text","label":"What's one career you're curious about but haven't explored yet?","optional":true,"placeholder":"e.g. Physical therapy, urban planning, carpentry"}
+      ]
+    },
+    {
+      "id": "vision",
+      "name": "Future Vision",
+      "icon": "fa-eye",
+      "questions": [
+        {"id":"dreamCareer","type":"text","label":"If you could have any career, what would it be?","sub":"No limits — don't worry about whether it's realistic right now.","placeholder":"e.g. Surgeon, furniture maker, film director, entrepreneur","optional":true},
+        {"id":"lifeMission","type":"text","label":"What do you think your life mission is?","sub":"Big question — take your time, or skip it.","placeholder":"e.g. To make healthcare accessible to everyone","optional":true},
+        {"id":"successDef","type":"text","label":"How do you personally define success?","sub":"Not society's definition — yours.","placeholder":"e.g. Freedom to travel, financial independence, helping others","optional":true},
+        {"id":"tenYearVision","type":"textarea","label":"Where do you see yourself professionally in 10 years?","sub":"Paint a picture of your ideal future.","placeholder":"Describe your ideal career and life...","optional":true}
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- APPLICATION LOGIC -->
+<script>
+// Load static question data
+const questionData = JSON.parse(document.getElementById('questionData').textContent);
+const sections = questionData.sections;
+const countries = questionData.countries;
+const languages = questionData.languages;
+
+// Application state and constants
+const STORAGE_KEY = 'melex_it_career';
+let state = {currentSection: 0, currentQuestion: 0, answers: {}, language: 'en'};
+let generatedPrompt = '';
+
+// DOM helper functions
+function $(s) { return document.querySelector(s); }
+function $$(s) { return document.querySelectorAll(s); }
+
+// State management functions
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) { state = JSON.parse(s); return true; }
+  } catch(e) {}
+  return false;
+}
+
+function hasSavedProgress() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) { const d = JSON.parse(s); return Object.keys(d.answers || {}).length > 0; }
+  } catch(e) {}
+  return false;
+}
+
+// UI utility functions
+function showToast(m) {
+  const t = $('#toast');
+  t.textContent = m;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function getAnswer(id) { return state.answers[id]; }
+function setAnswer(id, val) { state.answers[id] = val; saveState(); }
+
+// Question visibility logic
+function getVisibleQuestions(sec) {
+  return sec.questions.filter(q => {
+    if (!q.showIf) return true;
+    return Object.entries(q.showIf).every(([key, vals]) => vals.includes(state.answers[key]));
+  });
+}
+
+// Progress calculation
+function getTotalVisible() {
+  let t = 0;
+  sections.forEach(s => { t += getVisibleQuestions(s).length; });
+  return t;
+}
+
+function getProgress() {
+  let answered = 0;
+  const total = getTotalVisible();
+  sections.forEach(s => {
+    getVisibleQuestions(s).forEach(q => {
+      const a = state.answers[q.id];
+      if (a !== undefined && a !== null && a !== '' && !(Array.isArray(a) && a.length === 0)) answered++;
+    });
+  });
+  return total > 0 ? Math.round((answered / total) * 100) : 0;
+}
+
+function updateProgress() { $('#progressFill').style.width = getProgress() + '%'; }
+
+// Screen navigation
+function showScreen(id) {
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  $(`#screen-${id}`).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Assessment flow control
+function startAssessment() {
+  state.currentSection = 0;
+  state.currentQuestion = 0;
+  saveState();
+  showScreen('question');
+  $('#topBar').style.display = 'flex';
+  renderQuestion();
+}
+
+function resumeAssessment() {
+  if (!loadState()) { showToast('No saved progress found'); return; }
+  showScreen('question');
+  $('#topBar').style.display = 'flex';
+  renderQuestion();
+}
+
+function restartAssessment() {
+  if (!confirm('This will erase all your progress. Are you sure?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = {currentSection: 0, currentQuestion: 0, answers: {}, language: 'en'};
+  showScreen('welcome');
+  $('#topBar').style.display = 'none';
+  updateProgress();
+  $('#resumeBtn').style.display = hasSavedProgress() ? 'inline-flex' : 'none';
+}
+
+function goBack() {
+  if (state.currentQuestion > 0) {
+    state.currentQuestion--;
+  } else if (state.currentSection > 0) {
+    state.currentSection--;
+    const prevVis = getVisibleQuestions(sections[state.currentSection]);
+    state.currentQuestion = Math.max(0, prevVis.length - 1);
+  }
+  saveState();
+  renderQuestion();
+}
+
+function skipStep() {
+  const sec = sections[state.currentSection];
+  const visQ = getVisibleQuestions(sec);
+  if (state.currentQuestion < visQ.length - 1) {
+    state.currentQuestion++;
+  } else if (state.currentSection < sections.length - 1) {
+    state.currentSection++;
+    state.currentQuestion = 0;
+  } else {
+    finishAssessment();
+    return;
+  }
+  saveState();
+  renderQuestion();
+}
+
+function nextStep() {
+  const sec = sections[state.currentSection];
+  const visQ = getVisibleQuestions(sec);
+  const q = visQ[state.currentQuestion];
+  if (!q.optional) {
+    const a = state.answers[q.id];
+    if (a === undefined || a === null || a === '' || (Array.isArray(a) && a.length === 0)) {
+      showToast('Please answer this question to continue, or skip it.');
+      return;
+    }
+  }
+  if (state.currentQuestion < visQ.length - 1) {
+    state.currentQuestion++;
+  } else if (state.currentSection < sections.length - 1) {
+    state.currentSection++;
+    state.currentQuestion = 0;
+  } else {
+    finishAssessment();
+    return;
+  }
+  saveState();
+  renderQuestion();
+}
+
+function jumpToSection(i) {
+  if (i < state.currentSection) {
+    state.currentSection = i;
+    state.currentQuestion = 0;
+    saveState();
+    renderQuestion();
+  }
+}
+
+// Question rendering functions
+function renderQuestion() {
+  const sec = sections[state.currentSection];
+  const visQ = getVisibleQuestions(sec);
+  if (state.currentQuestion >= visQ.length) {
+    if (state.currentSection < sections.length - 1) {
+      state.currentSection++;
+      state.currentQuestion = 0;
+      return renderQuestion();
+    } else {
+      finishAssessment();
+      return;
+    }
+  }
+  const q = visQ[state.currentQuestion];
+  const qNum = state.currentQuestion + 1;
+  const totalQ = visQ.length;
+
+  let dotsHtml = '';
+  sections.forEach((s, i) => {
+    const cls = i < state.currentSection ? 'done' : i === state.currentSection ? 'active' : '';
+    dotsHtml += `<div class="section-dot ${cls}" title="${s.name}" data-section="${i}"></div>`;
+  });
+  $('#sectionDots').innerHTML = dotsHtml;
+  updateProgress();
+  $('#backBtn').style.visibility = (state.currentSection === 0 && state.currentQuestion === 0) ? 'hidden' : 'visible';
+
+  let html = `<div class="animate-slide-up">`;
+  html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em"><i class="fa-solid ${sec.icon}" style="margin-right:4px"></i> ${sec.name}</span>
+    <span style="font-size:12px;color:var(--muted)">${qNum} / ${totalQ}</span>
+    ${q.optional ? '<span style="font-size:11px;color:var(--muted);background:var(--bg2);padding:2px 8px;border-radius:20px">Optional</span>' : ''}
+  </div>`;
+  html += `<h3 style="font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.3">${q.label}</h3>`;
+  if (q.sub) html += `<p style="color:var(--fg2);font-size:14px;line-height:1.6;margin-bottom:24px">${q.sub}</p>`;
+  html += `</div><div class="animate-slide-up delay-1" id="questionInput">`;
+
+  switch(q.type) {
+    case 'text': html += renderText(q); break;
+    case 'number': html += renderNumber(q); break;
+    case 'textarea': html += renderTextarea(q); break;
+    case 'select': html += renderSelect(q); break;
+    case 'search': html += renderSearch(q); break;
+    case 'cards': html += renderCards(q); break;
+    case 'chips': html += renderChips(q); break;
+    case 'toggle': html += renderToggle(q); break;
+    case 'slider': html += renderSlider(q); break;
+    case 'rating': html += renderRating(q); break;
+  }
+  html += `</div>`;
+  $('#questionContent').innerHTML = html;
+
+  let actHtml = '';
+  if (q.type !== 'rating') actHtml += `<button class="btn-primary" id="continueBtn">Continue <i class="fa-solid fa-arrow-right"></i></button>`;
+  else actHtml += `<button class="btn-primary" id="continueBtn">Continue <i class="fa-solid fa-arrow-right"></i></button>`;
+  $('#questionActions').innerHTML = actHtml;
+  setTimeout(() => initQuestionControls(q), 50);
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderText(q) {
+  return `<input type="text" id="inp-${q.id}" placeholder="${esc(q.placeholder||'')}" value="${esc(getAnswer(q.id)||'')}" autocomplete="off">`;
+}
+function renderNumber(q) {
+  return `<input type="number" id="inp-${q.id}" placeholder="${esc(q.placeholder||'')}" value="${esc(getAnswer(q.id)||'')}" min="${q.min||''}" max="${q.max||''}" autocomplete="off">`;
+}
+function renderTextarea(q) {
+  return `<textarea id="inp-${q.id}" placeholder="${esc(q.placeholder||'')}" rows="4">${esc(getAnswer(q.id)||'')}</textarea>`;
+}
+function renderSelect(q) {
+  let h = `<select id="inp-${q.id}">`;
+  q.options.forEach(o => { h += `<option value="${esc(o)}" ${getAnswer(q.id) === o ? 'selected' : ''}>${esc(o)}</option>`; });
+  h += `</select>`;
+  return h;
+}
+function renderSearch(q) {
+  const val = getAnswer(q.id) || '';
+  let h = `<div style="position:relative" id="search-wrap-${q.id}">`;
+  h += `<div style="position:relative"><i class="fa-solid fa-magnifying-glass" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px"></i>`;
+  h += `<input type="text" id="inp-${q.id}" placeholder="${esc(q.placeholder||'')}" value="${esc(val)}" autocomplete="off" style="padding-left:42px">`;
+  h += `</div>`;
+  h += `<div id="search-dropdown-${q.id}" style="position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-top:4px;max-height:200px;overflow-y:auto;display:none;z-index:50;box-shadow:var(--shadow-lg)"></div></div>`;
+  return h;
+}
+function renderCards(q) {
+  const val = getAnswer(q.id);
+  let h = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px">`;
+  q.options.forEach(o => {
+    const sel = val === o.v ? 'selected' : '';
+    h += `<div class="option-card ${sel}" tabindex="0" role="radio" aria-checked="${sel ? 'true' : 'false'}" data-val="${esc(o.v)}">
+      <div class="icon-wrap"><i class="fa-solid ${o.i}"></i></div><span style="font-size:14px;font-weight:500">${esc(o.t)}</span></div>`;
+  });
+  h += `</div>`;
+  return h;
+}
+function renderChips(q) {
+  const val = getAnswer(q.id) || [];
+  let h = `<div style="display:flex;flex-wrap:wrap;gap:8px">`;
+  q.options.forEach(o => {
+    const sel = val.includes(o) ? 'selected' : '';
+    h += `<button class="chip ${sel}" type="button" data-val="${esc(o)}">${esc(o)}</button>`;
+  });
+  h += `</div>`;
+  return h;
+}
+function renderToggle(q) {
+  const val = getAnswer(q.id);
+  return `<div style="display:flex;align-items:center;gap:16px">
+    <div class="toggle-wrap ${val ? 'on' : ''}" id="toggle-${q.id}" tabindex="0" role="switch" aria-checked="${val ? 'true' : 'false'}">
+      <div class="toggle-knob"></div></div>
+    <span style="font-size:14px;color:var(--fg2)" id="toggle-label-${q.id}">${val ? 'Yes' : 'No'}</span></div>`;
+}
+function renderSlider(q) {
+  const val = getAnswer(q.id) ?? Math.round((q.min + q.max) / 2);
+  const pct = ((val - q.min) / (q.max - q.min)) * 100;
+  let h = `<div class="slider-container" id="slider-wrap-${q.id}" data-min="${q.min}" data-max="${q.max}" data-step="${q.step}" data-val="${val}">`;
+  h += `<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+    <span style="font-size:32px;font-weight:800;font-family:'Outfit',sans-serif;color:var(--accent)" id="slider-val-${q.id}">${val}</span>
+    <span style="font-size:13px;color:var(--muted)">${q.unit || ''}</span></div>`;
+  h += `<div class="slider-track" id="slider-track-${q.id}"><div class="slider-fill" id="slider-fill-${q.id}" style="width:${pct}%"></div>`;
+  h += `<div class="slider-thumb" id="slider-thumb-${q.id}" style="left:${pct}%" tabindex="0" role="slider" aria-valuemin="${q.min}" aria-valuemax="${q.max}" aria-valuenow="${val}"></div></div></div>`;
+  return h;
+}
+function renderRating(q) {
+  const ratings = getAnswer(q.id) || {};
+  let h = `<div style="display:flex;flex-direction:column">`;
+  q.items.forEach(item => {
+    const val = ratings[item.id] || 0;
+    h += `<div class="rating-item">
+      <span style="font-size:14px;font-weight:500;min-width:180px">${esc(item.n)}</span>
+      <div class="rating-dots" data-item-id="${item.id}">`;
+    for (let i = 1; i <= q.max; i++) {
+      h += `<div class="rating-dot ${i <= val ? 'filled' : ''}" data-val="${i}" tabindex="0" role="button" aria-label="${i}">${i}</div>`;
+    }
+    h += `</div></div>`;
+  });
+  h += `</div>`;
+  return h;
+}
+
+// Control initialization and event handlers
+function initQuestionControls(q) {
+  switch(q.type) {
+    case 'text':
+    case 'number': {
+      const inp = $(`#inp-${q.id}`);
+      if (inp) { inp.addEventListener('input', (e) => setAnswer(q.id, e.target.value)); inp.focus(); }
+      break;
+    }
+    case 'textarea': {
+      const ta = $(`#inp-${q.id}`);
+      if (ta) { ta.addEventListener('input', (e) => setAnswer(q.id, e.target.value)); ta.focus(); }
+      break;
+    }
+    case 'select': {
+      const sel = $(`#inp-${q.id}`);
+      if (sel) sel.addEventListener('change', (e) => setAnswer(q.id, e.target.value));
+      break;
+    }
+    case 'search':
+      initSearch(q);
+      break;
+    case 'cards': {
+      $$('.option-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const val = card.dataset.val;
+          setAnswer(q.id, val);
+          $$('.option-card').forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-checked', 'false'); });
+          card.classList.add('selected');
+          card.setAttribute('aria-checked', 'true');
+        });
+        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); } });
+      });
+      break;
+    }
+    case 'chips': {
+      $$('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const val = chip.dataset.val;
+          let current = getAnswer(q.id) || [];
+          current = current.includes(val) ? current.filter(v => v !== val) : [...current, val];
+          setAnswer(q.id, current);
+          chip.classList.toggle('selected');
+        });
+      });
+      break;
+    }
+    case 'toggle': {
+      const toggle = $(`#toggle-${q.id}`);
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const newVal = !getAnswer(q.id);
+          setAnswer(q.id, newVal);
+          toggle.classList.toggle('on', newVal);
+          toggle.setAttribute('aria-checked', newVal ? 'true' : 'false');
+          $(`#toggle-label-${q.id}`).textContent = newVal ? 'Yes' : 'No';
+        });
+        toggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); } });
+      }
+      break;
+    }
+    case 'slider':
+      initSlider(q);
+      break;
+    case 'rating': {
+      $$('.rating-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const itemId = dot.parentElement.dataset.itemId;
+          const val = parseInt(dot.dataset.val);
+          const ratings = getAnswer(q.id) || {};
+          ratings[itemId] = val;
+          setAnswer(q.id, ratings);
+          dot.parentElement.querySelectorAll('.rating-dot').forEach(d => {
+            d.classList.toggle('filled', parseInt(d.dataset.val) <= val);
+          });
+        });
+        dot.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dot.click(); } });
+      });
+      break;
+    }
+  }
+  const continueBtn = $('#continueBtn');
+  if (continueBtn) continueBtn.addEventListener('click', nextStep);
+}
+
+function initSearch(q) {
+  const input = $(`#inp-${q.id}`);
+  const dropdown = $(`#search-dropdown-${q.id}`);
+  const dataSource = q.dataSource === 'countries' ? countries : languages;
+  if (!input || !dropdown) return;
+
+  function filterAndShow(query) {
+    const filtered = dataSource.filter(item => item.toLowerCase().includes(query.toLowerCase())).slice(0, 20);
+    if (filtered.length === 0 || query === '') { dropdown.style.display = 'none'; return; }
+    dropdown.innerHTML = filtered.map(item => `<div class="search-opt" style="padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--border)" data-value="${esc(item)}">${esc(item)}</div>`).join('');
+    dropdown.style.display = 'block';
+    dropdown.querySelectorAll('[data-value]').forEach(item => {
+      item.addEventListener('mouseover', () => item.style.background = 'var(--bg2)');
+      item.addEventListener('mouseout', () => item.style.background = 'none');
+      item.addEventListener('click', () => {
+        input.value = item.dataset.value;
+        setAnswer(q.id, item.dataset.value);
+        dropdown.style.display = 'none';
+      });
+    });
+  }
+  input.addEventListener('focus', () => filterAndShow(input.value));
+  input.addEventListener('input', (e) => filterAndShow(e.target.value));
+  document.addEventListener('click', (e) => { if (!e.target.closest(`#search-wrap-${q.id}`)) dropdown.style.display = 'none'; });
+  input.focus();
+}
+
+function initSlider(q) {
+  const wrap = $(`#slider-wrap-${q.id}`);
+  const track = $(`#slider-track-${q.id}`);
+  const thumb = $(`#slider-thumb-${q.id}`);
+  const fill = $(`#slider-fill-${q.id}`);
+  const valDisplay = $(`#slider-val-${q.id}`);
+  if (!wrap || !track || !thumb || !fill || !valDisplay) return;
+
+  const min = parseFloat(wrap.dataset.min);
+  const max = parseFloat(wrap.dataset.max);
+  const step = parseFloat(wrap.dataset.step);
+
+  function updateSlider(val) {
+    const clamped = Math.min(max, Math.max(min, val));
+    const stepped = Math.round(clamped / step) * step;
+    const pct = ((stepped - min) / (max - min)) * 100;
+    thumb.style.left = pct + '%';
+    fill.style.width = pct + '%';
+    valDisplay.textContent = stepped;
+    thumb.setAttribute('aria-valuenow', stepped);
+    wrap.dataset.val = stepped;
+    setAnswer(q.id, stepped);
+  }
+  function getValFromEvent(e) {
+    const rect = track.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const pct = (clientX - rect.left) / rect.width;
+    return min + pct * (max - min);
+  }
+  let isDragging = false;
+  thumb.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
+  thumb.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); }, {passive: false});
+  thumb.addEventListener('keydown', (e) => {
+    const cur = parseFloat(wrap.dataset.val);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { updateSlider(cur + step); e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { updateSlider(cur - step); e.preventDefault(); }
+  });
+  track.addEventListener('click', (e) => updateSlider(getValFromEvent(e)));
+  document.addEventListener('mousemove', (e) => { if (isDragging) updateSlider(getValFromEvent(e)); });
+  document.addEventListener('touchmove', (e) => { if (isDragging) updateSlider(getValFromEvent(e)); }, {passive: false});
+  document.addEventListener('mouseup', () => { isDragging = false; });
+  document.addEventListener('touchend', () => { isDragging = false; });
+
+  updateSlider(parseFloat(wrap.dataset.val));
+}
+
+// ============================================================
+// TRAIT ENGINE — modular, additive scoring (no hardcoded careers)
+// ============================================================
+const TRAIT_KEYS = ['leadership','creativity','analytical','technical','social','business','research','learning','persistence','risk','communication','organization','problemSolving','adaptability','innovation','curiosity','discipline','confidence'];
+
+const SKILL_TRAIT_MAP = {
+  sk_creative:{creativity:1}, sk_business:{business:1}, sk_comm:{communication:1}, sk_lead:{leadership:1},
+  sk_ps:{problemSolving:1}, sk_ct:{analytical:1}, sk_research:{research:1}, sk_techuse:{technical:1},
+  sk_digital:{technical:0.6}, sk_teach:{communication:0.5,social:0.5}, sk_writing:{communication:0.8},
+  sk_sales:{business:0.6,communication:0.4}, sk_math:{analytical:1}, sk_design:{creativity:1},
+  sk_org:{organization:1}, sk_team:{social:1}, sk_adapt:{adaptability:1}, sk_projm:{organization:0.6,leadership:0.4},
+  sk_negotiate:{communication:0.5,business:0.5}, sk_speak:{communication:0.7,confidence:0.3},
+  sk_data:{analytical:0.6,research:0.4}, sk_manual:{technical:1}, sk_innovate:{innovation:1,creativity:0.3}
+};
+
+const PERSONALITY_TRAIT_MAP = {
+  persProblem:{problemSolving:1,analytical:0.5}, persHelp:{social:1}, persTeach:{communication:0.7,social:0.5},
+  persLead:{leadership:1}, persDesign:{creativity:1}, persAnalyze:{analytical:1}, persNumbers:{analytical:0.6,business:0.3},
+  persOrganize:{organization:1}, persBuild:{technical:0.7,creativity:0.3}, persRisk:{risk:1,confidence:0.3},
+  persLearn:{learning:1,curiosity:0.7}, persSpeak:{communication:1,confidence:0.5}, persTeam:{social:0.5,communication:0.3},
+  persPersist:{persistence:1,discipline:0.5}, persInnovate:{innovation:1,creativity:0.3}
+};
+// persRoutine is inverted (high "enjoy routine" -> lower adaptability)
+
+const WORKSTYLE_TRAIT_MAP = {
+  'Working in teams':{social:0.5}, 'Managing/leading people':{leadership:1}, 'Building products or systems':{technical:0.7,creativity:0.3},
+  'Helping and caring for people':{social:1}, 'Research and investigation':{research:1}, 'Creative and artistic work':{creativity:1,innovation:0.3},
+  'Business and strategy':{business:1}, 'Technical/specialized work':{technical:1}, 'Physical/manual work':{technical:0.4,persistence:0.3},
+  'Field work (outdoors or on-site)':{adaptability:0.4}, 'Office-based work':{organization:0.3}
+};
+
+const INTEREST_TRAIT_MAP = {
+  'Science':{research:0.3,curiosity:0.3}, 'Technology':{technical:0.3}, 'Business & Finance':{business:0.3},
+  'Medicine & Health':{social:0.3}, 'Engineering':{technical:0.3,analytical:0.2}, 'Education':{communication:0.3,social:0.2},
+  'Law & Justice':{analytical:0.2,communication:0.2}, 'Politics & Government':{leadership:0.2,communication:0.2},
+  'Agriculture':{persistence:0.2}, 'Animals':{social:0.2}, 'Environment & Nature':{curiosity:0.2},
+  'Sports & Fitness':{discipline:0.2}, 'History & Culture':{curiosity:0.2,research:0.2}, 'Languages':{communication:0.2},
+  'Psychology':{social:0.2,research:0.2}, 'Music':{creativity:0.3}, 'Art & Design':{creativity:0.3,innovation:0.2},
+  'Gaming':{technical:0.2,creativity:0.2}, 'Construction & Trades':{technical:0.2,persistence:0.2}, 'Fashion':{creativity:0.2},
+  'Travel':{adaptability:0.2}, 'Space':{curiosity:0.3,research:0.2}, 'Research':{research:0.4,curiosity:0.2},
+  'Writing & Journalism':{communication:0.3,creativity:0.2}, 'Media & Entertainment':{creativity:0.2,communication:0.2}
+};
+
+function addTrait(acc, trait, rawValue, maxValue, weight) {
+  if (!acc[trait]) acc[trait] = {sum:0,max:0};
+  acc[trait].sum += rawValue * weight;
+  acc[trait].max += maxValue * weight;
+}
+
+function computeTraits() {
+  const a = state.answers;
+  const acc = {};
+
+  // Skills (1-5 scale)
+  const skills = a.skillRatings || {};
+  Object.entries(SKILL_TRAIT_MAP).forEach(([skillId, map]) => {
+    const val = skills[skillId] || 0;
+    Object.entries(map).forEach(([trait, weight]) => addTrait(acc, trait, val, 5, weight));
+  });
+
+  // Personality sliders (1-10 scale)
+  Object.entries(PERSONALITY_TRAIT_MAP).forEach(([qId, map]) => {
+    const val = a[qId];
+    if (val === undefined) return;
+    Object.entries(map).forEach(([trait, weight]) => addTrait(acc, trait, val, 10, weight));
+  });
+  if (a.persRoutine !== undefined) addTrait(acc, 'adaptability', 11 - a.persRoutine, 10, 0.8);
+
+  // Work-style chips (boolean signal, scaled to 10)
+  const workNature = a.workNature || [];
+  Object.entries(WORKSTYLE_TRAIT_MAP).forEach(([option, map]) => {
+    const selected = workNature.includes(option) ? 10 : 0;
+    Object.entries(map).forEach(([trait, weight]) => addTrait(acc, trait, selected, 10, weight));
+  });
+
+  // Interests (small boolean signal)
+  const interests = a.interestAreas || [];
+  Object.entries(INTEREST_TRAIT_MAP).forEach(([option, map]) => {
+    const selected = interests.includes(option) ? 10 : 0;
+    Object.entries(map).forEach(([trait, weight]) => addTrait(acc, trait, selected, 10, weight));
+  });
+
+  // Decision-making section
+  if (a.comfortUncertainty !== undefined) { addTrait(acc, 'adaptability', a.comfortUncertainty, 10, 0.6); addTrait(acc, 'risk', a.comfortUncertainty, 10, 0.4); }
+  if (a.decisionStyle === 'I research extensively before deciding') { addTrait(acc, 'analytical', 9, 10, 0.5); addTrait(acc, 'research', 9, 10, 0.4); }
+  if (a.decisionStyle === 'I decide quickly and adjust as I go') { addTrait(acc, 'adaptability', 9, 10, 0.5); addTrait(acc, 'confidence', 9, 10, 0.4); }
+
+  // Experience & exposure
+  if (a.leadershipExp) addTrait(acc, 'leadership', 9, 10, 0.6);
+  if (a.exploredOptions) addTrait(acc, 'curiosity', 8, 10, 0.3);
+  if (a.talkedToPros) addTrait(acc, 'confidence', 7, 10, 0.2);
+  const yearsExp = a.yearsExp || 0;
+  addTrait(acc, 'persistence', Math.min(yearsExp, 10), 10, 0.4);
+  addTrait(acc, 'discipline', Math.min(yearsExp, 10), 10, 0.3);
+
+  // Normalize each trait 0-100
+  const result = {};
+  TRAIT_KEYS.forEach(t => {
+    const e = acc[t];
+    result[t] = e && e.max > 0 ? Math.round((e.sum / e.max) * 100) : 50;
+  });
+  return result;
+}
+
+const TRAIT_LABELS = {
+  leadership:'Leadership', creativity:'Creativity', analytical:'Analytical Thinking', technical:'Technical Interest',
+  social:'Social Orientation', business:'Business Orientation', research:'Research Interest', learning:'Learning Ability',
+  persistence:'Persistence', risk:'Risk Tolerance', communication:'Communication', organization:'Organization',
+  problemSolving:'Problem Solving', adaptability:'Adaptability', innovation:'Innovation', curiosity:'Curiosity',
+  discipline:'Discipline', confidence:'Confidence'
+};
+
+const TRAIT_COLORS = ['#14B8A6','#6366F1','#F59E0B','#EC4899','#10B981','#F97316','#38BDF8','#A78BFA','#F472B6','#4ADE80','#FB923C','#22D3EE','#E879F9','#FACC15','#34D399','#F87171','#818CF8','#2DD4BF'];
+
+// Broad, non-hardcoded career *categories* generated from trait combinations.
+const CATEGORY_DEFS = [
+  {name:'Technology & Engineering', traits:['technical','analytical','problemSolving'], examples:'e.g. software development, engineering, IT, data analysis, technical trades'},
+  {name:'Business & Entrepreneurship', traits:['business','leadership','confidence','risk'], examples:'e.g. management, sales, entrepreneurship, finance, consulting'},
+  {name:'Healthcare & Human Services', traits:['social','communication','persistence'], examples:'e.g. medicine, nursing, counseling, social work, caregiving'},
+  {name:'Creative & Design', traits:['creativity','innovation','adaptability'], examples:'e.g. design, art, music, film, fashion, writing'},
+  {name:'Science & Research', traits:['research','analytical','curiosity','learning'], examples:'e.g. research, laboratory science, academia, data science'},
+  {name:'Education & Training', traits:['communication','social','organization','persistence'], examples:'e.g. teaching, training, coaching, curriculum design'},
+  {name:'Skilled Trades & Technical Work', traits:['technical','organization','persistence'], examples:'e.g. construction, mechanics, agriculture, manufacturing'},
+  {name:'Media, Arts & Communication', traits:['creativity','communication','innovation'], examples:'e.g. journalism, marketing, media production, public relations'},
+  {name:'Public Service & Government', traits:['social','organization','discipline'], examples:'e.g. government, law, policy, non-profit, community work'},
+  {name:'Operations, Admin & Management', traits:['organization','leadership','discipline'], examples:'e.g. operations, project management, administration, logistics'}
+];
+
+function computeCategories(traits) {
+  return CATEGORY_DEFS.map(cat => {
+    const score = Math.round(cat.traits.reduce((sum, t) => sum + (traits[t] || 0), 0) / cat.traits.length);
+    return {...cat, score};
+  }).sort((a,b) => b.score - a.score);
+}
+
+// Readiness scores (practical/logistical readiness, separate from personality traits)
+function calcTechScore() {
+  let score = 55;
+  const skills = getAnswer('skillRatings') || {};
+  const relevant = ['sk_techuse','sk_digital','sk_data'];
+  const avg = relevant.reduce((s,id) => s + (skills[id]||0), 0) / relevant.length;
+  score += avg * 8;
+  return Math.min(100, Math.max(0, Math.round(score)));
+}
+function calcTimeScore() {
+  let score = 40;
+  const daily = getAnswer('dailyHours') || 0;
+  const persist = getAnswer('persPersist') || 5;
+  if (daily >= 3) score += 25; else if (daily >= 1) score += 12;
+  score += persist * 3;
+  return Math.min(100, Math.max(0, Math.round(score)));
+}
+function calcFinScore() {
+  let score = 40;
+  const budget = getAnswer('learnBudget');
+  const needIncome = getAnswer('needIncome');
+  const savings = getAnswer('hasSavings');
+  if (budget && !budget.includes('$0')) score += 15;
+  if (!needIncome) score += 20;
+  if (savings && (savings.includes('3–6 months') || savings.includes('6–12 months') || savings.includes('More than 12 months'))) score += 25;
+  return Math.min(100, Math.max(0, Math.round(score)));
+}
+function calcMindsetScore() {
+  let score = 45;
+  score += (getAnswer('persPersist') || 5) * 2.5;
+  score += (getAnswer('persLearn') || 5) * 1.5;
+  score += (getAnswer('comfortUncertainty') || 5) * 1.5;
+  const obstacles = getAnswer('obstacles') || [];
+  if (obstacles.includes('Low confidence')) score -= 15;
+  if (obstacles.includes('Fear of failure')) score -= 10;
+  return Math.min(100, Math.max(0, Math.round(score)));
+}
+function calcSupportScore() {
+  let score = 50;
+  if (getAnswer('supportFamily')) score -= 15;
+  const canRelocate = getAnswer('canRelocate');
+  if (canRelocate && canRelocate.includes('Yes')) score += 15;
+  const workMode = getAnswer('workMode') || [];
+  if (workMode.includes('Remote') || workMode.includes('Hybrid')) score += 10;
+  const obstacles = getAnswer('obstacles') || [];
+  if (obstacles.includes('No mentor or guidance')) score -= 15;
+  if (obstacles.includes('Family obligations')) score -= 10;
+  return Math.min(100, Math.max(0, Math.round(score)));
+}
+
+function findContradictions() {
+  const contradictions = [];
+  const needIncome = getAnswer('needIncome');
+  const dailyHours = getAnswer('dailyHours') || 0;
+  const budget = getAnswer('learnBudget');
+  const dreamCareer = getAnswer('dreamCareer');
+  const workStatus = getAnswer('workStatus');
+  const obstacles = getAnswer('obstacles') || [];
+
+  if (needIncome && dailyHours < 2) {
+    contradictions.push({title:'Limited time with immediate income needs', desc:'You need income soon but have less than 2 hours/day for growth. Consider paths that build skills while you earn, such as on-the-job learning or apprenticeships.'});
+  }
+  if (budget && budget.includes('$0') && workStatus === 'unemployed') {
+    contradictions.push({title:'No budget while unemployed', desc:'You\'ll need to rely mostly on free resources. This is possible, but requires more discipline and research to find quality free materials.'});
+  }
+  if (dreamCareer && obstacles.includes('Limited English') && !/amharic|ethiopia|local/i.test(dreamCareer)) {
+    contradictions.push({title:'Language barrier for an international path', desc:'Your dream career may require strong English skills. Consider including language learning as part of your plan.'});
+  }
+  if (obstacles.includes('Fear of failure') && obstacles.includes('Procrastination')) {
+    contradictions.push({title:'Fear and procrastination cycle', desc:'These often go together. Breaking tasks into very small steps and celebrating small wins can help break this cycle.'});
+  }
+  return contradictions;
+}
+
+// Assessment completion and prompt generation
+function finishAssessment() {
+  showScreen('analysis');
+  $('#topBar').style.display = 'none';
+
+  const items = [
+    {icon:'fa-chart-line', text:'Calculating readiness scores...'},
+    {icon:'fa-brain', text:'Analyzing personality patterns...'},
+    {icon:'fa-route', text:'Mapping career paths...'},
+    {icon:'fa-file-lines', text:'Crafting your personalized prompt...'}
+  ];
+  let html = '';
+  items.forEach((item, i) => {
+    html += `<div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:var(--radius-sm);background:var(--card);border:1px solid var(--border);opacity:0;transform:translateX(-20px);transition:all .5s ease" class="analysis-item" data-delay="${i * 600}">
+      <i class="fa-solid ${item.icon}" style="color:var(--accent);width:20px;text-align:center"></i>
+      <span style="font-size:14px;font-weight:500">${item.text}</span>
+    </div>`;
+  });
+  $('#analysisItems').innerHTML = html;
+
+  setTimeout(() => {
+    $$('.analysis-item').forEach(item => {
+      const delay = parseInt(item.dataset.delay);
+      setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateX(0)'; }, delay);
+    });
+  }, 200);
+
+  setTimeout(() => {
+    calculateReadiness();
+    showScreen('readiness');
+  }, 2800);
+}
+
+function calculateReadiness() {
+  const scores = [
+    {name:'Technical Foundation', score: calcTechScore(), color:'var(--accent)'},
+    {name:'Time Commitment', score: calcTimeScore(), color:'#6366F1'},
+    {name:'Financial Readiness', score: calcFinScore(), color:'var(--warm)'},
+    {name:'Mindset & Motivation', score: calcMindsetScore(), color:'#EC4899'},
+    {name:'Support System', score: calcSupportScore(), color:'#10B981'}
+  ];
+  let html = '';
+  scores.forEach(s => {
+    html += `<div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:14px;font-weight:600">${s.name}</span>
+        <span style="font-size:14px;font-weight:700;color:${s.color}">${s.score}%</span>
+      </div>
+      <div class="score-bar"><div class="score-fill" style="background:${s.color}" data-target="${s.score}"></div></div>
+    </div>`;
+  });
+  $('#readinessScores').innerHTML = html;
+
+  const traits = computeTraits();
+  const sortedTraits = TRAIT_KEYS.map((t,i) => ({key:t, label:TRAIT_LABELS[t], score:traits[t], color:TRAIT_COLORS[i]})).sort((a,b) => b.score - a.score).slice(0,6);
+  let traitHtml = '';
+  sortedTraits.forEach(t => {
+    traitHtml += `<div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:14px;font-weight:600">${t.label}</span>
+        <span style="font-size:14px;font-weight:700;color:${t.color}">${t.score}%</span>
+      </div>
+      <div class="score-bar"><div class="score-fill" style="background:${t.color}" data-target="${t.score}"></div></div>
+    </div>`;
+  });
+  $('#traitScores').innerHTML = traitHtml;
+
+  setTimeout(() => { $$('.score-fill').forEach(bar => { bar.style.width = bar.dataset.target + '%'; }); }, 100);
+
+  const contradictions = findContradictions();
+  if (contradictions.length > 0) {
+    let contHtml = '<h3 style="font-size:16px;font-weight:600;margin-bottom:12px;color:var(--warm)"><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px"></i>Things to Consider</h3>';
+    contradictions.forEach(c => {
+      contHtml += `<div class="contradiction-card"><i class="fa-solid fa-circle-exclamation"></i>
+        <div><div style="font-size:14px;font-weight:600;margin-bottom:4px">${esc(c.title)}</div>
+        <div style="font-size:13px;color:var(--fg2);line-height:1.5">${esc(c.desc)}</div></div></div>`;
+    });
+    $('#contradictions').innerHTML = contHtml;
+  } else {
+    $('#contradictions').innerHTML = '';
+  }
+
+  generatedPrompt = buildPrompt();
+}
+
+function buildInsights() {
+  const traits = computeTraits();
+  const sorted = TRAIT_KEYS.map(t => ({key:t, label:TRAIT_LABELS[t], score:traits[t]})).sort((a,b) => b.score - a.score);
+  const topStrengths = sorted.slice(0,4);
+  const growthAreas = sorted.slice(-3).filter(t => t.score < 55).sort((a,b) => a.score - b.score);
+  const categories = computeCategories(traits).slice(0,3);
+
+  const workMode = (getAnswer('workMode')||[]).join(', ') || 'flexible arrangements';
+  const workEnv = (getAnswer('workEnv')||[]).join(', ') || 'a range of organizations';
+  const teamSize = getAnswer('teamSize') || 'no strong team-size preference';
+
+  const readiness = {tech: calcTechScore(), time: calcTimeScore(), fin: calcFinScore(), mind: calcMindsetScore(), sup: calcSupportScore()};
+  const risks = [];
+  if (readiness.fin < 45) risks.push('Financial readiness is on the lower side — budget-friendly, free-first resources will matter early on.');
+  if (readiness.time < 45) risks.push('Available time for growth is limited — progress may need to be slower and steadier rather than intensive.');
+  if (readiness.sup < 45) risks.push('Support system looks thin right now — consider actively seeking a mentor or community.');
+  const obstacles = getAnswer('obstacles') || [];
+  if (obstacles.includes('Fear of failure')) risks.push('Fear of failure was flagged — starting with small, low-stakes steps can help build momentum.');
+  if (growthAreas.some(g => g.key === 'confidence')) risks.push('Confidence scored lower than other traits — real-world exposure (talking to people in the field, small projects) tends to build this fastest.');
+  if (risks.length === 0) risks.push('No major red flags stood out — your biggest task now is choosing a direction and committing to it.');
+
+  const nextSteps = [];
+  const lowestReadiness = Object.entries(readiness).sort((a,b) => a[1]-b[1])[0];
+  const readinessLabels = {tech:'building foundational skills', time:'finding a sustainable, realistic schedule', fin:'shoring up your financial runway', mind:'working on mindset and consistency', sup:'building a support network or finding a mentor'};
+  nextSteps.push(`Start by ${readinessLabels[lowestReadiness[0]]}, since that's your current lowest-readiness area.`);
+  if (categories[0]) nextSteps.push(`Explore 2-3 specific roles within "${categories[0].name}" — read about them, watch a day-in-the-life video, or message someone doing that job.`);
+  if (!getAnswer('talkedToPros')) nextSteps.push('Have at least one real conversation with someone working in a field you\'re curious about.');
+  nextSteps.push('Set one concrete, dated milestone for the next 30 days — something small enough that you can\'t talk yourself out of it.');
+
+  let html = '';
+  html += `<div class="insight-card"><h4><i class="fa-solid fa-dna" style="color:var(--accent)"></i> Top Strengths</h4>`;
+  html += topStrengths.map(t => `<span class="trait-pill">${t.label} · ${t.score}%</span>`).join('');
+  html += `</div>`;
+
+  if (growthAreas.length) {
+    html += `<div class="insight-card"><h4><i class="fa-solid fa-seedling" style="color:var(--warm)"></i> Growth Areas</h4>`;
+    html += growthAreas.map(t => `<span class="trait-pill" style="background:var(--warm-light);color:var(--warm)">${t.label} · ${t.score}%</span>`).join('');
+    html += `</div>`;
+  }
+
+  html += `<div class="insight-card"><h4><i class="fa-solid fa-compass-drafting" style="color:var(--accent)"></i> Ideal Work Environment</h4>
+    <p>Based on your preferences, you're likely to thrive with <strong>${esc(workMode)}</strong> work, inside organizations like <strong>${esc(workEnv)}</strong>, on a team size of roughly <strong>${esc(teamSize)}</strong>.</p></div>`;
+
+  html += `<div class="insight-card"><h4><i class="fa-solid fa-layer-group" style="color:var(--accent)"></i> Best Career Categories</h4>`;
+  categories.forEach(c => {
+    html += `<div class="category-card"><div class="cat-title">${esc(c.name)}</div><div class="cat-score">${c.score}% match</div><div class="cat-examples">${esc(c.examples)}</div></div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="insight-card"><h4><i class="fa-solid fa-triangle-exclamation" style="color:var(--warm)"></i> Potential Risks</h4><ul style="padding-left:18px">`;
+  risks.forEach(r => { html += `<li>${esc(r)}</li>`; });
+  html += `</ul></div>`;
+
+  html += `<div class="insight-card"><h4><i class="fa-solid fa-shoe-prints" style="color:var(--accent)"></i> Recommended Next Steps</h4><ul style="padding-left:18px">`;
+  nextSteps.forEach(s => { html += `<li>${esc(s)}</li>`; });
+  html += `</ul></div>`;
+
+  return html;
+}
+
+function buildPrompt() {
+  const a = state.answers;
+  const traits = computeTraits();
+  const categories = computeCategories(traits);
+  let prompt = `You are a career advisor for MELEX IT. I've completed a detailed, career-agnostic assessment (it covers every field — not just tech) and need your help creating a personalized career roadmap.\n\n`;
+
+  prompt += `## MY PROFILE\n\n`;
+  if (a.name) prompt += `**Name:** ${a.name}\n`;
+  if (a.age) prompt += `**Age:** ${a.age}\n`;
+  if (a.gender && a.gender !== 'Prefer not to say') prompt += `**Gender:** ${a.gender}\n`;
+  if (a.country) prompt += `**Country:** ${a.country}\n`;
+  if (a.city) prompt += `**City:** ${a.city}\n`;
+  if (a.nativeLang) prompt += `**Native Language:** ${a.nativeLang}\n`;
+  prompt += `**Preferred Response Language:** ${a.prefLang || 'English'}\n\n`;
+
+  prompt += `## EDUCATION\n\n`;
+  prompt += `**Status:** ${a.eduStatus || 'Not specified'}\n`;
+  if (a.eduGrade) prompt += `**Grade/Year:** ${a.eduGrade}\n`;
+  if (a.eduDegree) prompt += `**Degree:** ${a.eduDegree}\n`;
+  if (a.eduField) prompt += `**Field of Study:** ${a.eduField}\n`;
+  if (a.eduYear) prompt += `**Graduation Year:** ${a.eduYear}\n\n`;
+
+  prompt += `## CURRENT SITUATION & EXPERIENCE\n\n`;
+  prompt += `**Current Status:** ${a.workStatus || 'Not specified'}\n`;
+  if (a.jobTitle) prompt += `**Job Title:** ${a.jobTitle}\n`;
+  if (a.industry) prompt += `**Industry/Field:** ${a.industry}\n`;
+  if (a.enjoyWork !== undefined) prompt += `**Work Enjoyment:** ${a.enjoyWork}/10\n`;
+  if (a.whyChange) prompt += `**Why Change:** ${a.whyChange}\n`;
+  if (a.yearsExp !== undefined) prompt += `**Years of Experience:** ${a.yearsExp}\n`;
+  if (a.pastRoles) prompt += `**Past Roles/Projects:** ${a.pastRoles}\n`;
+  if (a.proudAchievement) prompt += `**Proud Achievement:** ${a.proudAchievement}\n`;
+  prompt += `**Has Led a Team/Project:** ${a.leadershipExp ? 'Yes' : 'No'}\n\n`;
+
+  if (a.interestAreas && a.interestAreas.length) prompt += `## INTERESTS\n\n${a.interestAreas.join(', ')}\n\n`;
+
+  const skills = a.skillRatings || {};
+  const skillLabelMap = {sk_creative:'Creative Thinking',sk_business:'Business Acumen',sk_comm:'Communication',sk_lead:'Leadership',sk_ps:'Problem Solving',sk_ct:'Critical Thinking',sk_research:'Research',sk_techuse:'Technology Use',sk_digital:'Digital Literacy',sk_teach:'Teaching/Mentoring',sk_writing:'Writing',sk_sales:'Sales & Persuasion',sk_math:'Mathematics',sk_design:'Design',sk_org:'Organization',sk_team:'Teamwork',sk_adapt:'Adaptability',sk_projm:'Project Management',sk_negotiate:'Negotiation',sk_speak:'Public Speaking',sk_data:'Data Analysis',sk_manual:'Manual/Hands-on Skills',sk_innovate:'Innovation'};
+  const highSkills = Object.entries(skills).filter(([,v]) => v >= 4).map(([k]) => skillLabelMap[k] || k);
+  if (highSkills.length) prompt += `## TOP SKILLS\n\n${highSkills.join(', ')}\n\n`;
+
+  prompt += `## PERSONALITY TRAITS (calculated, 0-100 scale)\n\n`;
+  TRAIT_KEYS.forEach(t => { prompt += `**${TRAIT_LABELS[t]}:** ${traits[t]}\n`; });
+  prompt += '\n';
+
+  prompt += `## BEST-FIT CAREER CATEGORIES (from trait analysis)\n\n`;
+  categories.slice(0,4).forEach(c => { prompt += `- **${c.name}** (${c.score}% match) — ${c.examples}\n`; });
+  prompt += '\n';
+
+  if (a.learnStyle && a.learnStyle.length) prompt += `## LEARNING STYLE\n\n**Preferred Methods:** ${a.learnStyle.join(', ')}\n`;
+  if (a.learnPace) prompt += `**Pace:** ${a.learnPace}\n`;
+  if (a.learnChallenge) prompt += `**Response to Challenge:** ${a.learnChallenge}\n`;
+  prompt += '\n';
+
+  prompt += `## WORK PREFERENCES\n\n`;
+  if (a.workNature && a.workNature.length) prompt += `**Work Nature:** ${a.workNature.join(', ')}\n`;
+  if (a.workMode && a.workMode.length) prompt += `**Work Mode:** ${a.workMode.join(', ')}\n`;
+  if (a.workEnv && a.workEnv.length) prompt += `**Work Environment:** ${a.workEnv.join(', ')}\n`;
+  if (a.teamSize) prompt += `**Team Size:** ${a.teamSize}\n\n`;
+
+  prompt += `## LIFESTYLE\n\n`;
+  if (a.canRelocate) prompt += `**Open to Relocation:** ${a.canRelocate}\n`;
+  if (a.travelPref) prompt += `**Travel Preference:** ${a.travelPref}\n`;
+  prompt += `**Supporting Family:** ${a.supportFamily ? 'Yes' : 'No'}\n`;
+  if (a.dailyHours !== undefined) prompt += `**Daily Hours Available for Growth:** ${a.dailyHours}\n`;
+  if (a.workLifeBalance !== undefined) prompt += `**Work-Life Balance Priority:** ${a.workLifeBalance}/10\n\n`;
+
+  prompt += `## GOALS\n\n`;
+  if (a.shortGoal) prompt += `**Short-term Goals (6 months):** ${a.shortGoal}\n`;
+  if (a.longGoal) prompt += `**Long-term Goals (3-5 years):** ${a.longGoal}\n`;
+  if (a.incomeGoal) prompt += `**Income Goal:** ${a.incomeGoal}\n`;
+  if (a.learnGoal) prompt += `**#1 Learning Goal:** ${a.learnGoal}\n`;
+  if (a.otherGoals) prompt += `**Other Goals:** ${a.otherGoals}\n\n`;
+
+  prompt += `## FINANCIAL SITUATION\n\n`;
+  if (a.learnBudget) prompt += `**Monthly Budget for Training:** ${a.learnBudget}\n`;
+  prompt += `**Needs Immediate Income:** ${a.needIncome ? 'Yes' : 'No'}\n`;
+  if (a.hasSavings) prompt += `**Savings:** ${a.hasSavings}\n\n`;
+
+  prompt += `## MOTIVATION\n\n`;
+  if (a.whyCareer) prompt += `**Why This Career:** ${a.whyCareer}\n`;
+  if (a.motivFactors && a.motivFactors.length) prompt += `**Key Motivators:** ${a.motivFactors.join(', ')}\n`;
+  if (a.motivTrigger) prompt += `**Trigger:** ${a.motivTrigger}\n\n`;
+
+  prompt += `## CHALLENGES\n\n`;
+  if (a.obstacles && a.obstacles.length) prompt += `**Obstacles:** ${a.obstacles.join(', ')}\n`;
+  if (a.biggestChallenge) prompt += `**Biggest Challenge:** ${a.biggestChallenge}\n`;
+  if (a.pastFailure) prompt += `**Past Attempts:** ${a.pastFailure}\n\n`;
+
+  prompt += `## DECISION MAKING\n\n`;
+  if (a.decisionStyle) prompt += `**Decision Style:** ${a.decisionStyle}\n`;
+  if (a.planningHorizon) prompt += `**Planning Horizon:** ${a.planningHorizon}\n`;
+  if (a.comfortUncertainty !== undefined) prompt += `**Comfort with Uncertainty:** ${a.comfortUncertainty}/10\n\n`;
+
+  prompt += `## CAREER EXPOSURE\n\n`;
+  prompt += `**Has Explored Career Options:** ${a.exploredOptions ? 'Yes' : 'No'}\n`;
+  prompt += `**Has Talked to People in the Field:** ${a.talkedToPros ? 'Yes' : 'No'}\n`;
+  if (a.hadExperience && a.hadExperience.length) prompt += `**Relevant Experience:** ${a.hadExperience.join(', ')}\n`;
+  if (a.exposureGap) prompt += `**Curious About but Unexplored:** ${a.exposureGap}\n\n`;
+
+  prompt += `## FUTURE VISION\n\n`;
+  if (a.dreamCareer) prompt += `**Dream Career:** ${a.dreamCareer}\n`;
+  if (a.lifeMission) prompt += `**Life Mission:** ${a.lifeMission}\n`;
+  if (a.successDef) prompt += `**Definition of Success:** ${a.successDef}\n`;
+  if (a.tenYearVision) prompt += `**10-Year Vision:** ${a.tenYearVision}\n\n`;
+
+  prompt += `## READINESS SCORES\n\n`;
+  prompt += `- Technical Foundation: ${calcTechScore()}%\n`;
+  prompt += `- Time Commitment: ${calcTimeScore()}%\n`;
+  prompt += `- Financial Readiness: ${calcFinScore()}%\n`;
+  prompt += `- Mindset & Motivation: ${calcMindsetScore()}%\n`;
+  prompt += `- Support System: ${calcSupportScore()}%\n\n`;
+
+  prompt += `## YOUR TASK\n\n`;
+  prompt += `Based on this comprehensive profile — and considering careers across EVERY field (not just technology) — please provide:\n\n`;
+  prompt += `1. **Career Path Recommendations:** Suggest 2-3 specific career paths that align with my profile, dreams, and constraints. Explain why each is a good fit.\n\n`;
+  prompt += `2. **Reality Check:** Honestly assess the feasibility of my dream career given my current situation. If there's a gap, explain what it would take to bridge it.\n\n`;
+  prompt += `3. **6-Month Action Plan:** Create a detailed, week-by-week plan for the next 6 months, including specific resources that fit my budget and time constraints.\n\n`;
+  prompt += `4. **Skill Development Roadmap:** Prioritize which skills I should build, in what order, and suggest realistic free/affordable resources for each.\n\n`;
+  prompt += `5. **Income Strategy:** If I need income soon, suggest ways to start earning while developing my skills. Include realistic timelines.\n\n`;
+  prompt += `6. **Potential Roadblocks:** Identify challenges I might face that I haven't considered, and suggest mitigation strategies.\n\n`;
+  prompt += `7. **Success Metrics:** Define specific, measurable milestones for 1 month, 3 months, 6 months, and 1 year.\n\n`;
+  prompt += `**Important:** Be honest and realistic. Don't sugarcoat challenges, but don't be discouraging either — focus on actionable steps I can take starting today.\n\n`;
+  prompt += `Please respond in ${a.prefLang === 'አማርኛ (Amharic)' ? 'Amharic' : 'English'}.`;
+
+  return prompt;
+}
+
+function showResult() {
+  showScreen('result');
+  $('#resultInsights').innerHTML = buildInsights();
+  $('#promptOutput').textContent = generatedPrompt;
+}
+
+function copyPrompt() {
+  navigator.clipboard.writeText(generatedPrompt).then(() => {
+    showToast('Prompt copied to clipboard!');
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = generatedPrompt;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showToast('Prompt copied to clipboard!');
+  });
+}
+
+function openChatGPT() {
+  const encodedPrompt = encodeURIComponent(generatedPrompt);
+  window.open(`https://chat.openai.com/?q=${encodedPrompt}`, '_blank');
+}
+
+// Initialize application
+function init() {
+  updateProgress();
+  if (hasSavedProgress()) $('#resumeBtn').style.display = 'inline-flex';
+
+  $('#startBtn').addEventListener('click', startAssessment);
+  $('#resumeBtn').addEventListener('click', resumeAssessment);
+  $('#backBtn').addEventListener('click', goBack);
+  $('#skipBtn').addEventListener('click', skipStep);
+  $('#generateBtn').addEventListener('click', showResult);
+  $('#copyBtn').addEventListener('click', copyPrompt);
+  $('#chatgptBtn').addEventListener('click', openChatGPT);
+  $('#restartBtn').addEventListener('click', restartAssessment);
+
+  const skipBtn = $('#skipBtn');
+  skipBtn.addEventListener('mouseover', () => { skipBtn.style.color = 'var(--fg)'; skipBtn.style.background = 'var(--bg2)'; });
+  skipBtn.addEventListener('mouseout', () => { skipBtn.style.color = 'var(--muted)'; skipBtn.style.background = 'none'; });
+
+  $('#sectionDots').addEventListener('click', (e) => {
+    const dot = e.target.closest('.section-dot');
+    if (dot) jumpToSection(parseInt(dot.dataset.section));
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>

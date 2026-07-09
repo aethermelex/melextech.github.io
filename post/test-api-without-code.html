@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Test an API Without Writing Code — MELEX IT</title>
+    <meta name="description" content="You do not need to write code to test an API thoroughly. Learn how to use visual tools like Postman, Insomnia, and Hoppscotch to inspect requests, validate responses, and find bugs.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/how-to-test-an-api-without-code">
+    <meta name="author" content="MELEX IT">
+    <meta name="keywords" content="api testing no code, postman tutorial, api testing for beginners, rest api testing, manual api testing, insomnia rest client">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Test an API Without Writing Code">
+    <meta property="og:description" content="A comprehensive guide to testing APIs using visual, point-and-click tools. No programming required.">
+    <meta property="og:url" content="https://melextech.dev/post/how-to-test-an-api-without-code">
+    <meta property="og:image" content="https://melextech.dev/guide/img/test-api-without-code.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="API Testing">
+    <meta property="article:tag" content="API Testing">
+    <meta property="article:tag" content="No-Code">
+    <meta property="article:tag" content="Postman">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Test an API Without Writing Code">
+    <meta name="twitter:description" content="A comprehensive guide to testing APIs using visual, point-and-click tools. No programming required.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/test-api-without-code.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Test an API Without Writing Code",
+        "description": "A deep, practical guide to understanding and testing APIs using visual tools like Postman, Insomnia, Hoppscotch, Bruno, and Swagger UI, without writing a single line of code.",
+        "image": "https://melextech.dev/guide/img/test-api-without-code.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/how-to-test-an-api-without-code"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Can I really test APIs effectively without knowing how to program?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Visual API clients like Postman, Insomnia, Hoppscotch, and Bruno are built specifically for this. They handle the syntax of constructing requests and parsing responses for you. Your job is the logic: understanding the business requirements, constructing the right test scenarios, and interpreting the data that comes back."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between REST APIs and GraphQL?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "REST is the traditional style where you have multiple endpoints, each representing a resource, and you use HTTP methods to interact with them. GraphQL is a newer approach where there is a single endpoint, and you send a query telling the server exactly which fields of data you want returned. Both can be tested without code."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I know if an API is working correctly if I do not know what the data is supposed to look like?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You rely on the API documentation and your business knowledge. The documentation should define the schema, which is a blueprint of what the JSON should look like, including field names, data types, and which fields are required. You also rely on common sense to spot anomalies."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is manual API testing enough, or do I eventually have to learn to code?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Manual visual testing is enough for exploratory testing, investigating bugs, and learning how a system works. However, as the API grows, you will want to run the same tests every time a developer pushes new code. At that point, you can use built-in visual test runners in tools like Postman to automate those checks without writing traditional code."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What should I do if the API documentation does not match the actual behavior of the API?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Document these discrepancies clearly. Take a screenshot of the documentation and a capture of the actual response from your testing tool. Report it to the team. The documentation and the code must agree, and your job is to find out when they do not."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "API Testing", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "How to Test an API Without Code", "item": "https://melextech.dev/post/how-to-test-an-api-without-code"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --bg-alt:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+    color-scheme:light;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+/* Smooth theme transitions */
+html,body,header,.nav,.mobile-nav,.footer,.callout,.explain-block,.quick-summary,
+.audience-box,.approach-overview,.story-opener,.toc-card,.comparison .table-wrapper,
+.pick-card,.faq-item,.share-btn,.author-bio,.help-ending,.promo-card,.ad-block,
+.help-btn,.stp,.mobile-cta,.step{
+    transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+/* Theme Toggle Button */
+.theme-toggle-btn{background:transparent;border:1px solid var(--border);color:var(--fg);width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.theme-toggle-btn:hover{border-color:var(--accent);background:var(--bg-alt);color:var(--accent-hover)}
+.theme-toggle-btn svg{width:20px;height:20px}
+[data-theme="dark"] .sun-icon{display:block}
+[data-theme="dark"] .moon-icon{display:none}
+html:not([data-theme="dark"]) .sun-icon{display:none}
+html:not([data-theme="dark"]) .moon-icon{display:block}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:300px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.audience-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.audience-box .audience-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{display:flex;flex-direction:column;gap:6px}
+.audience-box li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:20px;position:relative}
+.audience-box li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-weight:600}
+
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+
+.effect-note{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:var(--radius-sm);margin:16px 0;font-size:.82rem;line-height:1.7}
+.effect-note.neutral{background:var(--surface-2);border:1px solid var(--border);color:var(--fg-sub)}
+.effect-note.caution{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{width:16px;height:16px;flex-shrink:0;margin-top:2px}
+
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.ad-block{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:32px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px;background:var(--surface-2)}
+.ad-block.in-content{margin:32px 0}
+
+.video-section{margin-bottom:36px}
+.video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
+.video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);border:1px solid var(--border);background:#0F172A}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.pick-pros):not(.pick-cons):not(.steps-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.pick-pros):not(.pick-cons):not(.steps-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.steps{margin-bottom:0}
+.steps-intro{font-size:.88rem;color:var(--fg-light);margin-bottom:24px;line-height:1.7}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+
+.pick-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;transition:border-color .15s}
+.pick-card:hover{border-color:var(--border-2)}
+.pick-card .pick-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.pick-card .pick-rank{font-family:'Plus Jakarta Sans',sans-serif;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:100px;background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border);white-space:nowrap}
+.pick-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin:0;line-height:1.35}
+.pick-card .pick-sub{font-size:.85rem;color:var(--fg-light);margin-bottom:14px;line-height:1.6}
+.spec-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin:14px 0}
+.spec-list li{font-size:.82rem;color:var(--fg-sub);line-height:1.5;display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)}
+.spec-list li:last-child{border-bottom:none}
+.spec-list li strong{color:var(--dark);font-weight:600;font-size:.8rem}
+.pick-pros{margin:14px 0 0}
+.pick-pros h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-pros ul{display:flex;flex-direction:column;gap:4px}
+.pick-pros li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-pros li::before{content:'\2713';position:absolute;left:0;color:#22c55e;font-weight:700}
+.pick-cons{margin:10px 0 0}
+.pick-cons h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-cons ul{display:flex;flex-direction:column;gap:4px}
+.pick-cons li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-cons li::before{content:'\2717';position:absolute;left:0;color:#ef4444;font-weight:700}
+.pick-verdict{margin-top:14px;padding:12px 16px;background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--radius-sm);font-size:.84rem;color:var(--accent-hover);line-height:1.6}
+.pick-verdict strong{color:var(--dark);font-weight:600}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.help-ending{text-align:center;padding:36px 24px;background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1px solid var(--border);border-radius:var(--radius);margin-top:40px}
+.help-ending .help-ending-icon{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.help-ending .help-ending-icon svg{width:22px;height:22px;color:var(--accent)}
+.help-ending h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;border:none;padding:0}
+.help-ending>p{font-size:.85rem;color:var(--fg-light);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto}
+.help-ending .help-reassure{font-size:.82rem;color:var(--fg-muted);margin-top:16px;line-height:1.6}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.promo-card{border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.ad-space{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:28px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+
+/* ============================================================
+   DARK MODE — All overrides in one clean block
+   Contrast-fixed: fg-faint, warn-text, tip-text, danger-text
+   ============================================================ */
+[data-theme="dark"]{
+    --surface:#0F1623;--surface-2:#151D2E;--surface-3:#1A2338;
+    --bg-alt:#1A2338;
+    --fg:#E2E8F0;--fg-sub:#CBD5E1;--fg-light:#94A3B8;--fg-muted:#8B9AB5;--fg-faint:#6B7FA0;
+    --dark:#F1F5F9;
+    --border:#1A2336;--border-2:#263044;--border-3:#374460;
+    --dark-card:rgba(255,255,255,.04);--dark-border:rgba(255,255,255,.08);--dark-muted:#7B8DA4;
+    --accent-soft:rgba(45,212,191,.1);--accent-border:rgba(45,212,191,.25);
+    --warn:rgba(245,158,11,.08);--warn-border:#F59E0B;--warn-text:#FDE68A;--warn-strong:#FBBF24;
+    --tip:rgba(34,197,94,.08);--tip-border:#22C55E;--tip-text:#BBF7D0;--tip-strong:#4ADE80;
+    --info:rgba(59,130,246,.08);--info-border:#60A5FA;--info-text:#93C5FD;--info-strong:#60A5FA;
+    --danger:rgba(239,68,68,.08);--danger-border:#EF4444;--danger-text:#FECACA;--danger-strong:#F87171;
+    --story-warm:rgba(194,113,58,.06);--story-warm-border:rgba(194,113,58,.2);--story-warm-accent:#D97706;
+    color-scheme:dark;
+}
+
+/* Header */
+[data-theme="dark"] .header{background:rgba(15,22,35,.85)!important}
+[data-theme="dark"] .logo-text{color:#F1F5F9!important}
+[data-theme="dark"] .nav-link{color:#94A3B8}
+[data-theme="dark"] .nav-link:hover,[data-theme="dark"] .nav-link.active{color:#F1F5F9;background:rgba(255,255,255,.06)}
+[data-theme="dark"] .menu-line{background:#F1F5F9}
+[data-theme="dark"] .theme-toggle-btn{border-color:#263044;color:#E2E8F0}
+[data-theme="dark"] .theme-toggle-btn:hover{border-color:var(--accent);background:rgba(45,212,191,.1);color:var(--accent)}
+
+/* Mobile CTA */
+[data-theme="dark"] .mobile-cta{background:rgba(15,22,35,.95)!important;border-top-color:#1A2336!important}
+
+/* Breadcrumb */
+[data-theme="dark"] .breadcrumb{color:#6B7FA0}
+[data-theme="dark"] .breadcrumb a{color:#7B8DA4}
+[data-theme="dark"] .breadcrumb a:hover{color:var(--accent)}
+[data-theme="dark"] .breadcrumb svg{color:#374460}
+
+/* Headings */
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4{color:#F1F5F9!important}
+
+/* Content */
+[data-theme="dark"] .content-col strong{color:#F1F5F9}
+[data-theme="dark"] .content-col code{background:#1E293B;color:#E2E8F0;border:1px solid #263044}
+[data-theme="dark"] .content-col p{color:#CBD5E1}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list):not(.pick-pros):not(.pick-cons):not(.steps-list) li{color:#CBD5E1}
+[data-theme="dark"] .content-col h2{border-bottom-color:#1A2336}
+
+/* Hero */
+[data-theme="dark"] .hero .reassure{color:#6B7FA0}
+[data-theme="dark"] .hero .problem{color:#94A3B8}
+[data-theme="dark"] .hero .meta{color:#6B7FA0}
+[data-theme="dark"] .hero .meta svg{color:#6B7FA0}
+
+/* Story Opener */
+[data-theme="dark"] .story-opener p{color:#D4C4B0}
+[data-theme="dark"] .story-opener::before{color:#D97706;opacity:.25}
+
+/* Explain Block */
+[data-theme="dark"] .explain-block{border-color:rgba(96,165,250,.2)}
+
+/* Quick Summary */
+[data-theme="dark"] .quick-summary{background:linear-gradient(135deg,rgba(45,212,191,.05),rgba(56,189,248,.05))}
+[data-theme="dark"] .quick-summary li{color:#CBD5E1}
+[data-theme="dark"] .quick-summary li strong{color:#F1F5F9}
+
+/* Audience Box */
+[data-theme="dark"] .audience-box{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .audience-box li{color:#CBD5E1}
+
+/* Approach Overview */
+[data-theme="dark"] .approach-overview{border-color:#1A2336}
+[data-theme="dark"] .approach-overview p{color:#CBD5E1}
+[data-theme="dark"] .approach-item{color:#CBD5E1}
+[data-theme="dark"] .approach-num{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.25)}
+[data-theme="dark"] .approach-num.deep{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:#FBBF24}
+
+/* Effect Notes */
+[data-theme="dark"] .effect-note.neutral{background:#151D2E;border-color:#1A2336;color:#CBD5E1}
+
+/* Steps */
+[data-theme="dark"] .step{border-bottom-color:#1A2336}
+[data-theme="dark"] .step-number{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.25)}
+[data-theme="dark"] .step p{color:#CBD5E1}
+[data-theme="dark"] .steps-intro{color:#94A3B8}
+
+/* Help Ending */
+[data-theme="dark"] .help-ending{background:linear-gradient(135deg,#111827,#0F172A);border-color:#1A2336}
+[data-theme="dark"] .help-ending .help-reassure{color:#6B7FA0}
+
+/* Video */
+[data-theme="dark"] .video-wrapper{border-color:#1A2336}
+[data-theme="dark"] .video-caption{color:#6B7FA0}
+
+/* TOC */
+[data-theme="dark"] .toc-card{background:var(--surface);border-color:#1A2336}
+[data-theme="dark"] .toc-link:hover{color:#F1F5F9;background:#151D2E}
+[data-theme="dark"] .toc-link.active{color:var(--accent);background:rgba(45,212,191,.1)}
+
+/* Comparison Table */
+[data-theme="dark"] .table-wrapper{border-color:#1A2336}
+[data-theme="dark"] .comparison thead{background:#151D2E}
+[data-theme="dark"] .comparison th{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison td{color:#CBD5E1;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison tbody tr:last-child td{border-bottom:none}
+[data-theme="dark"] .comparison tbody tr:hover{background:#151D2E}
+[data-theme="dark"] .comparison .badge.green{background:rgba(34,197,94,.15);color:#86EFAC}
+[data-theme="dark"] .comparison .badge.yellow{background:rgba(245,158,11,.15);color:#FDE68A}
+[data-theme="dark"] .comparison .badge.red{background:rgba(239,68,68,.15);color:#FECACA}
+[data-theme="dark"] .comparison .badge.blue{background:rgba(59,130,246,.15);color:#93C5FD}
+
+/* Pick Card */
+[data-theme="dark"] .pick-card{background:var(--surface);border-color:#1A2336}
+[data-theme="dark"] .pick-card:hover{border-color:#263044}
+[data-theme="dark"] .spec-list li{color:#CBD5E1;border-bottom-color:#1A2336}
+[data-theme="dark"] .spec-list li strong{color:#F1F5F9}
+[data-theme="dark"] .pick-pros li,[data-theme="dark"] .pick-cons li{color:#CBD5E1}
+
+/* FAQ */
+[data-theme="dark"] .faq-item{border-color:#1A2336}
+[data-theme="dark"] .faq-item.open{border-color:rgba(45,212,191,.3)}
+[data-theme="dark"] .faq-q{color:#F1F5F9}
+[data-theme="dark"] .faq-q:hover{background:#151D2E}
+[data-theme="dark"] .faq-q svg{color:#6B7FA0}
+[data-theme="dark"] .faq-item.open .faq-q svg{color:var(--accent)}
+[data-theme="dark"] .faq-a-inner{color:#CBD5E1}
+
+/* Share Bar */
+[data-theme="dark"] .share-bar{border-top-color:#1A2336;border-bottom-color:#1A2336}
+[data-theme="dark"] .share-bar span{color:#6B7FA0}
+[data-theme="dark"] .share-btn{background:#151D2E;border-color:#263044}
+[data-theme="dark"] .share-btn:hover{border-color:#374460;background:#1E293B}
+[data-theme="dark"] .share-btn svg{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy.copied{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#86EFAC}
+
+/* Author Bio */
+[data-theme="dark"] .author-bio{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .author-avatar{background:#1E293B}
+
+/* Help Section */
+[data-theme="dark"] .help{border-top-color:#1A2336}
+[data-theme="dark"] .help-btn{border-color:#263044;color:#CBD5E1}
+[data-theme="dark"] .help-btn:hover{border-color:#374460;background:#151D2E}
+
+/* Promo Cards */
+[data-theme="dark"] .promo-card{background:#0F1623;border-color:#1A2336}
+[data-theme="dark"] .promo-card:hover{border-color:#263044}
+[data-theme="dark"] .promo-card.aff .promo-icon{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .promo-card.aff .promo-icon svg{stroke:#94A3B8}
+[data-theme="dark"] .promo-card.aff .promo-btn{background:var(--accent)}
+
+/* Ad Block */
+[data-theme="dark"] .ad-block{border-color:#263044;background:#131A2B;color:#374460}
+
+/* Scroll to Top */
+[data-theme="dark"] .stp{background:#1E293B;border-color:#263044}
+[data-theme="dark"] .stp:hover{background:#263044;border-color:#374460}
+[data-theme="dark"] .stp svg{color:#94A3B8}
+
+/* Similar */
+[data-theme="dark"] .similar{border-top-color:#1A2336}
+[data-theme="dark"] .similar li{border-bottom-color:#1A2336}
+[data-theme="dark"] .similar a:hover{color:#F1F5F9}
+[data-theme="dark"] .similar a svg{color:#374460}
+
+/* Footer */
+[data-theme="dark"] .footer{background:#080C14!important}
+[data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,.06);color:#374460}
+[data-theme="dark"] .footer-bottom a{color:#6B7FA0}
+
+/* OS-level dark preference fallback for first-time visitors */
+@media(prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+        --surface:#0F1623;--surface-2:#151D2E;--surface-3:#1A2338;
+        --bg-alt:#1A2338;
+        --fg:#E2E8F0;--fg-sub:#CBD5E1;--fg-light:#94A3B8;--fg-muted:#8B9AB5;--fg-faint:#6B7FA0;
+        --dark:#F1F5F9;
+        --border:#1A2336;--border-2:#263044;--border-3:#374460;
+        --dark-card:rgba(255,255,255,.04);--dark-border:rgba(255,255,255,.08);--dark-muted:#7B8DA4;
+        --accent-soft:rgba(45,212,191,.1);--accent-border:rgba(45,212,191,.25);
+        --warn:rgba(245,158,11,.08);--warn-border:#F59E0B;--warn-text:#FDE68A;--warn-strong:#FBBF24;
+        --tip:rgba(34,197,94,.08);--tip-border:#22C55E;--tip-text:#BBF7D0;--tip-strong:#4ADE80;
+        --info:rgba(59,130,246,.08);--info-border:#60A5FA;--info-text:#93C5FD;--info-strong:#60A5FA;
+        --danger:rgba(239,68,68,.08);--danger-border:#EF4444;--danger-text:#FECACA;--danger-strong:#F87171;
+        --story-warm:rgba(194,113,58,.06);--story-warm-border:rgba(194,113,58,.2);--story-warm-accent:#D97706;
+        color-scheme:dark;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .ad-space{display:none}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+    .spec-list{grid-template-columns:1fr}
+    .theme-toggle-btn{margin-right:4px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .help-ending{padding:28px 20px}
+    .pick-card{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+
+<!-- FOUC prevention: set theme before first paint -->
+<script>
+    (function(){
+        var t=localStorage.getItem('theme');
+        if(t==='dark'||((!t)&&window.matchMedia('(prefers-color-scheme:dark)').matches)){
+            document.documentElement.setAttribute('data-theme','dark');
+        }
+    })();
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link active">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>How to Test an API Without Code</span>
+</nav>
+
+<main class="page-layout">
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">API Testing &middot; No-Code Testing Guide</p>
+                <h1 itemprop="headline">How to Test an API Without Writing Code</h1>
+                <p class="problem" itemprop="description">You do not need to write a single line of code to test an API thoroughly. This guide shows you how to use visual tools to inspect requests, validate responses, and find bugs like a professional, using a coffee roasting inventory system as your real-world anchor.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="story-opener">
+                <p>Last month, a friend who manages operations for a chain of specialty coffee shops asked me a question that caught me off guard. Her company had just built a new digital inventory system called RoastTrack, and the developers kept saying things like "the API is returning a 422 on the POST endpoint" and "the JSON payload is missing a required field." She nodded along in meetings, but privately, she had no idea what any of it meant. She knew the business logic inside and out. She knew exactly how many kilograms of Ethiopian Yirgacheffe should be in the system after a roast cycle. But the technical language of APIs felt like a wall keeping her from doing her job.</p>
+                <p>Her situation is incredibly common. API testing has been locked behind a gate labeled "programmers only" for years, even though the people who best understand the business rules, the expected data, and the edge cases are often the ones who never learned to code. That wall does not need to exist anymore. Today, a new generation of visual tools lets anyone who can read a webpage and fill out a form test an API with the same rigor as a senior engineer. This guide is for her, and for you.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    What "Testing an API Without Code" Really Means
+                </div>
+                <p>When developers test an API, they often open a terminal and type out raw commands. They manually format the headers, the body, and the URL as plain text. What you will do instead is use a graphical application with text boxes, dropdown menus, and clickable buttons. You are still doing rigorous, technical testing. You are still inspecting the exact same data. You are just using a visual interface to construct and send your requests instead of typing them character by character into a command line.</p>
+                <p>Think of it like the difference between building a spreadsheet by typing raw formulas versus using the menu buttons to insert a chart. The underlying math is identical. The interface is just friendlier.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>APIs are conversations:</strong> One system sends a request, another sends a response. Testing verifies that this conversation is accurate and secure.</li>
+                    <li><strong>Visual tools replace programming:</strong> Applications like Postman, Insomnia, and Hoppscotch let you build and send requests using forms and buttons.</li>
+                    <li><strong>Status codes tell the story:</strong> Learning to read codes like 200, 400, and 500 tells you instantly if the problem is your fault or the server's fault.</li>
+                    <li><strong>Error cases hide the bugs:</strong> Testing what happens when things go wrong is where you find the most critical vulnerabilities.</li>
+                    <li><strong>Variables enable automation:</strong> You can chain requests and run full test suites without writing a single script.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Guide Is For
+                </div>
+                <ul class="audience-list">
+                    <li>Project managers and business analysts who need to verify technical implementations.</li>
+                    <li>Manual QA testers transitioning from frontend click-testing to backend API testing.</li>
+                    <li>Operations staff like our coffee shop manager who understand the data but not the protocols.</li>
+                    <li>Developers who want a refresher on API fundamentals and tool-agnostic workflows.</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    How We Will Cover This
+                </div>
+                <p>We will start with the concepts, move to the tools, and then tie everything together with a continuous real-world scenario. You do not need any software installed to understand the first half.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>Understand the anatomy of API requests, responses, HTTP methods, and JSON data.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>Evaluate the best visual API clients and learn their strengths and weaknesses.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>Follow a complete step-by-step workflow testing the RoastTrack coffee inventory API, including error hunting and automation.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-block in-content" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <h2 id="why-api-testing-matters">Why API Testing Matters More Than You Think</h2>
+            <p>Most people associate software testing with clicking through a website to see if buttons work and pages load. That is frontend testing, and it is important. But if the website looks beautiful and the buttons click perfectly, yet the API behind it is sending the wrong prices, leaking customer data, or taking thirty seconds to respond, the user experience is still broken. The frontend is just a pretty face. The API is the brain and the nervous system.</p>
+            <p>When the barista app at our coffee shop displays the wrong bean weight, it is rarely the app's fault. The app just showed what RoastTrack told it. When a customer places an order online and it never shows up in the roastery's fulfillment queue, the API that connects the storefront to the inventory failed.</p>
+            <p>API testing catches the problems that frontend testing cannot see. It verifies the actual data flowing between systems. It checks security, making sure an unauthorized person cannot ask RoastTrack to delete all the inventory. It checks performance, making sure the system does not crash when fifty baristas across the city check stock levels at the exact same second.</p>
+            <p>For a long time, API testing was locked behind a wall of programming. If you wanted to test an API, you had to write a script in Python, JavaScript, or terminal commands. That barrier excluded a massive group of people who understood the business logic perfectly but did not know how to type out a function. Today, that barrier is gone.</p>
+
+            <h2 id="anatomy-of-an-api">The Anatomy of an API Conversation</h2>
+            <p>Before you can test something, you need to understand its parts. Every interaction with an API boils down to a single exchange: a Request and a Response. Let us break down the anatomy of a request using our RoastTrack system.</p>
+
+            <h3>The URL, Also Known as the Endpoint</h3>
+            <p>Every request needs an address. In web browsing, you type a URL into your browser to get a page. In API testing, you type a URL into your testing tool to get data. But API URLs look slightly different. They are called endpoints, and they usually represent specific resources.</p>
+            <p>A browser URL might look like the homepage of a website. An API endpoint for RoastTrack might look like this: <code>https://api.roasttrack.com/v1/batches</code></p>
+            <p>This tells you several things. The domain is <code>api.roasttrack.com</code>. The version of the API is <code>v1</code>, which is important because companies update APIs and you need to know which version you are testing. And the resource you are asking about is <code>batches</code>, which in our coffee world means a batch of roasted beans.</p>
+
+            <h3>HTTP Methods: The Verbs of the Web</h3>
+            <p>A URL alone is a noun. It is the thing you are talking about. But to have a conversation, you need verbs. You need actions. The HTTP protocol provides these actions, and they are called HTTP methods. There are many, but for the vast majority of API testing, you only need to know five.</p>
+            <p><strong>GET</strong> is the simplest. It means "give me information." If you send a GET request to the batches endpoint, you are asking RoastTrack to show you a list of all the roasted batches. You are not changing anything. You are just looking. A GET request never has a body. It is purely for retrieving data.</p>
+            <p><strong>POST</strong> means "create something new." When a roaster finishes a new batch of Colombian Supremo beans, the roasting machine sends a POST request to the batches endpoint. It carries a payload, a body, containing all the details of that new batch: the bean origin, the roast date, the weight, and the flavor notes. The server takes that information and creates a new record in the database.</p>
+            <p><strong>PUT</strong> means "replace this entire thing." Imagine you realize the weight recorded for batch number 104 was wrong. It was not fifteen kilograms, it was eighteen. A PUT request to the endpoint for batch 104 would send the complete, corrected record. The server replaces the old record entirely with the new one you sent.</p>
+            <p><strong>PATCH</strong> means "update just part of this thing." This is finer than PUT. If you only want to update the tasting notes for batch 104, changing "chocolate" to "cocoa," you do not need to send the entire batch record. You just send a PATCH request with only the tasting notes field changed. The server merges your small change into the existing record.</p>
+            <p><strong>DELETE</strong> means exactly what it sounds like. If a bag of beans got contaminated and needs to be removed from the system, you send a DELETE request to that specific batch's endpoint. The server removes it.</p>
+            <p>Understanding these five methods is half the battle in API testing. When you look at a new API, your first question should always be: which methods does this endpoint support, and what should happen when I use them?</p>
+
+            <h3>Headers: The Metadata Envelope</h3>
+            <p>When you send a physical letter, you put an envelope around it. On the envelope, you write the return address, the destination address, and maybe a note saying "Please forward if this person has moved." The letter itself is the payload. The envelope is the metadata. Headers in an API request are exactly that envelope. They carry information about the request itself, not the data inside it.</p>
+            <p>Common headers you will encounter include <code>Content-Type</code>, which tells the server what format your data is in (almost always <code>application/json</code> for modern APIs), and <code>Authorization</code>, which carries your credentials so the server knows who you are and what you are allowed to do.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>You do not need to memorize headers.</strong> Your visual tool will show you the most common ones as dropdown options. You just need to understand that they exist and that they control how the server interprets your request.</p>
+                </div>
+            </div>
+
+            <h3>The Body: Where the Data Lives</h3>
+            <p>For GET and DELETE requests, there is usually no body. You are just asking the server to do something, and the URL and headers contain all the information needed. But for POST, PUT, and PATCH requests, the body is where you put the actual data you want to send.</p>
+            <p>In modern APIs, the body is almost always formatted as JSON. JSON stands for JavaScript Object Notation, but you do not need to know JavaScript to read it. It is simply a way of structuring data using curly braces, colons, and commas. Here is what a POST request body to create a new coffee batch might look like:</p>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>Common beginner mistake:</strong> Sending a POST or PUT request without setting the <code>Content-Type</code> header to <code>application/json</code>. The server will not know how to read your data and will return a 415 Unsupported Media Type error. Most visual tools set this automatically when you select "JSON" as the body type, but always verify.</p>
+                </div>
+            </div>
+
+            <h3>Status Codes: The Shorthand Language</h3>
+            <p>Every API response comes back with a status code. This is a three-digit number that tells you, at a glance, what happened. You do not need to memorize all of them. You need to know the five families.</p>
+            <ul>
+                <li><strong>2xx (Success):</strong> The request worked. <code>200 OK</code> means "here is the data you asked for." <code>201 Created</code> means "your new record was saved." <code>204 No Content</code> means "the deletion worked, there is nothing to send back."</li>
+                <li><strong>4xx (Client Error):</strong> You made a mistake. <code>400 Bad Request</code> means your data was malformed. <code>401 Unauthorized</code> means you are not logged in. <code>403 Forbidden</code> means you are logged in but not allowed to do this. <code>404 Not Found</code> means the endpoint or resource does not exist. <code>422 Unprocessable Entity</code> means your data was valid JSON but failed the server's validation rules.</li>
+                <li><strong>5xx (Server Error):</strong> The server made a mistake. <code>500 Internal Server Error</code> is a catch-all for "something broke on our end." <code>502 Bad Gateway</code> means the server is down or misconfigured. <code>503 Service Unavailable</code> means the server is overloaded.</li>
+            </ul>
+            <p>The rule of thumb is simple: if you see a 4xx, the problem is probably your fault. Check your URL, your headers, your body, and your permissions. If you see a 5xx, the problem is the server's fault. Report it to the development team.</p>
+
+            <h3>The Response Body: Reading the Data</h3>
+            <p>When you send a GET request for a list of coffee batches, the server sends back a response body containing that data in JSON format. Your visual tool will display this as formatted, color-coded text that is easy to read. You need to get comfortable scanning JSON responses and spotting when something looks wrong.</p>
+            <p>A healthy response for our batches endpoint might look like an array of objects, each with fields like <code>id</code>, <code>origin</code>, <code>roastDate</code>, <code>weightKg</code>, and <code>status</code>. An unhealthy response might have missing fields, null values where data should exist, or data types that do not match what the documentation says. For example, if <code>weightKg</code> is supposed to be a number but comes back as a string like <code>"fifteen"</code>, that is a bug.</p>
+
+            <h2 id="choosing-the-right-tool">Choosing the Right Visual API Client</h2>
+            <p>Now that you understand what you are testing, you need a tool to do it with. There are several excellent options, and they all do the same core thing: let you construct requests visually and read responses without code. The differences are in workflow, pricing, and extra features.</p>
+
+            <div class="comparison">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Cost</th>
+                                <th>Offline</th>
+                                <th>Best For</th>
+                                <th>Verdict</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Postman</strong></td>
+                                <td>Free tier / Paid</td>
+                                <td><span class="badge yellow">Partial</span></td>
+                                <td>Teams, automation, large collections</td>
+                                <td><span class="badge green">Industry Standard</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Insomnia</strong></td>
+                                <td>Free / Paid</td>
+                                <td><span class="badge green">Yes</span></td>
+                                <td>Solo testers, clean UI</td>
+                                <td><span class="badge blue">Best UX</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hoppscotch</strong></td>
+                                <td>Free</td>
+                                <td><span class="badge red">No</span></td>
+                                <td>Quick tests, open-source fans</td>
+                                <td><span class="badge green">Fastest Start</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bruno</strong></td>
+                                <td>Free</td>
+                                <td><span class="badge green">Yes</span></td>
+                                <td>Git-based workflows, privacy</td>
+                                <td><span class="badge blue">Rising Star</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Swagger UI</strong></td>
+                                <td>Free</td>
+                                <td><span class="badge red">No</span></td>
+                                <td>Exploring documented APIs</td>
+                                <td><span class="badge yellow">Read-Only</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content">
+                    <p><strong>My recommendation for beginners:</strong> Start with Hoppscotch in your browser right now, no install needed. Once you are comfortable with the basics, move to Insomnia or Postman for more advanced workflows like saved collections and test automation.</p>
+                </div>
+            </div>
+
+            <h2 id="step-by-step-testing">Step-by-Step: Testing the RoastTrack API</h2>
+            <p class="steps-intro">Let us put everything together. We are going to test the RoastTrack coffee inventory API from start to finish, the way a professional tester would. Open Hoppscotch, Postman, or Insomnia in another tab and follow along.</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-header">
+                        <span class="step-number">1</span>
+                        <h3>Send Your First GET Request</h3>
+                    </div>
+                    <p>Set the method to GET. Enter the endpoint URL: <code>https://api.roasttrack.com/v1/batches</code>. Click Send. Look at the response. Check the status code. Is it 200? Good. Now look at the body. Do you see an array of batch objects? Does each batch have an <code>id</code>, <code>origin</code>, and <code>weightKg</code>? If any field is missing or null, note it. That is your first finding.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <span class="step-number">2</span>
+                        <h3>Test Filtering and Pagination</h3>
+                    </div>
+                    <p>Add a query parameter: <code>?status=roasted&limit=5</code>. Send the request again. Do you only get roasted batches? Are there at most five? Now try <code>?status=invalid_status</code>. What happens? If the server returns a 200 with an empty array, that might be acceptable. If it returns a 500 error, that is a bug. Invalid input should never crash the server.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <span class="step-number">3</span>
+                        <h3>Create a New Batch with POST</h3>
+                    </div>
+                    <p>Set the method to POST. Keep the same endpoint. Switch to the Body tab, select JSON, and enter a valid batch object with all required fields. Send it. You should get a 201 Created with the new batch in the response, including a server-generated <code>id</code>. Now change it: remove a required field and send again. You should get a 422 error with a message explaining what is missing. If you get a 500 instead, the server's validation is broken.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <span class="step-number">4</span>
+                        <h3>Test Authorization Boundaries</h3>
+                    </div>
+                    <p>Remove your authorization token from the headers. Try to send a DELETE request to delete a batch. You should get a 401 or 403. If the server deletes the batch anyway, you have found a critical security vulnerability. Report it immediately.</p>
+                </div>
+                <div class="step">
+                    <div class="step-header">
+                        <span class="step-number">5</span>
+                        <h3>Document and Report</h3>
+                    </div>
+                    <p>For every issue you find, record: the endpoint, the method, the request you sent, the expected result, the actual result, and a screenshot. Organize your findings by severity. A 401 bypass is critical. A misspelled error message is minor. This structure makes your report actionable for developers.</p>
+                </div>
+            </div>
+
+            <div class="ad-block in-content" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <h2 id="common-mistakes">Common Mistakes to Avoid</h2>
+            <p>Even with visual tools, there are pitfalls that trip up beginners consistently. Here are the ones I see most often.</p>
+            <ul>
+                <li><strong>Only testing the happy path.</strong> Sending valid data and getting a 200 proves the system works when everything is perfect. It proves nothing about what happens when things go wrong. Most bugs live in error handling.</li>
+                <li><strong>Ignoring the response headers.</strong> The body gets all the attention, but response headers contain critical information like rate limit counters, caching directives, and content type declarations. A response that claims to be JSON but has no <code>Content-Type: application/json</code> header is a configuration bug.</li>
+                <li><strong>Not testing with realistic data volumes.</strong> A GET request that returns three records in testing might timeout when it returns thirty thousand in production. Ask the team about expected data volumes and test accordingly.</li>
+                <li><strong>Assuming the documentation is correct.</strong> Treat the documentation as a guide, not a guarantee. Your job as a tester is to verify that the documentation matches reality. When it does not, that discrepancy itself is a bug.</li>
+            </ul>
+
+            <div class="callout danger">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>Never test against a production API with destructive methods unless explicitly authorized.</strong> Sending DELETE or PUT requests to a live system can permanently destroy real data. Always confirm you are using a test or staging environment.</p>
+                </div>
+            </div>
+
+            <h2 id="automation-without-code">Automation Without Code</h2>
+            <p>Once you have a set of requests that verify the API's behavior, you will want to run them repeatedly without clicking through each one manually. Postman and Insomnia both offer visual test runners that let you write assertions using simple point-and-click interfaces or minimal scripting languages.</p>
+            <p>In Postman, you can add tests to any request using their "Tests" tab. A basic assertion looks like checking that the status code is 200, or that a specific field in the response body contains the expected value. You can chain requests together so that the output of one (like a newly created batch ID) automatically feeds into the input of the next. You can run entire collections with one click and see a pass/fail report.</p>
+            <p>This is not traditional programming. It is structured testing with guardrails. And it is the natural next step once you are comfortable with manual visual testing.</p>
+
+            <div class="help-ending">
+                <div class="help-ending-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <h2>Still unsure where to start?</h2>
+                <p>Open Hoppscotch in your browser right now. Find any free public API (like JSONPlaceholder or PokeAPI). Send a GET request. Look at what comes back. That single action is the first step, and you already have everything you need to take it.</p>
+                <p class="help-reassure">No installs, no accounts, no code. Just a URL and a Send button.</p>
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </button>
+                <button class="share-btn copy" id="copyLinkBtn" aria-label="Copy link">
+                    COPY LINK
+                </button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar"><img src="../img/founder-mx.webp" alt="Melalew Mengistu" loading="lazy"></div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="help">
+                <h2>Need Help?</h2>
+                <p>Ask questions or share your testing workflow with the community.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Telegram
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc" id="tocSidebar">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list">
+                    <a href="#why-api-testing-matters" class="toc-link">Why API Testing Matters</a>
+                    <a href="#anatomy-of-an-api" class="toc-link">Anatomy of an API Conversation</a>
+                    <a href="#choosing-the-right-tool" class="toc-link">Choosing the Right Tool</a>
+                    <a href="#step-by-step-testing" class="toc-link">Step-by-Step Testing</a>
+                    <a href="#common-mistakes" class="toc-link">Common Mistakes to Avoid</a>
+                    <a href="#automation-without-code" class="toc-link">Automation Without Code</a>
+                </div>
+            </div>
+
+            <div class="ad-space" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+        </div>
+    </aside>
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="https://t.me/melexit" class="cta-btn primary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        <span>Join Community</span>
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    /* === Theme Toggle === */
+    var themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    /* === Scroll Progress Bar === */
+    var progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+        }, { passive: true });
+    }
+
+        // Close on link click
+        mobileNav.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('open');
+                menuBtn.classList.remove('active');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    /* === FAQ Accordion === */
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var item = btn.parentElement;
+            var answer = item.querySelector('.faq-a');
+            var inner = item.querySelector('.faq-a-inner');
+            var isOpen = item.classList.contains('open');
+
+            // Close all others
+            document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+                }
+            });
+
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = '0';
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
+    });
+
+    /* === TOC Active Highlighting === */
+    var tocLinks = document.querySelectorAll('.toc-link');
+    var headings = [];
+    tocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (el) headings.push({ el: el, link: link });
+    });
+
+    if (headings.length) {
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var active = null;
+            for (var i = headings.length - 1; i >= 0; i--) {
+                if (headings[i].el.offsetTop - 120 <= scrollTop) {
+                    active = headings[i];
+                    break;
+                }
+            }
+            tocLinks.forEach(function(l) { l.classList.remove('active'); });
+            if (active) active.link.classList.add('active');
+        }, { passive: true });
+    }
+
+    /* === Copy Link Button === */
+    var copyBtn = document.getElementById('copyLinkBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(location.href).then(function() {
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"></polyline></svg> COPIED';
+                setTimeout(function() {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> COPY LINK';
+                }, 2000);
+            });
+        });
+    }
+
+    /* === Scroll to Top === */
+    var stpBtn = document.getElementById('scrollToTop');
+    if (stpBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 600) {
+                stpBtn.classList.add('vis');
+            } else {
+                stpBtn.classList.remove('vis');
+            }
+        }, { passive: true });
+        stpBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* === Mobile CTA Visibility === */
+    var mobileCta = document.getElementById('mobileCta');
+    if (mobileCta) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 800) {
+                mobileCta.classList.add('vis');
+            } else {
+                mobileCta.classList.remove('vis');
+            }
+        }, { passive: true });
+    }
+
+});
+</script>
+
+</body>
+</html>

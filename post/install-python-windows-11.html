@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Install Python on Windows 11 (Step-by-Step 2026) — Melex InfoTech</title>
+    <meta name="description" content="The definitive guide to installing Python 3 on Windows 11. Learn how to set up the environment, configure PATH, and run your first script in minutes.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/Install-Python-Windows-11">
+    <meta name="author" content="Melex InfoTech">
+    <meta name="keywords" content="Install Python, Windows 11, Python Setup, Python PATH, Programming 2026">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Install Python on Windows 11 (Step-by-Step 2026)">
+    <meta property="og:description" content="The definitive guide to installing Python 3 on Windows 11. Set up your development environment correctly the first time.">
+    <meta property="og:url" content="https://melextech.dev/post/Install-Python-Windows-11">
+    <meta property="og:image" content="https://melextech.dev/guide/img/install-python.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Melex InfoTech">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Guides">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="Windows 11">
+    <meta property="article:tag" content="Development">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Install Python on Windows 11 (Step-by-Step 2026)">
+    <meta name="twitter:description" content="The definitive guide to installing Python 3 on Windows 11. Set up your development environment correctly the first time.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/install-python.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Install Python on Windows 11 (Step-by-Step 2026)",
+        "description": "A professional guide to setting up Python development environment on Windows 11.",
+        "image": "https://melextech.dev/guide/img/install-python.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Melex InfoTech",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/Install-Python-Windows-11"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Install Python on Windows 11",
+        "description": "Complete steps to download, install, and verify Python on Windows 11.",
+        "totalTime": "PT10M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Download Installer",
+                "text": "Go to python.org and download the latest 64-bit Windows installer."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Run Installer",
+                "text": "Run the file and ensure 'Add python.exe to PATH' is checked before clicking Install Now."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Verify Installation",
+                "text": "Open Command Prompt and type 'python --version' to confirm it works."
+            }
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "Melex InfoTech"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Should I use 32-bit or 64-bit Python?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use 64-bit unless you have a specific reason to use 32-bit. Modern Windows 11 systems are all 64-bit, and 64-bit Python can access more than 4GB of RAM, which matters for data science and machine learning work. Some legacy enterprise tools only offer 32-bit builds, but that's increasingly rare."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What if I forgot to check 'Add to PATH'?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Open Windows Search, type 'environment variables,' click 'Edit the system environment variables,' find 'Path' in the list, click Edit, and add the Python installation folder path (usually C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python3xx\\) to the list. Then reopen Command Prompt."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does installing Python affect my existing software?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Python installs into its own directory and doesn't modify other software. Some applications bundle their own Python runtime (like Blender or QGIS), which is separate from your system Python. These can coexist without conflict."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I install specific packages?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Open Command Prompt and run 'pip install package_name'. This uses Python's package manager to download and install packages from PyPI (the Python Package Index). For project-specific dependencies, use virtual environments first to avoid conflicts between projects."
+                }
+            },
+            {
+    "@type": "Question",
+    "name": "Can I have multiple Python versions installed?",
+    "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Python allows side-by-side installation of different versions. The installer gives you the option to keep the old version when installing a new one. Each version installs to a separate folder with its own pip. You can select which version runs by default or call a specific version explicitly like 'py -3.11' or 'py -3.12'."
+    }
+}
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Install Python", "item": "https://melextech.dev/post/Install-Python-Windows-11"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+    --code-bg:#1e293b;--code-fg:#e2e8f0;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+code{font-family:'JetBrains Mono',monospace;background:var(--surface-2);padding:3px 6px;border-radius:4px;font-size:.85em;color:#d946ef;border:1px solid var(--border)}
+pre{background:var(--code-bg);color:var(--code-fg);padding:18px;border-radius:var(--radius-sm);overflow-x:auto;font-size:.85rem;line-height:1.6;margin:16px 0;border:1px solid var(--border-2)}
+pre code{background:transparent;color:inherit;border:none;padding:0}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em;font-weight:700;text-transform:uppercase}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Gregory,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+
+.fix-block{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.fix-block:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fix-header{margin-bottom:6px}
+.fix-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fix-tag.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.fix-tag.deeper{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.fix-tag.deepest{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.fix-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--dark);letter-spacing:-.02em;line-height:1.35;margin:0;padding:0;border:none}
+.fix-reason{font-size:.86rem;color:var(--fg-light);line-height:1.75;margin:10px 0 0}
+
+.steps{margin-bottom:0}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px dashed var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent-hover);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+.step p:last-child{margin-bottom:0}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.success{background:var(--tip);border:1px solid #BBF7D0;border-radius:var(--radius);padding:20px 24px;margin:32px 0;text-align:center}
+.success p{font-size:.88rem;color:#166534;margin:0;line-height:1.6}
+.success strong{color:#14532D}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);border-bottom:2px solid var(--border);padding-bottom:10px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4;background:var(--surface)}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.help-ending{text-align:center;padding:36px 24px;background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1px solid var(--border);border-radius:var(--radius);margin-top:40px}
+.help-ending .help-ending-icon{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.help-ending .help-ending-icon svg{width:22px;height:22px;color:var(--accent)}
+.help-ending h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;border:none;padding:0}
+.help-ending>p{font-size:.85rem;color:var(--fg-light);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto}
+.help-ending .help-reassure{font-size:.82rem;color:var(--fg-muted);margin-top:16px;line-height:1.6}
+
+.promo-card{border-radius:var(--radius);padding:24px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;font-size:.84rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s;background:var(--accent);color:#fff}
+.mobile-cta .cta-btn:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .explain-block{padding:20px 18px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+
+/* ─── What the Installer Gives You ─── */
+.quick-summary{
+    background:linear-gradient(135deg,var(--accent-soft),#F0F9FF);
+    border:1px solid var(--accent-border);
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin-bottom:36px;
+    position:relative;
+    overflow:hidden;
+}
+.quick-summary::after{
+    content:'';
+    position:absolute;
+    top:-30px;right:-30px;
+    width:120px;height:120px;
+    background:radial-gradient(circle,rgba(45,212,191,.12) 0%,transparent 70%);
+    pointer-events:none;
+}
+.qs-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;
+    color:var(--accent-hover);
+    margin-bottom:16px;
+    display:flex;align-items:center;gap:6px;
+}
+.qs-label svg{width:14px;height:14px}
+.qs-list{display:flex;flex-direction:column;gap:0}
+.qs-list li{
+    display:flex;align-items:flex-start;gap:14px;
+    font-size:.88rem;color:var(--fg-sub);line-height:1.7;
+    padding:12px 0;
+    border-bottom:1px solid rgba(45,212,191,.12);
+    position:relative;
+}
+.qs-list li:last-child{border-bottom:none;padding-bottom:0}
+.qs-list li:first-child{padding-top:0}
+.qs-list li strong{color:var(--fg);font-weight:600;white-space:nowrap}
+.qs-item-icon{
+    width:36px;height:36px;border-radius:10px;
+    background:#fff;border:1px solid rgba(45,212,191,.2);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;margin-top:1px;
+}
+.qs-item-icon svg{width:18px;height:18px;color:var(--accent-hover)}
+.qs-item-text{flex:1;min-width:0}
+
+/* ─── Common Errors and Fixes ─── */
+.errors-section{margin:40px 0 0}
+.errors-section .errors-title{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1.2rem;font-weight:700;color:var(--dark);
+    border-bottom:2px solid var(--border);
+    padding-bottom:10px;margin-bottom:20px;
+    display:flex;align-items:center;gap:10px;
+}
+.errors-section .errors-title svg{width:20px;height:20px;color:var(--danger-border)}
+
+.error-card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s,box-shadow .2s;
+}
+.error-card:hover{
+    border-color:var(--border-2);
+    box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.error-card-header{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:16px 20px;
+    cursor:pointer;transition:background .15s;
+    background:var(--surface);
+    width:100%;text-align:left;
+    font-family:'Plus Jakarta Sans',sans-serif;
+}
+.error-card-header:hover{background:var(--surface-2)}
+.error-card-left{display:flex;align-items:center;gap:12px;min-width:0}
+.error-card-num{
+    width:28px;height:28px;border-radius:8px;
+    background:var(--danger-border);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.72rem;font-weight:700;flex-shrink:0;
+}
+.error-card-name{
+    font-size:.88rem;font-weight:600;color:var(--dark);
+    line-height:1.4;
+}
+.error-card-toggle{
+    width:24px;height:24px;flex-shrink:0;
+    color:var(--fg-muted);transition:transform .25s,color .2s;
+}
+.error-card.open .error-card-toggle{transform:rotate(180deg);color:var(--accent)}
+.error-card.open{border-color:var(--accent-border)}
+.error-card-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+}
+.error-card-body-inner{padding:0 20px 20px}
+
+.error-msg{
+    background:var(--code-bg);color:#FCA5A5;
+    padding:20px 16px 12px;
+    border-radius:var(--radius-xs);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.8rem;line-height:1.6;
+    margin-bottom:16px;
+    border:1px solid rgba(239,68,68,.15);
+    word-break:break-word;
+}
+.error-badge{
+    display:inline-block;
+    font-family:'Inter',sans-serif;
+    font-size:.6rem;font-weight:700;
+    letter-spacing:.06em;
+    padding:1px 8px;border-radius:4px;
+    color:#fff;margin-bottom:10px;
+}
+.error-badge.err{background:var(--danger-border)}
+.error-badge.fix{background:var(--tip-border)}
+
+.error-fix{
+    background:var(--tip);border:1px solid #BBF7D0;
+    border-radius:var(--radius-sm);
+    padding:20px 18px 18px;
+}
+.error-fix p{font-size:.84rem;color:var(--tip-text);line-height:1.75;margin:0}
+.error-fix p+p{margin-top:10px}
+.error-fix strong{color:var(--tip-strong)}
+.error-fix pre{margin:10px 0 0}
+.error-fix code{color:var(--tip-text);background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08)}
+
+/* ─── Dark mode ─── */
+[data-theme="dark"] .error-card{border-color:#1A2336;background:#0F1623}
+[data-theme="dark"] .error-card:hover{border-color:#263044;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+[data-theme="dark"] .error-card.open{border-color:rgba(45,212,191,.3)}
+[data-theme="dark"] .error-card-header{background:#0F1623}
+[data-theme="dark"] .error-card-header:hover{background:#151D2E}
+[data-theme="dark"] .error-card-name{color:#F1F5F9}
+[data-theme="dark"] .error-card-toggle{color:#5A6A82}
+[data-theme="dark"] .error-card.open .error-card-toggle{color:var(--accent)}
+[data-theme="dark"] .error-msg{background:#0B0F19;color:#FCA5A5;border-color:rgba(239,68,68,.15)}
+[data-theme="dark"] .error-fix{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.2)}
+[data-theme="dark"] .error-fix p{color:#86EFAC}
+[data-theme="dark"] .error-fix strong{color:#4ADE80}
+[data-theme="dark"] .error-fix code{color:#86EFAC;background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.06)}
+[data-theme="dark"] .errors-title{border-bottom-color:#1A2336}
+[data-theme="dark"] .errors-title svg{color:#F87171}
+
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-2);
+    color: var(--accent-hover);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            // Get current active theme state
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Install Python</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">DEVELOPMENT SETUP</p>
+                <h1 itemprop="headline">How to Install Python on Windows 11 (Step-by-Step 2026)</h1>
+                <p class="problem" itemprop="description">A complete guide to installing Python 3 on Windows 11, including PATH configuration, package management verification, and running your first script all in about five minutes.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>A junior developer messaged up their PATH variable during onboarding. Every time they opened a terminal, the system couldn't find Python. They spent an hour trying to figure out why <code>python</code> returned "'python' is not recognized as an internal or external command." The fix took thirty seconds: reinstall with the checkbox checked.</p>
+                <p>This is the single most common Python installation mistake on Windows. The installer handles PATH correctly if you let it but if you miss that checkbox, you'll spend more time troubleshooting than you spent installing.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    What PATH Actually Does
+                </div>
+                <p><strong>PATH</strong> is a system variable that tells Windows which folders to search when you type a command in the terminal. When you type <code>python</code>, Windows checks each folder in the PATH list from left to right until it finds <code>python.exe</code>. If the Python folder isn't in that list, you get "'python' is not recognized."</p>
+                <p>Before Python 3.4, this checkbox wasn't checked by default and users had to add the path manually. Now it is, which is why the installation is straightforward but only if you don't skip that step.</p>
+                <p>There's a second reason PATH matters: if you install multiple Python versions, the last one installed becomes the default. The previous version is still accessible by its full path like <code>py -3.11</code> instead of <code>python</code>.</p>
+            </div>
+
+<div class="quick-summary">
+    <div class="qs-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        What the Installer Gives You
+    </div>
+    <ul class="qs-list">
+        <li>
+            <div class="qs-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            </div>
+            <div class="qs-item-text">
+                <strong>Python interpreter</strong> The actual language runtime that executes <code>.py</code> files. This is what you're really installing; everything else is bonus.
+            </div>
+        </li>
+        <li>
+            <div class="qs-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <div class="qs-item-text">
+                <strong>pip</strong> Python's package manager. Lets you install libraries like Django, NumPy, or Requests from PyPI with a single command.
+            </div>
+        </li>
+        <li>
+            <div class="qs-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div class="qs-item-text">
+                <strong>IDLE</strong> A lightweight graphical editor and REPL bundled with Python. Useful for quick experiments, though most developers switch to VS Code or PyCharm.
+            </div>
+        </li>
+        <li>
+            <div class="qs-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"></path><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            </div>
+            <div class="qs-item-text">
+                <strong>py launcher</strong> A Windows-specific tool that lets you pick which Python version runs when you double-click a <code>.py</code> file or type <code>py</code> in the terminal.
+            </div>
+        </li>
+    </ul>
+</div>
+
+<section class="errors-section" id="errors">
+    <h2 class="errors-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        Common Errors and Fixes
+    </h2>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">1</span>
+                <span class="error-card-name">'python' is not recognized as an internal or external command</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    'python' is not recognized as an internal or external command, operable program or batch file.
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> The Python installation folder is not in your system PATH. This happens when the "Add python.exe to PATH" checkbox was unchecked during installation.</p>
+                    <p><strong>Fix:</strong> Reinstall Python and make sure the checkbox is checked. Alternatively, manually add the path:</p>
+                    <pre><code># Add these two paths to System PATH:
+C:\Users\YourName\AppData\Local\Programs\Python\Python313\
+C:\Users\YourName\AppData\Local\Programs\Python\Python313\Scripts\</code></pre>
+                    <p>Search "environment variables" → "Edit the system environment variables" → "Environment Variables" → Find "Path" under User variables → Edit → Add both paths → Restart your terminal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">2</span>
+                <span class="error-card-name">'pip' is not recognized as an internal or external command</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    'pip' is not recognized as an internal or external command, operable program or batch file.
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> The <code>Scripts\</code> subfolder inside your Python installation isn't in PATH. This folder contains <code>pip.exe</code>. The main Python folder may be in PATH, but Scripts often gets missed in manual setup.</p>
+                    <p><strong>Fix:</strong> Add the Scripts folder to PATH (same method as Error 1), or use this shortcut that works regardless of PATH:</p>
+                    <pre><code>python -m pip --version</code></pre>
+                    <p>If that works, your pip is fine it's just the Scripts folder missing from PATH. Add it and <code>pip</code> will work directly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">3</span>
+                <span class="error-card-name">SSL: CERTIFICATE_VERIFY_FAILED when using pip</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate')
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> Corporate proxies, antivirus SSL inspection, or outdated certificate bundles can break pip's HTTPS connections to PyPI.</p>
+                    <p><strong>Option A: update certificates:</strong></p>
+                    <pre><code>python -m pip install --upgrade certifi
+python -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org package_name</code></pre>
+                    <p><strong>Option B: if behind a proxy:</strong> Configure your proxy settings or ask IT to add <code>pypi.org</code> and <code>files.pythonhosted.org</code> to the SSL inspection allowlist.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">4</span>
+                <span class="error-card-name">PermissionError: [Errno 13] Permission denied during install</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    Could not install packages due to an OSError: [Errno 13] Permission denied: 'C:\Program Files\Python313\Lib\site-packages\...'
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> Python was installed for "All Users" (to <code>Program Files</code>) and you don't have write permission without admin rights.</p>
+                    <p><strong>Option A (recommended):</strong></p>
+                    <pre><code>pip install --user package_name</code></pre>
+                    <p><strong>Option B:</strong> Run Command Prompt as Administrator and retry.</p>
+                    <p><strong>Option C (best long-term):</strong> Reinstall Python with "Install just for me" instead of "Install for all users" to avoid permission issues entirely.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">5</span>
+                <span class="error-card-name">Error 0x80070002 — Installation fails silently</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    Python 3.13.2 Setup failed with error code 0x80070002. The system cannot find the file specified.
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> The installer file is corrupted (incomplete download) or your antivirus quarantined part of it during execution.</p>
+                    <p><strong>Fix:</strong></p>
+                    <pre><code># 1. Re-download the installer (don't reuse the old file)
+# 2. Temporarily disable real-time protection in Windows Defender
+# 3. Right-click the installer → Properties → check "Unblock" at bottom
+# 4. Run the installer again</code></pre>
+                    <p>If it still fails, try the <strong>web-based installer</strong> instead of the offline one — it's a smaller download that pulls components on demand and is less likely to trigger antivirus heuristics.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-card" data-error>
+        <button class="error-card-header" aria-expanded="false">
+            <div class="error-card-left">
+                <span class="error-card-num">6</span>
+                <span class="error-card-name">Wrong Python version runs (multiple versions installed)</span>
+            </div>
+            <svg class="error-card-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="error-card-body">
+            <div class="error-card-body-inner">
+                <div class="error-msg">
+                    <span class="error-badge err">ERROR</span>
+                    python --version → Python 3.11.5 (expected 3.13)
+                </div>
+                <div class="error-fix">
+                    <span class="error-badge fix">FIX</span>
+                    <p><strong>Cause:</strong> When multiple Python versions are installed, the one whose folder appears first in PATH wins.</p>
+                    <p><strong>Fix:</strong> Use the <code>py</code> launcher to explicitly select a version:</p>
+                    <pre><code>py -3.13 --version    # Explicitly use 3.13
+py -3.11 --version    # Explicitly use 3.11
+py --list             # Show all installed versions</code></pre>
+                    <p>To change the default, reorder the Python folders in your PATH variable so the preferred version comes first, or use <code>py</code> as your default command instead of <code>python</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1 2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    What We'll Do
+                </div>
+                <p>Five minutes of actual work, split into three phases: download, install with correct configuration, and verification.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>Download the correct installer from python.org and choose the right version.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>Install with PATH enabled and understand what the installer is doing.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>Verify Python, pip, and run your first script to confirm everything works end-to-end.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Table of Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">1. Download the Right Installer</a>
+                    <a href="#fix-2" class="toc-link">2. Install with PATH Enabled</a>
+                    <a href="#fix-3" class="toc-link">3. Verify Python, pip, and IDLE</a>
+                    <a href="#fix-4" class="toc-link">4. Run Your First Script</a>
+                    <a href="#fix-5" class="toc-link">5. Set Up a Code Editor</a>
+                    <a href="#fix-6" class="toc-link">6. Common Errors and Fixes</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div itemprop="articleBody">
+
+                <div class="fix-block" id="fix-1">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Step 1</span>
+                        <h2>Download the Right Installer</h2>
+                    </div>
+                    <p class="fix-reason">Third-party download sites bundle Python with adware or modified installers. The official source is the only one that guarantees an unmodified, cryptographically verified binary. Always download from python.org.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Go to python.org/downloads</h3>
+                            </div>
+                            <p>Navigate to <a href="https://www.python.org/downloads/" target="_blank" rel="nofollow" style="color:var(--accent-hover);text-decoration:underline">python.org/downloads</a>. The page detects your operating system automatically and recommends the correct installer.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Choose the right version</h3>
+                            </div>
+                            <p>Download the latest stable release highlighted at the top of the page (e.g., Python 3.12.x). Click the yellow <strong>"Download Python 3.12.x"</strong> button. Don't download Python 2 it reached end of life in 2020 and is no longer maintained.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Choose 64-bit</h3>
+                            </div>
+                            <p>On the download page, make sure "Windows installer (64-bit)" is selected, not the 32-bit version. All modern Windows 11 systems are 64-bit. The 64-bit version can access more than 4GB of RAM, which matters for data science, machine learning, and running large applications. The only reason to choose 32-bit is if you're working with legacy enterprise software that doesn't have a 64-bit version available.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout info">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Windows Store version:</strong> Windows 11 also offers Python through the Microsoft Store. Avoid it for development work. The Store version has limitations it installs to a hidden AppData folder, doesn't include pip by default, and makes PATH configuration harder. The official installer from python.org gives you a standard, full-featured installation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-2">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Step 2</span>
+                        <h2>Install with PATH Enabled</h2>
+                    </div>
+                    <p class="fix-reason">The PATH checkbox tells Windows where Python lives so you can run it from any terminal. Without it, every terminal command fails with "'python' is not recognized." This is the single most important setting in the entire installation.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Run the installer</h3>
+                            </div>
+                            <p>Find the downloaded <code>.exe</code> in your Downloads folder and double-click it. Windows may show a "User Account Control" prompt click "Yes."</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Check the PATH checkbox</h3>
+                            </div>
+                            <p>At the the bottom of the first installer screen, you'll see a checkbox labeled <strong>"Add python.exe to PATH"</strong>. Make sure it's checked. This is checked by default in modern Python installers, but verify it anyway. Click <strong>"Install Now."</strong></p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Choose "Install Now" over "Customize installation"</h3>
+                            </div>
+                            <p>"Install Now" gives you a standard setup with pip, IDLE, and the py launcher. "Customize installation" is useful if you need to exclude specific components, change the install location, or opt out of pip. For a first-time setup, "Install Now" is the right choice.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>Wait for completion</h3>
+                            </div>
+                            <p>The installer takes about 30–60 seconds. Let it finish. You'll see a "Setup was successful" message when done.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Disable PATH during installation if you already have another Python version.</strong> If you're installing a second Python version alongside an existing one, uncheck "Add to PATH" during installation. You can add the new version to PATH manually afterward to avoid breaking tools that depend on the current default version.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-3">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Step 3</span>
+                        <h2>Verify Python, pip, and IDLE</h2>
+                    </div>
+                    <p class="fix-reason">Installation appearing successful doesn't guarantee it actually works. Verification takes about one minute but catches PATH issues, broken pip installations, and silent failures that the installer won't tell you about.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Check Python version</h3>
+                            </div>
+                            <p>Open <code>Command Prompt</code> (<code>cmd</code> in the Start menu, or press <code>Win + R</code> and type <code>cmd</code>. Run:</p>
+                            <pre><code>python --version</code></pre>
+                            <p>You should see output like <code>Python 3.12.x</code>. If you see an error about Python not being recognized, the PATH wasn't set correctly. Go back to Step 2.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Check pip version</h3>
+                            </div>
+                            <p>Pip is Python's package manager. Verify it's working:</p>
+                            <pre><code>pip --version</code></pre>
+                            <p>You should see version, version, and location information. If you see a deprecation warning about pip version, run <code>python -m pip install --upgrade pip</code> to update it.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Check IDLE</h3>
+                            </div>
+                            <p>Open the Start menu, type <code>IDLE</code>, and open it. IDLE is Python's built-in editor with syntax highlighting and an interactive shell. You don't need it for professional work most developers use VS Code but it's useful for quick tests and learning.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Run <code>pip list</code> to see all installed packages.</strong> This shows everything pip has installed globally on your system. If you see unexpected packages you don't remember installing, it may indicate a permissions issue or another user installed something system-wide.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-4">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Step 4</span>
+                        <h2>Run Your First Python Script</h2>
+                    </div>
+                    <p class="fix-reason">Seeing a successful version number proves the installation is technically correct, but actually running code confirms it works end-to-end. Create a simple test script to validate everything from the interpreter to the runtime.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Create a Python file</h3>
+                            </div>
+                            <p>Open Notepad or any text editor. Paste the following:</p>
+                            <pre><code>print("Hello, World!")</code></pre>
+                            <p>Save it as <code>hello.py</code> in your Documents folder.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Run it from terminal</h3>
+                            </div>
+                            <p>Open <code>Command Prompt</code>, navigate to your Documents folder, and run:</p>
+                            <pre><code>python hello.py</code></pre>
+                            <p>You should see <code>Hello, World!</code> printed in the terminal. If you do, your Python installation is fully functional.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Try installing a real package</h3>
+                            </div>
+                            <p>Let's install <code>requests</code>, one of the most widely used Python libraries for making HTTP requests:</p>
+                            <pre><code>pip install requests</code></pre>
+                            <p>Then open Python and run:</p>
+                            <pre><code>import requests
+response = requests.get("https://http://example.com")
+print(response.status_code)</code></pre>
+                            <p>If you see <code>200</code> printed, the entire chain works: Python runs, pip installs from PyPI, the library works, and network access functions correctly.</p>
+                        </div>
+                    </div>
+
+                    <div class="success">
+                        <p><strong>Python environment is ready.</strong> You have a working interpreter, a package manager, and a verified runtime. Everything a beginner needs to start writing Python code is now in place.</p>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-5">
+                    <div class="fix-header">
+                        <span class="fix-tag deepest">Bonus</span>
+                        <h2>Set Up a Code Editor</h2>
+                    </div>
+                    <p class="fix-reason">IDLE works for quick tests, but it lacks the features professional developers rely on: autocomplete, linting, debugging, and integration with version control systems.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Install VS Code</h3>
+                            </div>
+                            <p>Download <a href="https://code.visualstudio.com/" target="_blank" rel="nofollow" style="color:var(--accent-hover);text-decoration:underline">VS Code</a> (free, open-source). During installation, it will automatically detect your Python installation and suggest the official Python extension.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Install the Python extension</h3>
+                            </div>
+                            <p>VS Code will suggest installing the Python extension by Microsoft. Install it. This gives you syntax highlighting, code completion, linting, debugging, and the ability to run Python code directly inside the editor with a terminal at the bottom.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Create a virtual environment</h3>
+                            </div>
+                            <p>In VS Code, open the terminal and run:</p>
+                            <pre><code>python -m venv myproject</code></pre>
+                            <p>Activate it with:</p>
+                            <pre><code>myproject\Scripts\activate</code></pre>
+                            <p>Virtual environments isolate project dependencies so different projects don't conflict with each other. This is standard practice in professional Python development and something you should learn early.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-6">
+                    <div class="fix-header">
+                        <span class="fix-tag deepest">Troubleshooting</span>
+                        <h2>Common Errors and Fixes</h2>
+                    </div>
+                    <p class="fix-reason">Most installation problems trace back to one of these root causes. Fix the root cause rather than trying random fixes.</p>
+
+                    <h3>"'python' is not recognized as an internal or external command"</h3>
+                    <p>This means the Python folder isn't in your PATH. Fix it by finding the Python installation folder (usually <code>C:\Users\YourName\AppData\Local\Programs\Python\Python312\</code>), copying that path, and adding it to your system PATH variable. Then reopen Command Prompt.</p>
+
+                    <h3>"pip" is not recognized</h3>
+                    <p>This means pip wasn't installed or isn't in PATH. Run <code>python -m ensurepip</code> to bootstrap pip, then retry. If that fails, reinstall Python with PATH checked. Verify pip with <code>pip --version</code>.</p>
+
+                    <h3>"pip install" fails with a long red error</h3>
+                    <p>This usually means your network is blocking PyPI connections (common in corporate environments), or you're behind a proxy that interferes with SSL. Try <code>pip install --trusted-host pypi.org</code> to bypass SSL verification. If you're on a corporate network, you may need to configure proxy settings in <code>pip.ini</code> or ask your IT department for an exception.</p>
+
+                    <h3>Two Python versions are installed but the wrong one runs</h3>
+                    <p>This happens when you install a new Python version with "Add to PATH" still checked — the new version overwrites the default <code>python</code> command. The old version is still installed and accessible by its version number, like <code>py -3.11</code>. To control which version is default, open System Environment Variables, find Python in the PATH list, and reorder the entries so your preferred version comes first.</p>
+
+                    <h3>Scripts work in IDLE but fail in terminal</h3>
+                    <p>IDLE uses its own Python environment that may differ from your system Python. If <code>pip list</code> shows packages in IDLE but <code>python script.py</code> fails in Command Prompt, IDLE is using a different Python environment. Open a regular Command Prompt and try the command there instead.</p>
+                </div>
+
+                <div class="share-bar" aria-label="Share this article">
+                    <span>Share</span>
+                    <button class="share-btn copy" id="copyLinkBtn" aria-label="Copy link">
+
+                        <span id="copyLinkText">COPY LINK</span>
+                    </button>
+                    <a class="share-btn" href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Kali%20Linux%20Dual%20Boot&url=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </a>
+                    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                    </a>
+                    <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot&title=How%20to%20Install%20Kali%20Linux%20Dual%20Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                    </a>
+                </div>
+
+                <div class="author-bio">
+                    <div class="author-avatar">
+                        <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                    </div>
+                    <div class="author-info">
+                        <h4>Melalew Mengistu</h4>
+                        <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                    </div>
+                </div>
+
+                <section class="faq-section" id="faq">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Should I use 32-bit or 64-bit Python?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Use 64-bit unless you have a specific reason to use 32-bit. Modern Windows 11 systems are all 64-bit, and 64-bit Python can access more than 4GB of RAM, which matters for data science and machine learning work. Some legacy enterprise tools only offer 32-bit builds, but that's increasingly rare in 2026.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What if I forgot to check "Add to PATH"?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Open Windows Search, type "environment variables," click "Edit the system environment variables," find "Path" in the list, click Edit, and add the Python installation folder path (usually <code>C:\Users\YourName\AppData\Local\Programs\Python\Python312\</code>) to the list. Then reopen Command Prompt and try <code>python --version</code> again.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Does installing Python affect my existing software?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>No. Python installs into its own directory and doesn't modify other software. Some applications bundle their own Python runtime (like Blender, QGIS, or ArcGIS) in a self-contained way, which is completely separate from your system Python installation. These coexist without conflicts because they don't share a PATH entry.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>How do I install specific packages?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Open Command Prompt and run <code>pip install package_name</code>. This downloads and installs the package from PyPI (the Python Package Index). For project-specific dependencies, use virtual environments first to avoid version conflicts between projects.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Can I have multiple Python versions installed?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Yes. The installer lets you keep the old version when installing a new one. Each version installs to a separate folder. The last one installed becomes the default when you type <code>python</code>. You can call a specific version explicitly with <code>py -3.11</code> or <code>py -3.12</code>. Be careful with tools that depend on a specific Python version upgrading can break them if they're sensitive to API changes between versions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What's the difference between python.exe, py.exe, pyw.exe, and pythonw.exe?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p><code>python.exe</code> is the interactive interpreter (the REPL you get when you type <code>python</code> with no arguments). <code>py.exe</code> is the standard interpreter used to run <code>.py</code> files. <code>pythonw.exe</code> is a Windows-only tool that launches scripts without opening a terminal. They all point to the same underlying <code>python.exe</code> executable — the difference is just how they're invoked.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="help-ending">
+                    <div class="help-ending-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h2>Installation Failed?</h2>
+                    <p>Getting a specific error code or permission issue? Post in the MELEX IT community with your exact error message and we'll help you troubleshoot it.</p>
+                    <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer" style="display:inline-flex">
+                        <span>Ask on Telegram</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </a>
+                    <p class="help-reassure">Free help from the MELEX IT community. No signup required.</p>
+                </div>
+
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col" aria-label="Sidebar">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">1. Download the Right Installer</a>
+                    <a href="#fix-2" class="toc-link">2. Install with PATH Enabled</a>
+                    <a href="#fix-3" class="toc-link">3. Verify Python, pip, and IDLE</a>
+                    <a href="#fix-4" class="toc-link">4. Run Your First Script</a>
+                    <a href="#fix-5" class="toc-link">5. Set Up a Code Editor</a>
+                    <a href="#fix-6" class="toc-link">6. Common Errors and Fixes</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="promo-card aff">
+                <div class="promo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <h3>Recommended Hosting</h3>
+                <p>Reliable cloud hosting for your backend and database projects.</p>
+                <a href="https://my.yegara.com/index.php?aff=19198" class="promo-btn">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn">
+        <span>Recommended Tools</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var sp=document.getElementById('scrollProgress');
+    var stp=document.getElementById('scrollToTop');
+    var mcta=document.getElementById('mobileCta');
+    var mbtn=document.getElementById('mobileMenuBtn');
+    var mnav=document.getElementById('mobileNav');
+    var copyBtn=document.getElementById('copyLinkBtn');
+    var copyTxt=document.getElementById('copyLinkText');
+
+    function onScroll(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        var p=h>0?s/h:0;
+        sp.style.width=(p*100)+'%';
+        stp.classList.toggle('vis',s>400);
+        if(mcta)mcta.classList.toggle('vis',s>800);
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+
+    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+    mbtn.addEventListener('click',function(){
+        var o=mnav.classList.contains('open');
+        mnav.classList.toggle('open');
+        mbtn.classList.toggle('active');
+        mbtn.setAttribute('aria-expanded',!o);
+        mnav.setAttribute('aria-hidden',o);
+        document.body.style.overflow=o?'':'hidden';
+    });
+
+    var faqItems=document.querySelectorAll('.faq-item');
+    faqItems.forEach(function(item){
+        var btn=item.querySelector('.faq-q');
+        var ans=item.querySelector('.faq-a');
+        btn.addEventListener('click',function(){
+            var isOpen=item.classList.contains('open');
+            faqItems.forEach(function(other){
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                other.querySelector('.faq-a').style.maxHeight='0';
+            });
+            if(!isOpen){
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded','true');
+                ans.style.maxHeight=ans.scrollHeight+'px';
+            }
+        });
+    });
+
+    if(copyBtn){
+        copyBtn.addEventListener('click',function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+                copyTxt.textContent='COPIED';
+                copyBtn.classList.add('copied');
+                setTimeout(function(){
+                    copyTxt.textContent='COPY LINK';
+                    copyBtn.classList.remove('copied');
+                },2000);
+            });
+        });
+    }
+
+    var tocSections=['fix-1','fix-2','fix-3','fix-4','fix-5','fix-6','faq'];
+    var tocLinksInline=document.querySelectorAll('#tocListInline .toc-link');
+    var tocLinksSidebar=document.querySelectorAll('#tocListSidebar .toc-link');
+
+    function updateToc(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var active='';
+        tocSections.forEach(function(id){
+            var el=document.getElementById(id);
+            if(el&&el.offsetTop-120<=s)active=id;
+        });
+        tocLinksInline.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+        tocLinksSidebar.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+    }
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+})();
+
+
+// ── Error cards accordion ──
+document.querySelectorAll('[data-error]').forEach(card => {
+    const btn = card.querySelector('.error-card-header');
+    const body = card.querySelector('.error-card-body');
+    btn.addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+        document.querySelectorAll('[data-error].open').forEach(openCard => {
+            openCard.classList.remove('open');
+            openCard.querySelector('.error-card-header').setAttribute('aria-expanded', 'false');
+            openCard.querySelector('.error-card-body').style.maxHeight = '0';
+        });
+        if (!isOpen) {
+            card.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+            body.style.maxHeight = body.scrollHeight + 'px';
+        }
+    });
+});
+</script>
+
+</body>
+</html>

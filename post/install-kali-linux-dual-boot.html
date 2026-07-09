@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Install Kali Linux Dual Boot (No Errors) — Melex InfoTech</title>
+    <meta name="description" content="The definitive guide to installing Kali Linux alongside Windows 11. Learn how to partition your drive, fix EFI boot issues, and prevent installation errors.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/Install-Kali-Linux-Dual-Boot">
+    <meta name="author" content="Melex InfoTech">
+    <meta name="keywords" content="Install Kali Linux, Dual Boot, Linux Installation, UEFI, Partitioning, Secure Boot">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Install Kali Linux Dual Boot (No Errors)">
+    <meta property="og:description" content="Install Kali Linux alongside Windows safely. A step-by-step guide to dual booting without losing your data.">
+    <meta property="og:url" content="https://melextech.dev/post/Install-Kali-Linux-Dual-Boot">
+    <meta property="og:image" content="https://melextech.dev/guide/img/kali-install.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Melex InfoTech">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Guides">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Cybersecurity">
+    <meta property="article:tag" content="Windows">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Install Kali Linux Dual Boot">
+    <meta name="twitter:description" content="Install Kali Linux alongside Windows safely. A step-by-step guide to dual booting without losing your data.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/kali-install.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Install Kali Linux Dual Boot (No Errors)",
+        "description": "A professional step-by-step guide to dual booting Kali Linux with Windows 11/10 on UEFI systems.",
+        "image": "https://melextech.dev/guide/img/kali-install.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Melex InfoTech",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/Install-Kali-Linux-Dual-Boot"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Install Kali Linux Dual Boot",
+        "description": "Instructions for shrinking Windows partition and installing Kali Linux via USB.",
+        "totalTime": "PT45M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "tool": [
+            {"@type": "HowToTool", "name": "Rufus"},
+            {"@type": "HowToTool", "name": "8GB USB Drive"},
+            {"@type": "HowToTool", "name": "Kali Linux ISO"}
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Create Bootable USB",
+                "text": "Download the ISO and use Rufus to flash it to a USB drive in GPT mode."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Shrink Windows Volume",
+                "text": "Open Disk Management and shrink C: drive to make space for Linux."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Install Kali",
+                "text": "Boot from USB, select 'Free Space', and configure installation."
+            }
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "Melex InfoTech"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "My PC boots straight to Windows; no GRUB menu appears.",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "This means Windows replaced GRUB or the EFI boot entry is wrong. Boot into BIOS, switch boot priority to 'OS Boot Manager' or the Linux entry. If that doesn't work, boot from a Kali Live USB and reinstall GRUB using boot-repair or manual chroot commands."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Should I use MBR or GPT for dual booting?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use GPT. MBR is a legacy standard that limits you to 4 primary partitions and doesn't support drives over 2TB. Modern Windows 11 installs use GPT by default, and Kali's UEFI installer expects GPT. If your drive is MBR, you'll need to convert it before installing — which means backing up and wiping the drive."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Will installing Kali delete my Windows files?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not if you follow the guided partitioning method and select 'Use the largest continuous free space' during installation. This targets only the unallocated partition you created. However, you should always back up important files before modifying disk partitions — a power outage or accidental click during partitioning can cause data loss."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Install Kali Linux", "item": "https://melextech.dev/post/Install-Kali-Linux-Dual-Boot"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --code-bg:#1e293b;--code-fg:#e2e8f0;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+code{font-family:'JetBrains Mono',monospace;background:var(--surface-2);padding:3px 6px;border-radius:4px;font-size:.85em;color:#d946ef;border:1px solid var(--border)}
+pre{background:var(--code-bg);color:var(--code-fg);padding:18px;border-radius:var(--radius-sm);overflow-x:auto;font-size:.85rem;line-height:1.6;margin:16px 0;border:1px solid var(--border-2)}
+pre code{background:transparent;color:inherit;border:none;padding:0}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em;font-weight:700;text-transform:uppercase}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+
+.fix-block{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.fix-block:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fix-header{margin-bottom:6px}
+.fix-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fix-tag.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.fix-tag.deeper{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.fix-tag.deepest{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.fix-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--dark);letter-spacing:-.02em;line-height:1.35;margin:0;padding:0;border:none}
+.fix-reason{font-size:.86rem;color:var(--fg-light);line-height:1.75;margin:10px 0 0}
+
+.steps{margin-bottom:0}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px dashed var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent-hover);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+.step p:last-child{margin-bottom:0}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.video-section{margin-bottom:36px}
+.video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
+.video-lazy{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);background:#0F172A;cursor:pointer;border:1px solid var(--border)}
+.video-lazy img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .3s}
+.video-lazy:hover img{opacity:.5}
+.video-lazy iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(255,255,255,.95);border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.video-lazy:hover .video-play{transform:translate(-50%,-50%) scale(1.08);background:#fff}
+.video-play svg{width:22px;height:22px;margin-left:3px;fill:var(--dark)}
+.video-lazy.playing .video-play,
+.video-lazy.playing img{display:none}
+.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);border-bottom:2px solid var(--border);padding-bottom:10px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4;background:var(--surface)}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.help-ending{text-align:center;padding:36px 24px;background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1px solid var(--border);border-radius:var(--radius);margin-top:40px}
+.help-ending .help-ending-icon{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.help-ending .help-ending-icon svg{width:22px;height:22px;color:var(--accent)}
+.help-ending h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;border:none;padding:0}
+.help-ending>p{font-size:.85rem;color:var(--fg-light);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto}
+.help-ending .help-reassure{font-size:.82rem;color:var(--fg-muted);margin-top:16px;line-height:1.6}
+
+.promo-card{border-radius:var(--radius);padding:24px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;font-size:.84rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s;background:var(--accent);color:#fff}
+.mobile-cta .cta-btn:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .explain-block{padding:20px 18px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            // Get current active theme state
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Linux">Linux</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Install Kali Linux</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">ADVANCED GUIDE</p>
+                <h1 itemprop="headline">How to Install Kali Linux Dual Boot (No Errors)</h1>
+                <p class="problem" itemprop="description">A step-by-step guide to installing Kali Linux alongside Windows 11 on a UEFI system. Covers partitioning, boot configuration, and the common errors that derail most first-time installations.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        June 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    What Dual Booting Actually Does
+                </div>
+                <p>Dual booting means installing two operating systems on the same drive, each in its own partition. When you power on the PC, a boot menu (GRUB) lets you choose which OS to load. Your Windows partition and your Kali partition are completely separate files on one side don't touch the other.</p>
+                <p>The process involves three things that can go wrong: getting the partition table wrong, misconfiguring the UEFI boot entries, or having Windows Fast Startup lock the drive. This guide addresses all three upfront so you don't hit them during installation.</p>
+                <p>This guide assumes a modern Windows 10/11 PC with <strong>UEFI firmware</strong> and a <strong>GPT partition table</strong> which covers virtually every PC sold since 2018.</p>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    Process Overview
+                </div>
+                <p>We'll prepare Windows first (because it's the hardest to fix after the fact), then create the bootable USB and run the Kali installer.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>Download ISO and flash a bootable USB with correct partition scheme.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>Shrink Windows partition and disable features that block Linux installation.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>Boot from USB, install Kali into the free space, and verify GRUB works.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-section">
+                <h2>Watch the Tutorial</h2>
+                <div class="video-lazy" data-video-id="t-o9v6hdk6w" role="button" tabindex="0" aria-label="Play video tutorial">
+                    <img src="https://img.youtube.com/vi/t-o9v6hdk6w/hqdefault.jpg" alt="Kali Linux dual boot installation video tutorial" loading="lazy">
+                </div>
+                <p class="video-caption">Follow along as we go through BIOS configuration, partitioning, and the full Kali installer.</p>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Table of Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">1. Create Bootable USB</a>
+                    <a href="#fix-2" class="toc-link">2. Shrink Windows Partition</a>
+                    <a href="#fix-3" class="toc-link">3. Disable Fast Startup & Secure Boot</a>
+                    <a href="#fix-4" class="toc-link">4. Install Kali Linux</a>
+                    <a href="#fix-5" class="toc-link">5. Post-Installation Verification</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div itemprop="articleBody">
+
+                <div class="fix-block" id="fix-1">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Step 1</span>
+                        <h2>Download Kali and Create Bootable USB</h2>
+                    </div>
+                    <p class="fix-reason">The installer needs to run from external media. The USB must be flashed in GPT mode with a UEFI-compatible bootloader, otherwise your PC won't recognize it as a bootable device.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Download the ISO</h3>
+                            </div>
+                            <p>Go to the <a href="https://www.kali.org/get-kali/" target="_blank" rel="nofollow" style="color:var(--accent-hover);text-decoration:underline">official Kali downloads page</a> and grab the <strong>64-bit Installer</strong> image. Don't download the "Live" version for a dual-boot install the installer version gives you a persistent installation with proper partition management. The file will be around 4GB.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Flash with Rufus</h3>
+                            </div>
+                            <p>Download <strong>Rufus</strong> (free, no installation required). Insert an 8GB+ USB drive. In Rufus, select your USB, select the Kali ISO, and critically: set <strong>Partition scheme to GPT</strong> and <strong>Target system to UEFI (non-CSM)</strong>. Leave everything else default and click Start. Rufus will format the drive and write the bootable image.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Alternative on Linux or Mac:</strong> Use <code>balenaEtcher</code> or the <code>dd</code> command. The key requirement is the same the USB must be GPT-partitioned with an EFI system partition, which Etcher handles automatically.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-2">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Step 2</span>
+                        <h2>Shrink Windows Partition</h2>
+                    </div>
+                    <p class="fix-reason">Kali needs unallocated disk space to create its root, home, and swap partitions. You create this by shrinking your existing Windows partition not by deleting it or creating a new volume in Windows (which would format it as NTFS, and Kali can't use that).</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Open Disk Management</h3>
+                            </div>
+                            <p>Right-click the Start button and select <strong>Disk Management</strong>. You'll see your drive layout typically one large C: partition taking up the entire disk.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Shrink the volume</h3>
+                            </div>
+                            <p>Right-click the C: drive, select <strong>Shrink Volume</strong>. Windows will query for available shrink space. Enter at least <strong>40960 MB</strong> (40GB). Click Shrink. You'll see a new black bar labeled "Unallocated" appear next to C:.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Don't create a new volume here</h3>
+                            </div>
+                            <p>Windows will offer to create a new simple volume from the unallocated space. Skip this. The Kali installer needs raw unallocated space if you format it as NTFS or exFAT in Windows, the installer won't be able to use it properly for Linux partitions.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout info">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>How much space?</strong> 40GB is the practical minimum for Kali if you plan to install tools and store files. 60–80GB is comfortable. If you have a 256GB drive, 40GB is fine. If you have a 1TB drive, allocate more you'll thank yourself later when you're working with large datasets or VM images.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-3">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Step 3</span>
+                        <h2>Disable Fast Startup and Configure UEFI</h2>
+                    </div>
+                    <p class="fix-reason">Two Windows features commonly break dual-boot setups. Fast Startup writes a hibernation-like file that locks the NTFS partition, preventing Linux from reading or modifying it. Secure Boot can block the Kali bootloader if it's not signed. Both need to be handled before you boot the USB.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Disable Fast Startup in Windows</h3>
+                            </div>
+                            <p>Open Control Panel → <strong>Power Options</strong> → click "Choose what the power buttons do" on the left. Click the blue text "Change settings that are currently unavailable." Uncheck <strong>"Turn on fast startup (recommended)"</strong>. Save changes.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Enter BIOS/UEFI</h3>
+                            </div>
+                            <p>Restart your PC. During the boot logo screen, press the BIOS key repeatedly. This varies by manufacturer: <code>F2</code> for Dell/ASUS, <code>F10</code> for HP, <code>Delete</code> for most custom boards. If you miss it, hold <code>Shift + Restart</code> from Windows → Recovery → Advanced Startup → UEFI Firmware Settings.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Disable Secure Boot</h3>
+                            </div>
+                            <p>Navigate to the <strong>Boot</strong> or <strong>Security</strong> tab. Set <strong>Secure Boot to Disabled</strong>. While Kali technically supports Secure Boot with signed shim, disabling it eliminates a whole category of boot failures on first install. You can re-enable it later after GRUB is properly configured.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>Verify Boot Mode is UEFI</h3>
+                            </div>
+                            <p>Still in BIOS, confirm "Boot Mode" is set to <strong>UEFI</strong>, not "Legacy" or "CSM." If you see a "CSM" (Compatibility Support Module) option, disable it. Save changes and exit. The PC will reboot.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>BitLocker warning:</strong> If your Windows drive is BitLocker-encrypted, shrinking the partition may trigger a BitLocker recovery on next boot. Make sure you have your recovery key saved (usually in your Microsoft account). The shrink operation itself doesn't encrypt or decrypt anything it just resizes the partition but some BIOS changes can trigger BitLocker's tamper detection.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-4">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Step 4</span>
+                        <h2>Boot from USB and Install Kali</h2>
+                    </div>
+                    <p class="fix-reason">With the preparation done, the actual installation is straightforward. The key decision point is the partitioning step selecting the wrong option here is how people accidentally overwrite Windows.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Boot from the USB</h3>
+                            </div>
+                            <p>Insert the USB. Reboot and press the boot menu key (<code>F12</code>, <code>F11</code>, or <code>Esc</code> depending on your motherboard). Select the USB drive from the list. You'll see the Kali boot menu select the first option (Graphical Install).</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Walk through the installer prompts</h3>
+                            </div>
+                            <p>Select your language, location, and keyboard layout. When you reach the network configuration step, connect to Wi-Fi or plug in Ethernet the installer needs network access to fetch package lists and install software.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Partitioning the critical step</h3>
+                            </div>
+                            <p>When you reach "Partition disks," select <strong>"Guided use the largest continuous free space."</strong> This is the option that targets only the unallocated space you created. Do NOT select "Guided use entire disk" that will wipe Windows. The installer will automatically create / (root), /home, and swap partitions within the free space.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>Finish the installation</h3>
+                            </div>
+                            <p>Set your username and password. Select "Install the GRUB boot loader to the master boot record" it should default to your primary drive (e.g., <code>/dev/nvme0n1</code>), not a partition like <code>/dev/nvme0n1p1</code>. Complete the install. When prompted, remove the USB and reboot.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout danger">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>GRUB target matters:</strong> If GRUB installs to a partition instead of the drive, Windows Boot Manager won't chainload it and you'll boot straight to Windows with no GRUB menu. If this happens, you'll need to boot from the Kali Live USB and reinstall GRUB using <code>grub-install /dev/nvme0n1</code> from a chroot environment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-5">
+                    <div class="fix-header">
+                        <span class="fix-tag deepest">Step 5</span>
+                        <h2>Post-Installation Verification</h2>
+                    </div>
+                    <p class="fix-reason">After the first boot into Kali, a few things need checking before you start using it for real work.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Verify the GRUB menu appears</h3>
+                            </div>
+                            <p>Reboot the PC. You should see the GRUB menu with both Kali Linux and Windows Boot Manager listed. Select Windows to confirm it still boots. If GRUB doesn't appear, see the FAQ section below.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Update Kali immediately</h3>
+                            </div>
+                            <p>Open a terminal and run <code>sudo apt update && sudo apt full-upgrade -y</code>. The ISO you downloaded may be weeks old, and Kali's tools update frequently. Running this before you start working ensures you have current package versions and security patches.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Verify Windows is accessible from Kali</h3>
+                            </div>
+                            <p>Kali should auto-mount your Windows partition under <code>/mnt/windows</code> or a similar path. Open your file manager and check. If it's not mounted, you can mount it manually with <code>sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows</code> (adjust the partition number to match your Windows partition).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="share-bar" aria-label="Share this article">
+                    <span>Share</span>
+                    <button class="share-btn copy" id="copyLinkBtn" aria-label="Copy link">
+                       
+                        <span id="copyLinkText">COPY LINK</span>
+                    </button>
+                    <a class="share-btn" href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Kali%20Linux%20Dual%20Boot&url=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </a>
+                    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                    </a>
+                    <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://melextech.dev/post/Install-Kali-Linux-Dual-Boot&title=How%20to%20Install%20Kali%20Linux%20Dual%20Boot" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                    </a>
+                </div>
+
+                <div class="author-bio">
+                    <div class="author-avatar">
+                        <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                    </div>
+                    <div class="author-info">
+                        <h4>Melalew Mengistu</h4>
+                        <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                    </div>
+                </div>
+
+                <section class="faq-section" id="faq">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>My PC boots straight to Windows; no GRUB menu appears.</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>This means GRUB either wasn't installed correctly or Windows Boot Manager overwrote the EFI boot entry. First, enter BIOS and check if a "kali" or "ubuntu" boot entry exists in the boot order if it does, move it above Windows Boot Manager. If no Linux entry exists, boot from your Kali USB in live mode, open a terminal, and run <code>sudo grub-install /dev/nvme0n1</code> (replace with your drive). If that still doesn't work, use <code>boot-repair</code> from a live session.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Should I use MBR or GPT for dual booting?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Use GPT. MBR is a legacy standard limited to 4 primary partitions and 2TB drives. Windows 11 requires GPT anyway. If your drive is somehow still MBR (rare for a Windows 11 machine), you'd need to convert it which requires backing up all data, wiping the drive, and reinstalling Windows. Check your partition table in Disk Management by right-clicking the disk (not the partition) and looking at "Partition Style."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Will installing Kali delete my Windows files?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Not if you select "Guided - use the largest continuous free space" during partitioning. This targets only the unallocated area. However, partition operations carry inherent risk a power outage mid-shrink or a mis-click in the partitioner can cause data loss. Back up important files to an external drive before starting. It's not paranoia; it's standard practice for any disk modification.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Can I access my Windows files from Kali?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" role="region">
+                                <div class="faq-a-inner">
+                                    <p>Yes. Kali includes <code>ntfs-3g</code>, which provides read/write access to NTFS partitions. Your Windows drive typically mounts automatically under <code>/mnt/windows</code>. If it doesn't, you can mount it manually. Be careful not to modify system files on the Windows partition from Linux — Windows may mark the drive as dirty and run a chkdsk on next boot, which is normal but can be alarming if you're not expecting it.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="help-ending">
+                    <div class="help-ending-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h2>Installation Failed?</h2>
+                    <p>Getting a cryptic error, black screen, or missing GRUB menu? Post your error and we'll help you debug it.</p>
+                    <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer" style="display:inline-flex">
+                        <span>Ask on Telegram</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </a>
+                    <p class="help-reassure">Free help from the MELEX IT community. No signup required.</p>
+                </div>
+
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col" aria-label="Sidebar">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">1. Create Bootable USB</a>
+                    <a href="#fix-2" class="toc-link">2. Shrink Windows Partition</a>
+                    <a href="#fix-3" class="toc-link">3. Disable Fast Startup & Secure Boot</a>
+                    <a href="#fix-4" class="toc-link">4. Install Kali Linux</a>
+                    <a href="#fix-5" class="toc-link">5. Post-Installation Verification</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="promo-card aff">
+                <div class="promo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <h3>Recommended Hosting</h3>
+                <p>Reliable cloud hosting for your backend and database projects.</p>
+                <a href="https://my.yegara.com/index.php?aff=19198" class="promo-btn">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn">
+        <span>Recommended Tools</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var sp=document.getElementById('scrollProgress');
+    var stp=document.getElementById('scrollToTop');
+    var mcta=document.getElementById('mobileCta');
+    var mbtn=document.getElementById('mobileMenuBtn');
+    var mnav=document.getElementById('mobileNav');
+    var copyBtn=document.getElementById('copyLinkBtn');
+    var copyTxt=document.getElementById('copyLinkText');
+
+    function onScroll(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        var p=h>0?s/h:0;
+        sp.style.width=(p*100)+'%';
+        stp.classList.toggle('vis',s>400);
+        if(mcta)mcta.classList.toggle('vis',s>800);
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+
+    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+    mbtn.addEventListener('click',function(){
+        var o=mnav.classList.contains('open');
+        mnav.classList.toggle('open');
+        mbtn.classList.toggle('active');
+        mbtn.setAttribute('aria-expanded',!o);
+        mnav.setAttribute('aria-hidden',o);
+        document.body.style.overflow=o?'':'hidden';
+    });
+
+    var faqItems=document.querySelectorAll('.faq-item');
+    faqItems.forEach(function(item){
+        var btn=item.querySelector('.faq-q');
+        var ans=item.querySelector('.faq-a');
+        btn.addEventListener('click',function(){
+            var isOpen=item.classList.contains('open');
+            faqItems.forEach(function(other){
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                other.querySelector('.faq-a').style.maxHeight='0';
+            });
+            if(!isOpen){
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded','true');
+                ans.style.maxHeight=ans.scrollHeight+'px';
+            }
+        });
+    });
+
+    if(copyBtn){
+        copyBtn.addEventListener('click',function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+                copyTxt.textContent='COPIED';
+                copyBtn.classList.add('copied');
+                setTimeout(function(){
+                    copyTxt.textContent='COPY LINK';
+                    copyBtn.classList.remove('copied');
+                },2000);
+            });
+        });
+    }
+
+    var videoLazy=document.querySelector('.video-lazy');
+    if(videoLazy){
+        function loadVideo(){
+            if(videoLazy.classList.contains('playing'))return;
+            var vid=videoLazy.getAttribute('data-video-id');
+            if(!vid)return;
+            var iframe=document.createElement('iframe');
+            iframe.src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0';
+            iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen','');
+            iframe.title='Video tutorial';
+            videoLazy.appendChild(iframe);
+            videoLazy.classList.add('playing');
+            videoLazy.removeAttribute('role');
+            videoLazy.removeAttribute('tabindex');
+        }
+        videoLazy.addEventListener('click',loadVideo);
+        videoLazy.addEventListener('keydown',function(e){
+            if(e.key==='Enter'||e.key===' '){e.preventDefault();loadVideo();}
+        });
+    }
+
+    var tocSections=['fix-1','fix-2','fix-3','fix-4','fix-5','faq'];
+    var tocLinksInline=document.querySelectorAll('#tocListInline .toc-link');
+    var tocLinksSidebar=document.querySelectorAll('#tocListSidebar .toc-link');
+
+    function updateToc(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var active='';
+        tocSections.forEach(function(id){
+            var el=document.getElementById(id);
+            if(el&&el.offsetTop-120<=s)active=id;
+        });
+        tocLinksInline.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+        tocLinksSidebar.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+    }
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+})();
+</script>
+
+</body>
+</html>

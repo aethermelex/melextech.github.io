@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix "DNS Server Not Responding" on Windows 11 and Mac — MELEX IT</title>
+    <meta name="description" content="Your browser says DNS Server Not Responding but Wi-Fi is connected. Here's how to diagnose and fix DNS errors in under 5 minutes, step by step.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/Fix-DNS-Server-Not-Responding">
+    <meta name="author" content="MELEX IT">
+    <meta name="keywords" content="DNS server not responding, fix DNS error, internet not working but wifi connected, change DNS windows 11, flush DNS, DNS_PROBE_FINISHED, NXDOMAIN">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Fix DNS Server Not Responding on Windows 11 and Mac">
+    <meta property="og:description" content="Your browser says DNS Server Not Responding but Wi-Fi is connected. Fix it in under 5 minutes with these steps.">
+    <meta property="og:url" content="https://melextech.dev/post/Fix-DNS-Server-Not-Responding">
+    <meta property="og:image" content="https://melextech.dev/guide/img/dns-fix.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Guides">
+    <meta property="article:tag" content="Networking">
+    <meta property="article:tag" content="Windows">
+    <meta property="article:tag" content="Troubleshooting">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Fix DNS Server Not Responding on Windows 11 and Mac">
+    <meta name="twitter:description" content="Wi-Fi is connected but websites won't load. Here's how to fix DNS errors step by step.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/dns-fix.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Fix DNS Server Not Responding on Windows 11 and Mac",
+        "description": "A step-by-step troubleshooting guide for fixing DNS errors on Windows and Mac, covering restart, DNS changes, cache flushing, and ISP escalation.",
+        "image": "https://melextech.dev/guide/img/dns-fix.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/Fix-DNS-Server-Not-Responding"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Fix DNS Server Not Responding Error",
+        "description": "Steps to resolve DNS connectivity issues by restarting hardware, changing DNS settings, flushing cache, and escalating to your ISP when needed.",
+        "totalTime": "PT10M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Restart your modem and router",
+                "text": "Unplug both devices from power for 30 seconds, then reconnect modem first, then router."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Change your DNS server to Google or Cloudflare",
+                "text": "In Windows 11, go to Settings > Network > Wi-Fi > Properties > DNS. Set preferred DNS to 8.8.8.8 and alternate to 8.8.4.4."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Flush the DNS cache",
+                "text": "Open Command Prompt as administrator and run ipconfig /flushdns, then restart your browser."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Reset the network stack if needed",
+                "text": "Run netsh winsock reset in Command Prompt as admin and restart your computer. This fixes corrupted network configurations."
+            }
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "MELEX IT"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is the DNS server down for everyone or just me?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Check another device on the same network — your phone, for instance. If it loads websites fine, the problem is isolated to your computer. If nothing on the network can resolve DNS, the issue is your router or ISP."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What DNS should I use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Google DNS (8.8.8.8 and 8.8.4.4) is the most widely used and consistently fast option. Cloudflare DNS (1.1.1.1 and 1.0.0.1) is slightly better for privacy. Both are free, reliable, and significantly faster than most ISP default DNS servers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does this error keep coming back?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Recurring DNS errors usually point to one of three causes: your ISP's DNS servers are unreliable, your network adapter settings keep reverting to automatic, or there's a malware infection actively modifying your DNS settings. If you change DNS manually and it keeps reverting, check for malware and consider disabling automatic DNS in your adapter settings."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Will changing DNS slow down my internet?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. DNS lookups take milliseconds regardless of which server you use. Google and Cloudflare DNS are actually faster than most ISP defaults because they have more server locations and better caching infrastructure. You might notice webpages loading fractionally faster, not slower."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does DNS_PROBE_FINISHED mean?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "DNS_PROBE_FINISHED means your computer sent a DNS query but received no response at all — the server didn't reply, not even with an error. This usually means the DNS server address is wrong, unreachable, or your firewall is blocking DNS traffic on port 53."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Fix DNS Errors", "item": "https://melextech.dev/post/Fix-DNS-Server-Not-Responding"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+
+.fix-block{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.fix-block:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fix-header{margin-bottom:6px}
+.fix-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fix-tag.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.fix-tag.deeper{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.fix-tag.deepest{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.fix-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--dark);letter-spacing:-.02em;line-height:1.35;margin:0;padding:0;border:none}
+.fix-reason{font-size:.86rem;color:var(--fg-light);line-height:1.75;margin:10px 0 0}
+
+.effect-note{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:var(--radius-sm);margin:16px 0;font-size:.82rem;line-height:1.7}
+.effect-note.neutral{background:var(--surface-2);border:1px solid var(--border);color:var(--fg-sub)}
+.effect-note.caution{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{width:16px;height:16px;flex-shrink:0;margin-top:2px}
+
+.help-ending{text-align:center;padding:36px 24px;background:linear-gradient(135deg,#F8FAFC,#F1F5F9);border:1px solid var(--border);border-radius:var(--radius);margin-top:40px}
+.help-ending .help-ending-icon{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.help-ending .help-ending-icon svg{width:22px;height:22px;color:var(--accent)}
+.help-ending h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;border:none;padding:0}
+.help-ending>p{font-size:.85rem;color:var(--fg-light);margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto}
+.help-ending .help-reassure{font-size:.82rem;color:var(--fg-muted);margin-top:16px;line-height:1.6}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.faq-list):not(.qs-list):not(.approach-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.faq-list):not(.qs-list):not(.approach-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.steps{margin-bottom:0}
+.steps-intro{font-size:.88rem;color:var(--fg-light);margin-bottom:24px;line-height:1.7}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent-hover);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+.step p:last-child{margin-bottom:0}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.promo-card{border-radius:var(--radius);padding:24px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;font-size:.84rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s;background:var(--accent);color:#fff}
+.mobile-cta .cta-btn:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .help-ending{padding:28px 20px}
+    .step p{font-size:.88rem}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            // Get current active theme state
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="/guide" class="nav-link">Guides</a>
+            <a href="/product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Network">Network</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Fix DNS Errors</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">QUICK FIX GUIDE</p>
+                <h1 itemprop="headline">How to Fix "DNS Server Not Responding" on Windows 11 and Mac</h1>
+                <p class="problem" itemprop="description">Wi-Fi shows connected but websites won't load. Your computer can't translate domain names into IP addresses because the DNS lookup is timing out. Here's how to diagnose and fix it in under 5 minutes.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>A client called last week their team couldn't access any external website. Wi-Fi showed full bars. Pinging IP addresses worked fine. But every browser returned "DNS Server Not Responding." They'd already spent two hours rebooting computers, reinstalling network drivers, and calling their ISP, who said everything looked fine on their end. The real problem: their ISP's DNS servers had been failing intermittently for three days before the ISP finally acknowledged the outage.</p>
+                <p>This error doesn't mean your hardware is broken. It means your computer asked a DNS server for a website's address and got silence back. Here's how to fix it, starting with the simplest solution and escalating only when needed.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    What DNS Actually Does (And Why It Fails)
+                </div>
+                <p>Every website has a numeric IP address like <code>142.250.80.45</code> but you type names like <code>melextech.dev</code>. DNS translates names into those addresses. When you enter a URL, your computer queries a DNS server, gets the IP back, and connects directly to that IP.</p>
+                <p>"Not responding" means your computer sent the query and got no reply within the timeout window (usually 2 - 4 seconds). Three things cause this: the DNS server itself is down, your network can't reach the DNS server, or your computer's cached DNS data is corrupt and returning wrong addresses that lead to dead ends.</p>
+                <p>The most common cause is the simplest one: your ISP's DNS server is unreliable or temporarily down. Switching to a public DNS server resolves it immediately in most cases.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Fix in Order
+                </div>
+                <ul class="qs-list">
+                    <li><strong>Step 1:</strong> Restart your modem and router fixes roughly 40% of DNS issues on the spot.</li>
+                    <li><strong>Step 2:</strong> Change your DNS server to Google (8.8.8.8) or Cloudflare (1.1.1.1) fixes another 40%.</li>
+                    <li><strong>Step 3:</strong> Flush your DNS cache and reset the network stack catches the remaining cases.</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    Diagnosis Before Fixing
+                </div>
+                <p>Spend 30 seconds figuring out where the problem lives before trying fixes. This tells you which step to start with.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span><strong>Only one device affected?</strong> The problem is on that machine jump to Step 2 (change DNS). Skip the router restart since other devices work fine.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span><strong>All devices affected?</strong> The problem is network-wide start with Step 1 (restart router). If that doesn't help, your ISP's DNS is almost certainly down.</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span><strong>Started after a Windows update or VPN change?</strong> The update or VPN likely overwrote your DNS settings. Go straight to Step 2 and check whether your manual DNS configuration got reverted.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Table of Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">1. Restart Your Modem and Router</a>
+                    <a href="#fix-2" class="toc-link">2. Change Your DNS Server</a>
+                    <a href="#fix-3" class="toc-link">3. Flush DNS and Reset Network Stack</a>
+                    <a href="#fix-4" class="toc-link">4. When Nothing Works: Escalate to Your ISP</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div id="fix-1" class="fix-block">
+                <div class="fix-header">
+                    <span class="fix-tag start">Start Here</span>
+                    <h2>Restart Your Modem and Router</h2>
+                </div>
+                <p class="fix-reason">Routers run nonstop and build up memory errors over days or weeks. A full power cycle clears the RAM, re-establishes the WAN connection, and forces your ISP to assign a fresh IP. In our experience, this single step resolves roughly 40% of DNS complaints.</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Unplug both devices from power</h3>
+                        </div>
+                        <p>Remove the power cable from the modem and the router. Don't use the power button many routers don't fully cut power when you press it, which means the memory never actually clears.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Wait at least 30 seconds</h3>
+                        </div>
+                        <p>Count to thirty slowly. The capacitors inside both devices need time to fully discharge. This is the step most people skip, and it's the main reason their "restart" doesn't work.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">3</span>
+                            <h3>Reconnect in the right order</h3>
+                        </div>
+                        <p>Plug the modem in first. Wait for the status light to show a solid connection usually 1–2 minutes. Then plug in the router and wait another minute for it to fully initialize. Try loading a webpage.</p>
+                    </div>
+                </div>
+
+                <div class="effect-note good">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span><strong>If this fixed it:</strong> The DNS error was caused by a stale router state. No further action needed. If it comes back after a few hours, move to Step 2.</span>
+                </div>
+
+                <div class="callout info">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Why not just restart the computer?</strong> Rebooting your PC only clears the local DNS cache it doesn't touch the network layer where the actual problem lives. We'll clear that cache separately in Step 3 if needed. Restart the router first because it addresses the root cause in most cases.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fix-2" class="fix-block">
+                <div class="fix-header">
+                    <span class="fix-tag deeper">Most Common Fix</span>
+                    <h2>Change Your DNS Server to Google or Cloudflare</h2>
+                </div>
+                <p class="fix-reason">Your ISP assigns a default DNS server through DHCP. These servers are often overloaded, under-maintained, or geographically distant from you. Public DNS servers like Google's and Cloudflare's have more capacity, more server locations worldwide, and better anycast routing than most ISP infrastructure. Switching resolves the majority of persistent DNS problems.</p>
+
+                <div class="callout tip">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Google vs Cloudflare:</strong> Google DNS (8.8.8.8 / 8.8.4.4) is the most battle-tested public DNS compatible with every network setup we've encountered. Cloudflare DNS (1.1.1.1 / 1.0.0.1) is marginally faster in some regions and doesn't log your queries. Either one works. If one doesn't resolve your issue, try the other.</p>
+                    </div>
+                </div>
+
+                <h3>Windows 11</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Open your network adapter properties</h3>
+                        </div>
+                        <p>Press <code>Win + I</code> to open Settings. Go to <strong>Network & internet</strong> → <strong>Wi-Fi</strong>. Click the <strong>i</strong> icon next to your connected network name.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Navigate to DNS settings</h3>
+                        </div>
+                        <p>Click <strong>Edit</strong> next to "DNS server assignment." This opens the DNS configuration panel for that adapter.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">3</span>
+                            <h3>Switch to manual DNS</h3>
+                        </div>
+                        <p>Change the dropdown from "Automatic" to <strong>Manual</strong>. Toggle <strong>IPv4</strong> on. Enter <strong>8.8.8.8</strong> as the preferred DNS and <strong>8.8.4.4</strong> as the alternate. Save.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">4</span>
+                            <h3>Verify it worked</h3>
+                        </div>
+                        <p>Close your browser completely not just the tab, the entire browser then reopen it. If websites load, you're done. If the error persists, open Command Prompt as admin and run <code>ipconfig /flushdns</code> to clear cached entries that still point to the old server.</p>
+                    </div>
+                </div>
+
+                <h3>macOS</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Open network settings</h3>
+                        </div>
+                        <p>Go to <strong>System Settings</strong> → <strong>Network</strong>. Select your active connection (Wi-Fi or Ethernet) and click <strong>Details</strong>.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Add your DNS servers</h3>
+                        </div>
+                        <p>Click the <strong>DNS</strong> tab. Hit the <strong>+</strong> button and add <strong>8.8.8.8</strong>. Click <strong>+</strong> again and add <strong>8.8.4.4</strong>. Drag Google's servers to the top of the list so they're queried first. Click OK.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">3</span>
+                            <h3>Flush the macOS DNS cache</h3>
+                        </div>
+                        <p>Open Terminal and run <code>sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder</code>. It will ask for your admin password. Unlike Windows, macOS holds onto DNS records aggressively skipping this step is a common reason the fix appears not to work.</p>
+                    </div>
+                </div>
+
+                <div class="effect-note good">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span><strong>If this fixed it:</strong> Your ISP's DNS was the bottleneck. You can leave these settings permanently public DNS servers are reliable long-term choices.</span>
+                </div>
+
+                <div class="callout warn">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Corporate or school networks:</strong> Some organizations require you to use their internal DNS servers to access local resources like intranet sites or file shares. If you switch to Google DNS and lose access to internal tools, add your organization's DNS server as a third entry in the list your computer will try the public servers first for external sites and fall back to the internal one for local addresses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fix-3" class="fix-block">
+                <div class="fix-header">
+                    <span class="fix-tag deeper">Deeper Fix</span>
+                    <h2>Flush DNS Cache and Reset the Network Stack</h2>
+                </div>
+                <p class="fix-reason">Your operating system caches DNS responses to speed up future visits. Sometimes that cache gets corrupted — a stale record points to the wrong IP, or a partial response gets stuck. Flushing clears it. If the cache isn't the problem, the network stack (the low-level software that handles all network communication) might be corrupted usually by a buggy driver update, a VPN that didn't uninstall cleanly, or malware.</p>
+
+                <h3>Flush the DNS cache</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Windows: Open Command Prompt as administrator</h3>
+                        </div>
+                        <p>Click the Start button, type <code>cmd</code>, right-click <strong>Command Prompt</strong>, and select <strong>Run as administrator</strong>. Run <code>ipconfig /flushdns</code>. You should see "Successfully flushed the DNS Resolver Cache." Restart your browser.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>macOS: Flush via Terminal</h3>
+                        </div>
+                        <p>Open Terminal and run <code>sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder</code>. Enter your password when prompted. No success message appears if there's no error, it worked.</p>
+                    </div>
+                </div>
+
+                <div class="effect-note neutral">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span>Flushing alone fixes the problem when corrupted cache entries are the cause. If websites still don't load after a flush, proceed to the network stack reset below.</span>
+                </div>
+
+                <h3>Reset the network stack (Windows only)</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Run the reset commands</h3>
+                        </div>
+                        <p>Still in an admin Command Prompt, run these three commands one at a time, waiting for each to finish:</p>
+                        <p><code>netsh winsock reset</code></p>
+                        <p><code>netsh int ip reset</code></p>
+                        <p><code>ipconfig /release</code> then <code>ipconfig /renew</code></p>
+                        <p>The first command resets the Winsock catalog the interface between your applications and the network. The second resets the TCP/IP stack to its default state. The release/renew pair gets a fresh IP from your router.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Restart your computer</h3>
+                        </div>
+                        <p>The winsock reset doesn't take effect until you reboot. After restarting, reconnect to Wi-Fi and test. You may need to re-enter your Wi-Fi password.</p>
+                    </div>
+                </div>
+
+                <div class="callout danger">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>The winsock reset will temporarily break:</strong> VPN clients, custom firewall rules, and any software that installed its own network protocol (some antivirus suites do this). You'll need to reconnect VPNs and possibly reinstall software that depends on custom network adapters. Don't run this on a work machine without checking with your IT team first.</p>
+                    </div>
+                </div>
+
+                <div class="callout info">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>macOS equivalent:</strong> macOS doesn't have a direct winsock reset command. If flushing the cache didn't work on a Mac, the closest approach is deleting the network configuration files in <code>/Library/Preferences/SystemConfiguration/</code> and restarting. This resets all network settings to defaults — Wi-Fi passwords, VPN configs, and custom DNS will need to be re-entered. Only do this if you've exhausted other options.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fix-4" class="fix-block">
+                <div class="fix-header">
+                    <span class="fix-tag deepest">Last Resort</span>
+                    <h2>When Nothing Works: Escalate to Your ISP</h2>
+                </div>
+                <p class="fix-reason">If you've restarted hardware, switched DNS servers, flushed the cache, and reset the network stack and the problem persists across every device on your network the issue is almost certainly on your ISP's side. This could be a DNS server outage, a routing problem in their network, or a misconfigured connection at their end.</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">1</span>
+                            <h3>Confirm it's not just you</h3>
+                        </div>
+                        <p>Check a site like <strong><a href="https://downforeveryoneorjustme.com">downforeveryoneorjustme.com</a></strong> or ask someone on a different network (a friend's phone on mobile data) to test the same websites. If they load fine elsewhere, the problem is isolated to your connection.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">2</span>
+                            <h3>Call your ISP with specific information</h3>
+                        </div>
+                        <p>Don't say "the internet isn't working." That gets you a scripted reboot response. Instead, tell them: "I've already restarted my modem and router, switched to Google DNS at 8.8.8.8, and flushed my DNS cache. The problem affects all devices on my network. Pinging IP addresses works but domain name resolution fails. I believe your DNS servers or upstream routing is the issue." This skips tier-1 troubleshooting and usually gets you to someone who can actually check their infrastructure.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="step-number">3</span>
+                            <h3>Use a temporary workaround while waiting</h3>
+                        </div>
+                        <p>If your ISP can't fix it immediately, enable a VPN on your device. A VPN routes your DNS queries through the VPN provider's servers instead of your ISP's, which bypasses the problem entirely. It's not a permanent solution — it adds latency and may slow your connection but it lets you keep working while the ISP investigates.</p>
+                    </div>
+                </div>
+
+                <div class="callout warn">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Before calling, rule out malware:</strong> Some malware changes your DNS settings to redirect you to phishing pages. If you set manual DNS to 8.8.8.8 and it keeps reverting to an unfamiliar address, run a full scan with <a href="/product" style="color:var(--info-border);text-decoration:underline">reputable antivirus software</a> before contacting your ISP. No ISP can fix a malware problem from their end.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-bar" aria-label="Share this article">
+                <span>Share</span>
+                <button class="share-btn copy" id="copyLinkBtn" aria-label="Copy link">
+                    <span id="copyLinkText">COPY LINK</span>
+                </button>
+                <a class="share-btn" href="https://twitter.com/intent/tweet?text=How%20to%20Fix%20DNS%20Server%20Not%20Responding&url=https://melextech.dev/post/Fix-DNS-Server-Not-Responding" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://melextech.dev/post/Fix-DNS-Server-Not-Responding" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+                </a>
+                <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://melextech.dev/post/Fix-DNS-Server-Not-Responding&title=How%20to%20Fix%20DNS%20Server%20Not%20Responding" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </a>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar">
+                    <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                </div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <section class="faq-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Is the DNS server down for everyone or just me?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>Check another device on the same network your phone, for instance. If it loads websites fine, the problem is isolated to your computer. If nothing on the network can resolve DNS, the issue is your router or ISP.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>What DNS should I use?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>Google DNS (8.8.8.8 and 8.8.4.4) is the most widely used and consistently fast option. Cloudflare DNS (1.1.1.1 and 1.0.0.1) is slightly better for privacy. Both are free, reliable, and significantly faster than most ISP default DNS servers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Why does this error keep coming back?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>Recurring DNS errors usually point to one of three causes: your ISP's DNS servers are unreliable, your network adapter settings keep reverting to automatic, or there's a malware infection actively modifying your DNS settings. If you change DNS manually and it keeps reverting, check for malware and consider disabling automatic DNS in your adapter settings.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Will changing DNS slow down my internet?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>No. DNS lookups take milliseconds regardless of which server you use. Google and Cloudflare DNS are actually faster than most ISP defaults because they have more server locations and better caching infrastructure. You might notice webpages loading fractionally faster, not slower.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>What does DNS_PROBE_FINISHED mean?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" role="region">
+                            <div class="faq-a-inner">
+                                <p>DNS_PROBE_FINISHED means your computer sent a DNS query but received no response at all the server didn't reply, not even with an error. This usually means the DNS server address is wrong, unreachable, or your firewall is blocking DNS traffic on port 53.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="help-ending">
+                <div class="help-ending-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <h2>Still stuck?</h2>
+                <p>If none of these steps resolved your issue, the problem may be something less common a firewall misconfiguration, a hijacked hosts file, or a router firmware bug.</p>
+                <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer" style="display:inline-flex">
+                    <span>Ask on Telegram</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </a>
+                <p class="help-reassure">Free help from the MELEX IT community. No signup required.</p>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col" aria-label="Sidebar">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">1. Restart Your Modem and Router</a>
+                    <a href="#fix-2" class="toc-link">2. Change Your DNS Server</a>
+                    <a href="#fix-3" class="toc-link">3. Flush DNS and Reset Network Stack</a>
+                    <a href="#fix-4" class="toc-link">4. When Nothing Works: Escalate to ISP</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="promo-card aff">
+                <div class="promo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <h3>Recommended Hosting</h3>
+                <p>Reliable cloud hosting for your backend and database projects.</p>
+                <a href="https://my.yegara.com/index.php?aff=19198" class="promo-btn">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn">
+        <span>Recommended Tools</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var sp=document.getElementById('scrollProgress');
+    var stp=document.getElementById('scrollToTop');
+    var mcta=document.getElementById('mobileCta');
+    var mbtn=document.getElementById('mobileMenuBtn');
+    var mnav=document.getElementById('mobileNav');
+    var copyBtn=document.getElementById('copyLinkBtn');
+    var copyTxt=document.getElementById('copyLinkText');
+
+    function onScroll(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        var p=h>0?s/h:0;
+        sp.style.width=(p*100)+'%';
+        stp.classList.toggle('vis',s>400);
+        if(mcta)mcta.classList.toggle('vis',s>800);
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+
+    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+    mbtn.addEventListener('click',function(){
+        var o=mnav.classList.contains('open');
+        mnav.classList.toggle('open');
+        mbtn.classList.toggle('active');
+        mbtn.setAttribute('aria-expanded',!o);
+        mnav.setAttribute('aria-hidden',o);
+        document.body.style.overflow=o?'':'hidden';
+    });
+
+    var faqItems=document.querySelectorAll('.faq-item');
+    faqItems.forEach(function(item){
+        var btn=item.querySelector('.faq-q');
+        var ans=item.querySelector('.faq-a');
+        btn.addEventListener('click',function(){
+            var isOpen=item.classList.contains('open');
+            faqItems.forEach(function(other){
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                other.querySelector('.faq-a').style.maxHeight='0';
+            });
+            if(!isOpen){
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded','true');
+                ans.style.maxHeight=ans.scrollHeight+'px';
+            }
+        });
+    });
+
+    if(copyBtn){
+        copyBtn.addEventListener('click',function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+                copyTxt.textContent='COPIED';
+                copyBtn.classList.add('copied');
+                setTimeout(function(){
+                    copyTxt.textContent='COPY LINK';
+                    copyBtn.classList.remove('copied');
+                },2000);
+            });
+        });
+    }
+
+    var tocSections=['fix-1','fix-2','fix-3','fix-4','faq'];
+    var tocLinksInline=document.querySelectorAll('#tocListInline .toc-link');
+    var tocLinksSidebar=document.querySelectorAll('#tocListSidebar .toc-link');
+
+    function updateToc(){
+        var s=window.scrollY||document.documentElement.scrollTop;
+        var active='';
+        tocSections.forEach(function(id){
+            var el=document.getElementById(id);
+            if(el&&el.offsetTop-120<=s)active=id;
+        });
+        tocLinksInline.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+        tocLinksSidebar.forEach(function(l){
+            l.classList.toggle('active',l.getAttribute('href')==='#'+active);
+        });
+    }
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+})();
+</script>
+
+</body>
+</html>

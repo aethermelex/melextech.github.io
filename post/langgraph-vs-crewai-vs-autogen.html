@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangGraph vs CrewAI vs AutoGen: Which AI Agent Framework Should You Pick? — MELEX IT</title>
+    <meta name="description" content="A deep, honest comparison of LangGraph, CrewAI, and AutoGen. Architecture, code examples, performance, and real production guidance from an engineer who has built with all three.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/langgraph-vs-crewai-vs-autogen">
+    <meta name="author" content="MELEX IT">
+    <meta name="keywords" content="LangGraph vs CrewAI vs AutoGen, AI agent framework, multi-agent systems, LangChain, Microsoft AutoGen, CrewAI comparison">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LangGraph vs CrewAI vs AutoGen: Which AI Agent Framework Should You Pick?">
+    <meta property="og:description" content="Stop guessing which agent framework to use. Architecture breakdowns, real code, and honest production guidance.">
+    <meta property="og:url" content="https://melextech.dev/post/langgraph-vs-crewai-vs-autogen">
+    <meta property="og:image" content="https://melextech.dev/guide/img/langgraph-vs-crewai-vs-autogen.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="AI Engineering">
+    <meta property="article:tag" content="AI Agents">
+    <meta property="article:tag" content="LangGraph">
+    <meta property="article:tag" content="CrewAI">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LangGraph vs CrewAI vs AutoGen: Which AI Agent Framework Should You Pick?">
+    <meta name="twitter:description" content="Stop guessing which agent framework to use. Architecture breakdowns, real code, and honest production guidance.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/langgraph-vs-crewai-vs-autogen.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "LangGraph vs CrewAI vs AutoGen: Which AI Agent Framework Should You Pick?",
+        "description": "A deep technical comparison of LangGraph, CrewAI, and AutoGen covering architecture, state management, tool execution, human-in-the-loop, performance, and production readiness.",
+        "image": "https://melextech.dev/guide/img/langgraph-vs-crewai-vs-autogen.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/langgraph-vs-crewai-vs-autogen"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Can I use LangGraph without LangChain?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "LangGraph is built as a separate package from LangChain, but it still relies on LangChain's message types, tool abstractions, and LLM wrappers under the hood. You can minimize your LangChain dependency, but going fully independent is not practical. The tool-calling interfaces and message schemas are tightly coupled."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is CrewAI actually production-ready?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "CrewAI has improved significantly with enterprise features, observability through CrewAI+, and better error handling. However, for highly complex workflows with branching logic, cycles, or fine-grained state control, it still falls short compared to LangGraph. For straightforward sequential or hierarchical agent teams, it works well in production with proper monitoring."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which framework is best for beginners?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "CrewAI has the gentlest learning curve because its mental model maps directly to how humans think about teams: assign roles, define tasks, set a process. LangGraph requires understanding graph theory concepts like nodes, edges, and state machines. AutoGen sits in the middle but demands comfort with conversation-based patterns and asynchronous programming."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can these frameworks work together?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Technically yes, since all three ultimately call LLM APIs. You could embed a CrewAI crew as a tool inside a LangGraph node, or use AutoGen agents within a LangGraph workflow. However, this adds complexity and debugging overhead. In practice, pick one framework per project and use it consistently."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do these frameworks handle long-term memory?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "None of the three frameworks ship with built-in long-term memory out of the box. LangGraph's checkpointing provides conversation-level persistence across runs. CrewAI offers a basic memory module that stores context between tasks. AutoGen has no native long-term memory. For true long-term memory, you need to integrate external solutions like Redis, PostgreSQL, or vector databases regardless of which framework you choose."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "AI Engineering", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "LangGraph vs CrewAI vs AutoGen", "item": "https://melextech.dev/post/langgraph-vs-crewai-vs-autogen"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+.mobile-menu-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px}
+.menu-line{width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .25s}
+.mobile-menu-btn.active .menu-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.mobile-menu-btn.active .menu-line:nth-child(2){opacity:0}
+.mobile-menu-btn.active .menu-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-nav{position:fixed;inset:0;z-index:105;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);display:flex;flex-direction:column;padding:90px 32px 40px;transform:translateY(-100%);opacity:0;visibility:hidden;transition:all .3s ease}
+.mobile-nav.open{transform:translateY(0);opacity:1;visibility:visible}
+.mobile-nav a{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:600;color:var(--dark);padding:16px 0;border-bottom:1px solid var(--border);display:block}
+.mobile-nav .btn-primary{margin-top:24px;justify-content:center;padding:14px;font-size:.95rem}
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:300px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+.audience-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.audience-box .audience-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{display:flex;flex-direction:column;gap:6px}
+.audience-box li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:20px;position:relative}
+.audience-box li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-weight:600}
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+.ad-block{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:32px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px;background:var(--surface-2)}
+.ad-block.in-content{margin:32px 0}
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+.pick-pros{margin:14px 0 0}
+.pick-pros h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-pros ul{display:flex;flex-direction:column;gap:4px}
+.pick-pros li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-pros li::before{content:'\2713';position:absolute;left:0;color:#22c55e;font-weight:700}
+.pick-cons{margin:10px 0 0}
+.pick-cons h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-cons ul{display:flex;flex-direction:column;gap:4px}
+.pick-cons li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-cons li::before{content:'\2717';position:absolute;left:0;color:#ef4444;font-weight:700}
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+.promo-card{border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+.code-block{background:#0F172A;border:1px solid #1E293B;border-radius:var(--radius);margin:20px 0;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid #1E293B}
+.code-lang{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748B}
+.code-copy{font-size:.72rem;font-weight:600;color:#64748B;padding:4px 10px;border-radius:var(--radius-xs);border:1px solid #334155;transition:all .15s;cursor:pointer;background:none}
+.code-copy:hover{border-color:#475569;color:#94A3B8}
+.code-copy.copied{color:#22C55E;border-color:#22C55E}
+.code-block pre{padding:16px 20px;overflow-x:auto;font-size:.8rem;line-height:1.75;font-family:'SF Mono',Consolas,monospace;color:#E2E8F0;margin:0;white-space:pre}
+.code-block code{background:none;padding:0;border-radius:0;font-size:inherit;color:inherit}
+.arch-diagram{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:20px 0;overflow-x:auto}
+.arch-flow{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.arch-node{padding:10px 16px;border-radius:var(--radius-sm);font-size:.76rem;font-weight:600;white-space:nowrap;text-align:center}
+.arch-node.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.arch-node.process{background:var(--info);color:var(--info-text);border:1px solid #BFDBFE}
+.arch-node.decision{background:var(--warn);color:var(--warn-text);border:1px solid #FDE68A}
+.arch-node.end{background:var(--surface);color:var(--fg-sub);border:1px solid var(--border-2)}
+.arch-node.tool{background:#F3E8FF;color:#7C3AED;border:1px solid #DDD6FE}
+.arch-arrow{font-size:1.1rem;color:var(--fg-faint);flex-shrink:0;font-weight:700}
+.arch-arrow.bidir{color:var(--accent)}
+.arch-stack{display:flex;flex-direction:column;align-items:center;gap:4px}
+.arch-label{font-size:.66rem;color:var(--fg-muted);text-align:center;margin-top:4px}
+.verdict-card{border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;transition:border-color .15s}
+.verdict-card:hover{border-color:var(--border-2)}
+.verdict-card .verdict-tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.verdict-card .verdict-tag.teal{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.verdict-card .verdict-tag.amber{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.verdict-card .verdict-tag.rose{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
+.verdict-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin:0 0 6px;line-height:1.35}
+.verdict-card p{font-size:.85rem;color:var(--fg-sub);line-height:1.7;margin:0}
+.theme-toggle-btn{background:transparent;border:1px solid var(--border);color:var(--fg);width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease}
+.theme-toggle-btn:hover{border-color:var(--accent);background:var(--surface-2);color:var(--accent-hover)}
+.theme-toggle-btn svg{width:20px;height:20px}
+[data-theme="dark"] .sun-icon{display:block}
+[data-theme="dark"] .moon-icon{display:none}
+html:not([data-theme="dark"]) .sun-icon{display:none}
+html:not([data-theme="dark"]) .moon-icon{display:block}
+[data-theme="dark"]{--bg:#0B0F19;--bg-alt:#131A2B;--surface:#0F1623;--surface-2:#151D2E;--surface-3:#1A2338;--fg:#E2E8F0;--fg-sub:#CBD5E1;--fg-light:#94A3B8;--fg-muted:#8B9AB5;--fg-faint:#5A6A82;--dark:#F1F5F9;--border:#1A2336;--border-2:#263044;--border-3:#374460;--dark-card:rgba(255,255,255,0.04);--dark-border:rgba(255,255,255,0.08);--dark-muted:#7B8DA4;--accent-soft:rgba(45,212,191,0.1);--accent-border:rgba(45,212,191,0.25);--warn:rgba(245,158,11,0.08);--warn-border:#F59E0B;--warn-text:#FCD34D;--warn-strong:#FBBF24;--tip:rgba(34,197,94,0.08);--tip-border:#22C55E;--tip-text:#86EFAC;--tip-strong:#4ADE80;--info:rgba(59,130,246,0.08);--info-border:#60A5FA;--info-text:#93C5FD;--info-strong:#60A5FA;--danger:rgba(239,68,68,0.08);--danger-border:#EF4444;--danger-text:#FCA5A5;--danger-strong:#F87171;--story-warm:rgba(194,113,58,0.06);--story-warm-border:rgba(194,113,58,0.2);--story-warm-accent:#D97706;color-scheme:dark}
+html,body,header,.nav{transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease}
+[data-theme="dark"] .header{background:rgba(15,22,35,0.85)!important}
+[data-theme="dark"] .logo-text{color:#F1F5F9!important}
+[data-theme="dark"] .nav-link{color:#94A3B8}
+[data-theme="dark"] .nav-link:hover,[data-theme="dark"] .nav-link.active{color:#F1F5F9;background:rgba(255,255,255,0.06)}
+[data-theme="dark"] .menu-line{background:#F1F5F9}
+[data-theme="dark"] .theme-toggle-btn{border-color:#263044;color:#E2E8F0}
+[data-theme="dark"] .theme-toggle-btn:hover{border-color:var(--accent);background:rgba(45,212,191,0.1);color:var(--accent)}
+[data-theme="dark"] .mobile-nav{background:rgba(15,22,35,0.98)!important}
+[data-theme="dark"] .mobile-nav a{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .mobile-cta{background:rgba(15,22,35,0.95)!important;border-top-color:#1A2336!important}
+[data-theme="dark"] .breadcrumb{color:#5A6A82}
+[data-theme="dark"] .breadcrumb a{color:#7B8DA4}
+[data-theme="dark"] .breadcrumb svg{color:#374460}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4{color:#F1F5F9!important}
+[data-theme="dark"] .content-col strong{color:#F1F5F9}
+[data-theme="dark"] .content-col code{background:#1E293B;color:#E2E8F0;border:1px solid #263044}
+[data-theme="dark"] .content-col p{color:#CBD5E1}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{color:#CBD5E1}
+[data-theme="dark"] .content-col h2{border-bottom-color:#1A2336}
+[data-theme="dark"] .hero .reassure{color:#5A6A82}
+[data-theme="dark"] .hero .problem{color:#94A3B8}
+[data-theme="dark"] .hero .meta{color:#5A6A82}
+[data-theme="dark"] .story-opener p{color:#D4C4B0}
+[data-theme="dark"] .story-opener::before{color:#D97706;opacity:.25}
+[data-theme="dark"] .explain-block{border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .quick-summary{background:linear-gradient(135deg,rgba(45,212,191,0.05),rgba(56,189,248,0.05))}
+[data-theme="dark"] .quick-summary li{color:#CBD5E1}
+[data-theme="dark"] .quick-summary li strong{color:#F1F5F9}
+[data-theme="dark"] .audience-box{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .audience-box li{color:#CBD5E1}
+[data-theme="dark"] .approach-overview{border-color:#1A2336}
+[data-theme="dark"] .approach-overview p{color:#CBD5E1}
+[data-theme="dark"] .approach-item{color:#CBD5E1}
+[data-theme="dark"] .approach-num{background:rgba(45,212,191,0.1);border-color:rgba(45,212,191,0.25)}
+[data-theme="dark"] .approach-num.deep{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:#FBBF24}
+[data-theme="dark"] .table-wrapper{border-color:#1A2336}
+[data-theme="dark"] .comparison thead{background:#151D2E}
+[data-theme="dark"] .comparison th{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison td{color:#CBD5E1;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison tbody tr:last-child td{border-bottom:none}
+[data-theme="dark"] .comparison tbody tr:hover{background:#151D2E}
+[data-theme="dark"] .comparison .badge.green{background:rgba(34,197,94,0.15);color:#86EFAC}
+[data-theme="dark"] .comparison .badge.yellow{background:rgba(245,158,11,0.15);color:#FCD34D}
+[data-theme="dark"] .comparison .badge.red{background:rgba(239,68,68,0.15);color:#FCA5A5}
+[data-theme="dark"] .comparison .badge.blue{background:rgba(59,130,246,0.15);color:#93C5FD}
+[data-theme="dark"] .faq-item{border-color:#1A2336}
+[data-theme="dark"] .faq-item.open{border-color:rgba(45,212,191,0.3)}
+[data-theme="dark"] .faq-q{color:#F1F5F9}
+[data-theme="dark"] .faq-q:hover{background:#151D2E}
+[data-theme="dark"] .faq-q svg{color:#5A6A82}
+[data-theme="dark"] .faq-item.open .faq-q svg{color:var(--accent)}
+[data-theme="dark"] .faq-a-inner{color:#CBD5E1}
+[data-theme="dark"] .share-bar{border-top-color:#1A2336;border-bottom-color:#1A2336}
+[data-theme="dark"] .share-bar span{color:#5A6A82}
+[data-theme="dark"] .share-btn{background:#151D2E;border-color:#263044}
+[data-theme="dark"] .share-btn:hover{border-color:#374460;background:#1E293B}
+[data-theme="dark"] .share-btn svg{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy.copied{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#86EFAC}
+[data-theme="dark"] .author-bio{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .author-avatar{background:#1E293B}
+[data-theme="dark"] .help{border-top-color:#1A2336}
+[data-theme="dark"] .help-btn{border-color:#263044;color:#CBD5E1}
+[data-theme="dark"] .help-btn:hover{border-color:#374460;background:#151D2E}
+[data-theme="dark"] .promo-card{background:#0F1623;border-color:#1A2336}
+[data-theme="dark"] .promo-card:hover{border-color:#263044}
+[data-theme="dark"] .promo-card.aff .promo-icon{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .promo-card.aff .promo-icon svg{stroke:#94A3B8}
+[data-theme="dark"] .promo-card.aff .promo-btn{background:var(--accent)}
+[data-theme="dark"] .ad-block{border-color:#263044;background:#131A2B;color:#374460}
+[data-theme="dark"] .stp{background:#1E293B;border-color:#263044}
+[data-theme="dark"] .stp:hover{background:#263044;border-color:#374460}
+[data-theme="dark"] .stp svg{color:#94A3B8}
+[data-theme="dark"] .footer{background:#080C14!important}
+[data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,0.06);color:#374460}
+[data-theme="dark"] .footer-bottom a{color:#5A6A82}
+[data-theme="dark"] .code-block{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .code-header{background:rgba(255,255,255,0.03);border-bottom-color:#1A2336}
+[data-theme="dark"] .arch-diagram{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .arch-node.process{background:rgba(59,130,246,0.08);border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .arch-node.decision{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)}
+[data-theme="dark"] .arch-node.tool{background:rgba(124,58,237,0.08);border-color:rgba(124,58,237,0.2)}
+[data-theme="dark"] .verdict-card{border-color:#1A2336;background:#0F1623}
+[data-theme="dark"] .verdict-card:hover{border-color:#263044}
+[data-theme="dark"] .help-ending{background:linear-gradient(135deg,#111827,#0F172A);border-color:#1A2336}
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .arch-flow{flex-wrap:wrap;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="/guide" class="nav-link">Guides</a>
+            <a href="/product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Ai">AI</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>LangGraph vs CrewAI vs AutoGen</span>
+</nav>
+
+<main class="page-layout">
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">Engineering Guide &middot; Deep Comparison</p>
+                <h1 itemprop="headline">LangGraph vs CrewAI vs AutoGen: Which AI Agent Framework Should You Pick?</h1>
+                <p class="problem" itemprop="description">Three frameworks, three fundamentally different philosophies about how AI agents should work. Here is an honest, architecture-level comparison from someone who has shipped production systems with all three.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="story-opener">
+                <p>Six months ago, a startup I advise hit a wall. They had built a prototype using CrewAI that orchestrated three agents to research companies, draft investment memos, and flag risks. It worked beautifully in demos. But the moment they needed conditional logic, retry loops, and human approval gates, the whole thing buckled. They spent three weeks trying to wedge branching behavior into CrewAI's sequential process before accepting they had picked the wrong tool.</p>
+                <p>I have seen this exact story play out dozens of times now. Teams pick an agent framework based on a YouTube tutorial or a Hacker News thread, build something that works for a happy path, and then discover the framework's mental model does not match what their application actually needs. The cost of switching at that point is enormous. You have to restructure your state, rewrite your tool interfaces, and retrain your team on a different paradigm. This article exists to help you avoid that mistake.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    What This Comparison Actually Covers
+                </div>
+                <p>This is not a feature checklist scraped from documentation pages. I am going to explain <strong>how each framework thinks</strong>, what problems its architecture naturally solves, and where it breaks down under real production pressure. I have built customer support agents with LangGraph, content pipelines with CrewAI, and data analysis tools with AutoGen. Each one has genuine strengths that matter in specific contexts.</p>
+                <p>The right choice depends on your workflow complexity, your team's expertise, and where you need the system to be in twelve months, not just next week.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>LangGraph</strong> is a graph-based state machine. Best for complex, branching workflows with cycles, checkpoints, and fine-grained control over execution.</li>
+                    <li><strong>CrewAI</strong> is a role-based team orchestrator. Best for straightforward multi-agent pipelines where simplicity and speed of development matter more than architectural flexibility.</li>
+                    <li><strong>AutoGen</strong> is a conversation-driven framework. Best for research, prototyping, and applications where agents need to negotiate, debate, or collaboratively write code.</li>
+                    <li>For <strong>production systems with real users</strong>, LangGraph is currently the safest bet despite its steeper learning curve.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Guide Is For
+                </div>
+                <ul class="audience-list">
+                    <li>Engineers evaluating agent frameworks for a production project starting in the next 3 months</li>
+                    <li>Technical leads deciding on an AI architecture for a SaaS product or internal tool</li>
+                    <li>Developers who have used one framework and want to understand what they are missing</li>
+                    <li>AI researchers building multi-agent experiments that need to scale into products</li>
+                    <li>Founders who need to make a framework decision their team will live with for years</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    How This Guide Is Structured
+                </div>
+                <p>We will move from foundational concepts to deep technical analysis, then to practical decision-making. Each framework gets the same level of scrutiny.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>Core concepts: what agents are and why frameworks exist at all</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>Deep dives into LangGraph, CrewAI, and AutoGen with code and architecture diagrams</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>Honest comparison across performance, developer experience, and real-world fit</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="what-is-an-ai-agent">What Is an AI Agent?</h2>
+
+            <p>An AI agent is a system that uses a large language model as its reasoning engine but goes beyond simple question-answering. Instead of responding to a single prompt and stopping, an agent can <strong>decide what to do next</strong> based on its current state, available tools, and the goal it is trying to achieve.</p>
+
+            <p>Think of it this way: a chatbot is like a person who answers a question and then goes silent. An agent is like a person who answers a question, realizes they need more information, looks it up, evaluates what they found, decides whether it is sufficient, and either gives you a final answer or keeps investigating. The loop between thinking, acting, and observing is what makes an agent fundamentally different from a chat interface.</p>
+
+            <p>Concretely, most AI agents share these capabilities:</p>
+
+            <ul>
+                <li><strong>Tool use:</strong> Calling external APIs, running code, querying databases, reading files</li>
+                <li><strong>Planning:</strong> Breaking a complex goal into smaller steps and deciding the order of execution</li>
+                <li><strong>Memory:</strong> Retaining context from earlier steps in the current run or across runs</li>
+                <li><strong>State management:</strong> Tracking where the agent is in its workflow and what has been accomplished</li>
+                <li><strong>Reasoning:</strong> Evaluating intermediate results and deciding whether to continue, retry, or stop</li>
+            </ul>
+
+            <p>A simple example: you ask an agent to "analyze our Q2 revenue data and email me a summary." The agent parses your request, decides it needs to query the database, executes a SQL query, reads the results, realizes it should also compare against Q1, runs a second query, synthesizes both datasets into a summary, drafts an email, and sends it. Each of those steps involves a decision point that a basic LLM call cannot handle on its own.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>Single agent vs. multi-agent:</strong> A single agent handles the entire loop alone. A multi-agent system assigns specialized roles, like a researcher who gathers data and a writer who drafts the report. Multi-agent systems introduce coordination overhead but can produce better results for complex tasks by giving each agent a focused domain.</p></div>
+            </div>
+
+            <h2 id="why-agent-frameworks-exist">Why Agent Frameworks Exist</h2>
+
+            <p>You could build an agent from scratch with a while loop, some function-calling logic, and a state dictionary. I have done it. It works for a weekend project. But the moment you need to handle edge cases, the complexity explodes in ways that are surprisingly hard to manage.</p>
+
+            <p>The problems that agent frameworks solve are real and non-obvious until you hit them:</p>
+
+            <p><strong>Orchestration.</strong> Who decides what happens next? In a simple chain, it is obvious: step A then step B then step C. But what if step B fails? What if step A returns something that means you should skip B entirely? What if you need to loop back to step A after step C? Hand-rolled if/else chains become unmaintainable past three or four branches.</p>
+
+            <p><strong>State consistency.</strong> As an agent runs, it accumulates messages, tool outputs, intermediate decisions, and metadata. Keeping this state consistent across retries, errors, and concurrent runs is surprisingly difficult. If your agent crashes halfway through a 12-step workflow, can it resume from where it left off?</p>
+
+            <p><strong>Tool abstraction.</strong> Every LLM provider formats tool calls differently. OpenAI uses function calling with a specific JSON schema. Anthropic uses a different format. Local models through Ollama have yet another interface. A framework gives you a unified way to define tools and lets you swap models without rewriting your tool layer.</p>
+
+            <p><strong>Observability.</strong> When an agent produces a wrong answer, you need to trace exactly which step went wrong, what the LLM was thinking at that point, and what tool output led it astray. Without structured logging and checkpointing, debugging agent behavior is like debugging a program with no stack traces.</p>
+
+            <p><strong>Human-in-the-loop.</strong> Production agents frequently need approval before taking irreversible actions: sending emails, executing trades, deleting records. Implementing pause-resume semantics correctly, especially with async operations and timeouts, is a non-trivial distributed systems problem.</p>
+
+            <p><strong>Multi-agent coordination.</strong> When multiple agents work together, you need protocols for how they communicate, how to prevent infinite loops of agents talking past each other, and how to aggregate their outputs. These are not problems you want to solve from scratch at 2 AM when your production agent system starts spinning.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>When you do not need a framework:</strong> If your "agent" is really just an LLM with one or two tools and no branching logic, use the model provider's native tool-calling API directly. Frameworks add overhead that is not worth it for simple chains. The complexity threshold where a framework starts paying for itself is roughly when you have conditional routing, retries, or more than three sequential steps.</p></div>
+            </div>
+
+            <h2 id="langgraph">LangGraph: Graph-Based Agent Orchestration</h2>
+
+            <p>LangGraph, built by the LangChain team, treats agent workflows as <strong>directed graphs</strong>. Every step in your workflow is a node. Every transition between steps is an edge. The entire agent is a state machine that you define declaratively and then compile into an executable graph.</p>
+
+            <p>This is not just a metaphor. LangGraph literally builds a graph data structure in memory, and the execution engine traverses it according to the rules you specify. Edges can be unconditional (always go from A to B) or conditional (inspect the state and choose between B, C, or loop back to A). The graph can have cycles, which means agents can retry, self-correct, or iterate without any special hacking.</p>
+
+            <h3>Architecture</h3>
+
+            <p>The core abstraction is a <strong>typed state dictionary</strong> that flows through the graph. Every node is a Python function that receives the current state, does some work (usually calling an LLM or executing a tool), and returns a partial state update. These partial updates are merged into the full state using a reducer function, typically <code>operator.add</code> for message lists so that each node appends to the conversation rather than replacing it.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node start">Input</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Agent Node</div>
+                        <div class="arch-label">LLM decides action</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node decision">Router</div>
+                        <div class="arch-label">Conditional edge</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node tool">Tool Node</div>
+                        <div class="arch-label">Execute function</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Agent Node</div>
+                        <div class="arch-label">Process result</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node end">Output</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The router is where LangGraph's power becomes apparent. After the agent node returns, the router inspects the state to determine if the agent wants to call a tool, has produced a final answer, or needs to loop back. This is not hardcoded logic in the node itself. It is a separate function that reads the state and returns a string naming the next node. This separation means your nodes stay clean and your routing logic is testable in isolation.</p>
+
+            <h3>State and Checkpointing</h3>
+
+            <p>LangGraph's state system is its most underappreciated feature. Every time a node completes, the framework can snapshot the entire state to a checkpoint store. Out of the box, this supports SQLite for local development and Postgres for production. The LangGraph Platform adds a managed checkpointing service with a visual debugger.</p>
+
+            <p>What this means in practice: if your agent crashes, times out, or you need to resume a long-running workflow days later, you can reload the exact state and continue. No custom persistence logic. No database schema design. It works automatically because the state is a typed dictionary that serializes cleanly.</p>
+
+            <p>Checkpointing also enables human-in-the-loop patterns. You can compile the graph with <code>interrupt_before=["review_node"]</code>, and the execution engine will pause right before that node, return control to your application, and wait for you to resume with additional input. This is how you implement approval gates without building any custom infrastructure.</p>
+
+            <h3>Code Example</h3>
+
+            <p>Here is a production-pattern LangGraph agent that researches a topic, calls a search tool, and routes based on whether the agent needs more information or has enough to summarize.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="code-copy" data-code="langgraph-example">Copy</button>
+                </div>
+                <pre><code id="langgraph-example">from langgraph.graph import StateGraph, END, START
+from langgraph.graph.message import add_messages
+from langgraph.checkpoint.memory import MemorySaver
+from typing import TypedDict, Annotated
+from langchain_core.tools import tool
+from langchain_openai import ChatOpenAI
+
+class AgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+    search_results: list[str]
+    iteration_count: int
+
+@tool
+def search_web(query: str) -> str:
+    """Search the web for information about a topic."""
+    return f"Results for '{query}': [simulated search data]"
+
+llm = ChatOpenAI(model="gpt-4o").bind_tools([search_web])
+
+def agent_node(state: AgentState):
+    response = llm.invoke(state["messages"])
+    return {"messages": [response]}
+
+def tool_node(state: AgentState):
+    last_message = state["messages"][-1]
+    outputs = []
+    for call in last_message.tool_calls:
+        result = search_web.invoke(call["args"])
+        outputs.append(
+            {"role": "tool", "name": call["name"],
+             "content": result, "tool_call_id": call["id"]}
+        )
+    return {"messages": outputs}
+
+def router(state: AgentState):
+    last_message = state["messages"][-1]
+    if last_message.tool_calls:
+        if state["iteration_count"] >= 5:
+            return "summarize"
+        return "tools"
+    return END
+
+def summarize_node(state: AgentState):
+    summary_prompt = (
+        "Based on the research above, provide a "
+        "concise summary. If results are insufficient, "
+        "say so clearly."
+    )
+    response = llm.invoke(
+        state["messages"] + [
+            {"role": "user", "content": summary_prompt}
+        ]
+    )
+    return {"messages": [response]}
+
+builder = StateGraph(AgentState)
+builder.add_node("agent", agent_node)
+builder.add_node("tools", tool_node)
+builder.add_node("summarize", summarize_node)
+
+builder.add_edge(START, "agent")
+builder.add_conditional_edges("agent", router, {
+    "tools": "tools",
+    "summarize": "summarize",
+    END: END,
+})
+builder.add_edge("tools", "agent")
+builder.add_edge("summarize", END)
+
+checkpointer = MemorySaver()
+graph = builder.compile(
+    checkpointer=checkpointer,
+    interrupt_before=["summarize"]
+)
+
+result = graph.invoke(
+    {"messages": [{"role": "user",
+      "content": "Research recent advances in
+       quantum error correction"}],
+     "search_results": [],
+     "iteration_count": 0}
+)</code></pre>
+            </div>
+
+            <p>Notice several things that matter for production: the iteration count guard prevents infinite tool-calling loops. The <code>interrupt_before</code> on the summarize node means a human can review the research before the final summary is generated. The state is typed, so you get IDE autocompletion and type checking. The checkpointer means this workflow can survive a process restart.</p>
+
+            <h3>Advantages</h3>
+            <div class="pick-pros"><ul>
+                <li>Cycles and loops are first-class citizens, not workarounds</li>
+                <li>Checkpointing and state persistence work out of the box</li>
+                <li>Human-in-the-loop via interrupt points requires zero custom code</li>
+                <li>Conditional routing keeps node logic clean and testable</li>
+                <li>LangGraph Studio provides visual graph debugging</li>
+                <li>Supports subgraphs for composing reusable agent components</li>
+                <li>Typed state prevents entire categories of runtime bugs</li>
+                <li>Production-proven at scale by companies like Replit and Klarna</li>
+            </ul></div>
+
+            <h3>Disadvantages</h3>
+            <div class="pick-cons"><ul>
+                <li>Steeper learning curve: you must think in graphs, not linear flows</li>
+                <li>More boilerplate for simple use cases compared to CrewAI</li>
+                <li>Tightly coupled to LangChain's message types and tool abstractions</li>
+                <li>Documentation is comprehensive but scattered across multiple repos</li>
+                <li>Graph complexity can become hard to visualize beyond 15-20 nodes</li>
+                <li>Error messages from deep in the graph execution engine can be cryptic</li>
+            </ul></div>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content"><p><strong>Common mistake:</strong> Building a LangGraph graph with too many tiny nodes. Each node has overhead (function call, state merge, checkpoint write). Group related logic into fewer, more meaningful nodes. A good rule of thumb: if a node does not have a meaningful routing decision after it, it probably should be merged with an adjacent node.</p></div>
+            </div>
+
+            <h2 id="crewai">CrewAI: Role-Based Team Orchestration</h2>
+
+            <p>CrewAI takes a fundamentally different approach. Instead of graphs and state machines, it models agent systems as <strong>teams of people</strong>. You define agents with roles, goals, and backstories. You define tasks with descriptions and expected outputs. Then you assign tasks to agents and specify a process for how the team works together.</p>
+
+            <p>The mental model is deliberately simple because it maps to how humans already think about collaboration. A marketing team has a researcher, a writer, and an editor. They work sequentially or with a manager delegating. CrewAI mirrors this exactly.</p>
+
+            <h3>Architecture</h3>
+
+            <p>CrewAI has four core abstractions: <strong>Agents</strong>, <strong>Tasks</strong>, <strong>Tools</strong>, and <strong>Crews</strong>. An Agent is a configurable LLM wrapper with a role, a goal, a backstory (which becomes part of the system prompt), and an optional list of tools. A Task is a unit of work with a description, expected output format, and a reference to the agent that should perform it. A Crew binds agents and tasks together with a process type.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node start">Kickoff</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Researcher</div>
+                        <div class="arch-label">Task 1: Gather data</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Writer</div>
+                        <div class="arch-label">Task 2: Draft content</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Editor</div>
+                        <div class="arch-label">Task 3: Review and refine</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node end">Final Output</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The two process types are <strong>Sequential</strong> and <strong>Hierarchical</strong>. Sequential runs tasks in order, passing the output of each task as context to the next. Hierarchical adds a manager agent that delegates tasks to worker agents, potentially running some in parallel. The manager decides which agent should handle each task based on their roles.</p>
+
+            <p>Under the hood, CrewAI builds on LangChain. It uses LangChain's LLM wrappers, tool abstractions, and output parsers. This means you get LangChain's model compatibility for free, but it also means you inherit LangChain's occasional versioning pain and abstraction leaks.</p>
+
+            <h3>Code Example</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="code-copy" data-code="crewai-example">Copy</button>
+                </div>
+                <pre><code id="crewai-example">from crewai import Agent, Task, Crew, Process
+from crewai_tools import SerperDevTool
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
+search_tool = SerperDevTool()
+
+researcher = Agent(
+    role="Senior Technology Analyst",
+    goal="Identify the most impactful AI engineering "
+         "trends from the past quarter",
+    backstory="You are a seasoned technology analyst "
+              "at a leading VC firm. You specialize in "
+              "separaging signal from noise in AI "
+              "developments and have 15 years of "
+              "experience evaluating emerging tech.",
+    tools=[search_tool],
+    llm=llm,
+    verbose=True,
+    max_iter=5,
+)
+
+writer = Agent(
+    role="Technical Content Strategist",
+    goal="Transform raw research into a compelling "
+         "narrative for a technical executive audience",
+    backstory="You write for CTOs and engineering "
+              "leaders who value substance over hype. "
+              "Your writing is precise, opinionated, "
+              "and backed by evidence.",
+    llm=llm,
+    verbose=True,
+    max_iter=3,
+)
+
+editor = Agent(
+    role="Editor-in-Chief",
+    goal="Ensure the final output is accurate, "
+         "well-structured, and free of claims "
+         "not supported by the research",
+    backstory="You have zero tolerance for fluff. "
+              "Every claim must trace back to a source. "
+              "You cut anything that does not add value.",
+    llm=llm,
+    verbose=True,
+    max_iter=3,
+)
+
+research_task = Task(
+    description="Research and compile the top 5 AI "
+                "agent framework developments from "
+                "Q2 2025. For each, include: what "
+                "changed, who was involved, and why "
+                "it matters practically.",
+    expected_output="A structured list of 5 developments "
+                     "with concrete details and sources.",
+    agent=researcher,
+)
+
+writing_task = Task(
+    description="Using the research findings, write "
+                "an 800-word analysis piece suitable "
+                "for a CTO newsletter. Lead with the "
+                "most surprising finding.",
+    expected_output="An 800-word article in markdown "
+                     "with a strong opening, clear "
+                     "sections, and an actionable "
+                     "takeaway for each trend.",
+    agent=writer,
+    context=[research_task],
+)
+
+editing_task = Task(
+    description="Review the article for accuracy "
+                "against the research, fix any "
+                "unsupported claims, improve "
+                "structure, and ensure the tone "
+                "is appropriately technical.",
+    expected_output="A polished final article ready "
+                     "for publication.",
+    agent=editor,
+    context=[research_task, writing_task],
+)
+
+crew = Crew(
+    agents=[researcher, writer, editor],
+    tasks=[research_task, writing_task, editing_task],
+    process=Process.sequential,
+    verbose=True,
+)
+
+result = crew.kickoff()</code></pre>
+            </div>
+
+            <p>The code reads almost like a specification document. That is CrewAI's biggest strength: the distance between what you want and what you write is minimal. A non-engineer could read this code and understand the system's behavior. That is not true of LangGraph, where the behavior emerges from the interaction between nodes, edges, and routing functions.</p>
+
+            <h3>Memory Handling</h3>
+
+            <p>CrewAI provides a basic memory module that stores short-term context (the current task chain) and long-term context (across multiple crew runs). In practice, the short-term memory works reliably because it simply passes task outputs forward. The long-term memory is less mature. It uses an embedded store by default, and the quality of recall depends heavily on how you configure it. For production systems that need reliable cross-session memory, you will likely need to implement your own layer on top of a proper database.</p>
+
+            <h3>Advantages</h3>
+            <div class="pick-pros"><ul>
+                <li>Fastest time from idea to working prototype of any framework</li>
+                <li>Mental model (teams, roles, tasks) is intuitive for non-experts</li>
+                <li>Minimal boilerplate for standard multi-agent pipelines</li>
+                <li>Backstories and roles produce better-prompted agents by default</li>
+                <li>Hierarchical process enables basic delegation patterns</li>
+                <li>Good documentation with practical examples</li>
+                <li>Active community and rapid iteration on new features</li>
+            </ul></div>
+
+            <h3>Disadvantages</h3>
+            <div class="pick-cons"><ul>
+                <li>No native support for cycles, loops, or conditional branching within a process</li>
+                <li>State management is opaque: you cannot inspect or modify intermediate state easily</li>
+                <li>No built-in checkpointing or crash recovery</li>
+                <li>Human-in-the-loop requires custom callback hacking, not first-class support</li>
+                <li>Debugging is difficult when a task produces unexpected output deep in the chain</li>
+                <li>Performance overhead from verbose prompting (backstories, role descriptions in every call)</li>
+                <li>Hierarchical mode's manager agent adds cost and latency for delegation that could be static</li>
+                <li>Less suitable for workflows where the path depends on runtime data, not just task order</li>
+            </ul></div>
+
+            <div class="callout danger">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                <div class="callout-content"><p><strong>Production trap:</strong> CrewAI makes it dangerously easy to build something that works for happy paths. The problems appear when you need error recovery, conditional logic, or state inspection. If your workflow has any branching beyond "do these tasks in order," evaluate whether CrewAI's limitations will force you into workarounds that make the code harder to maintain than a LangGraph equivalent.</p></div>
+            </div>
+
+            <h2 id="autogen">AutoGen: Conversation-Driven Multi-Agent Systems</h2>
+
+            <p>AutoGen, developed by Microsoft Research, approaches agent orchestration through <strong>conversations</strong>. Instead of graphs or task chains, AutoGen models agent systems as groups of entities that send messages to each other. The framework manages the message flow, and the agents decide what to say and do based on the conversation history.</p>
+
+            <p>This reflects how Microsoft's research team thinks about agent collaboration: as a dialogue rather than a workflow. Agents propose, critique, refine, and negotiate through structured messages. The framework provides the plumbing for this communication while keeping the actual reasoning in the LLM.</p>
+
+            <h3>Architecture</h3>
+
+            <p>AutoGen's core building blocks are <strong>Agent</strong> objects and a <strong>GroupChat</strong> manager. Each agent has an LLM configuration, a name, and a system message defining its behavior. Agents can be "assistant" agents (LLM-backed) or "user proxy" agents (which can execute code and simulate user input).</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node process">Assistant A</div>
+                        <div class="arch-label">Proposes approach</div>
+                    </div>
+                    <span class="arch-arrow bidir">&harr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Assistant B</div>
+                        <div class="arch-label">Critiques and refines</div>
+                    </div>
+                    <span class="arch-arrow bidir">&harr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node tool">User Proxy</div>
+                        <div class="arch-label">Executes code</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>The conversation flow in AutoGen is fundamentally different from the other two frameworks. In LangGraph, you define the path explicitly. In CrewAI, the path is defined by task order. In AutoGen, the path <strong>emerges from the conversation</strong>. An agent speaks, another agent responds, and the conversation continues until a termination condition is met (a maximum number of rounds, a specific message pattern, or a human input).</p>
+
+            <p>AutoGen 0.4, released in late 2024, introduced a significant architectural overhaul. It moved from a class-based agent model to a more functional approach with <code>RunContext</code> and proper async support. This broke backward compatibility with 0.2, but the new architecture is cleaner and more suitable for production use.</p>
+
+            <h3>Code Execution</h3>
+
+            <p>AutoGen's most distinctive feature is its built-in code execution environment. The <code>UserProxyAgent</code> can write code to a file, execute it in a subprocess or Docker container, capture the output, and feed it back into the conversation. This creates a powerful loop: an agent proposes code, it gets executed, the result informs the next message, and the agent can iteratively debug and improve the code.</p>
+
+            <p>This makes AutoGen particularly strong for data analysis, mathematical reasoning, and any task where agents need to write and validate code as part of their reasoning process. No other framework has this level of integrated code execution support.</p>
+
+            <h3>Code Example</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="code-copy" data-code="autogen-example">Copy</button>
+                </div>
+                <pre><code id="autogen-example">import autogen
+
+llm_config = {
+    "model": "gpt-4o",
+    "temperature": 0.2,
+    "api_key": "your-key-here",
+}
+
+analyst = autogen.AssistantAgent(
+    name="DataAnalyst",
+    system_message=(
+        "You are a data analyst. When you need to "
+        "analyze data, write Python code and have "
+        "the user proxy execute it. Always verify "
+        "your results by checking the output. "
+        "If the code fails, debug it and try again."
+    ),
+    llm_config=llm_config,
+)
+
+critic = autogen.AssistantAgent(
+    name="QualityReviewer",
+    system_message=(
+        "You review the analyst's work. Check for: "
+        "1) Methodological errors in the analysis "
+        "2) Incorrect conclusions from the data "
+        "3) Missing edge cases or assumptions "
+        "If you find issues, describe them clearly. "
+        "If the work is solid, say APPROVE."
+    ),
+    llm_config=llm_config,
+)
+
+user_proxy = autogen.UserProxyAgent(
+    name="executor",
+    human_input_mode="NEVER",
+    max_consecutive_auto_reply=10,
+    code_execution_config={
+        "work_dir": "analysis_output",
+        "use_docker": False,
+    },
+)
+
+groupchat = autogen.GroupChat(
+    agents=[analyst, critic, user_proxy],
+    messages=[],
+    max_round=20,
+    speaker_selection_method="auto",
+)
+
+manager = autogen.GroupChatManager(
+    groupchat=groupchat,
+    llm_config=llm_config,
+)
+
+user_proxy.initiate_chat(
+    manager,
+    message=(
+        "Analyze the following sales data by "
+        "calculating month-over-month growth rates, "
+        "identifying the best and worst performing "
+        "product categories, and determining if "
+        "there is a statistically significant "
+        "upward trend. Data: "
+        "Jan=45000, Feb=48000, Mar=47000, "
+        "Apr=52000, May=55000, Jun=53000"
+    ),
+)</code></pre>
+            </div>
+
+            <p>The conversation that emerges from this setup will typically follow a pattern: the analyst writes Python code to calculate growth rates, the user proxy executes it and returns the output, the analyst interprets the results, the critic reviews the methodology, and they iterate until the critic approves or the round limit is hit. No explicit orchestration is needed. The conversation drives itself.</p>
+
+            <h3>Advantages</h3>
+            <div class="pick-pros"><ul>
+                <li>Built-in code execution with Docker isolation is unique and powerful</li>
+                <li>Conversation-driven model produces natural multi-agent collaboration</li>
+                <li>Excellent for research, prototyping, and exploratory analysis</li>
+                <li>GroupChat manager handles speaker selection automatically</li>
+                <li>Flexible enough to implement almost any communication pattern</li>
+                <li>Strong academic backing with published research on multi-agent effectiveness</li>
+                <li>AutoGen 0.4's async support makes it viable for higher-throughput applications</li>
+            </ul></div>
+
+            <h3>Disadvantages</h3>
+            <div class="pick-cons"><ul>
+                <li>Conversation-based flow is hard to predict and debug</li>
+                <li>No native state persistence or checkpointing across runs</li>
+                <li>Token consumption is high because every agent sees the full conversation history</li>
+                <li>Termination conditions are coarse: you mostly rely on round limits</li>
+                <li>Human-in-the-loop is limited to specific agent types and message patterns</li>
+                <li>0.4 migration broke many existing codebases and community resources</li>
+                <li>Less structured than LangGraph for deterministic workflows</li>
+                <li>GroupChat with more than 4-5 agents often degrades into noise</li>
+                <li>Production deployment tooling is less mature than LangGraph Platform</li>
+            </ul></div>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content"><p><strong>Token cost warning:</strong> In a GroupChat with three agents and 15 rounds, each agent's LLM call includes the full conversation history up to that point. By round 15, each call is processing thousands of tokens of prior messages. A single GroupChat run can easily cost 5-10x what an equivalent LangGraph workflow costs because LangGraph's nodes only see the state they need, not the entire conversation.</p></div>
+            </div>
+
+            <h2 id="feature-comparison">Feature Comparison</h2>
+
+            <div class="comparison">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dimension</th>
+                                <th>LangGraph</th>
+                                <th>CrewAI</th>
+                                <th>AutoGen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Core Paradigm</strong></td>
+                                <td>Graph / State Machine</td>
+                                <td>Role-Based Teams</td>
+                                <td>Conversation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ease of Learning</strong></td>
+                                <td><span class="badge yellow">Moderate</span></td>
+                                <td><span class="badge green">Easy</span></td>
+                                <td><span class="badge yellow">Moderate</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>State Management</strong></td>
+                                <td><span class="badge green">Typed, persistent</span></td>
+                                <td><span class="badge red">Opaque, transient</span></td>
+                                <td><span class="badge red">Conversation-only</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Checkpointing</strong></td>
+                                <td><span class="badge green">Built-in</span></td>
+                                <td><span class="badge red">Not available</span></td>
+                                <td><span class="badge red">Not available</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cycles / Loops</strong></td>
+                                <td><span class="badge green">First-class</span></td>
+                                <td><span class="badge red">Not supported</span></td>
+                                <td><span class="badge yellow">Via conversation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conditional Routing</strong></td>
+                                <td><span class="badge green">Explicit functions</span></td>
+                                <td><span class="badge red">Not supported</span></td>
+                                <td><span class="badge yellow">LLM-driven</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tool Integration</strong></td>
+                                <td><span class="badge green">LangChain ecosystem</span></td>
+                                <td><span class="badge green">LangChain + CrewAI tools</span></td>
+                                <td><span class="badge green">Custom functions</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Execution</strong></td>
+                                <td><span class="badge yellow">Via tools</span></td>
+                                <td><span class="badge yellow">Via tools</span></td>
+                                <td><span class="badge green">Built-in, Docker</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Human-in-the-Loop</strong></td>
+                                <td><span class="badge green">Interrupt points</span></td>
+                                <td><span class="badge red">Callbacks only</span></td>
+                                <td><span class="badge yellow">Limited patterns</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multi-Agent Support</strong></td>
+                                <td><span class="badge green">Subgraphs</span></td>
+                                <td><span class="badge green">Crews</span></td>
+                                <td><span class="badge green">GroupChat</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Token Efficiency</strong></td>
+                                <td><span class="badge green">High (selective state)</span></td>
+                                <td><span class="badge yellow">Medium</span></td>
+                                <td><span class="badge red">Low (full history)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Debugging Experience</strong></td>
+                                <td><span class="badge green">Studio + traces</span></td>
+                                <td><span class="badge red">Print-based</span></td>
+                                <td><span class="badge yellow">Message logs</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Documentation Quality</strong></td>
+                                <td><span class="badge green">Comprehensive</span></td>
+                                <td><span class="badge green">Good, growing</span></td>
+                                <td><span class="badge yellow">Fragmented by version</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Community Size</strong></td>
+                                <td><span class="badge green">Large</span></td>
+                                <td><span class="badge green">Growing fast</span></td>
+                                <td><span class="badge yellow">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Production Readiness</strong></td>
+                                <td><span class="badge green">High</span></td>
+                                <td><span class="badge yellow">Improving</span></td>
+                                <td><span class="badge yellow">Moderate</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enterprise Adoption</strong></td>
+                                <td><span class="badge green">Klarna, Replit</span></td>
+                                <td><span class="badge yellow">Early stage</span></td>
+                                <td><span class="badge yellow">Microsoft internal</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Best for Beginners</strong></td>
+                                <td>No</td>
+                                <td><span class="badge green">Yes</span></td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Best for Startups</strong></td>
+                                <td><span class="badge green">Yes</span></td>
+                                <td><span class="badge yellow">Simple cases</span></td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Best for Enterprises</strong></td>
+                                <td><span class="badge green">Yes</span></td>
+                                <td>No</td>
+                                <td><span class="badge yellow">Research teams</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h2 id="architecture-comparison">Architecture Comparison</h2>
+
+            <p>The most important difference between these frameworks is not their feature lists. It is <strong>how they think about control flow</strong>. This distinction determines everything else: how you debug, how you test, how you scale, and what kinds of workflows feel natural versus forced.</p>
+
+            <p>LangGraph gives you <strong>explicit control</strong>. You define every possible path through the system as edges on a graph. The framework will never surprise you with an unexpected sequence of steps because there are no hidden transitions. If something goes wrong, you can trace the exact path the execution took through the graph and see which conditional edge made which decision. This is the same principle that makes finite state machines reliable in hardware design and distributed systems.</p>
+
+            <p>CrewAI gives you <strong>implicit control</strong>. The execution order is determined by task sequence and the process type. You trust that the framework will run tasks in the right order and pass context correctly. This works beautifully when the workflow is linear. But when you need "if the researcher finds insufficient data, skip the writer and go straight to a notification task," there is no clean way to express that. You start adding flags to task outputs and conditional logic in callbacks, which defeats the simplicity that made CrewAI appealing in the first place.</p>
+
+            <p>AutoGen gives you <strong>emergent control</strong>. The flow is not defined by you at all. It emerges from the conversation dynamics between agents. This is powerful for exploratory tasks where you genuinely do not know the right sequence of steps in advance. But it is terrifying for production systems where you need deterministic behavior. Two runs with the same input can produce completely different conversation paths and, consequently, different results.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>Why this matters for testing:</strong> With LangGraph, you can write unit tests for individual nodes and integration tests for specific graph paths. With CrewAI, you mostly test entire crew runs end-to-end. With AutoGen, you can test individual agent responses but not the conversation flow itself. The testability gap between explicit and emergent control is enormous and becomes critical as your system grows.</p></div>
+            </div>
+
+            <h2 id="performance-comparison">Performance Comparison</h2>
+
+            <p>Performance in agent frameworks is not just about speed. It encompasses latency, token efficiency, memory overhead, and the cost of running the system at scale.</p>
+
+            <p><strong>Latency.</strong> LangGraph typically has the lowest per-step latency because each node can be optimized independently. You can run lightweight nodes synchronously and heavy LLM-call nodes asynchronously without changing the graph structure. CrewAI adds latency through its verbose prompting: every agent call includes the role, goal, and backstory, which adds tokens to every request. AutoGen's GroupChat has the highest latency because each round requires multiple sequential LLM calls (one per agent that speaks), and later rounds include increasingly long conversation histories.</p>
+
+            <p><strong>Token efficiency.</strong> This is where the architectural differences become financially significant. In LangGraph, you control exactly what state each node sees. If a summarization node only needs the last three messages, you can filter the state before passing it in. In CrewAI, each task includes the outputs of all prior tasks as context, growing linearly. In AutoGen, every agent in a GroupChat sees the entire conversation history on every turn, growing quadratically with the number of rounds. For a 20-round GroupChat with three agents, the token waste is substantial.</p>
+
+            <p><strong>Memory overhead.</strong> LangGraph's checkpointing writes state to a database, so memory usage per running instance is low. CrewAI keeps the full task chain in memory for the duration of the run. AutoGen keeps the full message history in memory. For long-running workflows with large intermediate results, CrewAI and AutoGen can hit memory limits that LangGraph avoids through its incremental checkpointing.</p>
+
+            <p><strong>Scaling.</strong> LangGraph scales best because its state machine model maps naturally to distributed execution. The LangGraph Platform can run different nodes on different workers. CrewAI runs a crew as a single process, so scaling means running multiple crew instances behind a load balancer. AutoGen's conversation model makes distributed execution fundamentally difficult because the conversation state is inherently sequential.</p>
+
+            <h2 id="developer-experience">Developer Experience</h2>
+
+            <p>The day-to-day experience of working with these frameworks differs more than their documentation suggests.</p>
+
+            <p><strong>Setup.</strong> All three install via pip and work within minutes. CrewAI wins here slightly because you need fewer configuration decisions. LangGraph requires you to think about your state schema upfront. AutoGen requires configuring the code execution environment if you plan to use it.</p>
+
+            <p><strong>Documentation.</strong> LangGraph's documentation is the most thorough but also the most scattered. Core concepts are well-explained in the main docs, but advanced patterns like subgraph composition and custom checkpointers require digging through GitHub examples and the LangChain cookbook. CrewAI's documentation is more focused and approachable, though it sometimes glosses over limitations. AutoGen's documentation is still recovering from the 0.4 migration. Many tutorials and Stack Overflow answers reference 0.2 APIs that no longer exist.</p>
+
+            <p><strong>Debugging.</strong> This is where LangGraph's investment really shows. LangGraph Studio gives you a visual representation of the graph, shows the state at each node, and lets you step through execution. Combined with LangSmith tracing, you get something closer to a traditional debugger than any other framework offers. CrewAI's debugging is largely print-based: set <code>verbose=True</code> and read the output. AutoGen logs all messages, which is useful but produces overwhelming output for long conversations.</p>
+
+            <p><strong>IDE support.</strong> LangGraph's typed state and explicit function signatures give you good autocompletion and type checking in VS Code or PyCharm. CrewAI's agent and task definitions are less typed, so you get less IDE assistance. AutoGen 0.4 improved its type hints significantly, but the dynamic nature of conversation-based systems means the IDE can only help so much.</p>
+
+            <p><strong>Error handling.</strong> LangGraph lets you add error-handling nodes and retry edges to your graph. If a tool call fails, you can route to a retry node with backoff logic, then route back to the original node. This is explicit and testable. CrewAI has basic retry configuration on agents (<code>max_iter</code>, <code>max_retry_limit</code>), but you cannot define custom recovery logic per failure type. AutoGen handles errors within the conversation: if code execution fails, the error message becomes part of the conversation, and the agent can respond to it. This is flexible but unpredictable.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>Practical tip:</strong> Regardless of which framework you choose, wrap your LLM calls with structured logging from day one. Log the input messages, the model response, the latency, and the token count. Every framework's built-in logging will feel sufficient until you are debugging a production issue at 3 AM and realize you do not have enough context to understand why an agent made a specific decision.</p></div>
+            </div>
+
+            <div class="ad-block in-content" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <h2 id="real-world-use-cases">Real-World Use Cases</h2>
+
+            <p>Frameworks are not good or bad in isolation. They are good or bad for specific problems. Here is how each one fits real applications.</p>
+
+            <h3>AI Customer Support System</h3>
+            <p>A customer support agent needs to classify the issue, search the knowledge base, attempt a resolution, escalate to a human if it cannot help, and log the interaction. This workflow has clear branching (resolved vs. escalated), a human-in-the-loop requirement (escalation), and a need for audit trails (logging). <strong>LangGraph is the clear winner here.</strong> You can model each stage as a node, use conditional edges for routing, add an interrupt point before the human escalation node, and use checkpointing for audit compliance. CrewAI could handle the happy path but would struggle with the branching and escalation logic. AutoGen's conversational model is not suited for deterministic customer-facing workflows.</p>
+
+            <h3>Coding Assistant</h3>
+            <p>An agent that receives a coding task, writes code, runs tests, reads error output, fixes bugs, and iterates until tests pass. This is essentially a loop with code execution, which maps perfectly to <strong>AutoGen's</strong> strengths. The built-in code execution environment, the conversation-driven iteration between writing and testing, and the ability to have a reviewer agent critique the code all play to AutoGen's design. You could build this in LangGraph (and it would be more deterministic), but AutoGen gets you there faster for this specific pattern.</p>
+
+            <h3>Content Production Pipeline</h3>
+            <p>A system that takes a topic, researches it, outlines an article, writes drafts for different sections, edits for style and accuracy, and publishes. This is a sequential pipeline with specialized roles, exactly what <strong>CrewAI</strong> was designed for. The workflow is linear, each step has a clear input and output, and the "team" metaphor helps non-technical stakeholders understand and modify the system. LangGraph would work but would be over-engineering for what is fundamentally a straight-line process.</p>
+
+            <h3>Research Agent</h3>
+            <p>An agent that explores a research question by searching multiple sources, synthesizing findings, identifying gaps, and deciding whether to search more or conclude. The key challenge is that the research path is not known in advance. The agent must decide dynamically how many sources to consult and when it has enough information. <strong>AutoGen excels here</strong> because the conversational model naturally supports exploratory, non-deterministic workflows. LangGraph could model this with a loop and a termination condition, but the graph structure would be artificially rigid for an inherently open-ended process.</p>
+
+            <h3>Healthcare Triage System</h3>
+            <p>A system that collects patient symptoms, cross-references with medical guidelines, flags urgent cases for immediate attention, schedules non-urgent cases, and maintains a full audit trail for compliance. The audit trail requirement, the deterministic routing (urgent vs. non-urgent), the human-in-the-loop needs, and the regulatory environment all point to <strong>LangGraph</strong>. Checkpointing provides the audit trail. Conditional routing handles triage. Interrupt points enable human review. No other framework provides this combination of control and compliance features.</p>
+
+            <h3>Financial Analysis Workflow</h3>
+            <p>A system that pulls financial data from multiple APIs, runs calculations, generates visualizations, produces a report, and flags anomalies for human review. If the workflow is a fixed pipeline, <strong>CrewAI</strong> handles it well. If the analysis needs to branch based on what the data shows (for example, "if revenue dropped more than 20%, run a deeper decomposition analysis"), you need <strong>LangGraph</strong>. If the system needs to write and execute custom analysis code based on the data, <strong>AutoGen</strong> becomes relevant.</p>
+
+            <h3>Sales Automation</h3>
+            <p>An agent that researches a prospect, drafts a personalized email, decides whether to send it immediately or request human review based on deal size and account tier, tracks the response, and follows up. The conditional logic (review vs. auto-send based on deal characteristics) and the need for reliable execution make <strong>LangGraph</strong> the right choice. A missed follow-up because of an unhandled error in a CrewAI pipeline directly costs revenue.</p>
+
+            <h3>Autonomous Knowledge Management</h3>
+            <p>A system that continuously monitors information sources, extracts relevant knowledge, updates an internal knowledge base, and alerts stakeholders when significant changes are detected. This is a long-running, event-driven workflow with conditional logic and multiple output paths. <strong>LangGraph</strong> can model this as a graph that processes events, with different nodes for different event types and conditional routing based on content analysis.</p>
+
+            <h2 id="which-framework-should-you-choose">Which Framework Should You Choose?</h2>
+
+            <p>Here are concrete recommendations based on who you are and what you are building.</p>
+
+            <div class="verdict-card">
+                <span class="verdict-tag teal">Recommended</span>
+                <h3>For Beginners Learning AI Agents</h3>
+                <p>Start with CrewAI. It teaches you the core concepts, agents, tasks, tools, and multi-agent coordination, with the least friction. Build a few small projects. Then graduate to LangGraph to understand state management and control flow. Skipping straight to LangGraph is like learning to drive on a manual transmission: possible, but you will spend more time fighting the tool than learning the concepts.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag teal">Recommended</span>
+                <h3>For Intermediate Developers Building a Side Project</h3>
+                <p>If your project is a content pipeline, a research assistant, or anything with a relatively linear flow, CrewAI will get you to a working product fastest. If your project has any branching, retry logic, or conditional behavior, invest the extra time in LangGraph upfront. You will save weeks of refactoring later.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag teal">Recommended</span>
+                <h3>For AI Startups Building Production Systems</h3>
+                <p>LangGraph. Unambiguously. The checkpointing, human-in-the-loop, and observability features are not nice-to-haves. They are requirements for any system that serves real users. The learning curve is an investment that pays for itself the first time you need to debug a production issue or add an approval gate.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag amber">Conditional</span>
+                <h3>For SaaS Companies Adding AI Features</h3>
+                <p>LangGraph for any feature that involves multi-step workflows, decision-making, or tool use. If you are just adding a simple RAG问答 interface, none of these frameworks are necessary. Use the LLM API directly. Only reach for a framework when the complexity of the agent logic justifies the abstraction overhead.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag teal">Recommended</span>
+                <h3>For Enterprise Teams</h3>
+                <p>LangGraph, paired with the LangGraph Platform for deployment and LangSmith for observability. Enterprises need audit trails, access controls, reproducible executions, and integration with existing infrastructure. LangGraph's checkpointing maps to compliance requirements. Its typed state maps to enterprise data governance. Its graph model maps to the kind of documented, reviewable workflows that enterprise teams are comfortable with.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag rose">Niche</span>
+                <h3>For Researchers and Data Scientists</h3>
+                <p>AutoGen for exploratory work, prototyping, and any task involving code generation and execution. Its conversational model maps well to how researchers already work: propose, test, refine, discuss. For turning research prototypes into production systems, plan to rewrite in LangGraph rather than trying to productionize AutoGen directly.</p>
+            </div>
+
+            <div class="verdict-card">
+                <span class="verdict-tag amber">Conditional</span>
+                <h3>For Hobby Projects and Experiments</h3>
+                <p>Use whatever is most fun. CrewAI for quick wins. AutoGen for playing with multi-agent conversations. LangGraph if you want to learn the skills that will matter most professionally. The best framework for a hobby project is the one that keeps you motivated to keep building.</p>
+            </div>
+
+            <h2 id="future-of-ai-agent-frameworks">Future of AI Agent Frameworks</h2>
+
+            <p>The agent framework landscape is moving fast, and several trends will reshape how these tools compare within the next year.</p>
+
+            <p><strong>Model Context Protocol (MCP).</strong> Anthropic's MCP is becoming a standard for how agents connect to external tools and data sources. Instead of each framework implementing its own tool abstraction, MCP provides a universal protocol. All three frameworks are moving toward MCP support, but LangGraph is furthest along because of its tighter integration with the broader LangChain ecosystem, which adopted MCP early. Within a year, your choice of framework may matter less for tool integration because MCP will level that playing field.</p>
+
+            <p><strong>Long-term memory.</strong> None of these frameworks solve long-term memory well today. The industry is converging on a pattern where frameworks handle short-term workflow state, and external services handle persistent memory through vector databases and knowledge graphs. Expect to see tighter integrations between agent frameworks and memory services like Mem0, Zep, and LangChain's memory modules. The framework that provides the cleanest interface for plugging in external memory will gain an advantage.</p>
+
+            <p><strong>Agentic workflows as infrastructure.</strong> The trajectory is clear: agent workflows are becoming deployable units of infrastructure, similar to how container orchestration evolved from manual Docker commands to Kubernetes. LangGraph Platform is the furthest along this path, treating graphs as deployable artifacts with versioning, scaling, and monitoring. CrewAI+ is moving in this direction. AutoGen's future here is less clear, given Microsoft's broader investment in semantic kernel as their enterprise agent platform.</p>
+
+            <p><strong>Multi-agent collaboration patterns.</strong> Current frameworks mostly support simple collaboration: sequential, hierarchical, or conversational. Real-world multi-agent systems need more sophisticated patterns: parallel execution with result aggregation, competitive agents that challenge each other's outputs, and observer agents that monitor and optimize the collaboration itself. Expect LangGraph's subgraph composition to enable the most sophisticated patterns, since you can embed entire agent graphs as nodes within a larger orchestration graph.</p>
+
+            <p><strong>Cost optimization.</strong> As agents move from prototypes to production, token cost becomes a first-class concern. Frameworks will need to provide better tools for token budgeting, selective context inclusion, and caching of repeated computations. LangGraph's explicit state control gives it a structural advantage here, but all three frameworks will need to invest in cost-awareness features.</p>
+
+            <h2 id="final-verdict">Final Verdict</h2>
+
+            <p>After building real systems with all three frameworks, here is my honest assessment.</p>
+
+            <p><strong>LangGraph wins</strong> when your workflow has any combination of: branching logic, retry loops, human approval gates, compliance requirements, production users, or a need to run reliably for months without someone babysitting it. The learning curve is real but temporary. The benefits are permanent. If you are building something that matters, this is the safest choice.</p>
+
+            <p><strong>CrewAI wins</strong> when you need to go from zero to a working multi-agent prototype in hours, not days. It is the best teaching tool, the best rapid prototyping tool, and the best choice for linear pipelines where the simplicity of the code matters more than the flexibility of the architecture. Just go in with eyes open about its limitations, and have a migration plan to LangGraph if the project outgrows CrewAI's capabilities.</p>
+
+            <p><strong>AutoGen wins</strong> when your problem is fundamentally exploratory, when agents need to write and execute code as a core part of their reasoning, or when you are doing research that benefits from the conversational dynamics between agents. It is a powerful research tool that is slowly becoming production-viable, but it is not there yet for customer-facing systems.</p>
+
+            <p>The framework landscape will look different in a year. MCP may reduce the importance of tool integration differences. New entrants may challenge the incumbents. But the underlying architectural philosophies, explicit control, implicit control, and emergent control, will remain the most important axis for evaluation. Understanding those philosophies is more valuable than memorizing any specific framework's API, because that understanding transfers regardless of which tool you are using.</p>
+
+            <div class="faq-section">
+                <h2 id="faq">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Can I use LangGraph without LangChain?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>LangGraph is built as a separate package from LangChain, but it still relies on LangChain's message types, tool abstractions, and LLM wrappers under the hood. You can minimize your LangChain dependency, but going fully independent is not practical. The tool-calling interfaces and message schemas are tightly coupled. If you want a framework that is completely independent of LangChain, you would need to look beyond these three options entirely.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Is CrewAI actually production-ready?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>CrewAI has improved significantly with enterprise features, observability through CrewAI+, and better error handling. However, for highly complex workflows with branching logic, cycles, or fine-grained state control, it still falls short compared to LangGraph. For straightforward sequential or hierarchical agent teams with well-defined inputs and outputs, it works well in production with proper monitoring, logging, and error alerting around the crew execution.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Which framework is best for beginners?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>CrewAI has the gentlest learning curve because its mental model maps directly to how humans think about teams: assign roles, define tasks, set a process. You can build a working multi-agent system in under 50 lines of code. LangGraph requires understanding graph theory concepts like nodes, edges, conditional routing, and state reducers before you can build anything useful. AutoGen sits in the middle but demands comfort with conversation-based patterns and asynchronous programming in version 0.4.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Can these frameworks work together?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Technically yes, since all three ultimately call LLM APIs. You could embed a CrewAI crew as a tool inside a LangGraph node, or use AutoGen agents within a LangGraph workflow by wrapping their execution in a node function. However, this adds complexity and debugging overhead because you now have two different execution models, two different state systems, and two different logging formats to reason about. In practice, pick one framework per project and use it consistently. The cost of mixing frameworks almost always outweighs the benefits.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">How do these frameworks handle long-term memory?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>None of the three frameworks ship with production-grade long-term memory out of the box. LangGraph's checkpointing provides conversation-level persistence across runs, meaning you can resume a workflow, but it does not provide semantic memory that lets an agent recall facts from a completely different session. CrewAI offers a basic memory module that stores context between tasks within a single crew run, with experimental long-term memory using embeddings. AutoGen has no native long-term memory. For true long-term memory that persists across unrelated sessions, you need to integrate external solutions like Mem0, Zep, a vector database, or a custom storage layer regardless of which framework you choose.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">What about other frameworks like Semantic Kernel, Claude Code, or custom solutions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Semantic Kernel is Microsoft's enterprise-focused agent framework and is a strong option if you are in the Microsoft ecosystem, but it is more of an SDK than an orchestration framework. Claude Code is a coding assistant, not a general-purpose agent framework. Custom solutions built directly on LLM APIs make sense for simple agents but become unmaintainable as complexity grows. The three frameworks covered here represent the mainstream open-source options for Python-based agent development. If you are in the .NET ecosystem, Semantic Kernel deserves its own evaluation. If you are building in TypeScript, look at LangGraph.js or the Vercel AI SDK.</p></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on X" onclick="window.open('https://x.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent('LangGraph vs CrewAI vs AutoGen: honest comparison from someone who shipped with all three'),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </button>
+                <button class="share-btn copy" id="copyLinkBtn">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar"><img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52"></div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="similar">
+                <h2>Continue Reading</h2>
+                <ul>
+                    <li><a href="/guide/building-production-ai-agents"><span>How to Build Production AI Agents That Don't Break at 3 AM</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <li><a href="/guide/langgraph-state-management"><span>LangGraph State Management: The Definitive Guide</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <li><a href="/guide/mcp-protocol-explained"><span>Model Context Protocol: Why It Changes Everything for AI Tools</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                </ul>
+            </div>
+
+            <div class="help">
+                <h2>Need Help Choosing?</h2>
+                <p>Join our community of AI engineers building real agent systems.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Telegram
+                    </a>
+                    <a href="https://melextech.dev/guide" class="help-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        More Guides
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+            <div class="toc-card sidebar-toc" id="tocSidebar">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#what-is-an-ai-agent" class="toc-link">What Is an AI Agent?</a>
+                    <a href="#why-agent-frameworks-exist" class="toc-link">Why Agent Frameworks Exist</a>
+                    <a href="#langgraph" class="toc-link">LangGraph</a>
+                    <a href="#crewai" class="toc-link">CrewAI</a>
+                    <a href="#autogen" class="toc-link">AutoGen</a>
+                    <a href="#feature-comparison" class="toc-link">Feature Comparison</a>
+                    <a href="#architecture-comparison" class="toc-link">Architecture Comparison</a>
+                    <a href="#performance-comparison" class="toc-link">Performance Comparison</a>
+                    <a href="#developer-experience" class="toc-link">Developer Experience</a>
+                    <a href="#real-world-use-cases" class="toc-link">Real-World Use Cases</a>
+                    <a href="#which-framework-should-you-choose" class="toc-link">Which Framework?</a>
+                    <a href="#future-of-ai-agent-frameworks" class="toc-link">Future of Agent Frameworks</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#what-is-an-ai-agent" class="toc-link">What Is an AI Agent?</a>
+                    <a href="#why-agent-frameworks-exist" class="toc-link">Why Agent Frameworks Exist</a>
+                    <a href="#langgraph" class="toc-link">LangGraph</a>
+                    <a href="#crewai" class="toc-link">CrewAI</a>
+                    <a href="#autogen" class="toc-link">AutoGen</a>
+                    <a href="#feature-comparison" class="toc-link">Feature Comparison</a>
+                    <a href="#architecture-comparison" class="toc-link">Architecture Comparison</a>
+                    <a href="#performance-comparison" class="toc-link">Performance Comparison</a>
+                    <a href="#developer-experience" class="toc-link">Developer Experience</a>
+                    <a href="#real-world-use-cases" class="toc-link">Real-World Use Cases</a>
+                    <a href="#which-framework-should-you-choose" class="toc-link">Which Framework?</a>
+                    <a href="#future-of-ai-agent-frameworks" class="toc-link">Future of Agent Frameworks</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+        </div>
+    </aside>
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <button class="cta-btn secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        Top
+    </button>
+    <a href="https://t.me/melexit" class="cta-btn primary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Join Us
+    </a>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script>
+(function(){
+    var scrollProg = document.getElementById('scrollProgress');
+    var stpBtn = document.getElementById('scrollToTop');
+    var mobileCta = document.getElementById('mobileCta');
+    var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    var mobileNav = document.getElementById('mobileNav');
+    var themeToggleBtn = document.getElementById('themeToggleBtn');
+    var copyLinkBtn = document.getElementById('copyLinkBtn');
+    var faqItems = document.querySelectorAll('.faq-item');
+    var allTocLinks = document.querySelectorAll('.toc-link');
+    var sections = [];
+    var codeCopyBtns = document.querySelectorAll('.code-copy');
+
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (el) sections.push({id: id, el: el, links: []});
+    });
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        for (var i = 0; i < sections.length; i++) {
+            if (sections[i].id === id) {
+                sections[i].links.push(link);
+                break;
+            }
+        }
+    });
+
+    function onScroll() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        scrollProg.style.width = progress + '%';
+
+        if (scrollTop > 600) {
+            stpBtn.classList.add('vis');
+        } else {
+            stpBtn.classList.remove('vis');
+        }
+
+        if (scrollTop > 800) {
+            mobileCta.classList.add('vis');
+        } else {
+            mobileCta.classList.remove('vis');
+        }
+
+        var current = '';
+        for (var i = 0; i < sections.length; i++) {
+            var rect = sections[i].el.getBoundingClientRect();
+            if (rect.top <= 120) {
+                current = sections[i].id;
+            }
+        }
+        allTocLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    onScroll();
+
+    stpBtn.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            var isOpen = mobileNav.classList.contains('open');
+            if (isOpen) {
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                mobileNav.classList.add('open');
+                mobileNav.setAttribute('aria-hidden', 'false');
+                mobileMenuBtn.classList.add('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href).then(function() {
+                    copyLinkBtn.textContent = 'COPIED';
+                    copyLinkBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyLinkBtn.textContent = 'COPY LINK';
+                        copyLinkBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    }
+
+    faqItems.forEach(function(item) {
+        var btn = item.querySelector('.faq-q');
+        var answer = item.querySelector('.faq-a');
+        var inner = item.querySelector('.faq-a-inner');
+        btn.addEventListener('click', function() {
+            var isOpen = item.classList.contains('open');
+            faqItems.forEach(function(other) {
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+                other.querySelector('.faq-a').style.maxHeight = '0';
+            });
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = inner.scrollHeight + 20 + 'px';
+            }
+        });
+    });
+
+    codeCopyBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var codeId = btn.getAttribute('data-code');
+            var codeEl = document.getElementById(codeId);
+            if (codeEl && navigator.clipboard) {
+                navigator.clipboard.writeText(codeEl.textContent).then(function() {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    });
+
+    allTocLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            if (mobileNav.classList.contains('open')) {
+                mobileNav.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>

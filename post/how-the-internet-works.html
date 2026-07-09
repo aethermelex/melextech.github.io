@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the Internet Work? From Cables to Packets to Pages — MELEX IT</title>
+    <meta name="description" content="The internet is not a cloud. It is hundreds of thousands of kilometers of cables, millions of machines, and a handful of protocols that make them all work together. Here is the full picture.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/how-does-the-internet-work">
+    <meta name="author" content="MELEX IT">
+    <meta name="keywords" content="how the internet works, internet infrastructure, TCP IP, DNS, packet switching, internet cables, internet protocols, how the web works">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How Does the Internet Work? From Cables to Packets to Pages">
+    <meta property="og:description" content="A complete explanation of how the internet works, from the physical cables on the ocean floor to the protocols in your operating system.">
+    <meta property="og:url" content="https://melextech.dev/post/how-does-the-internet-work">
+    <meta property="og:image" content="https://melextech.dev/guide/img/how-the-internet-works.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Computer Science">
+    <meta property="article:tag" content="Internet">
+    <meta property="article:tag" content="Networking">
+    <meta property="article:tag" content="TCP/IP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How Does the Internet Work? From Cables to Packets to Pages">
+    <meta name="twitter:description" content="A complete explanation of how the internet works, from ocean cables to rendered pages.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/how-the-internet-works.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How Does the Internet Work? From Cables to Packets to Pages",
+        "description": "A comprehensive technical explanation of internet infrastructure covering physical cables, packet switching, IP addressing, TCP, DNS, TLS, HTTP, routing, and data centers.",
+        "image": "https://melextech.dev/guide/img/how-the-internet-works.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/how-does-the-internet-work"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Who owns the internet?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nobody owns the internet as a whole. Different entities own different pieces. Telecommunication companies own the undersea and underground cables. Cloud providers like AWS, Google, and Microsoft own the data centers. Your ISP owns the connection to your home. The IETF and ICANN manage the technical standards and address systems, but they do not own the infrastructure. The internet is a collection of independently operated networks that agree to communicate using shared protocols."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the internet the same as the World Wide Web?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The internet is the physical and logical infrastructure: the cables, routers, and protocols that connect computers worldwide. The World Wide Web is an application that runs on top of the internet, using HTTP as its protocol and browsers as its clients. Email, video games, file sharing, and VPNs all use the internet but are not the web. The web is one of many services the internet supports."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How fast does data travel on the internet?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Data travels through fiber optic cables at roughly two-thirds the speed of light in a vacuum, which is about 200,000 kilometers per second. In practice, the speed you experience is much lower because of processing delays at each router, the time spent queuing at congested links, and the distance your data travels through multiple hops. A request from New York to London might travel 300,000 km through various routes and take 70-100 milliseconds."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can the internet be shut down?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not easily, and not completely. The internet is designed as a decentralized network with no single point of failure. If one cable is cut, traffic routes around it. If one data center goes offline, others take over. A government could restrict access within its borders by ordering ISPs to block traffic, as seen in some countries, but shutting down the global internet would require simultaneously disabling hundreds of thousands of independent networks across every country, which is practically impossible."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is my internet slow even though I pay for fast speeds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your rated speed is the maximum capacity of the connection between you and your ISP. Actual speed depends on many factors: congestion on your ISP's network, congestion at the destination server, the number of hops between you and the server, the quality of Wi-Fi in your home, interference from other devices, and the protocol overhead of encryption and packet headers. A 500 Mbps plan does not mean every website will deliver data at 500 Mbps. It means the pipe to your house can carry that much, but the rest of the journey may have narrower pipes."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev/"},
+            {"@type": "ListItem", "position": 2, "name": "Computer Science", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "How Does the Internet Work", "item": "https://melextech.dev/post/how-does-the-internet-work"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#f0fdfa;--accent-border:#99f6e4;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#5eead4);z-index:101;will-change:width}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:300px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+.story-opener{background:var(--story-warm);border:1px solid var(--story-warm-border);border-radius:var(--radius);padding:28px 28px 24px;margin-bottom:36px;position:relative;overflow:hidden}
+.story-opener::before{content:'\201C';position:absolute;top:-8px;left:16px;font-size:5rem;font-family:Georgia,serif;color:var(--story-warm-accent);opacity:.15;line-height:1}
+.story-opener p{font-size:.92rem;color:#5C4A3A;line-height:1.85;margin-bottom:12px;position:relative}
+.story-opener p:last-child{margin-bottom:0}
+.explain-block{background:var(--info);border:1px solid #BFDBFE;border-radius:var(--radius);padding:24px 26px;margin-bottom:36px}
+.explain-block .explain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--info-border);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{font-size:.88rem;color:var(--info-text);line-height:1.85;margin-bottom:10px}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+.audience-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.audience-box .audience-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{display:flex;flex-direction:column;gap:6px}
+.audience-box li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:20px;position:relative}
+.audience-box li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-weight:600}
+.approach-overview{border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px}
+.approach-overview .approach-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{font-size:.87rem;color:var(--fg-sub);line-height:1.8;margin-bottom:12px}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.approach-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--fg-sub);line-height:1.6}
+.approach-item .approach-num{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:700;color:var(--accent-hover);flex-shrink:0;margin-top:2px}
+.approach-item .approach-num.deep{background:#FEF3C7;border-color:#FDE68A;color:#B45309}
+.quick-summary{background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-hover);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+.ad-block{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:32px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px;background:var(--surface-2)}
+.ad-block.in-content{margin:32px 0}
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent-hover);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+@media(min-width:901px){.toc-card#tocInline{display:none}.toc-card.sidebar-toc{display:block}}
+@media(max-width:900px){.toc-card#tocInline{display:block}.toc-card.sidebar-toc{display:none!important}}
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+.comparison{margin:32px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Mobile: prevent comparison table overflow glitches */
+@media(max-width:480px){
+    .comparison{overflow-x:clip}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+}
+
+.pick-pros{margin:14px 0 0}
+.pick-pros h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
+.pick-pros ul{display:flex;flex-direction:column;gap:4px}
+.pick-pros li{font-size:.84rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.pick-pros li::before{content:'\2713';position:absolute;left:0;color:#22c55e;font-weight:700}
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+.promo-card{border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+
+@media(min-width:901px){.mobile-cta{display:none!important}}
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+.code-block{background:#0F172A;border:1px solid #1E293B;border-radius:var(--radius);margin:20px 0;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid #1E293B}
+.code-lang{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748B}
+.code-copy{font-size:.72rem;font-weight:600;color:#64748B;padding:4px 10px;border-radius:var(--radius-xs);border:1px solid #334155;transition:all .15s;cursor:pointer;background:none}
+.code-copy:hover{border-color:#475569;color:#94A3B8}
+.code-copy.copied{color:#22C55E;border-color:#22C55E}
+.code-block pre{padding:16px 20px;overflow-x:auto;font-size:.8rem;line-height:1.75;font-family:'SF Mono',Consolas,monospace;color:#E2E8F0;margin:0;white-space:pre}
+.code-block code{background:none;padding:0;border-radius:0;font-size:inherit;color:inherit}
+.arch-diagram{display:flex;align-items:center;justify-content:center;gap:0;padding:24px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:20px 0;overflow-x:auto}
+.arch-flow{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.arch-node{padding:10px 16px;border-radius:var(--radius-sm);font-size:.76rem;font-weight:600;white-space:nowrap;text-align:center}
+.arch-node.start{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.arch-node.process{background:var(--info);color:var(--info-text);border:1px solid #BFDBFE}
+.arch-node.decision{background:var(--warn);color:var(--warn-text);border:1px solid #FDE68A}
+.arch-node.end{background:var(--surface);color:var(--fg-sub);border:1px solid var(--border-2)}
+.arch-node.tool{background:#F3E8FF;color:#7C3AED;border:1px solid #DDD6FE}
+.arch-arrow{font-size:1.1rem;color:var(--fg-faint);flex-shrink:0;font-weight:700}
+.arch-stack{display:flex;flex-direction:column;align-items:center;gap:4px}
+.arch-label{font-size:.66rem;color:var(--fg-muted);text-align:center;margin-top:4px}
+.verdict-card{border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;transition:border-color .15s}
+.verdict-card:hover{border-color:var(--border-2)}
+.verdict-card .verdict-tag{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.verdict-card .verdict-tag.teal{background:var(--accent-soft);color:var(--accent-hover);border:1px solid var(--accent-border)}
+.verdict-card .verdict-tag.amber{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.verdict-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin:0 0 6px;line-height:1.35}
+.verdict-card p{font-size:.85rem;color:var(--fg-sub);line-height:1.7;margin:0}
+.theme-toggle-btn{background:transparent;border:1px solid var(--border);color:var(--fg);width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease}
+.theme-toggle-btn:hover{border-color:var(--accent);background:var(--surface-2);color:var(--accent-hover)}
+.theme-toggle-btn svg{width:20px;height:20px}
+[data-theme="dark"] .sun-icon{display:block}
+[data-theme="dark"] .moon-icon{display:none}
+html:not([data-theme="dark"]) .sun-icon{display:none}
+html:not([data-theme="dark"]) .moon-icon{display:block}
+[data-theme="dark"]{--bg:#0B0F19;--bg-alt:#131A2B;--surface:#0F1623;--surface-2:#151D2E;--surface-3:#1A2338;--fg:#E2E8F0;--fg-sub:#CBD5E1;--fg-light:#94A3B8;--fg-muted:#8B9AB5;--fg-faint:#5A6A82;--dark:#F1F5F9;--border:#1A2336;--border-2:#263044;--border-3:#374460;--dark-card:rgba(255,255,255,0.04);--dark-border:rgba(255,255,255,0.08);--dark-muted:#7B8DA4;--accent-soft:rgba(45,212,191,0.1);--accent-border:rgba(45,212,191,0.25);--warn:rgba(245,158,11,0.08);--warn-border:#F59E0B;--warn-text:#FCD34D;--warn-strong:#FBBF24;--tip:rgba(34,197,94,0.08);--tip-border:#22C55E;--tip-text:#86EFAC;--tip-strong:#4ADE80;--info:rgba(59,130,246,0.08);--info-border:#60A5FA;--info-text:#93C5FD;--info-strong:#60A5FA;--danger:rgba(239,68,68,0.08);--danger-border:#EF4444;--danger-text:#FCA5A5;--danger-strong:#F87171;--story-warm:rgba(194,113,58,0.06);--story-warm-border:rgba(194,113,58,0.2);--story-warm-accent:#D97706;color-scheme:dark}
+html,body,header,.nav{transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease}
+[data-theme="dark"] .header{background:rgba(15,22,35,0.85)!important}
+[data-theme="dark"] .logo-text{color:#F1F5F9!important}
+[data-theme="dark"] .nav-link{color:#94A3B8}
+[data-theme="dark"] .nav-link:hover,[data-theme="dark"] .nav-link.active{color:#F1F5F9;background:rgba(255,255,255,0.06)}
+[data-theme="dark"] .menu-line{background:#F1F5F9}
+[data-theme="dark"] .theme-toggle-btn{border-color:#263044;color:#E2E8F0}
+[data-theme="dark"] .theme-toggle-btn:hover{border-color:var(--accent);background:rgba(45,212,191,0.1);color:var(--accent)}
+[data-theme="dark"] .mobile-nav{background:rgba(15,22,35,0.98)!important}
+[data-theme="dark"] .mobile-nav a{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .mobile-cta{background:rgba(15,22,35,0.95)!important;border-top-color:#1A2336!important}
+[data-theme="dark"] .breadcrumb{color:#5A6A82}
+[data-theme="dark"] .breadcrumb a{color:#7B8DA4}
+[data-theme="dark"] .breadcrumb svg{color:#374460}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4{color:#F1F5F9!important}
+[data-theme="dark"] .content-col strong{color:#F1F5F9}
+[data-theme="dark"] .content-col code{background:#1E293B;color:#E2E8F0;border:1px solid #263044}
+[data-theme="dark"] .content-col p{color:#CBD5E1}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.approach-list):not(.audience-list):not(.spec-list):not(.pick-pros):not(.pick-cons) li{color:#CBD5E1}
+[data-theme="dark"] .content-col h2{border-bottom-color:#1A2336}
+[data-theme="dark"] .hero .reassure{color:#5A6A82}
+[data-theme="dark"] .hero .problem{color:#94A3B8}
+[data-theme="dark"] .hero .meta{color:#5A6A82}
+[data-theme="dark"] .story-opener p{color:#D4C4B0}
+[data-theme="dark"] .story-opener::before{color:#D97706;opacity:.25}
+[data-theme="dark"] .explain-block{border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .quick-summary{background:linear-gradient(135deg,rgba(45,212,191,0.05),rgba(56,189,248,0.05))}
+[data-theme="dark"] .quick-summary li{color:#CBD5E1}
+[data-theme="dark"] .quick-summary li strong{color:#F1F5F9}
+[data-theme="dark"] .audience-box{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .audience-box li{color:#CBD5E1}
+[data-theme="dark"] .approach-overview{border-color:#1A2336}
+[data-theme="dark"] .approach-overview p{color:#CBD5E1}
+[data-theme="dark"] .approach-item{color:#CBD5E1}
+[data-theme="dark"] .approach-num{background:rgba(45,212,191,0.1);border-color:rgba(45,212,191,0.25)}
+[data-theme="dark"] .approach-num.deep{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:#FBBF24}
+[data-theme="dark"] .table-wrapper{border-color:#1A2336}
+[data-theme="dark"] .comparison thead{background:#151D2E}
+[data-theme="dark"] .comparison th{color:#F1F5F9;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison td{color:#CBD5E1;border-bottom-color:#1A2336}
+[data-theme="dark"] .comparison tbody tr:last-child td{border-bottom:none}
+[data-theme="dark"] .comparison tbody tr:hover{background:#151D2E}
+[data-theme="dark"] .comparison .badge.green{background:rgba(34,197,94,0.15);color:#86EFAC}
+[data-theme="dark"] .comparison .badge.yellow{background:rgba(245,158,11,0.15);color:#FCD34D}
+[data-theme="dark"] .comparison .badge.red{background:rgba(239,68,68,0.15);color:#FCA5A5}
+[data-theme="dark"] .comparison .badge.blue{background:rgba(59,130,246,0.15);color:#93C5FD}
+[data-theme="dark"] .faq-item{border-color:#1A2336}
+[data-theme="dark"] .faq-item.open{border-color:rgba(45,212,191,0.3)}
+[data-theme="dark"] .faq-q{color:#F1F5F9}
+[data-theme="dark"] .faq-q:hover{background:#151D2E}
+[data-theme="dark"] .faq-q svg{color:#5A6A82}
+[data-theme="dark"] .faq-item.open .faq-q svg{color:var(--accent)}
+[data-theme="dark"] .faq-a-inner{color:#CBD5E1}
+[data-theme="dark"] .share-bar{border-top-color:#1A2336;border-bottom-color:#1A2336}
+[data-theme="dark"] .share-bar span{color:#5A6A82}
+[data-theme="dark"] .share-btn{background:#151D2E;border-color:#263044}
+[data-theme="dark"] .share-btn:hover{border-color:#374460;background:#1E293B}
+[data-theme="dark"] .share-btn svg{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy{color:#94A3B8}
+[data-theme="dark"] .share-btn.copy.copied{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#86EFAC}
+[data-theme="dark"] .author-bio{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .author-avatar{background:#1E293B}
+[data-theme="dark"] .help{border-top-color:#1A2336}
+[data-theme="dark"] .help-btn{border-color:#263044;color:#CBD5E1}
+[data-theme="dark"] .help-btn:hover{border-color:#374460;background:#151D2E}
+[data-theme="dark"] .promo-card{background:#0F1623;border-color:#1A2336}
+[data-theme="dark"] .promo-card:hover{border-color:#263044}
+[data-theme="dark"] .promo-card.aff .promo-icon{background:#151D2E;border-color:#1A2336}
+[data-theme="dark"] .promo-card.aff .promo-icon svg{stroke:#94A3B8}
+[data-theme="dark"] .promo-card.aff .promo-btn{background:var(--accent)}
+[data-theme="dark"] .ad-block{border-color:#263044;background:#131A2B;color:#374460}
+[data-theme="dark"] .stp{background:#1E293B;border-color:#263044}
+[data-theme="dark"] .stp:hover{background:#263044;border-color:#374460}
+[data-theme="dark"] .stp svg{color:#94A3B8}
+[data-theme="dark"] .footer{background:#080C14!important}
+[data-theme="dark"] .footer-bottom{border-top-color:rgba(255,255,255,0.06);color:#374460}
+[data-theme="dark"] .footer-bottom a{color:#5A6A82}
+[data-theme="dark"] .code-block{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .code-header{background:rgba(255,255,255,0.03);border-bottom-color:#1A2336}
+[data-theme="dark"] .arch-diagram{background:#131A2B;border-color:#1A2336}
+[data-theme="dark"] .arch-node.process{background:rgba(59,130,246,0.08);border-color:rgba(96,165,250,0.2)}
+[data-theme="dark"] .arch-node.decision{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)}
+[data-theme="dark"] .arch-node.tool{background:rgba(124,58,237,0.08);border-color:rgba(124,58,237,0.2)}
+[data-theme="dark"] .verdict-card{border-color:#1A2336;background:#0F1623}
+[data-theme="dark"] .verdict-card:hover{border-color:#263044}
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .arch-flow{flex-wrap:wrap;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+
+    if (!themeToggleBtn) return;
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    themeToggleBtn.addEventListener("click", () => {
+        const isDark =
+            document.documentElement.getAttribute("data-theme") === "dark";
+
+        if (isDark) {
+            document.documentElement.removeAttribute("data-theme");
+            localStorage.setItem("theme", "light");
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+        }
+    });
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme" type="button">
+    <!-- Sun -->
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+
+    <!-- Moon -->
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79"></path>
+    </svg>
+</button>
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Network">Network</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>How Does the Internet Work</span>
+</nav>
+
+<main class="page-layout">
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">Computer Science &middot; Networking Fundamentals</p>
+                <h1 itemprop="headline">How Does the Internet Work? From Cables to Packets to Pages</h1>
+                <p class="problem" itemprop="description">The internet has no center. No owner. No main building. It is a collection of hundreds of thousands of separate networks, connected by physical cables and unified by shared agreements called protocols. Understanding how it actually works changes how you think about every click, every stream, and every message you send.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="story-opener">
+                <p>In 1858, the first transatlantic telegraph cable was laid across the ocean floor. It carried a single message from Queen Victoria to President Buchanan in sixteen hours. People wept in the streets. Today, cables on that same ocean floor carry over 99% of international data traffic, and a message crosses the Atlantic in under 80 milliseconds. The physical medium has barely changed. What changed is everything built on top of it: the protocols, the routers, the software, and the billions of devices that speak a common language.</p>
+                <p>This article traces the complete journey of data from the moment you press Enter in your browser to the moment a page appears on your screen. Not at a hand-waving level. At the level where you can see why things work the way they do, not just that they do.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The One-Sentence Answer
+                </div>
+                <p>The internet is <strong>a system of interconnected computer networks that use standardized protocols to communicate with each other, physically connected by cables and wirelessly by radio links, logically unified by shared addressing and routing rules</strong>. Every other detail follows from this.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>The physical internet is cables.</strong> Over 1.3 million kilometers of submarine cables, millions of kilometers of land cables, and radio links connecting everything.</li>
+                    <li><strong>Data travels in packets.</strong> Your messages are chopped into small chunks, each addressed independently, routed separately, and reassembled at the destination.</li>
+                    <li><strong>Protocols are the rules.</strong> TCP ensures reliable delivery. IP handles addressing and routing. DNS translates names to numbers. HTTP defines how web requests and responses look.</li>
+                    <li><strong>Routers are the intersections.</strong> Specialized computers at every junction decide which direction each packet should go next, using routing tables that describe the map of the network.</li>
+                    <li><strong>Your browser does not talk to websites directly.</strong> It talks to a chain of intermediaries: your Wi-Fi router, your ISP, backbone networks, and the destination server, each handling one hop of the journey.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Guide Is For
+                </div>
+                <ul class="audience-list">
+                    <li>Anyone curious about what actually happens when they open a browser</li>
+                    <li>Developers who understand APIs but not the network layer beneath them</li>
+                    <li>Students encountering networking concepts for the first time</li>
+                    <li>Technical professionals who need a clear mental model to explain internet concepts to non-technical stakeholders</li>
+                </ul>
+            </div>
+
+            <h2 id="the-internet-is-not-a-cloud">The Internet Is Not a Cloud</h2>
+
+            <p>Every diagram of the internet shows a cloud. This is the single most misleading visual in all of technology education. The cloud implies something formless, distributed, ethereal. The reality is the opposite: the internet is one of the most physical, most precisely engineered systems humans have ever built.</p>
+
+            <p>At its lowest level, the internet is wires. Copper wires in telephone poles. Fiber optic cables buried under city streets. Enormous fiber bundles lying on the ocean floor, some as deep as 8,000 meters below sea level. Microwave links shooting between mountaintop towers. Cell tower antennas connecting phones to base stations. Your home Wi-Fi router shooting radio waves across your living room.</p>
+
+            <p>These wires connect to devices. Your phone. Your laptop. The server hosting this article. The DNS server that translated "melextech.dev" into an IP address. The router in your ISP's building that decided which cable your packets should travel down. The router in a data center in Virginia that forwarded those packets to the specific machine storing this file. Every single bit of data you have ever sent or received over the internet traveled through a physical medium as electrical pulses, light pulses, or radio waves.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>The "cloud" is a metaphor for abstraction.</strong> Cloud computing means you do not need to know which specific physical machine your code runs on. The machines are real. They are in real buildings. They generate real heat. The cloud is a business model and an abstraction layer, not a physical description of the internet.</p></div>
+            </div>
+
+            <h2 id="the-physical-layer">The Physical Layer: What the Internet Is Made Of</h2>
+
+            <p>The physical infrastructure of the internet has three tiers, each operating at a different scale.</p>
+
+            <h3>Submarine Cables</h3>
+
+            <p>Over 600 submarine cables cross the world's oceans, totaling roughly 1.3 million kilometers. These cables carry approximately 99% of intercontinental internet traffic. They are owned by consortia of telecommunication companies: a cable across the Atlantic might be jointly owned by AT&T, BT, Orange, and Telstra, each paying for a portion of its capacity.</p>
+
+            <p>A modern submarine cable is not a single wire. It is a bundle of up to 16 separate fiber optic strands, each capable of carrying terabits per second. The fibers are enclosed in copper tubing for protection, wrapped in layers of plastic and steel wire for strength, and coated in a waterproofing compound. The total diameter is about the size of a garden hose. Despite this, cables still get damaged. Ship anchors drag across them. Earthquakes snap them. Sharks have been known to bite them, though this is rarer than popularly claimed. Repair ships are dispatched to retrieve the cable, splice in a new section, and lower it back to the seafloor. A single repair operation can take weeks and cost millions of dollars.</p>
+
+            <h3>Land Cables</h3>
+
+            <p>On land, fiber optic cables run along roads, through underground conduits, and over utility poles. In cities, they thread through tunnels originally built for telephony. Between cities, they follow highway rights-of-way or railroad corridors. These land cables connect submarine cable landing stations to data centers and to the equipment inside ISP buildings.</p>
+
+            <p>Not all land connections are fiber. In rural areas, copper telephone lines (DSL) or fixed wireless links are still common. Satellite internet uses radio signals between a dish on your roof and a satellite in orbit, which then communicates with a ground station connected to the fiber network. Each technology has different characteristics for speed, latency, and reliability, but at the protocol level, they all work the same way.</p>
+
+            <h3>Last-Mile Connections</h3>
+
+            <p>The "last mile" is the connection between your ISP's local equipment and your device. For home internet, this is usually a coaxial cable (cable internet), a copper phone line (DSL), or a fiber optic line run directly to your home (fiber-to-the-home, or FTTH). For mobile internet, the last mile is a radio link between your phone and a nearby cell tower, which then connects to the ISP's network via fiber or microwave.</p>
+
+            <p>The last mile is often the bottleneck. Fiber can carry enormous bandwidth, but the coaxial cable or copper wire connecting your home has much less. This is why you might pay for "up to 500 Mbps" but actually get 350 Mbps during peak hours: the shared capacity of the last-mile infrastructure is being divided among your neighbors.</p>
+
+            <h2 id="packets">Packets: How Data Travels</h2>
+
+            <p>The internet does not send your data as one continuous stream. It chops it into small, independent pieces called packets. This decision is fundamental to how the internet works, and understanding why it works this way is the key to understanding everything else.</p>
+
+            <p>Imagine you need to send a 10-megabyte photo from New York to London. If the internet used circuit switching (like old telephone networks), it would establish a dedicated path between the two cities and send the entire photo as one continuous stream. That path would be reserved for your use even during the moments when no data is actively flowing, wasting capacity.</p>
+
+            <p>Instead, the internet uses <strong>packet switching</strong>. Your computer splits the photo into thousands of small packets, each typically between 500 and 1,500 bytes. Each packet is labeled with a destination address and a sequence number, then sent into the network independently. Different packets from the same file might take completely different routes through the internet, depending on which links are least congested at that exact millisecond. When they all arrive at the destination, the sequence numbers tell the receiving computer how to reassemble them in the correct order.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node start">Your File</div>
+                        <div class="arch-label">10 MB</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Packet 1</div>
+                        <div class="arch-label">1,500 bytes via Chicago</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Packet 2</div>
+                        <div class="arch-label">1,500 bytes via DC</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">Packet 3</div>
+                        <div class="arch-label">1,500 bytes via Montreal</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node end">Reassembled</div>
+                        <div class="arch-label">10 MB file</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>Packet switching is more efficient than circuit switching because it allows many users to share the same physical links simultaneously. Your packets interleave with packets from thousands of other users. No single user needs a dedicated path. This shared, statistical multiplexing is what makes the internet scalable and affordable. It is also why the internet feels slower during peak hours: more users means more packets competing for the same link capacity.</p>
+
+            <p>Every packet carries not just data but also headers: metadata that tells each router along the way where the packet is going, where it came from, how many hops it has traversed, and what protocol it belongs to. The data payload is what you actually want to send. The headers are the addressing and handling information that gets the payload to the right place.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Text</span>
+                    <button class="code-copy" data-code="packet-structure">Copy</button>
+                </div>
+                <pre><code id="packet-structure">IPv4 Header (20 bytes)
+├─ Version:          4
+├─ Header Length:     20
+├─ Total Length:      1,500 bytes
+├─ Identification:   0xA4F2
+├─ Flags:            Don't Fragment
+├─ Time to Live:     64
+├─ Protocol:         TCP (6)
+├─ Header Checksum:  0xB82C
+├─ Source IP:        192.168.1.100
+└─ Destination IP:   104.21.76.45
+
+TCP Header (20-60 bytes)
+├─ Source Port:      54321
+├─ Dest Port:        443
+├─ Sequence Number:  1,482,937
+├─ Ack Number:       0
+├─ Flags:            SYN
+└─ Window Size:      65,535
+
+HTTP Request (data payload)
+GET /post/how-does-the-internet-work HTTP/1.1
+Host: melextech.dev
+Accept: text/html</code></pre>
+            </div>
+
+            <p>This simplified breakdown shows a real packet's structure. The IP header tells routers where to send the packet. The TCP header tells the receiving computer which connection this packet belongs to and where it fits in the sequence. The data payload is the actual HTTP request from your browser. Together, these headers add about 40-80 bytes of overhead per packet. For a 1,500-byte packet carrying a 1,400-byte payload, that is roughly 5% overhead, an acceptable trade-off for the flexibility packet switching provides.</p>
+
+            <h2 id="ip-addresses-and-routing">IP Addresses and Routing</h2>
+
+            <p>Every device connected to the internet has at least one IP address. This address serves the same function as a postal address: it uniquely identifies the destination so that routers can forward packets in the right direction. IPv4 addresses are 32-bit numbers written as four decimal numbers separated by dots, like <code>104.21.76.45</code>. IPv6 addresses are 128-bit numbers written in hexadecimal, like <code>2606:4700:3030::ac43:8e31</code>. The world is gradually transitioning from IPv4 to IPv6 because IPv4 has run out of addresses (about 4.3 billion possible, not enough for all devices on Earth).</p>
+
+            <p>But IP addresses alone are not enough to route traffic. The internet is too large for any single device to know the path to every other device. Instead, routing is hierarchical and distributed. Your home router knows how to reach your ISP. Your ISP's routers know how to reach other ISPs they have business relationships with. Those ISPs' routers know how to reach yet more networks. Each router only needs to know the next hop, not the complete path.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>The postal analogy:</strong> Think of IP routing like the postal system. Your local post office does not need to know the exact route a letter takes to reach a destination in another country. It just needs to know which regional sorting facility to send it to next. That facility knows which international gateway to use. The gateway knows which country to send it to. And so on. Each step only requires local knowledge, yet the letter arrives at the right place. Internet routing works the same way, just millions of times faster.</p></div>
+            </div>
+
+            <p>Routers make forwarding decisions using routing tables: databases that map destination IP address ranges to output interfaces. A simplified routing table entry might say: "Any packet destined for 104.21.76.0/24 should go out interface eth0 to the next router at 10.0.0.1." Real routing tables contain hundreds of thousands of entries and are constantly updated by routing protocols (BGP, OSPF, IS-IS) that allow routers to share information about the network topology and automatically adapt when links fail or congestion changes.</p>
+
+            <p>The Time to Live (TTL) field in the IP header prevents packets from circulating forever if they enter a routing loop. Each router that handles a packet decrements the TTL by one. If it reaches zero, the router discards the packet and sends an error message back to the source. This is why traceroute works: it sends packets with incrementally increasing TTL values to discover each hop along the path.</p>
+
+            <h2 id="tcp">TCP: Reliable Delivery</h2>
+
+            <p>IP handles addressing and routing, but it does not guarantee that packets arrive in order, or that they arrive at all. Packets can be dropped when links are congested, arrive out of order because they took different routes, or be duplicated by malfunctioning equipment. For web browsing, file transfers, and most other applications, this unreliability is unacceptable. You need every byte of a webpage to arrive, in the right order, with no gaps.</p>
+
+            <p>TCP (Transmission Control Protocol) provides this reliability on top of IP. It does this through three mechanisms.</p>
+
+            <p><strong>The handshake.</strong> Before data flows, the client and server perform a three-way handshake. The client sends a SYN (synchronize) packet. The server responds with a SYN-ACK (synchronize-acknowledge). The client sends an ACK (acknowledge). Both sides now agree on initial sequence numbers and that they are ready to communicate. This handshake costs one round-trip of latency but prevents the server from doing work before confirming the client can actually receive responses.</p>
+
+            <p><strong>Sequencing and acknowledgment.</strong> TCP numbers every byte of data. The receiver sends acknowledgments back to the sender confirming which bytes it has received. If the sender does not receive an acknowledgment within a timeout period, it retransmits the data. This ensures that even if packets are lost in transit, the data eventually arrives intact.</p>
+
+            <p><strong>Flow control.</strong> TCP adjusts its sending rate based on how fast the receiver can process data and how congested the network is. If the receiver is a slow server or the network is busy, TCP backs off. If capacity frees up, it speeds up. This prevents fast senders from overwhelming slow receivers or congested links, which would cause widespread packet loss.</p>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content"><p><strong>Not everything uses TCP.</strong> Real-time video calls, live streaming, and online gaming often use UDP instead. UDP does not guarantee delivery, ordering, or flow control. It just sends packets and hopes they arrive. This sounds worse but is actually better for real-time applications: if a video frame is lost, you do not want to wait for it to be retransmitted. You want the next frame to arrive instead. The application handles the occasional gap. TCP's reliability guarantees come with latency costs that real-time applications cannot afford.</p></div>
+            </div>
+
+            <h2 id="dns">DNS: The Phonebook</h2>
+
+            <p>Humans remember names. Computers need numbers. DNS (Domain Name System) bridges this gap. When you type <code>melextech.dev</code> into your browser, the browser does not know what IP address to connect to. It asks a DNS resolver, which looks up the domain in a hierarchical database and returns the corresponding IP address.</p>
+
+            <p>DNS resolution is itself a multi-step process that demonstrates the distributed nature of the internet. Your browser first checks its own cache. If it does not have the answer, it asks your operating system's DNS resolver. If that does not have it either, the request goes to your ISP's DNS resolver. If the ISP's resolver does not have it cached, the query travels up the DNS hierarchy: to the root nameservers (which know where to find the TLD servers), then to the .dev TLD nameservers (which know where to find the melextech.dev authoritative nameserver), then to that authoritative nameserver (which knows the actual IP address). The entire process typically takes 20-120 milliseconds.</p>
+
+            <div class="arch-diagram">
+                <div class="arch-flow">
+                    <div class="arch-stack">
+                        <div class="arch-node start">Browser</div>
+                        <div class="arch-label">"melextech.dev?"</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node process">ISP Resolver</div>
+                        <div class="arch-label">Cached or asks up</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node decision">Root NS</div>
+                        <div class="arch-label">"Ask .dev server"</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node decision">.dev NS</div>
+                        <div class="arch-label">"Ask melextech's NS"</div>
+                    </div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-stack">
+                        <div class="arch-node end">Authoritative NS</div>
+                        <div class="arch-label">104.21.76.45</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>DNS results are cached aggressively at every level. Once your ISP resolves a domain, it caches the answer for hours. Your browser caches it too. This means most DNS lookups do not actually travel all the way to the root nameservers. The cached answer is served locally in under a millisecond. DNS caching is one of the most important performance optimizations on the internet, and broken or misconfigured DNS caching is one of the most common causes of slow websites.</p>
+
+            <h2 id="tls">TLS: Encryption on the Wire</h2>
+
+            <p>When you visit a website using HTTPS (which is nearly all of them now), the data traveling between your browser and the server is encrypted using TLS (Transport Layer Security). This means that anyone who intercepts the packets in transit, whether a rogue Wi-Fi operator, a compromised ISP, or a government surveillance system, can see that you are communicating with a particular IP address and how much data is flowing, but cannot read the actual content.</p>
+
+            <p>The encryption happens through a TLS handshake that occurs immediately after the TCP handshake. Your browser and the server exchange cryptographic keys, verify each other's identity using digital certificates, and agree on an encryption algorithm. All of this happens before any HTTP data is sent. After the handshake, both sides use the shared keys to encrypt and decrypt the data in each TCP segment.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content"><p><strong>HTTPS does not mean the server is trustworthy.</strong> TLS encrypts the connection and verifies that the server holds a certificate for the domain you requested. It does not guarantee the server is not malicious, that the content is accurate, or that your data is safe once it reaches the server. Encryption protects data in transit, not data at rest. The server still receives and processes the unencrypted data after decrypting it.</p></div>
+            </div>
+
+            <h2 id="http">HTTP: The Language of the Web</h2>
+
+            <p>HTTP (Hypertext Transfer Protocol) is the format that web browsers and web servers use to communicate. It runs on top of TCP (and TLS for HTTPS) and defines the structure of requests and responses. A browser sends a request that includes a method (what it wants to do), a path (which resource it wants), headers (metadata about the request), and optionally a body (data being sent to the server). The server responds with a status code (whether the request succeeded), headers, and a body (the requested content).</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">HTTP</span>
+                    <button class="code-copy" data-code="http-example">Copy</button>
+                </div>
+                <pre><code id="http-example">GET /post/how-does-the-internet-work HTTP/1.1
+Host: melextech.dev
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+Accept: text/html,application/xhtml+xml
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive</code></pre>
+            </div>
+
+            <p>HTTP/1.1, the version shown here, requires a separate TCP connection for each resource. Loading a page with 30 resources (HTML, CSS, images, JavaScript files) meant 30 separate TCP connections, each with its own handshake overhead. HTTP/2, introduced in 2015, solved this by allowing multiple requests and responses to be multiplexed over a single TCP connection. HTTP/3, the current standard being adopted, goes further by running over QUIC, a protocol built on UDP instead of TCP, eliminating the head-of-line blocking problem that could stall HTTP/2 connections.</p>
+
+            <h2 id="the-full-journey">The Full Journey: Start to Finish</h2>
+
+            <p>Now let me put it all together. Here is the complete journey when you type <code>melextech.dev/post/how-does-the-internet-work</code> into your browser and press Enter.</p>
+
+            <p><strong>Step 1: URL parsing.</strong> Your browser breaks the URL into components: the protocol (https), the domain (melextech.dev), and the path (/post/how-does-the-internet-work). It knows from the "https" prefix that it needs to use port 443 and establish an encrypted connection.</p>
+
+            <p><strong>Step 2: DNS lookup.</strong> Your browser checks its DNS cache. Finding no entry, it sends a query to your operating system's resolver. That resolver checks its cache and, if needed, forwards the query up the DNS hierarchy. Within 10-50 milliseconds, the answer comes back: the IP address is 104.21.76.45.</p>
+
+            <p><strong>Step 3: TCP handshake.</strong> Your browser opens a TCP connection to 104.21.76.45 on port 443. Three small packets fly back and forth: SYN, SYN-ACK, ACK. This takes roughly one round-trip to the server, typically 20-100 milliseconds depending on your distance from it.</p>
+
+            <p><strong>Step 4: TLS handshake.</strong> Over the established TCP connection, your browser and the server perform the TLS handshake. The server sends its certificate. Your browser verifies it against a list of trusted certificate authorities. Both sides agree on encryption parameters and generate session keys. This adds another round-trip, roughly 20-100 milliseconds.</p>
+
+            <p><strong>Step 5: HTTP request.</strong> Your browser sends the HTTP GET request through the encrypted tunnel. The request traverses multiple routers: your home router, your ISP's access network, a regional router, possibly a backbone router, and the data center's perimeter router, which delivers it to the web server. This journey takes 10-100 milliseconds depending on the number of hops and the distance.</p>
+
+            <p><strong>Step 6: Server processing.</strong> The web server receives the request and passes it to the application server. The application server queries the database, assembles the HTML with all the content of this article, and generates the response. This might take 50-500 milliseconds depending on the complexity of the page.</p>
+
+            <p><strong>Step 7: HTTP response.</strong> The response HTML travels back through the same path in reverse. The server sends it to its network, routers forward it hop by hop, and it arrives at your browser. Your browser receives the HTML and begins parsing it.</p>
+
+            <p><strong>Step 8: Rendering.</strong> As your browser parses the HTML, it discovers references to CSS, JavaScript, images, and fonts. It issues additional HTTP requests for each of these resources. Many of these requests can be parallelized since they are independent. Some are blocked by render-blocking rules: the browser may wait for critical CSS before painting anything on screen, then wait for certain JavaScript before making the page fully interactive. The page appears progressively: first the text content, then the styling, then images loading in, then JavaScript-driven interactivity activating.</p>
+
+            <p>Total time from keystroke to rendered page: 100-500 milliseconds for a well-optimized site. That is faster than a blink. Behind that speed, hundreds of machines, dozens of protocols, and millions of lines of code are coordinating to make it happen.</p>
+
+            <h2 id="data-centers-and-ixps">Data Centers and Internet Exchange Points</h2>
+
+            <p>The physical places where internet paths converge are data centers and Internet Exchange Points (IXPs).</p>
+
+            <p>A data center is a building (or set of buildings) purpose-built to house servers, network equipment, and supporting infrastructure like power, cooling, and security systems. Large data centers can contain tens of thousands of servers in rows of racks, consuming as much electricity as a small city. They are built in locations chosen for low risk of natural disasters, access to multiple fiber routes, affordable power, and favorable tax treatment.</p>
+
+            <p>An IXP is a facility where multiple networks physically interconnect. Instead of Network A paying Network B to carry its traffic across the internet backbone, they can both connect their equipment in the same building and exchange traffic directly. This is faster (fewer hops), cheaper (no transit fees), and more reliable (fewer potential failure points). Major IXPs in cities like London, Frankfurt, Amsterdam, Singapore, and San Francisco handle terabits of traffic per second and are the physical intersections where the internet's separate networks merge into one interconnected whole.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content"><p><strong>Why your traffic might go through an unexpected country:</strong> If you are in Kenya and visit a website hosted in Kenya, your traffic might still route through Europe if your ISP's only international connection goes through an undersea cable that lands in London. This is called tromboning, and it is more common than most people realize. Geography does not always dictate routing. Economics does.</p></div>
+            </div>
+
+            <h2 id="speed">Why Some Connections Are Fast and Others Slow</h2>
+
+            <p>Internet speed depends on multiple factors at different layers of the stack, and identifying the bottleneck requires understanding which layer is constrained.</p>
+
+            <div class="comparison">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Layer</th>
+                                <th>Typical Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Physical</strong></td>
+                                <td>Cable type (fiber vs copper vs wireless), distance to server, number of hops</td>
+                                <td>10-200 ms</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transport</strong></td>
+                                <td>TCP handshake overhead, TLS negotiation, congestion control backing off</td>
+                                <td>50-200 ms</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Application</strong></td>
+                                <td>Server processing time, database query speed, template rendering</td>
+                                <td>50-2000 ms</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Client</strong></td>
+                                <td>Browser parsing, JavaScript execution, layout, painting</td>
+                                <td>50-500 ms</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p>For most web pages, the server processing time is the dominant factor, not the network. A complex page that requires multiple database queries might take a second to generate, while the network round-trip is only 30 milliseconds. This is why optimizing server-side code often has a bigger impact on perceived speed than upgrading your internet connection.</p>
+
+            <p>However, for bandwidth-intensive activities like video streaming or large file downloads, the physical layer becomes the constraint. A 100 Mbps connection can stream a 4K video comfortably. A 10 Mbps connection cannot, regardless of how fast the server is. The bandwidth of the slowest link in the path determines the maximum throughput.</p>
+
+            <h2 id="common-misconceptions">Common Misconceptions</h2>
+
+            <h3>"The Internet Is a Single Network"</h3>
+            <p>The internet is thousands of separate networks that have agreed to interconnect using IP. Your ISP's network is different from AWS's network, which is different from Google's network. They connect at exchange points using a protocol called BGP (Border Gateway Protocol) that lets them share routing information. If one network decides to stop exchanging traffic with another, traffic between them stops. This has happened multiple times in internet history, and it is why the internet cannot be "shut down" by any single entity.</p>
+
+            <h3>"Satellite Internet Is Slow Because Satellites Are Far Away"</h3>
+            <p>Radio signals travel at the speed of light. The additional distance to a satellite in geostationary orbit (35,786 km up) adds about 240 milliseconds of round-trip latency compared to a ground-based connection. This is the speed of light traveling to the satellite and back, which is physically unavoidable. Newer low-Earth-orbit satellite constellations like Starlink operate at 500-1,200 km altitude, reducing this latency to 20-50 milliseconds, comparable to ground-based connections.</p>
+
+            <h3>"5G Is Always Faster Than 4G"</h3>
+            <p>5G can be faster than 4G in ideal conditions, delivering over 1 Gbps to a stationary device. But real-world 5G performance varies enormously based on your distance from the cell tower, the number of users sharing the tower's capacity, the frequency band in use, and obstacles between you and the antenna. In practice, many 5G users see speeds comparable to good 4G connections, while some 4G connections in uncongested areas outperform congested 5G connections.</p>
+
+            <h2 id="future">Where the Internet Is Going</h2>
+
+            <p>Several trends are reshaping the physical and logical infrastructure of the internet.</p>
+
+            <p><strong>Starlink and LEO constellations.</strong> Low-Earth-orbit satellite networks are bringing high-speed internet to areas where fiber was never economically viable: rural communities, remote islands, developing regions, ships at sea, and aircraft in flight. These systems reduce the last-mile problem to a radio link from space instead of a cable from the nearest town, fundamentally changing which parts of the world can participate fully in the internet economy.</p>
+
+            <p><strong>QUIC and HTTP/3.</strong> QUIC is a new transport protocol that runs over UDP instead of TCP, combining TLS encryption with transport features in a single handshake instead of two separate ones. This eliminates the head-of-line blocking problem of HTTP/2 and significantly reduces connection setup time. HTTP/3, which runs on QUIC, is now the default in Chrome, Firefox, and most modern browsers. The transition is mostly transparent to users but represents the most significant change to internet transport since TCP itself.</p>
+
+            <p><strong>IPv6 adoption.</strong> The IPv4 address space is exhausted. Regional Internet Registries stopped handing out new IPv4 blocks years ago. The transition to IPv6, which provides 340 undecillion addresses, has been slow but is accelerating. As of 2025, roughly 45% of Google's traffic uses IPv6. Many networks run both IPv4 and IPv6 in parallel, a dual-stack configuration that will likely persist for decades.</p>
+
+            <p><strong>Content Delivery Networks and edge computing.</strong> The trend is pushing computation closer to users. Instead of every request traveling to a centralized data center, more processing happens at edge locations in hundreds of cities worldwide. Cloudflare Workers, AWS Lambda@Edge, and similar platforms run code in locations that may be just a few milliseconds from the user, reducing the physical distance that data must travel.</p>
+
+            <h2 id="final-verdict">Final Verdict</h2>
+
+            <p>The internet works because millions of independently operated networks agree to follow the same set of rules: IP for addressing and routing, TCP for reliable delivery, DNS for name resolution, TLS for encryption, and HTTP for web communication. These protocols are implemented in software running on devices connected by physical cables and radio links. Routers use destination addresses in packet headers to make forwarding decisions, passing each packet one hop closer to its destination.</p>
+
+            <p>There is no central authority, no main switch, no single point of control. This decentralization is both the internet's greatest strength and the source of much of its complexity. When everything works, you do not notice any of this. A page loads, a message sends, a video streams. The complexity is invisible by design, which is exactly how good infrastructure should work.</p>
+
+            <p>Understanding the physical reality beneath the abstractions does not make you a better programmer or a faster internet user. But it gives you the mental model to diagnose problems, make better architectural decisions, and appreciate a system that most people use every day without understanding at all.</p>
+
+            <div class="faq-section">
+                <h2 id="faq">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Who owns the internet?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Nobody owns the internet as a whole. Different entities own different pieces. Telecommunication companies own the undersea and underground cables. Cloud providers like AWS, Google, and Microsoft own the data centers. Your ISP owns the connection to your home. The IETF and ICANN manage the technical standards and address systems, but they do not own the infrastructure. The internet is a collection of independently operated networks that agree to communicate using shared protocols.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Is the internet the same as the World Wide Web?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>No. The internet is the physical and logical infrastructure: the cables, routers, and protocols that connect computers worldwide. The World Wide Web is an application that runs on top of the internet, using HTTP as its protocol and browsers as its clients. Email, video games, file sharing, and VPNs all use the internet but are not the web. The web is one of many services the internet supports.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">How fast does data travel on the internet?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Data travels through fiber optic cables at roughly two-thirds the speed of light in a vacuum, about 200,000 kilometers per second. In practice, the speed you experience is much lower because of processing delays at each router, time spent queuing at congested links, and the distance your data travels through multiple hops. A request from New York to London might travel 300,000 km through various routes and take 70-100 milliseconds.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Can the internet be shut down?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Not easily, and not completely. The internet is designed as a decentralized network with no single point of failure. If one cable is cut, traffic routes around it. If one data center goes offline, others take over. A government could restrict access within its borders by ordering ISPs to block traffic, as seen in some countries, but shutting down the global internet would require simultaneously disabling hundreds of thousands of independent networks across every country, which is practically impossible.</p></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">Why is my internet slow even though I pay for fast speeds?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <div class="faq-a"><div class="faq-a-inner"><p>Your rated speed is the maximum capacity of the connection between you and your ISP. Actual speed depends on many factors: congestion on your ISP's network, congestion at the destination server, the number of hops between you and the server, the quality of Wi-Fi in your home, interference from other devices, and protocol overhead of encryption and packet headers. A 500 Mbps plan does not mean every website will deliver data at 500 Mbps. It means the pipe to your house can carry that much, but the rest of the journey may have narrower pipes.</p></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on X" onclick="window.open('https://x.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent('How the internet actually works, from ocean-floor cables to rendered pages. Not a cloud in sight.'),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank')">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </button>
+                <button class="share-btn copy" id="copyLinkBtn">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar"><img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52"></div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="similar">
+                <h2>Continue Reading</h2>
+                <ul>
+                    <li><a href="what-is-server.html"><span>What Is a Server? How Computers That Serve the Internet Actually Work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <a href="fix-dns-server-not-responding.html"><span>How to Fix "DNS Server Not Responding" on Windows 11 and Mac</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                    <li><a href="what-is-cloud-computing.html"><span>What is Cloud Computing</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+                </ul>
+            </div>
+
+            <div class="help">
+                <h2>Want to Learn More?</h2>
+                <p>Join our community of engineers who explain complex topics clearly.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Our Telegram
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+            <div class="toc-card sidebar-toc" id="tocSidebar">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#the-internet-is-not-a-cloud" class="toc-link">Not a Cloud</a>
+                    <a href="#the-physical-layer" class="toc-link">The Physical Layer</a>
+                    <a href="#packets" class="toc-link">Packets</a>
+                    <a href="#ip-addresses-and-routing" class="toc-link">IP Addresses and Routing</a>
+                    <a href="#tcp" class="toc-link">TCP</a>
+                    <a href="#dns" class="toc-link">DNS</a>
+                    <a href="#tls" class="toc-link">TLS</a>
+                    <a href="#http" class="toc-link">HTTP</a>
+                    <a href="#the-full-journey" class="toc-link">The Full Journey</a>
+                    <a href="#data-centers-and-ixps" class="toc-link">Data Centers & IXPs</a>
+                    <a href="#speed" class="toc-link">Speed Factors</a>
+                    <a href="#common-misconceptions" class="toc-link">Misconceptions</a>
+                    <a href="#future" class="toc-link">The Future</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#the-internet-is-not-a-cloud" class="toc-link">Not a Cloud</a>
+                    <a href="#the-physical-layer" class="toc-link">The Physical Layer</a>
+                    <a href="#packets" class="toc-link">Packets</a>
+                    <a href="#ip-addresses-and-routing" class="toc-link">IP Addresses and Routing</a>
+                    <a href="#tcp" class="toc-link">TCP</a>
+                    <a href="#dns" class="toc-link">DNS</a>
+                    <a href="#tls" class="toc-link">TLS</a>
+                    <a href="#http" class="toc-link">HTTP</a>
+                    <a href="#the-full-journey" class="toc-link">The Full Journey</a>
+                    <a href="#data-centers-and-ixps" class="toc-link">Data Centers & IXPs</a>
+                    <a href="#speed" class="toc-link">Speed Factors</a>
+                    <a href="#common-misconceptions" class="toc-link">Misconceptions</a>
+                    <a href="#future" class="toc-link">The Future</a>
+                    <a href="#final-verdict" class="toc-link">Final Verdict</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="ad-block" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+
+        </div>
+    </aside>
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <button class="cta-btn secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        Top
+    </button>
+    <a href="https://t.me/melexit" class="cta-btn primary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Join Us
+    </a>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-an-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script>
+(function(){
+    var scrollProg = document.getElementById('scrollProgress');
+    var stpBtn = document.getElementById('scrollToTop');
+    var mobileCta = document.getElementById('mobileCta');
+    var themeToggleBtn = document.getElementById('themeToggleBtn');
+    var copyLinkBtn = document.getElementById('copyLinkBtn');
+    var faqItems = document.querySelectorAll('.faq-item');
+    var allTocLinks = document.querySelectorAll('.toc-link');
+    var sections = [];
+    var codeCopyBtns = document.querySelectorAll('.code-copy');
+
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (el) sections.push({id: id, el: el, links: []});
+    });
+    allTocLinks.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        for (var i = 0; i < sections.length; i++) {
+            if (sections[i].id === id) {
+                sections[i].links.push(link);
+                break;
+            }
+        }
+    });
+
+    function onScroll() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        scrollProg.style.width = progress + '%';
+
+        if (scrollTop > 600) {
+            stpBtn.classList.add('vis');
+        } else {
+            stpBtn.classList.remove('vis');
+        }
+
+        if (scrollTop > 800) {
+            mobileCta.classList.add('vis');
+        } else {
+            mobileCta.classList.remove('vis');
+        }
+
+        var current = '';
+        for (var i = 0; i < sections.length; i++) {
+            var rect = sections[i].el.getBoundingClientRect();
+            if (rect.top <= 120) {
+                current = sections[i].id;
+            }
+        }
+        allTocLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    onScroll();
+
+    stpBtn.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            var next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href).then(function() {
+                    copyLinkBtn.textContent = 'COPIED';
+                    copyLinkBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyLinkBtn.textContent = 'COPY LINK';
+                        copyLinkBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    }
+
+    faqItems.forEach(function(item) {
+        var btn = item.querySelector('.faq-q');
+        var answer = item.querySelector('.faq-a');
+        var inner = item.querySelector('.faq-a-inner');
+        btn.addEventListener('click', function() {
+            var isOpen = item.classList.contains('open');
+            faqItems.forEach(function(other) {
+                other.classList.remove('open');
+                other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+                other.querySelector('.faq-a').style.maxHeight = '0';
+            });
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = inner.scrollHeight + 20 + 'px';
+            }
+        });
+    });
+
+    codeCopyBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var codeId = btn.getAttribute('data-code');
+            var codeEl = document.getElementById(codeId);
+            if (codeEl && navigator.clipboard) {
+                navigator.clipboard.writeText(codeEl.textContent).then(function() {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        });
+    });
+
+})();
+</script>
+</body>
+</html>

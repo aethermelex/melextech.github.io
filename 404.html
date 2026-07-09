@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page Not Found | Melex InfoTech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        :root {
+            --surface: #0F172A;
+            --surface-elevated: #1E293B;
+            --border: #1E293B;
+            --border-light: #334155;
+            --radius: 26px;
+            --accent: #2DD4BF;
+            --accent-dark: #14B8A6;
+            --accent-soft: rgba(45, 212, 191, 0.08);
+            --fg-heading: #F1F5F9;
+            --fg-light: #94A3B8;
+            --fg-muted: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--surface);
+            color: var(--fg-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Background Grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Subtle radial glow */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -55%);
+            background: radial-gradient(circle, rgba(45, 212, 191, 0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Confetti container — clips overflow */
+        .confetti-layer {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .error-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animated Ghost Icon */
+        .ghost-wrapper {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(45, 212, 191, 0.15));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Glitchy 404 Text */
+        .error-code {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 6rem;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--fg-heading) 20%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+
+        .error-code:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            cursor: default;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .error-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--fg-heading);
+        }
+
+        .error-desc {
+            color: var(--fg-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent);
+            color: var(--surface);
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            gap: 10px;
+            box-shadow: 0 4px 6px -1px rgba(45, 212, 191, 0.15),
+                        0 0 0 1px rgba(45, 212, 191, 0.1);
+        }
+
+        .btn-home:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(45, 212, 191, 0.25),
+                        0 0 0 1px rgba(45, 212, 191, 0.2);
+        }
+
+        /* Confetti Dots */
+        .confetti {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: fall linear infinite;
+        }
+
+        .confetti:nth-child(1) { background-color: var(--accent); left: 10%; animation-duration: 6s; animation-delay: 0s; }
+        .confetti:nth-child(2) { background-color: #818CF8; left: 30%; animation-duration: 8s; animation-delay: 1.5s; width: 5px; height: 5px; }
+        .confetti:nth-child(3) { background-color: var(--accent); left: 70%; animation-duration: 7s; animation-delay: 3s; width: 4px; height: 4px; }
+        .confetti:nth-child(4) { background-color: #F472B6; left: 90%; animation-duration: 9s; animation-delay: 0.8s; width: 5px; height: 5px; }
+        .confetti:nth-child(5) { background-color: var(--accent); left: 50%; animation-duration: 7.5s; animation-delay: 4s; width: 3px; height: 3px; }
+        .confetti:nth-child(6) { background-color: #818CF8; left: 15%; animation-duration: 10s; animation-delay: 2s; width: 4px; height: 4px; }
+
+        @keyframes fall {
+            0% { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(calc(100vh + 60px)) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .error-code { font-size: 4rem; }
+            .error-title { font-size: 1.5rem; }
+            .ghost-wrapper { width: 100px; height: 100px; }
+            .error-desc { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Clipped confetti layer — no scroll leak -->
+    <div class="confetti-layer">
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+    </div>
+
+    <main class="error-container">
+
+        <div class="ghost-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C7.58172 2 4 5.58172 4 10V20L6 18L8 20L10 18L12 20L14 18L16 20L18 18L20 20V10C20 5.58172 16.4183 2 12 2Z" stroke="#2DD4BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="9" cy="10" r="1.5" fill="#F1F5F9"/>
+                <circle cx="15" cy="10" r="1.5" fill="#F1F5F9"/>
+                <path d="M10 15C10.5 15.5 11.5 15.5 12 15C12.5 14.5 13.5 14.5 14 15" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <h1 class="error-code" title="Don't poke me!">404</h1>
+
+        <h2 class="error-title">Well, this is embarrassing 😅</h2>
+
+        <p class="error-desc">
+            We searched the database, checked the firewall, and even looked under the server rack... but this page is nowhere to be found.
+        </p>
+
+        <a href="javascript:history.back()" class="btn-home">
+            Let's Go Back
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+
+    </main>
+
+</body>
+</html>

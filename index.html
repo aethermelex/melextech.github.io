@@ -1,0 +1,1938 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Melex InfoTech — Tech, Cybersecurity & Programming Guides</title>
+        <meta name="description" content="Precise knowledge for the modern digital era. Guides on technology, cybersecurity, programming, networking, and more." />
+        <meta name="keywords" content="tech guides, cybersecurity, programming, networking, computer fixes, Python, Linux, Melex InfoTech, ICT" />
+        <meta name="author" content="Melex InfoTech" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://melextech.dev/" />
+        <meta property="og:title" content="Melex InfoTech — Precise Knowledge for the Modern Digital Era" />
+        <meta property="og:description" content="Guides on technology, cybersecurity, and programming. From quick fixes to deep dives." />
+        <meta property="og:image" content="https://melextech.dev/img/man.webp" />
+        <meta property="og:url" content="https://melextech.dev/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Melex InfoTech" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Melex InfoTech — Precise Knowledge for the Modern Digital Era" />
+        <meta name="twitter:description" content="Guides on technology, cybersecurity, and programming." />
+        <meta name="twitter:image" content="https://melextech.dev/img/man.webp" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet" />
+        <link rel="preload" href="/img/bg.webp" as="image">
+        <link rel="icon" type="image/x-icon" href="logo.webp" />
+
+        <style>
+            :root {
+    --bg: #FAFAFA;
+    --bg-alt: #F3F4F6;
+    --surface: #FFFFFF;
+    --fg: #334155;
+    --fg-light: #64748B;
+    --accent: #2DD4BF;
+    --accent-dark: #14B8A6;
+    --accent-soft: #CCFBF1;
+    --border: #F1F5F9;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.08);
+    --radius: 24px;
+    --radius-sm: 12px;
+    --nav-height: 65px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-height);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1E293B;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent), #60A5FA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+.btn svg { width: 18px; height: 18px; }
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(45, 212, 191, 0.4);
+}
+
+.btn-outline {
+    border: 1px solid var(--border);
+    color: var(--fg);
+    background: var(--surface);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+.header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 8px 0;
+    background: white;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.3s ease;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+}
+
+.header.scrolled {
+    border-bottom-color: var(--border);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-sm);
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo-icon {
+    width: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.nav { display: flex; gap: 4px; }
+
+.nav-link {
+    padding: 6px 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--fg-light);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--fg);
+    background: var(--bg-alt);
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.menu-line {
+    width: 100%;
+    height: 3px;
+    background: var(--fg);
+    border-radius: 999px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+.hero-anim {
+    opacity: 0;
+    animation: hero-reveal 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: var(--d, 0s);
+}
+
+@keyframes hero-reveal {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-cat-item.hero-anim {
+    animation-name: hero-cat-reveal;
+}
+
+@keyframes hero-cat-reveal {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.hero-anim-scale {
+    animation-name: hero-scale-reveal;
+}
+
+@keyframes hero-scale-reveal {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.hero {
+    padding: 120px 10px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: #0F172A;
+    background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.55)), url('img/bg.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 1;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-container {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1.0fr 0.7fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+    align-items: flex-start;
+}
+
+.hero-cat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    width: fit-content;
+}
+
+.hero-cat-emoji {
+    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.hero-cat-item:hover .hero-cat-emoji {
+    background: rgba(255,255,255,0.14);
+    transform: scale(1.08);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.hero-cat-text {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 0.03em;
+}
+
+.hero-title {
+    font-size: clamp(1.2rem, 4.2vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    color: white;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.843);
+    margin-bottom: 20px;
+    max-width: 540px;
+    line-height: 1.6;
+}
+
+.search-container { margin-bottom: 0; width: 100%; }
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 5px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+    max-width: 500px;
+    width: 100%;
+}
+
+.search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+.search-icon { width: 24px; height: 24px; margin-left: 16px; color: var(--fg-light); flex-shrink: 0; }
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 10px;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--fg);
+    font-family: inherit;
+    min-width: 0;
+}
+
+.search-btn {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.search-btn:hover { background: var(--accent-dark); }
+
+.hero-visual { position: relative; }
+.hero-image-container { position: relative; }
+
+.image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--fg-light);
+}
+
+.hero-img-placeholder { width: 100%; aspect-ratio: 3/3; padding: 10px; }
+
+.floating-badge {
+    position: absolute;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    animation: float 6s ease-in-out infinite;
+    color: white;
+    z-index: 5;
+}
+
+.floating-badge svg { width: 20px; height: 20px; stroke: var(--accent); }
+.fb-1 { top: 10%; left: -20px; animation-delay: 0s; }
+.fb-2 { bottom: 6%; right: -10px; animation-delay: 3s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.section-title { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 16px; }
+.section-description { color: var(--fg-light); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+
+.features { padding: 100px 0; background: #F8FAFC; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+.feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.feature-icon-wrapper {
+    width: 64px; height: 64px;
+    background: var(--accent-soft);
+    border-radius: 10px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .feature-icon-wrapper { transform: scale(1.1) rotate(5deg); }
+
+.feature-icon-wrapper.icon-orange { background: #FFEDD5; }
+.feature-icon-wrapper.icon-purple { background: #EDE9FE; }
+
+.feature-icon svg { width: 32px; height: 32px; stroke: var(--accent-dark); }
+.icon-orange svg { stroke: #F97316; }
+.icon-purple svg { stroke: #8B5CF6; }
+
+.feature-title { font-size: 1.25rem; margin-bottom: 12px; }
+.feature-description { color: var(--fg-light); font-size: 1rem; margin-bottom: 24px; line-height: 1.6; }
+
+.feature-link {
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.feature-link svg { width: 16px; height: 16px; transition: transform 0.2s; }
+.feature-link:hover svg { transform: translateX(4px); }
+
+.guides {
+    padding: 100px 0;
+    background-color: #0F172A;
+    background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.9)), url('img/bgeer.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.guides-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+
+.guide-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.guide-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.guide-image { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+.guide-image .image-placeholder { width: 100%; height: 100%; border-radius: 0; border: none; }
+
+.guide-category {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(255,255,255,0.95);
+    color: black;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-sm);
+}
+
+.guide-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.guide-title { font-size: 1.1rem; margin-bottom: 8px; line-height: 1.4; }
+.guide-excerpt { font-size: 0.95rem; color: var(--fg-light); margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+
+.guide-meta { display: flex; gap: 16px; color: var(--fg-light); font-size: 0.85rem; }
+.meta-item { display: flex; align-items: center; gap: 6px; }
+.meta-item svg { width: 14px; height: 14px; stroke: var(--fg-light); }
+
+.guides-cta { text-align: center; }
+
+.products {
+    padding: 100px 0;
+    background: #F8FAFC;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #60A5FA);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-banner {
+    width: calc(100% + 56px);
+    margin: -32px -28px 24px;
+    height: 110px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+
+.product-banner svg {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    z-index: 1;
+}
+
+.product-banner-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.product-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.product-card:hover::before { opacity: 1; }
+
+.product-logo {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    border: 1px solid var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.product-card:hover .product-logo { transform: scale(1.1) rotate(5deg); }
+.product-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.product-badge {
+    padding: 4px 12px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.product-name { font-size: 1.15rem; margin-bottom: 10px; line-height: 1.3; }
+
+.product-description {
+    color: var(--fg-light);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.product-link svg { width: 16px; height: 16px; transition: transform 0.2s; }
+.product-link:hover svg { transform: translateX(4px); }
+.product-link:hover { color: var(--accent); }
+
+.products-cta { text-align: center; }
+
+.footer { background: #1E293B; color: #fff; padding: 80px 0 40px; }
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+
+.footer-tagline { color: #94A3B8; margin: 16px 0 24px; max-width: 300px; line-height: 1.6; }
+
+.social-links { display: flex; gap: 12px; }
+
+.social-link {
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    transition: all 0.25s;
+}
+
+.social-link:hover { background: var(--accent); transform: translateY(-3px); }
+.social-link svg { width: 20px; height: 20px; fill: #fff; }
+
+.footer-title { font-size: 1rem; margin-bottom: 24px; font-weight: 600; color: #fff; }
+.footer-links ul { display: flex; flex-direction: column; gap: 16px; }
+.footer-links a { color: #94A3B8; font-size: 0.95rem; transition: all 0.2s; }
+.footer-links a:hover { color: var(--accent); padding-left: 4px; }
+
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; color: #64748B; font-size: 0.9rem; }
+
+.animate-fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+}
+
+.visible {
+    opacity: 1;
+    transform: translate(0);
+}
+
+.ck-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.15);
+    z-index: 299;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s;
+    backdrop-filter: blur(2px);
+}
+
+.ck-overlay.vis {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ck-banner {
+    position: fixed;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.12);
+    z-index: 300;
+    transition: bottom .5s cubic-bezier(.4,0,.2,1);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.ck-banner.vis {
+    bottom: 24px;
+}
+
+.ck-ico {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-soft);
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ck-ico svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent-dark);
+}
+
+.ck-body {
+    flex: 1;
+}
+
+.ck-body p {
+    font-size: .85rem;
+    color: var(--fg-light);
+    line-height: 1.65;
+    margin-bottom: 14px;
+}
+
+.ck-body p strong {
+    color: var(--fg-heading);
+}
+
+.ck-acts {
+    display: flex;
+    gap: 10px;
+}
+
+.ck-yes {
+    background: var(--accent);
+    color: #fff;
+    padding: 9px 22px;
+    border-radius: 10px;
+    font-size: .84rem;
+    font-weight: 600;
+    transition: all .2s;
+    border: none;
+    cursor: pointer;
+}
+
+.ck-yes:hover {
+    background: var(--accent-dark);
+}
+
+.ck-no {
+    color: var(--fg-muted);
+    font-size: .84rem;
+    font-weight: 500;
+    padding: 9px 16px;
+    transition: color .2s;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ck-no:hover {
+    color: var(--fg-light);
+}
+
+/* --- Theme Toggle Button Styling --- */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #1E293B;
+    --surface: #111827;
+    --fg: #F1F5F9;
+    --fg-light: #94A3B8;
+    --accent-soft: rgba(45, 212, 191, 0.15);
+    --border: #1F2937;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Ensure smooth background transition changes globally */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Overriding hardcoded light colors for dark theme consistency */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .header {
+    background: rgba(17, 24, 39, 0.8) !important;
+}
+
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0F172A !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-content {
+        order: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-visual {
+        order: 2;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-categories {
+        align-items: center;
+    }
+
+    .search-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .search-box {
+        margin: 0 auto;
+    }
+
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .guides-grid { grid-template-columns: repeat(2, 1fr); }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 768px) {
+    .header-actions .btn {
+        display: none;
+    }
+
+    .nav {
+        display: flex !important;
+        position: fixed;
+        top: 65px;
+        left: 0;
+        right: 0;
+        padding: 100px 24px 40px;
+        background: var(--surface);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-lg);
+        height: 100vh;
+        z-index: 9999;
+    }
+
+    .nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-link {
+        width: 100%;
+        font-size: 1.25rem;
+        padding: 16px 20px;
+        border-radius: 8px;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        position: relative;
+        z-index: 10001;
+    }
+
+    .hero {
+        padding: 90px 20px 40px;
+        min-height: auto;
+    }
+
+    .hero-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        order: 1;
+    }
+
+    .hero-visual {
+        order: 2;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        line-height: 1.2;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-description {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-categories {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .hero-cat-item {
+        justify-content: center;
+    }
+
+    .hero-cat-text {
+        font-size: 0.9rem;
+    }
+
+    .hero-cat-emoji {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .floating-badge {
+        display: none;
+    }
+
+    .hero-categories {
+        visibility: hidden;
+        margin-top: -30px;
+    }
+
+    .search-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-box {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        justify-content: space-between;
+    }
+
+    .search-input {
+        padding: 10px;
+    }
+
+    .search-btn-text {
+        display: none;
+    }
+
+    .search-btn {
+        padding: 12px 16px;
+        min-width: 44px;
+        justify-content: center;
+        border-radius: 10px;
+    }
+
+    .features-grid,
+    .guides-grid,
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-tagline {
+        margin: 16px auto 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .stat-number {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+}
+        </style>
+
+        <script type="application/ld+json">
+            [
+                {
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "Melex InfoTech",
+                    "url": "https://melextech.dev",
+                    "logo": "https://melextech.dev/logo.webp",
+                    "description": "Precise knowledge for the modern digital era. Guides on technology, cybersecurity, and programming.",
+                    "sameAs": [
+                        "https://www.youtube.com/@MELEXTECH",
+                        "https://www.instagram.com/MELEXTECH",
+                        "https://t.me/melexit"
+                    ]
+                },
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "name": "Melex InfoTech",
+                    "url": "https://melextech.dev",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://melextech.dev/guide?search={search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                }
+            ]
+        </script>
+
+        <script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            // Get current active theme state
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            // Apply theme configuration change dynamically
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Sync user settings across the site context via localStorage
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+    </head>
+    <body>
+        <header id="header" class="header">
+            <div class="container header-container">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <img src="logo.webp" alt="Melex InfoTech Logo" />
+                    </div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+
+                <nav id="nav" class="nav">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="/guide" class="nav-link">Guides</a>
+                    <a href="contact.html" class="nav-link">Contacts</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </nav>
+
+                <div class="header-actions">
+                    <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+                    <a href="https://t.me/melexit" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        <span>JOIN US</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </a>
+                    <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation">
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-grid-overlay"></div>
+                <div class="container hero-container">
+                    <div class="hero-content">
+                        <div class="hero-categories">
+                            <div class="hero-cat-item hero-anim" style="--d: 0.3s">
+                                <span class="hero-cat-emoji">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path fill="#FFD54F" d="M32 6C20.4 6 11 15.4 11 27c0 8 4.5 14.9 11 18v7h20v-7c6.5-3.1 11-10 11-18C53 15.4 43.6 6 32 6z"/>
+  <rect x="24" y="52" width="16" height="4" rx="2" fill="#9E9E9E"/>
+  <rect x="25" y="56" width="14" height="4" rx="2" fill="#757575"/>
+  <path fill="#FFF59D" d="M26 18c-5 2-8 6-9 11"/>
+</svg>
+                                </span>
+                                <span class="hero-cat-text">𝗧𝗲𝗰𝗵</span>
+                            </div>
+                            <div class="hero-cat-item hero-anim" style="--d: 0.45s">
+                                <span class="hero-cat-emoji">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path fill="#42A5F5" d="M32 6l20 8v16c0 14-8.4 24.7-20 28C20.4 54.7 12 44 12 30V14l20-8z"/>
+  <path fill="#90CAF9" d="M32 12v40c8-3 14-10 16-21V18l-16-6z"/>
+  <path fill="#1976D2" d="M32 6v52C20.4 54.7 12 44 12 30V14l20-8z"/>
+</svg>
+                                </span>
+                                <span class="hero-cat-text">𝗖𝘆𝗯𝗲𝗿𝘀𝗲𝗰𝘂𝗿𝗶𝘁𝘆</span>
+                            </div>
+                            <div class="hero-cat-item hero-anim" style="--d: 0.6s">
+                                <span class="hero-cat-emoji">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="16" y="12" width="32" height="24" rx="2" fill="#546E7A"/>
+  <rect x="19" y="15" width="26" height="18" fill="#4FC3F7"/>
+  <path fill="#B0BEC5" d="M8 40h48l4 8H4l4-8z"/>
+  <rect x="28" y="42" width="8" height="2" rx="1" fill="#78909C"/>
+</svg>
+                                </span>
+                                <span class="hero-cat-text">𝗣𝗿𝗼𝗴𝗿𝗮𝗺𝗺𝗶𝗻𝗴</span>
+                            </div>
+                        </div>
+
+                        <h1 class="hero-title hero-anim" style="--d: 0.8s">
+                            𝗣𝗿𝗲𝗰𝗶𝘀𝗲 𝗸𝗻𝗼𝘄𝗹𝗲𝗱𝗴𝗲 𝗳𝗼𝗿 𝘁𝗵𝗲
+                            <span class="text-gradient"><br><i>𝗺𝗼𝗱𝗲𝗿𝗻 𝗱𝗶𝗴𝗶𝘁𝗮𝗹 𝗲𝗿𝗮.</i></span>
+                        </h1>
+                        <p class="hero-description hero-anim" style="--d: 0.95s">
+                            Coding & Cybersecurity Resources
+                        </p>
+
+                        <div class="search-container hero-anim" style="--d: 1.1s">
+                            <form action="/guide" method="GET" class="search-box">
+                                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" name="search" class="search-input" placeholder="How can we help?" autocomplete="off" required />
+                                <button type="submit" class="search-btn">
+                                    <span class="search-btn-text">Search</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual hero-anim hero-anim-scale" style="--d: 0.5s">
+                        <div class="hero-image-container">
+                            <div class="image-placeholder hero-img-placeholder">
+                                <img src="img/man.webp" fetchpriority="high" alt="Melex InfoTech — Tech, Cybersecurity & Programming" />
+                            </div>
+                            <div class="floating-badge fb-1">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                <span>Trusted</span>
+                            </div>
+                            <div class="floating-badge fb-2">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <span>Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <div class="container">
+                    <div class="section-header animate-fade-up">
+                        <span class="section-tag">Why Us</span>
+                        <h2 class="section-title">Everything you need</h2>
+                        <p class="section-description">
+                            Simple solutions for complex problems.
+                        </p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card animate-fade-up">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">In-Depth Guides</h3>
+                            <p class="feature-description">
+                                No tech degree needed just follow along with our
+                                step-by-step tutorials.
+                            </p>
+                            <a href="/guide" class="feature-link"
+                                >Explore Guides
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg
+                            ></a>
+                        </div>
+
+                        <div class="feature-card animate-fade-up" style="transition-delay: 100ms">
+                            <div class="feature-icon-wrapper icon-orange">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Our Products</h3>
+                            <p class="feature-description">
+                                Hand-crafted SaaS tools that solve real problems
+                                all in one place.
+                            </p>
+                            <a href="/product" class="feature-link"
+                                >Explore Tools
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg
+                            ></a>
+                        </div>
+
+                        <div class="feature-card animate-fade-up" style="transition-delay: 200ms">
+                            <div class="feature-icon-wrapper icon-purple">
+                                <svg viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2z"/>
+    <line x1="8" y1="7" x2="16" y2="7"/>
+    <line x1="8" y1="11" x2="16" y2="11"/>
+</svg>
+                            </div>
+                            <h3 class="feature-title">Career Assessment</h3>
+                            <p class="feature-description">
+                                Test your skills in technology, networking, programming, and cybersecurity.
+                            </p>
+                            <a href="exams/index.html" class="feature-link"
+                                >Start Assessment
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg
+                            ></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guides" class="guides">
+                <div class="container">
+                    <div class="section-header animate-fade-up">
+                        <span class="section-tag">Explore</span>
+                        <h2 class="section-title" style="color: white">
+                            Popular Guides
+                        </h2>
+                        <p class="section-description">
+                            Browse our top-rated solutions across tech,
+                            security, and programming.
+                        </p>
+                    </div>
+
+                    <div class="guides-grid">
+                        <article class="guide-card animate-fade-up">
+                            <div class="guide-image">
+                                <div class="image-placeholder">
+                                    <img src="img/network.webp" alt="How to fix DNS Server Not Responding" />
+                                </div>
+                                <span class="guide-category">Network</span>
+                            </div>
+                            <div class="guide-content">
+                                <h3 class="guide-title">DNS Server Not Responding</h3>
+                                <p class="guide-excerpt">
+                                    Complete troubleshooting for wireless
+                                    connectivity problems.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="guide-card animate-fade-up" style="transition-delay: 100ms">
+                            <div class="guide-image">
+                                <div class="image-placeholder">
+                                    <img src="img/pc.webp" alt="How to speed up a slow PC" />
+                                </div>
+                                <span class="guide-category">Performance</span>
+                            </div>
+                            <div class="guide-content">
+                                <h3 class="guide-title">Speed Up Your PC</h3>
+                                <p class="guide-excerpt">
+                                    Optimize performance and eliminate lag for
+                                    good.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="guide-card animate-fade-up" style="transition-delay: 200ms">
+                            <div class="guide-image">
+                                <div class="image-placeholder">
+                                    <img src="img/windows.webp" alt="Windows error fixing and optimization" />
+                                </div>
+                                <span class="guide-category">Windows</span>
+                            </div>
+                            <div class="guide-content">
+                                <h3 class="guide-title">
+                                    Best SSDs 2026
+                                </h3>
+                                <p class="guide-excerpt">
+                                    Best SSDs for Windows 11 in 2026 (Performance Tested)
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="guide-card animate-fade-up" style="transition-delay: 300ms">
+                            <div class="guide-image">
+                                <div class="image-placeholder">
+                                    <img src="img/vpn.webp" alt="Best free VPN for Windows" />
+                                </div>
+                                <span class="guide-category">Security</span>
+                            </div>
+                            <div class="guide-content">
+                                <h3 class="guide-title">Best VPN 2026</h3>
+                                <p class="guide-excerpt">
+                                    Expert reviews of top privacy services for
+                                    every platform.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="guides-cta animate-fade-up">
+                        <a href="/guide" class="btn btn-outline"
+                            >View All Guides</a
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <section id="products" class="products">
+                <div class="container">
+                    <div class="section-header animate-fade-up">
+                        <span class="section-tag">Our Products</span>
+                        <h2 class="section-title">Tools We Built</h2>
+                        <p class="section-description">
+                            Hand-crafted solutions to make your digital life
+                            easier and more secure.
+                        </p>
+                    </div>
+
+                    <div class="products-grid">
+
+                        <div class="product-card animate-fade-up" style="transition-delay: 100ms">
+                            <div class="product-banner" style="background: linear-gradient(135deg, #1e293b 0%, #3b1f5e 50%, #1e293b 100%);">
+                                <svg viewBox="0 0 24 24" fill="none"
+     stroke="rgba(139,92,246,0.7)"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+    <polyline points="16 18 22 12 16 6"></polyline>
+    <polyline points="8 6 2 12 8 18"></polyline>
+</svg>
+                                <span class="product-banner-label">Developer</span>
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-name">RegexLab</h3>
+                                <p class="product-description">
+                                    Test, debug, and learn regular expressions in real time. Instantly validate patterns, match text, and improve your regex skills.
+                                </p>
+                                <a href="/product/regexlab.html" class="product-link">
+                                    <span>Explore</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="product-card animate-fade-up" style="transition-delay: 200ms">
+                            <div class="product-banner" style="background: linear-gradient(135deg, #0c4a6e 0%, #164e63 50%, #0c4a6e 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="rgba(96,165,250,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                                </svg>
+                                <span class="product-banner-label">Education</span>
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-name">UnitPro</h3>
+                                <p class="product-description">
+                                    Comprehensive unit converter covering Math, Physics, and Chemistry. Convert 100+ units instantly.
+                                </p>
+                                <a href="product/unitpro.html" class="product-link">
+                                    <span>Explore</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="product-card animate-fade-up" style="transition-delay: 300ms">
+                            <div class="product-banner" style="background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 50%, #450a0a 100%);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <span class="product-banner-label">SECURITY</span>
+                            </div>
+                            <div class="product-card-body">
+                                <h3 class="product-name">MelaSec</h3>
+                                <p class="product-description">
+                                    Password strength checker. Secure your accounts with real-time analysis.
+                                </p>
+                                <a href="product/melasec.html" class="product-link">
+                                    <span>Explore</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="products-cta animate-fade-up">
+                        <a href="https://t.me/melexit" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            <span>Join For Updates</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="why-melextech-exists" class="features" style="background: url('img/xybanner.webp'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <div class="container">
+                    <div class="section-header animate-fade-up" style="text-align: center;">
+                        <span class="section-tag">Our Purpose</span>
+                        <h2 class="section-title">Why MelexTech Exists</h2>
+                        <p class="section-description">
+                            Bridging the gap between complex concepts and practical usage.
+                        </p>
+                    </div>
+                    <div class="animate-fade-up" style="max-width: 800px; margin: 0 auto; line-height: 1.8; color: var(--fg-light); text-align: center;">
+                        <p style="margin-bottom: 1.4rem;">
+                            Technology doesn't have to be complicated, and acquiring technical skills shouldn't require a degree in computer science. MelexTech was created to bridge the gap between complex technical concepts and practical, everyday usage. In a digital world that is constantly evolving, we recognized a need for a reliable resource that simplifies technology education without sacrificing accuracy.
+                        </p>
+                        <p>
+                            Our approach is centered on practical learning. We believe that the best way to learn is by doing. That is why our resources include step-by-step guidance on everything from networking resources to Linux guides. We aim to equip you with real-world technology skills that you can apply immediately.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <img src="logo.webp" alt="Melex InfoTech Logo" />
+                            </div>
+                            <span class="logo-text" style="color: #fff"
+                                >MELEX IT</span
+                            >
+                        </div>
+                        <p class="footer-tagline">
+                            Precise knowledge for the modern digital era.
+                        </p>
+                        <div class="social-links">
+                            <a
+                                href="https://www.youtube.com/@MELEXTECH"
+                                class="social-link"
+                                aria-label="YouTube"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                ><svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                    /></svg
+                            ></a>
+                            <a
+                                href="https://www.instagram.com/MELEXTECH"
+                                class="social-link"
+                                aria-label="Instagram"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                ><svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
+                                    /></svg
+                            ></a>
+                            <a
+                                href="https://t.me/melexit"
+                                class="social-link"
+                                aria-label="Telegram"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                ><svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
+                                    /></svg
+                            ></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-links">
+                        <h4 class="footer-title">Solutions</h4>
+                        <ul>
+                            <li>
+                                <a href="/guide?search=Windows"
+                                    >Windows</a
+                                >
+                            </li>
+                            <li>
+                                <a href="/guide?search=Mobile"
+                                    >Mobile</a
+                                >
+                            </li>
+                            <li>
+                                <a href="/guide?search=Linux">Linux</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links">
+                        <h4 class="footer-title">Resources</h4>
+                        <ul>
+                            <li><a href="/guide">Guides</a></li>
+                            <li><a href="/product">Products</a></li>
+                            <li>
+                                <a
+                                    href="https://t.me/melexit"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >Community</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links">
+                        <h4 class="footer-title">Company</h4>
+                        <ul>
+                            <li>
+                                <a href="legal/privacy.html">Privacy Policy</a>
+                            </li>
+                            <li><a href="services.html">Services</a></li>
+                            <li>
+                                <a href="legal/terms.html">Terms of Service</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 MELEX IT. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+    const header = document.getElementById('header');
+
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    }
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('nav');
+
+    if (mobileMenuBtn && nav) {
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isActive = nav.classList.toggle('active');
+
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', isActive);
+
+            document.body.style.overflow = isActive ? 'hidden' : '';
+
+            console.log('Menu clicked:', isActive);
+        });
+
+        const navLinks = nav.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document
+        .querySelectorAll('.animate-fade-up, .animate-fade-left')
+        .forEach(el => revealObserver.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+        anchor.addEventListener('click', function (e) {
+
+            const href = this.getAttribute('href');
+
+            if (!href || href === '#') return;
+
+            const target = document.querySelector(href);
+
+            if (!target) return;
+
+            e.preventDefault();
+
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition =
+                elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        });
+
+    });
+
+});
+
+window.addEventListener('scroll', () => {
+    if (nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+        </script>
+
+        <div class="ck-overlay" id="ckOv" aria-hidden="true"></div>
+        <div class="ck-banner" id="ckBn" role="dialog" aria-label="Cookie consent" aria-modal="true">
+            <div class="ck-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+
+            <div class="ck-body">
+                <p><strong>We use cookies.</strong> To improve your experience and analyze traffic. <a href="Legal/privacy.html" style="color:var(--accent-dark);text-decoration:underline">Learn more</a></p>
+                <div class="ck-acts">
+                    <button class="ck-yes" id="ckYes">Accept</button>
+                    <button class="ck-no" id="ckNo">Decline</button>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>

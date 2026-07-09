@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI & Multi-Agent Systems: The Future of Automation — Melex InfoTech</title>
+    <meta name="description" content="What is Agentic AI? Discover how AI is moving from chatbots to autonomous workers, and how Multi-Agent Systems are building the digital workforce of tomorrow.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/what-is-agentic-ai-and-multi-agent-system">
+    <meta name="author" content="Melalew Mengistu">
+    <meta name="keywords" content="Agentic AI, Multi-Agent Systems, AutoGen, AI Agents, LangChain, Autonomous AI, Future of Work">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Agentic AI & Multi-Agent Systems: The Future of Automation">
+    <meta property="og:description" content="Stop asking ChatGPT to write poems. Start asking it to run your business. Here is the breakdown of the next evolution in AI.">
+    <meta property="og:url" content="https://melextech.dev/post/what-is-agentic-ai-and-multi-agent-system">
+    <meta property="og:image" content="https://melextech.dev/guide/img/agentic-ai.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Melex InfoTech">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Artificial Intelligence">
+    <meta property="article:tag" content="Agentic AI">
+    <meta property="article:tag" content="Multi-Agent Systems">
+    <meta property="article:tag" content="LLM">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agentic AI & Multi-Agent Systems: The Future of Automation">
+    <meta name="twitter:description" content="Stop asking ChatGPT to write poems. Start asking it to run your business. Here is the breakdown of the next evolution in AI.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/agentic-ai.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Agentic AI & Multi-Agent Systems: The Future of Automation",
+        "description": "Confused about the difference between a simple Chatbot and an Agentic AI? We break down how autonomous agents and multi-agent systems work.",
+        "image": "https://melextech.dev/guide/img/agentic-ai.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Melex InfoTech",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/what-is-agentic-ai-and-multi-agent-system"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is ChatGPT an Agentic AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "By default, no. ChatGPT is passive; it waits for you to prompt it. Agentic AI is active; it can set goals, browse the web, and use tools without you holding its hand."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the benefit of Multi-Agent Systems?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Specialization. Instead of one AI trying to be okay at everything (coding, writing, researching), you have one 'Researcher Agent' and one 'Coder Agent' working together, resulting in higher quality output."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are Multi-Agent Systems dangerous?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "They offer more autonomy, which requires careful safety guardrails. However, they are usually restricted to digital environments (like a sandboxed coding terminal) to prevent real-world damage."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What frameworks are used to build AI agents?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The most widely used frameworks in 2026 are LangGraph for graph-based agent workflows, CrewAI for role-based multi-agent teams, Microsoft AutoGen for conversational multi-agent systems, and OpenAI's Assistants API for single-agent tool use."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can AI agents replace human workers?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not entirely. Current AI agents excel at well-defined, repetitive digital tasks like data extraction, report generation, and code review. They struggle with ambiguous situations, cross-team communication, and decisions that require organizational context. The realistic model is augmentation, not replacement — agents handle the routine work while humans handle judgment calls."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Agentic AI & Multi-Agent Systems", "item": "https://melextech.dev/post/what-is-agentic-ai-and-multi-agent-system"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#F0FDFA;--accent-border:#CCFBF1;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,#14B8A6,var(--accent));z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:340px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{
+    background:var(--story-warm);
+    border:1px solid var(--story-warm-border);
+    border-radius:var(--radius);
+    padding:28px 28px 24px;
+    margin-bottom:36px;
+    position:relative;
+    overflow:hidden;
+}
+.story-opener::before{
+    content:'\201C';
+    position:absolute;
+    top:-8px;left:16px;
+    font-size:5rem;
+    font-family:Georgia,serif;
+    color:var(--story-warm-accent);
+    opacity:.15;
+    line-height:1;
+}
+.story-opener p{
+    font-size:.92rem;
+    color:#5C4A3A;
+    line-height:1.85;
+    margin-bottom:12px;
+    position:relative;
+}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{
+    background:var(--info);
+    border:1px solid #BFDBFE;
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin-bottom:36px;
+}
+.explain-block .explain-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--info-border);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{
+    font-size:.88rem;
+    color:var(--info-text);
+    line-height:1.85;
+    margin-bottom:10px;
+}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.quick-summary{background:linear-gradient(135deg,#F0FDFA,#ECFDF5);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.video-section{margin-bottom:36px}
+.video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
+.video-lazy{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);background:#0F172A;cursor:pointer;border:1px solid var(--border)}
+.video-lazy img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .3s}
+.video-lazy:hover img{opacity:.5}
+.video-lazy iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(255,255,255,.95);border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.video-lazy:hover .video-play{transform:translate(-50%,-50%) scale(1.08);background:#fff}
+.video-play svg{width:22px;height:22px;margin-left:3px;fill:var(--dark)}
+.video-lazy.playing .video-play,
+.video-lazy.playing img{display:none}
+.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){
+    .toc-card#tocInline{display:none}
+    .toc-card.sidebar-toc{display:block}
+}
+@media(max-width:900px){
+    .toc-card#tocInline{display:block}
+    .toc-card.sidebar-toc{display:none!important}
+}
+
+.fix-block{
+    margin-bottom:40px;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--border);
+}
+.fix-block:last-of-type{
+    border-bottom:none;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+.fix-header{
+    margin-bottom:6px;
+}
+.fix-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:3px 10px;
+    border-radius:100px;
+    font-size:.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:10px;
+}
+.fix-tag.start{
+    background:var(--accent-soft);
+    color:var(--accent);
+    border:1px solid var(--accent-border);
+}
+.fix-tag.deeper{
+    background:#FEF3C7;
+    color:#B45309;
+    border:1px solid #FDE68A;
+}
+.fix-tag.deepest{
+    background:#FEE2E2;
+    color:#B91C1C;
+    border:1px solid #FECACA;
+}
+.fix-header h2{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1.15rem;
+    font-weight:700;
+    color:var(--dark);
+    letter-spacing:-.02em;
+    line-height:1.35;
+    margin:0;
+    padding:0;
+    border:none;
+}
+.fix-reason{
+    font-size:.86rem;
+    color:var(--fg-light);
+    line-height:1.75;
+    margin:10px 0 0;
+}
+
+.effect-note{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 16px;
+    border-radius:var(--radius-sm);
+    margin:16px 0;
+    font-size:.82rem;
+    line-height:1.7;
+}
+.effect-note.neutral{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--fg-sub);
+}
+.effect-note.caution{
+    background:var(--warn);
+    border-left:3px solid var(--warn-border);
+    color:var(--warn-text);
+}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{
+    background:var(--tip);
+    border-left:3px solid var(--tip-border);
+    color:var(--tip-text);
+}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+    margin-top:2px;
+}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.steps{margin-bottom:0}
+.steps-intro{font-size:.88rem;color:var(--fg-light);margin-bottom:24px;line-height:1.7}
+.step{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step-number{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;color:var(--accent);flex-shrink:0}
+.step-header h3{margin:0;font-size:.95rem;line-height:1.4}
+.step p{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:10px}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+
+.tools-section{margin:32px 0}
+.tools-section h2{margin-bottom:16px}
+.tools-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.tool-card{display:flex;gap:14px;align-items:center;padding:16px;border:1px solid var(--border);border-radius:var(--radius);transition:all .15s;background:var(--surface)}
+.tool-card:hover{border-color:var(--border-2);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.tool-icon{width:44px;height:44px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+.tool-info{flex:1;min-width:0}
+.tool-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.tool-info p{font-size:.78rem;color:var(--fg-light);margin:0;line-height:1.5}
+.tool-link{font-size:.78rem;font-weight:600;color:var(--accent);white-space:nowrap;transition:color .15s}
+.tool-link:hover{color:var(--accent-hover)}
+
+.aff-card{display:flex;gap:16px;padding:18px;border:1px solid var(--border);border-radius:var(--radius);transition:all .2s;background:var(--surface);position:relative}
+.aff-card:hover{border-color:var(--border-2);box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateY(-1px)}
+.aff-thumb{width:80px;height:80px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--border);overflow:hidden;flex-shrink:0}
+.aff-thumb img{width:100%;height:100%;object-fit:cover}
+.aff-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.aff-body h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);line-height:1.3}
+.aff-rating{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--fg-muted)}
+.aff-rating .stars{color:#F59E0B;letter-spacing:1px;font-size:.7rem}
+.aff-body p{font-size:.78rem;color:var(--fg-light);margin:0;line-height:1.5}
+.aff-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.aff-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--dark)}
+.aff-price .old{font-size:.78rem;font-weight:400;color:var(--fg-muted);text-decoration:line-through;margin-left:6px}
+.aff-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;font-size:.78rem;font-weight:600;background:var(--dark);color:#fff;border-radius:var(--radius-xs);transition:background .15s}
+.aff-btn:hover{background:#1E293B}
+.aff-btn svg{width:12px;height:12px}
+.aff-badge{position:absolute;top:12px;right:12px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:100px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border)}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em; width: 100px;}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.similar{margin:36px 0;padding-top:28px;border-top:1px solid var(--border)}
+.similar h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px;border:none;padding:0}
+.similar li{border-bottom:1px solid var(--border)}
+.similar li:last-child{border-bottom:none}
+.similar a{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:.86rem;color:var(--fg-sub);line-height:1.5;transition:color .15s}
+.similar a:hover{color:var(--dark)}
+.similar a span{flex:1}
+.similar a svg{width:15px;height:15px;color:var(--fg-faint);flex-shrink:0;margin-left:12px}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.ad-space{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:80px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;min-height:260px;display:flex;align-items:center;justify-content:center}
+
+.promo-card.aff{background:var(--surface);border-color:var(--border);border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card.aff:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn.secondary{background:var(--surface);border:1px solid var(--border-2);color:var(--fg-sub)}
+.mobile-cta .cta-btn.secondary:hover{background:var(--surface-2)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .ad-space{display:none}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+    .aff-card{flex-direction:column;align-items:flex-start}
+    .aff-thumb{width:100%;height:120px}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+    .mobile-cta{gap:8px;padding:8px 14px}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+/* --- Headings --- */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* --- Content Text --- */
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+/* --- Hero --- */
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
+</script>
+<body>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="#" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Ai">Ai</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Agentic AI & Multi-Agent Systems</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">NEXT GEN AI ARCHITECTURE</p>
+                <h1 itemprop="headline">Agentic AI & Multi-Agent Systems: What They Are and When They Actually Matter</h1>
+                <p class="problem" itemprop="description">Most people still use AI like a search bar with personality. You type a prompt, you get a response. Agentic AI flips that model: you define a goal, and the AI decides what steps to take, which tools to use, and how to recover from errors all without you micromanaging each turn.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>Last month, a logistics company asked me to look at their invoice processing. They had a team of 8 people manually reading PDFs, entering data into SAP, and flagging exceptions. After deploying a single AI agent with OCR and API access, that team was reassigned to higher-value work within three weeks.</p>
+                <p>That's not a hypothetical. That's what happens when you move from "AI that answers questions" to "AI that completes tasks." The difference isn't incremental it changes what the role looks like.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The Shift Happening Right Now
+                </div>
+                <p>Until recently, LLMs operated in a single loop: you prompt, it responds. Every action required a human in the middle. <strong>Agentic AI breaks that loop</strong> by giving the model a planning layer, access to external tools, and a self-correction mechanism.</p>
+                <p>The practical consequence: instead of using ChatGPT to draft an email and then manually sending it, an agent can draft the email, check your calendar for context, look up the recipient in your CRM, send it via your email API, and log the interaction — all from one instruction like "follow up with leads from last week's conference."</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>Agentic AI:</strong> An AI system that can plan steps, use tools, and execute tasks with minimal human intervention.</li>
+                    <li><strong>Single Agent:</strong> One AI with access to tools, handling an end-to-end task independently.</li>
+                    <li><strong>Multi-Agent System:</strong> Multiple specialized agents that communicate and divide work, similar to a human team structure.</li>
+                </ul>
+            </div>
+
+            <div class="video-section">
+                <h2>Watch the Explanation</h2>
+                <div class="video-lazy" data-video-id="15_pppse4fY" role="button" tabindex="0" aria-label="Play video">
+                    <img src="https://img.youtube.com/vi/15_pppse4fY/hqdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    
+                </div>
+                <p class="video-caption">A walkthrough of how Agentic AI and Multi-Agent Systems work in practice.</p>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#fix-1" class="toc-link">What Makes an AI "Agentic"</a>
+                    <a href="#fix-2" class="toc-link">The Anatomy of an Agent</a>
+                    <a href="#fix-3" class="toc-link">Why Multi-Agent Systems Exist</a>
+                    <a href="#fix-4" class="toc-link">Frameworks People Actually Use</a>
+                    <a href="#fix-5" class="toc-link">Where This Breaks Down</a>
+                    <a href="#comparison" class="toc-link">Framework Comparison</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div itemprop="articleBody">
+
+                <div class="fix-block" id="fix-1">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Core Concept</span>
+                        <h2>What Makes an AI "Agentic"</h2>
+                    </div>
+                    <p class="fix-reason">The word "agentic" gets thrown around loosely. Not every AI that uses a tool is an agent. The distinction matters because it determines what you can realistically automate.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>The Three Capabilities That Define an Agent</h3>
+                            </div>
+                            <p>An AI system qualifies as agentic when it has all three of these: <strong>autonomy</strong> (it decides what to do next without you specifying each step), <strong>tool use</strong> (it can interact with external systems APIs, databases, browsers, code interpreters), and <strong>self-correction</strong> (it can detect when a step failed and try an alternative approach).</p>
+                            <p>ChatGPT with web search has tool use, but limited autonomy you still drive each interaction. An agent that you tell "research competitors and write a brief" and that independently opens browser tabs, extracts data, synthesizes findings, and produces a document that's agentic.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Where the Line Gets Blurry</h3>
+                            </div>
+                            <p>OpenAI's Assistants API lets you attach tools like code interpreters and file search. Is that an agent? Technically, it has tool use and some autonomy within a conversation. But it can't initiate actions outside a session, can't run long-running background tasks, and can't coordinate with other systems without a human trigger.</p>
+                            <p>In practice, people use "agent" to mean systems with a planning loop the AI evaluates its own progress and decides whether to continue, adjust, or stop. If there's no planning loop, it's a tool-augmented chatbot, not an agent.</p>
+                        </div>
+                    </div>
+
+                    <div class="effect-note neutral">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span><strong>Key distinction:</strong> A chatbot responds. An agent acts. The difference shows up in how you measure success chatbots are measured by response quality, agents are measured by task completion rate.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-2">
+                    <div class="fix-header">
+                        <span class="fix-tag start">Architecture</span>
+                        <h2>The Anatomy of an Agent</h2>
+                    </div>
+                    <p class="fix-reason">Understanding the components helps you evaluate frameworks, debug failures, and design systems that don't collapse under edge cases.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>The LLM as the Reasoning Engine</h3>
+                            </div>
+                            <p>The language model doesn't execute actions directly. It produces structured output usually JSON that tells the system what to do next. This is called the "agent loop." The LLM receives context (the goal, previous steps, available tools), reasons about what to do, outputs an action, and the system executes it.</p>
+                            <p>The model choice matters more here than in chatbot applications. GPT-4o and Claude 3.5 Sonnet handle tool-calling reliably. Smaller models often fail at multi-step planning they'll call the wrong tool, forget earlier instructions, or enter loops where they repeat the same action.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Tools: The Agent's Hands</h3>
+                            </div>
+                            <p>Tools are functions the agent can invoke. Common categories: <strong>information retrieval</strong> (web search, database queries, file reading), <strong>action execution</strong> (sending emails, creating Jira tickets, updating spreadsheets), and <strong>computation</strong> (running Python code, calculating formulas, processing data).</p>
+                            <p>The design of your tool interfaces directly affects agent reliability. A tool with 15 parameters will confuse the agent. A tool that takes a single natural language instruction and handles the complexity internally will perform much better. Abstract complexity away from the LLM give it simple levers, not complex control panels.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Memory: Short-Term and Long-Term</h3>
+                            </div>
+                            <p>Short-term memory is the conversation context — the list of prior steps and their results. This gets passed to the LLM on each loop iteration. When this context window fills up (usually after 15-30 steps depending on the model), the agent starts forgetting earlier instructions.</p>
+                            <p>Long-term memory stores information across sessions past task results, user preferences, learned patterns. This is typically implemented with vector databases (Pinecone, Weaviate) or structured storage. Most production agents need both. Without long-term memory, the agent re-learns the same patterns every session.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>The Planning and Control Loop</h3>
+                            </div>
+                            <p>This is the core differentiator. A basic agent loop is: think → act → observe → repeat. A more sophisticated agent adds: evaluate progress against the goal, determine if the goal is achievable, decide when to ask for human help, and handle tool failures gracefully.</p>
+                            <p>Frameworks like LangGraph implement this as a state machine. The agent moves between states (planning, executing, reviewing, finishing) with conditional transitions. This prevents common failure modes like infinite loops (the agent keeps trying the same failing action) or premature termination (the agent declares success after one partial step).</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Common failure:</strong> Giving an agent access to destructive tools (delete, send, publish) without a human-in-the-loop checkpoint. Even well-designed agents occasionally misinterpret instructions. Any irreversible action should require confirmation, at least in early deployment stages.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-3">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Architecture</span>
+                        <h2>Why Multi-Agent Systems Exist</h2>
+                    </div>
+                    <p class="fix-reason">A single agent that tries to do everything runs into a fundamental problem: the more tools and responsibilities you add, the more its performance degrades. Multi-agent systems solve this by splitting the work.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>The Generalist vs. Specialist Problem</h3>
+                            </div>
+                            <p>Ask one agent to research, write code, write documentation, and run tests, and you'll see quality drop across all four. The agent's context gets cluttered with irrelevant tool outputs, it loses track of the overall goal, and it starts making domain errors like writing test cases that don't match the code because it lost the implementation details 10 steps back.</p>
+                            <p>Split those responsibilities into a Researcher agent, a Coder agent, a Writer agent, and a Reviewer agent, and each one operates with a focused context. The Researcher only sees search results. The Coder only sees the research summary and the codebase. Quality improves significantly.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Communication Patterns Between Agents</h3>
+                            </div>
+                            <p>Agents communicate by passing structured messages. The two main patterns: <strong>sequential</strong> (Agent A finishes, passes output to Agent B, which passes to Agent C like an assembly line) and <strong>hierarchical</strong> (a manager agent delegates tasks, reviews outputs, and routes work — like a team lead).</p>
+                            <p>Sequential is simpler to debug but fragile if Agent B produces bad output, Agent C compounds the error. Hierarchical adds a review layer that catches problems but costs more in LLM calls. For most production systems, a hybrid works best: sequential for well-defined subtasks, with a reviewer agent that checks critical outputs.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Real-World Example: Automated Report Generation</h3>
+                            </div>
+                            <p>A financial firm uses a 4-agent system for weekly market reports. The Data Agent pulls prices, volumes, and news from 12 APIs. The Analysis Agent identifies trends and generates insights. The Writer Agent produces the narrative. The Editor Agent checks for factual consistency (did the writer claim a stock went up when the data shows it went down?) and formatting compliance.</p>
+                            <p>Before this system, an analyst spent 6-8 hours per report. The agent system produces a first draft in 12 minutes. The analyst now spends 30 minutes reviewing and adjusting a 90% reduction in manual work. The key detail: the Editor agent catches factual errors about 15% of the time, which is why it exists. Without it, the analyst would spend more time correcting than reviewing.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Practical tip:</strong> Start with a single agent. Only add a second agent when you can clearly identify a point where the first agent's context becomes overloaded or its performance drops on a specific subtask. Premature multi-agent architectures are harder to debug and more expensive to run.</p>
+                        </div>
+                    </div>
+
+                    <div class="effect-note good">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span><strong>Best for:</strong> Complex workflows with distinct phases (research → create → review → deliver), tasks requiring different expertise levels, and processes where quality verification is critical.</span>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-4">
+                    <div class="fix-header">
+                        <span class="fix-tag deeper">Tools</span>
+                        <h2>Frameworks People Actually Use in 2026</h2>
+                    </div>
+                    <p class="fix-reason">The framework landscape has consolidated. A year ago there were 20+ options. Now four dominate, each with a clear positioning.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>LangGraph</h3>
+                            </div>
+                            <p>LangGraph (by LangChain) lets you define agent workflows as directed graphs. Each node is a function (could be an LLM call, a tool, or a custom function), and edges define the flow. You get explicit control over the agent loop you can add conditional branches, human review checkpoints, and parallel execution.</p>
+                            <p>It's the most flexible option and the most complex. Teams use it when they need fine-grained control over the agent's decision-making process for example, routing to different tools based on confidence scores, or implementing approval gates for high-stakes actions. The downside: more boilerplate, and the graph abstraction adds cognitive overhead for simple use cases.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>CrewAI</h3>
+                            </div>
+                            <p>CrewAI takes a role-based approach. You define agents with roles ("Senior Researcher," "Technical Writer"), give them goals and tools, and specify how they interact. The framework handles the communication and task delegation.</p>
+                            <p>This is the fastest path to a working multi-agent system. You can go from concept to running prototype in under an hour. Teams use it for content pipelines, research automation, and any workflow that maps cleanly to "roles." The limitation: when your workflow doesn't fit the role metaphor (for example, a complex stateful process with branches and loops), CrewAI's abstractions start to feel constraining.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Microsoft AutoGen</h3>
+                            </div>
+                            <p>AutoGen focuses on conversational multi-agent systems. Agents communicate through a shared message thread, and the framework manages the back-and-forth. It's particularly strong for scenarios where agents need to negotiate, debate, or iteratively refine an output together.</p>
+                            <p>AutoGen works well for code generation with review (a coder writes, a reviewer critiques, the coder revises), brainstorming sessions, and any task where the value comes from agent-to-agent dialogue rather than a fixed pipeline. The trade-off: conversational patterns can be slow (many LLM round-trips) and harder to predict in terms of cost and completion time.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">4</span>
+                                <h3>OpenAI Assistants API</h3>
+                            </div>
+                            <p>The Assistants API is the simplest entry point. You create an assistant, attach tools (code interpreter, file search, or custom function calls), and run it in a thread. OpenAI manages the state, the tool execution, and the context window.</p>
+                            <p>It's limited to single-agent use cases and doesn't support custom planning loops. But for tasks like "analyze this dataset and create visualizations" or "process these documents and extract key fields," it's often sufficient. The main advantage: zero infrastructure to manage. The main limitation: vendor lock-in and no visibility into the planning process.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fix-block" id="fix-5">
+                    <div class="fix-header">
+                        <span class="fix-tag deepest">Reality Check</span>
+                        <h2>Where This Breaks Down</h2>
+                    </div>
+                    <p class="fix-reason">Agentic AI is powerful, but it's not magic. Understanding the failure modes prevents wasted investment and dangerous deployments.</p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">1</span>
+                                <h3>Cost Spirals</h3>
+                            </div>
+                            <p>An agent that runs 25 loop iterations with GPT-4o on a complex task can easily cost $2-5 per execution. Multiply that by hundreds of daily runs, and you're looking at real money. Teams often underestimate costs during prototyping because they test with simple cases that complete in 5-8 steps. Production data introduces edge cases that balloon the step count.</p>
+                            <p>Mitigation: use cheaper models for well-defined subtasks (GPT-4o-mini for classification, Claude Haiku for extraction), set hard limits on loop iterations, and implement caching for repeated operations.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">2</span>
+                                <h3>Reliability Is Not Guaranteed</h3>
+                            </div>
+                            <p>Even well-configured agents fail. They pick the wrong tool, misinterpret results, or enter loops. Current reliability for complex multi-step tasks hovers around 60-80% depending on the domain. That means 1 in 3 to 1 in 5 runs needs human intervention.</p>
+                            <p>This is why human-in-the-loop patterns matter. Design your system so that failures are caught and escalated rather than silently producing wrong outputs. A monitoring dashboard that shows agent step counts, tool call success rates, and completion times gives you visibility into where failures happen.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-header">
+                                <span class="step-number">3</span>
+                                <h3>Security Surface Area</h3>
+                            </div>
+                            <p>Every tool you give an agent is an attack surface. If the agent can read your database, write to your API, and send emails, a prompt injection attack or a misinterpreted instruction could cause real damage. Sandbox tools appropriately, restrict permissions to the minimum necessary, and log every tool call for audit trails.</p>
+                            <p>In practice: give the agent read-only access by default. Only grant write access to specific, scoped endpoints. Never give an agent direct SQL access use an API layer with input validation. These precautions sound obvious, but they're frequently skipped in the rush to demonstrate working prototypes.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout danger">
+                        <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                        <div class="callout-content">
+                            <p><strong>Critical:</strong> Never deploy an agent with financial transaction capabilities, deletion rights, or external communication (email, Slack, social media) without a human approval step. The cost of a single erroneous action in these domains far outweighs the efficiency gains from full autonomy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="comparison" class="comparison">
+                    <h2>Framework Comparison</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Criteria</th>
+                                    <th>LangGraph</th>
+                                    <th>CrewAI</th>
+                                    <th>AutoGen</th>
+                                    <th>Assistants API</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Setup Complexity</strong></td>
+                                    <td><span class="badge red">High</span></td>
+                                    <td><span class="badge green">Low</span></td>
+                                    <td><span class="badge yellow">Medium</span></td>
+                                    <td><span class="badge green">Minimal</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Multi-Agent Support</strong></td>
+                                    <td><span class="badge green">Excellent</span></td>
+                                    <td><span class="badge green">Excellent</span></td>
+                                    <td><span class="badge green">Excellent</span></td>
+                                    <td><span class="badge red">None</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Control Over Agent Loop</strong></td>
+                                    <td><span class="badge green">Full</span></td>
+                                    <td><span class="badge yellow">Moderate</span></td>
+                                    <td><span class="badge yellow">Moderate</span></td>
+                                    <td><span class="badge red">None</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Model Flexibility</strong></td>
+                                    <td><span class="badge green">Any LLM</span></td>
+                                    <td><span class="badge green">Any LLM</span></td>
+                                    <td><span class="badge green">Any LLM</span></td>
+                                    <td><span class="badge red">OpenAI only</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Infrastructure</strong></td>
+                                    <td>Self-hosted</td>
+                                    <td>Self-hosted</td>
+                                    <td>Self-hosted</td>
+                                    <td>Fully managed</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Best Fit</strong></td>
+                                    <td>Complex workflows</td>
+                                    <td>Role-based teams</td>
+                                    <td>Conversational agents</td>
+                                    <td>Simple tool use</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div class="callout info">
+                    <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                    <div class="callout-content">
+                        <p><strong>Picking a framework:</strong> If you're evaluating for the first time, start with the Assistants API for single-agent tasks and CrewAI for multi-agent tasks. Only move to LangGraph or AutoGen when you hit the limitations of those simpler options. Premature framework adoption is a common source of project delays the framework becomes the project instead of the agent.</p>
+                    </div>
+                </div>
+
+                <section id="faq" class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Is ChatGPT an Agentic AI?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>By default, no. ChatGPT is passive it waits for you to prompt it and responds within a single turn. Agentic AI is active: it can set goals, break them into steps, use tools across multiple turns, and self-correct. ChatGPT with custom GPTs that have access to actions gets closer, but it still requires human initiation for each task.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What is the benefit of Multi-Agent Systems?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>Specialization. A single agent juggling research, coding, writing, and review will produce lower quality across all areas because its context window gets cluttered. Multi-agent systems give each agent a focused scope, which improves output quality. They also make debugging easier when something goes wrong, you can isolate which agent caused the issue instead of searching through a long single-agent trace.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Are Multi-Agent Systems dangerous?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>"Dangerous" is too strong a word for current systems, but they do require careful guardrails. The risk isn't that agents become self-aware it's that an agent misinterprets an instruction and takes an irreversible action. Standard safety practices: sandbox execution environments, read-only access by default, human approval for destructive actions, and comprehensive logging. Most production deployments restrict agents to specific digital environments rather than giving them broad system access.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>What frameworks are used to build AI agents?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>The most widely used in 2026 are LangGraph for graph-based agent workflows with fine-grained control, CrewAI for role-based multi-agent teams that are quick to set up, Microsoft AutoGen for conversational multi-agent systems where agents debate or iterate together, and OpenAI's Assistants API for single-agent tool use with zero infrastructure management.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>Can AI agents replace human workers?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>Not entirely, and not soon. Current agents handle well-defined, repetitive digital tasks well: data extraction from documents, generating first drafts of reports, routine code review, monitoring and alerting. They fail at ambiguous situations, cross-team coordination, decisions requiring organizational context, and anything involving nuance or stakeholder management. The realistic pattern in 2026 is augmentation agents handle the mechanical 60-70% of a workflow, and humans handle the judgment-dependent 30-40%. The role changes, but it doesn't disappear.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q" aria-expanded="false">
+                                <span>How much does it cost to run an AI agent?</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="faq-a" aria-hidden="true">
+                                <div class="faq-a-inner">
+                                    <p>It depends on the model, the number of steps, and the task complexity. A simple single-agent task with GPT-4o-mini might cost $0.01-0.05 per run. A complex multi-agent workflow with GPT-4o can cost $2-10 per run. For daily production workloads, teams typically spend $200-2,000/month depending on volume. Using cheaper models for subtasks, caching repeated operations, and setting iteration limits are the most effective cost controls.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href)+'&text='+encodeURIComponent(document.title),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </button>
+                <button class="share-btn copy" aria-label="Copy link" id="copyLinkBtn">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar">
+                    <img src="../img/founder-mx.webp" alt="Melalew Mengistu" width="52" height="52" loading="lazy">
+                </div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="help">
+                <h2>Want to Build an Agent System?</h2>
+                <p>Tell us what you're automating and we'll point you in the right direction.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Our Community
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#fix-1" class="toc-link">What Makes an AI "Agentic"</a>
+                    <a href="#fix-2" class="toc-link">The Anatomy of an Agent</a>
+                    <a href="#fix-3" class="toc-link">Why Multi-Agent Systems Exist</a>
+                    <a href="#fix-4" class="toc-link">Frameworks People Actually Use</a>
+                    <a href="#fix-5" class="toc-link">Where This Breaks Down</a>
+                    <a href="#comparison" class="toc-link">Framework Comparison</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="ad-space" aria-hidden="true">Advertisement</div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        View Course
+    </a>
+    <a href="https://t.me/melexit" class="cta-btn secondary" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Ask Us
+    </a>
+</div>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Guides</div>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Products</div>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <div class="footer-title">Company</div>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <span><a href="../legal/terms.html">Terms Of Services</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function(){
+    var sp=document.getElementById('scrollProgress');
+    var stp=document.getElementById('scrollToTop');
+    var mcb=document.getElementById('mobileMenuBtn');
+    var mn=document.getElementById('mobileNav');
+    var mcta=document.getElementById('mobileCta');
+    var clb=document.getElementById('copyLinkBtn');
+
+    window.addEventListener('scroll',function(){
+        var s=document.documentElement.scrollTop;
+        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        if(h>0){sp.style.width=(s/h*100)+'%';}
+        if(s>400){stp.classList.add('vis');}else{stp.classList.remove('vis');}
+        if(s>1200){mcta.classList.add('vis');}else{mcta.classList.remove('vis');}
+    },{passive:true});
+
+    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+    mcb.addEventListener('click',function(){
+        var open=mn.classList.toggle('open');
+        mcb.classList.toggle('active');
+        mcb.setAttribute('aria-expanded',open);
+        mn.setAttribute('aria-hidden',!open);
+        document.body.style.overflow=open?'hidden':'';
+    });
+
+    document.querySelectorAll('.faq-q').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            var item=this.parentElement;
+            var wasOpen=item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(function(i){
+                i.classList.remove('open');
+                i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                i.querySelector('.faq-a').setAttribute('aria-hidden','true');
+                i.querySelector('.faq-a').style.maxHeight=null;
+            });
+            if(!wasOpen){
+                item.classList.add('open');
+                this.setAttribute('aria-expanded','true');
+                var a=item.querySelector('.faq-a');
+                a.setAttribute('aria-hidden','false');
+                a.style.maxHeight=a.scrollHeight+'px';
+            }
+        });
+    });
+
+    var tocLinks=document.querySelectorAll('.toc-link');
+    var sections=[];
+    tocLinks.forEach(function(l){
+        var id=l.getAttribute('href').slice(1);
+        var el=document.getElementById(id);
+        if(el)sections.push({link:l,el:el});
+    });
+
+    function updateToc(){
+        var st=window.scrollY;
+        var active=null;
+        for(var i=sections.length-1;i>=0;i--){
+            if(sections[i].el.getBoundingClientRect().top<=120){active=sections[i];break;}
+        }
+        tocLinks.forEach(function(l){l.classList.remove('active');});
+        if(active)active.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+
+    if(clb){
+        clb.addEventListener('click',function(){
+            navigator.clipboard.writeText(window.location.href).then(function(){
+                clb.textContent='COPIED';
+                clb.classList.add('copied');
+                setTimeout(function(){clb.textContent='COPY';clb.classList.remove('copied');},2000);
+            });
+        });
+    }
+
+    document.querySelectorAll('.video-lazy').forEach(function(container){
+        function loadVideo(){
+            if(container.classList.contains('playing'))return;
+            var videoId=container.getAttribute('data-video-id');
+            if(!videoId)return;
+            var iframe=document.createElement('iframe');
+            iframe.src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0';
+            iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen=true;
+            iframe.title='YouTube video player';
+            container.appendChild(iframe);
+            container.classList.add('playing');
+        }
+        container.addEventListener('click',loadVideo);
+        container.addEventListener('keydown',function(e){
+            if(e.key==='Enter'||e.key===' '){e.preventDefault();loadVideo();}
+        });
+    });
+})();
+</script>
+
+</body>
+</html>

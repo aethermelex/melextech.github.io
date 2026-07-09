@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — MelexTech</title>
+    <meta name="description" content="Terms of Service for MelexTech. Read our terms regarding the use of our educational technology website and services.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="../logo.webp">
+    <link rel="canonical" href="https://melextech.dev/terms">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAFA;
+            --bg-alt: #F3F4F6;
+            --surface: #FFFFFF;
+            --fg: #334155;
+            --fg-light: #64748B;
+            --accent: #2DD4BF;
+            --accent-dark: #14B8A6;
+            --accent-soft: #CCFBF1;
+            --border: #F1F5F9;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --radius: 24px;
+            --radius-sm: 12px;
+            --nav-height: 65px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #1E293B;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.2s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent), #60A5FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .btn svg { width: 18px; height: 18px; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 5px rgba(45, 212, 191, 0.4);
+        }
+
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 8px 0;
+            background: white;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .header.scrolled {
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .logo { display: flex; align-items: center; z-index: 10; }
+        .logo-icon { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+
+        .nav { display: flex; gap: 4px; }
+
+        .nav-link {
+            padding: 6px 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--fg-light);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover { color: var(--fg); background: var(--bg-alt); }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 110;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-line {
+            width: 24px; height: 2px;
+            background: var(--fg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .about-hero {
+            padding: 140px 0 80px;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                url('../img/bgeer.webp');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .hero-grid-dots {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.05;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .hero-content-center {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .badge-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+        }
+
+        .about-hero-title {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .about-hero-desc {
+            font-size: 1.125rem;
+            color: #94A3B8;
+            margin: 0;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .breadcrumb a { color: rgba(255,255,255,0.5); }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb svg { width: 14px; height: 14px; opacity: 0.5; }
+
+        .hero-fade {
+            position: relative;
+            z-index: 3;
+            height: 60px;
+            margin-top: -60px;
+            pointer-events: none;
+        }
+
+        .legal-section {
+            padding: 40px 0 100px;
+            position: relative;
+            z-index: 2;
+            background: var(--bg);
+        }
+
+        .legal-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .legal-toc {
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
+            max-height: calc(100vh - var(--nav-height) - 48px);
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .legal-toc::-webkit-scrollbar { display: none; }
+
+        .toc-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--fg-light);
+            margin-bottom: 16px;
+        }
+
+        .toc-list { display: flex; flex-direction: column; gap: 2px; }
+
+        .toc-list a {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--fg-light);
+            padding: 7px 12px;
+            border-radius: 8px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .toc-list a:hover { color: var(--fg); background: var(--bg-alt); }
+
+        .toc-list a.active {
+            color: var(--accent-dark);
+            border-left-color: var(--accent);
+            background: var(--accent-soft);
+            font-weight: 600;
+        }
+
+        .legal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 52px 56px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .legal-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #60A5FA);
+        }
+
+        .legal-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: var(--accent-soft);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-dark);
+            margin-bottom: 36px;
+        }
+
+        .legal-updated svg { width: 14px; height: 14px; }
+
+        .legal-content > p {
+            font-size: 0.95rem;
+            color: var(--fg-light);
+            line-height: 1.85;
+            margin-bottom: 24px;
+        }
+
+        .legal-content h2 {
+            font-size: 1.3rem;
+            margin: 48px 0 16px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .legal-content h2:first-of-type { margin-top: 0; }
+
+        .legal-content h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            border-radius: 4px;
+            background: linear-gradient(180deg, var(--accent), #60A5FA);
+            flex-shrink: 0;
+        }
+
+        .legal-content ul { margin: 12px 0 28px; }
+
+        .legal-content ul li {
+            position: relative;
+            padding: 7px 0 7px 26px;
+            font-size: 0.92rem;
+            color: var(--fg-light);
+            line-height: 1.75;
+        }
+
+        .legal-content ul li::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 16px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.5;
+        }
+
+        .legal-content strong { color: var(--fg); font-weight: 600; }
+
+        .legal-content a {
+            color: var(--accent-dark);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .legal-content a:hover { border-bottom-color: var(--accent-dark); }
+
+        .legal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, var(--accent-soft), #E0E7FF);
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            margin: 24px 0;
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent-dark);
+        }
+
+        .info-card-header svg { width: 16px; height: 16px; }
+        .info-card p { margin-bottom: 0 !important; color: var(--fg) !important; font-weight: 500; }
+
+        .legal-contact-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .legal-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+
+        .legal-contact-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateX(4px);
+        }
+
+        .legal-contact-icon {
+            width: 36px; height: 36px;
+            background: var(--accent-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .legal-contact-icon svg { width: 18px; height: 18px; stroke: var(--accent-dark); }
+        .legal-contact-item span { font-size: 0.92rem; font-weight: 500; color: #1E293B; }
+
+        .footer { background: #1E293B; color: #fff; padding: 80px 0 40px; position: relative; z-index: 2; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+        .footer-tagline { color: #94A3B8; margin: 16px 0 24px; max-width: 300px; line-height: 1.6; }
+        .social-links { display: flex; gap: 12px; }
+        .social-link { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: var(--radius-sm); transition: all 0.2s; }
+        .social-link:hover { background: var(--accent); transform: translateY(-3px); }
+        .social-link svg { width: 20px; height: 20px; fill: #fff; }
+        .footer-title { font-size: 1rem; margin-bottom: 24px; font-weight: 600; color: #fff; }
+        .footer-links ul { display: flex; flex-direction: column; gap: 16px; }
+        .footer-links a { color: #94A3B8; font-size: 0.95rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center; color: #64748B; font-size: 0.9rem; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 32px; right: 32px;
+            width: 48px; height: 48px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(16px);
+            transition: all 0.3s;
+            z-index: 90;
+        }
+
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-4px); }
+        .back-to-top svg { width: 22px; height: 22px; stroke: var(--fg); }
+
+        .animate-fade-up {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .legal-layout { grid-template-columns: 1fr; gap: 32px; }
+            .legal-toc { position: static; max-height: none; }
+            .toc-list { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+            .toc-list a { border-left: none; border-bottom: 2px solid transparent; padding: 5px 12px; font-size: 0.78rem; white-space: nowrap; }
+            .toc-list a.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+            .legal-content { padding: 36px 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .header-actions .btn { display: none; }
+            .mobile-menu-btn { display: flex; }
+
+            .nav {
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                padding: 100px 24px 40px;
+                background: var(--surface);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--shadow-lg);
+                height: 100vh;
+                z-index: 105;
+            }
+
+            .nav.active { transform: translateY(0); opacity: 1; visibility: visible; }
+            .nav-link { width: 100%; font-size: 1.25rem; padding: 16px 20px; border-radius: 8px; }
+            .about-hero { padding: 120px 0 60px; min-height: auto; }
+            .legal-content { padding: 28px 22px; }
+            .legal-content h2 { font-size: 1.15rem; margin: 36px 0 14px; }
+            .legal-contact-item:hover { transform: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand { display: flex; flex-direction: column; align-items: center; }
+            .social-links { justify-content: center; }
+            .footer-tagline { margin: 16px auto 24px; }
+            .legal-updated { font-size: 0.75rem; padding: 6px 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* --- Theme Toggle Button Styling --- */
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--fg);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent);
+            background: var(--bg-alt);
+            color: var(--accent-dark);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Toggle visibility of icons depending on active theme */
+        [data-theme="dark"] .sun-icon { display: block; }
+        [data-theme="dark"] .moon-icon { display: none; }
+        html:not([data-theme="dark"]) .sun-icon { display: none; }
+        html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+        /* --- Dark Mode Color Overrides --- */
+        [data-theme="dark"] {
+            --bg: #0B0F19;
+            --bg-alt: #1E293B;
+            --surface: #111827;
+            --fg: #F1F5F9;
+            --fg-light: #94A3B8;
+            --accent-soft: rgba(45, 212, 191, 0.15);
+            --border: #1F2937;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Ensure smooth background transition changes globally */
+        html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Overriding hardcoded light colors for dark theme consistency */
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4 {
+            color: #F8FAFC !important;
+        }
+
+        [data-theme="dark"] .header {
+            background: rgba(17, 24, 39, 0.8) !important;
+        }
+
+        [data-theme="dark"] .header.scrolled {
+            background: rgba(11, 15, 25, 0.95) !important;
+        }
+
+        [data-theme="dark"] .features,
+        [data-theme="dark"] .products {
+            background: #0F172A !important;
+        }
+
+        /* Adjust mobile layout styling for dark mode */
+        @media (max-width: 768px) {
+            [data-theme="dark"] .nav {
+                background: var(--surface) !important;
+            }
+            .theme-toggle-btn {
+                margin-right: 4px;
+            }
+        }
+    </style>
+</head>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                let newTheme = 'light';
+                
+                if (currentTheme === 'light') {
+                    newTheme = 'dark';
+                }
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        }
+    });
+</script>
+<body>
+
+    <header id="header" class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../logo.webp" alt="MelexTech Logo">
+                </div>
+                <span class="logo-text">MELEX IT</span>
+            </a>
+
+            <nav id="nav" class="nav">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../about.html" class="nav-link">About</a>
+                <a href="../services.html" class="nav-link">Services</a>
+                <a href="../guide" class="nav-link">Guides</a>
+                <a href="privacy.html" class="nav-link">Privacy</a>
+            </nav>
+
+            <div class="header-actions">
+                <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <a href="../contact.html" class="btn btn-primary">
+                    <span>Get Help</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <div class="hero-grid-dots"></div>
+            <div class="container">
+                <div class="hero-content-center animate-fade-up">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        Legal Document
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span>Terms of Service</span>
+                    </div>
+                    <h1 class="about-hero-title">Terms of <span class="text-gradient">Service</span></h1>
+                    <p class="about-hero-desc">The rules and guidelines governing your use of our website and educational content.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="hero-fade"></div>
+
+        <section class="legal-section">
+            <div class="container">
+                <div class="legal-layout">
+
+                    <aside class="legal-toc animate-fade-up">
+                        <div class="toc-label">On This Page</div>
+                        <ul class="toc-list">
+                            <li><a href="#acceptance" class="active">Acceptance of Terms</a></li>
+                            <li><a href="#purpose">Website Purpose</a></li>
+                            <li><a href="#permitted">Permitted Use</a></li>
+                            <li><a href="#prohibited">Prohibited Conduct</a></li>
+                            <li><a href="#ip">Intellectual Property</a></li>
+                            <li><a href="#disclaimer">Educational Disclaimer</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#saas">SaaS Tools</a></li>
+                            <li><a href="#affiliate">Affiliate Links</a></li>
+                            <li><a href="#advertising">Future Advertising</a></li>
+                            <li><a href="#ai-content">AI-Assisted Content</a></li>
+                            <li><a href="#third-party">Third-Party Links</a></li>
+                            <li><a href="#limitation">Limitation of Liability</a></li>
+                            <li><a href="#changes">Changes to the Terms</a></li>
+                            <li><a href="#governing">Governing Law</a></li>
+                            <li><a href="#contact">Contact Information</a></li>
+                        </ul>
+                    </aside>
+
+                    <div class="legal-content animate-fade-up" style="transition-delay: 100ms;">
+                        <div class="legal-updated">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            Last updated: June 5, 2026
+                        </div>
+
+                        <h2 id="acceptance">Acceptance of Terms</h2>
+                        <p>By accessing or using this website at melextech.dev (the "Website"), you agree to be bound by these Terms of Service. If you do not agree with these terms, you should not use the Website.</p>
+                        <p>These terms apply to all visitors and users of the Website. We, our, and us refer to the website operator, MelexTech.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="purpose">Website Purpose</h2>
+                        <p>This website is an independent educational technology platform. We publish educational content including:</p>
+                        <ul>
+                            <li>Technology blogs and articles</li>
+                            <li>Programming tutorials</li>
+                            <li>Linux guides</li>
+                            <li>Networking resources</li>
+                            <li>Cybersecurity education</li>
+                            <li>AI-related educational articles</li>
+                            <li>Technology explainers</li>
+                            <li>Practical learning resources</li>
+                        </ul>
+                        <p>This website is intended for users aged 14 and above.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="permitted">Permitted Use</h2>
+                        <p>You may use this website for personal, non-commercial educational purposes. You are permitted to:</p>
+                        <ul>
+                            <li>Read and view content on the Website</li>
+                            <li>Share links to our content on social media or other platforms</li>
+                            <li>Quote small portions of our content with proper attribution and a link to the original source</li>
+                            <li>Use our browser-based SaaS tools for their intended educational purposes</li>
+                            <li>Contact us through the contact form with legitimate inquiries</li>
+                        </ul>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="prohibited">Prohibited Conduct</h2>
+                        <p>You agree not to:</p>
+                        <ul>
+                            <li>Copy, republish, or reproduce our articles, tutorials, or guides in full without written permission</li>
+                            <li>Copy or reproduce our images without written permission</li>
+                            <li>Reproduce substantial portions of our content without authorization</li>
+                            <li>Use automated tools to scrape or collect content from the Website</li>
+                            <li>Attempt to interfere with the proper functioning of the Website</li>
+                            <li>Use the Website for any unlawful purpose</li>
+                            <li>Misrepresent your affiliation with this Website</li>
+                        </ul>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="ip">Intellectual Property</h2>
+                        <p>All original content on this Website, including text, articles, tutorials, images, graphics, and code, belongs to MelexTech unless otherwise stated. This content is protected by copyright laws.</p>
+                        <p>You may share links to our content freely. Brief quotations with proper attribution and a link back to the original article are permitted under fair use principles.</p>
+                        <p>For permission to use our content beyond what is permitted here, please contact us through the contact form.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="disclaimer">Educational Disclaimer</h2>
+                        <p>The content on this Website is provided for educational and informational purposes only.</p>
+                        <p>This content is not:</p>
+                        <ul>
+                            <li>Professional legal advice</li>
+                            <li>Financial advice</li>
+                            <li>Medical advice</li>
+                            <li>Professional cybersecurity consulting</li>
+                        </ul>
+                        <p>Our cybersecurity articles are educational in nature. Users remain entirely responsible for how they apply any information found on this Website. We recommend consulting qualified professionals for specific advice related to your situation.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="services">Services</h2>
+                        <p>In addition to free educational content, this Website offers information about the following services:</p>
+                        <ul>
+                            <li>Web Development</li>
+                            <li>Cybersecurity services</li>
+                            <li>Graphic Design</li>
+                            <li>Copywriting</li>
+                        </ul>
+                        <p>Details about these services, including scope and terms, are discussed directly with interested parties through the contact form. Engaging with these services is subject to separate agreements negotiated directly with the website operator.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="saas">SaaS Tools</h2>
+                        <p>This Website provides free, browser-based educational tools such as unit converters, password strength checkers, and regex learning tools.</p>
+                        
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                Important
+                            </div>
+                            <p>These tools run entirely in your browser using client-side JavaScript. They do not transmit your input to any server. No user accounts, logins, or server-side processing are required or used.</p>
+                        </div>
+
+                        <p>These tools are provided as-is for educational purposes. We make no warranties about their accuracy or suitability for any particular purpose.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="affiliate">Affiliate Links</h2>
+                        <p>This Website may contain affiliate links, particularly for hosting providers and similar technology services. If you click on an affiliate link and make a purchase, we may receive a commission at no additional cost to you.</p>
+                        <p>The presence of affiliate links does not influence our educational content or recommendations.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="advertising">Future Advertising</h2>
+                        <p>This Website may display advertisements through Google AdSense in the future. If advertising is implemented, Google may use cookies and similar technologies to serve ads based on your browsing activity.</p>
+                        <p>You can control ad personalization through Google's Ad Settings. The presence of advertisements does not constitute an endorsement of the advertised products or services.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="ai-content">AI-Assisted Content</h2>
+                        <p>Some articles on this Website may be created or assisted using artificial intelligence tools. All content, including AI-assisted content, is reviewed and edited by the website operator before publication to ensure accuracy and quality.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="third-party">Third-Party Links</h2>
+                        <p>This Website may contain links to third-party websites. We have no control over the content, privacy policies, or practices of third-party websites. We recommend reviewing the terms and privacy policies of any third-party sites you visit through links on this Website.</p>
+                        <p>Inclusion of third-party links does not imply endorsement.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="limitation">Limitation of Liability</h2>
+                        <p>To the maximum extent permitted by law, the website operator shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use this Website.</p>
+                        <p>This includes, but is not limited to, damages for:</p>
+                        <ul>
+                            <li>Loss of data or information</li>
+                            <li>Personal injury or property damage</li>
+                            <li>Any actions taken or not taken based on content found on this Website</li>
+                            <li>Unauthorized access to your personal information</li>
+                            <li>Interruption or cessation of Website availability</li>
+                        </ul>
+                        <p>You use this Website and its content entirely at your own risk.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="changes">Changes to the Terms</h2>
+                        <p>We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting on this page. We will update the "Last updated" date at the top of this page when changes are made.</p>
+                        <p>Your continued use of the Website after any modifications constitutes your acceptance of the updated Terms.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="governing">Governing Law</h2>
+                        <p>These Terms of Service shall be governed by and construed in accordance with the laws of Ethiopia. Any disputes arising from these Terms or your use of this Website shall be resolved in accordance with Ethiopian law.</p>
+
+                        <div class="legal-divider"></div>
+
+                        <h2 id="contact">Contact Information</h2>
+                        <p>For questions about these Terms of Service, please contact us:</p>
+
+                        <div class="legal-contact-row">
+                            <div class="legal-contact-item">
+                                <div class="legal-contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                </div>
+                                <span>contact@melextech.dev</span>
+                            </div>
+                            <div class="legal-contact-item">
+                                <div class="legal-contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                </div>
+                                <a href="../contact.html">melextech.dev/contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo">
+                        <div class="logo-icon">
+                            <img src="../logo.webp" alt="MelexTech Logo">
+                        </div>
+                        <span class="logo-text" style="color:#fff;">MELEXTECH</span>
+                    </a>
+                    <p class="footer-tagline">Precise knowledge for the modern digital era.</p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/@MELEXTECH" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+
+                        <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                        </a>
+                        
+                        <a href="https://www.instagram.com/MELEXTECH" class="social-link" aria-label="Instagram" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Solutions</h4>
+                    <ul>
+                        <li><a href="../guide?search=Android">Android</a></li>
+                        <li><a href="../guide?search=Programming">Programming</a></li>
+                        <li><a href="../guide?search=Linux">Linux</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul>
+                        <li><a href="../guide">Guides</a></li>
+                        <li><a href="../services.html">Services</a></li>
+                        <li><a href="../product">Products</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4 class="footer-title">Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 MelexTech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"></path></svg>
+    </button>
+
+    <script>
+        var header = document.getElementById('header');
+        var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        var nav = document.getElementById('nav');
+        var backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        mobileMenuBtn.addEventListener('click', function() {
+            var isActive = nav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', isActive);
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+
+        var navLinks = nav.querySelectorAll('.nav-link');
+        for (var i = 0; i < navLinks.length; i++) {
+            navLinks[i].addEventListener('click', function() {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        var tocLinks = document.querySelectorAll('.toc-list a');
+        var sections = [];
+
+        for (var k = 0; k < tocLinks.length; k++) {
+            var id = tocLinks[k].getAttribute('href').substring(1);
+            var section = document.getElementById(id);
+            if (section) {
+                sections.push({ link: tocLinks[k], section: section });
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            
+            for (var j = sections.length - 1; j >= 0; j--) {
+                var sectionTop = sections[j].section.offsetTop - 120;
+                if (scrollPos >= sectionTop) {
+                    for (var m = 0; m < tocLinks.length; m++) {
+                        tocLinks[m].classList.remove('active');
+                    }
+                    sections[j].link.classList.add('active');
+                    break;
+                }
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>

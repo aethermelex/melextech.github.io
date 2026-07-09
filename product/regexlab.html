@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegexLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea{font-family:inherit;color:inherit}
+a{color:var(--accent);text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+::selection{background:var(--accent);color:var(--bg)}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+
+[data-theme="dark"]{
+  --bg:#09090b;--surface:#111113;--surface-2:#19191d;--surface-3:#222226;
+  --border:#27272a;--border-hover:#3f3f46;--text:#fafaf9;--text-2:#a1a1aa;--text-3:#52525b;
+  --accent:#f59e0b;--accent-h:#d97706;--accent-sub:rgba(245,158,11,.08);--accent-glow:rgba(245,158,11,.12);
+  --match-bg:rgba(245,158,11,.2);--match-bd:rgba(245,158,11,.5);
+  --grp-bg:rgba(45,212,168,.15);--grp-bd:rgba(45,212,168,.45);
+  --ok:#22c55e;--err:#ef4444;--hdr:rgba(9,9,11,.85);--orb-a:.03;--code:#0c0c0e;
+}
+[data-theme="light"]{
+  --bg:#f8f8f7;--surface:#fff;--surface-2:#f3f3f4;--surface-3:#e4e4e7;
+  --border:#e4e4e7;--border-hover:#d4d4d8;--text:#18181b;--text-2:#52525b;--text-3:#a1a1aa;
+  --accent:#d97706;--accent-h:#b45309;--accent-sub:rgba(217,119,6,.06);--accent-glow:rgba(217,119,6,.1);
+  --match-bg:rgba(217,119,6,.12);--match-bd:rgba(217,119,6,.4);
+  --grp-bg:rgba(20,184,166,.1);--grp-bd:rgba(20,184,166,.4);
+  --ok:#16a34a;--err:#dc2626;--hdr:rgba(248,248,247,.85);--orb-a:.05;--code:#f0f0f1;
+}
+
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-1{width:550px;height:550px;background:var(--accent);opacity:var(--orb-a);top:-200px;right:-120px;animation:drift 28s ease-in-out infinite}
+.orb-2{width:450px;height:450px;background:#2dd4a8;opacity:var(--orb-a);bottom:-200px;left:-120px;animation:drift 28s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,18px) scale(1.06)}}
+
+.hdr{position:sticky;top:0;z-index:100;background:var(--hdr);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
+.hdr-in{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-box{width:34px;height:34px;background:var(--accent);border-radius:9px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;color:#000;transition:transform .2s}
+.logo-box:hover{transform:rotate(-8deg) scale(1.06)}
+.logo-t{font-size:20px;font-weight:700;letter-spacing:-.4px}
+.logo-t b{color:var(--accent)}
+.hdr-r{display:flex;align-items:center;gap:6px}
+.theme-btn{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--border);transition:all .2s}
+.theme-btn:hover{background:var(--surface-3);border-color:var(--border-hover)}
+.theme-btn svg{width:18px;height:18px;stroke:var(--text-2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:24px}
+.sec{margin-bottom:28px}
+.sec-t{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-t::before{content:'';width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;transition:border-color .2s}
+.card:hover{border-color:var(--border-hover)}
+.card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
+.card-lb{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px}
+
+.rx-wrap{position:relative}
+.rx-del{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;pointer-events:none;user-select:none}
+.rx-in{width:100%;background:var(--code);border:1px solid var(--border);border-radius:9px;padding:14px 18px 14px 28px;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:.2px}
+.rx-in:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.rx-in::placeholder{color:var(--text-3);font-weight:400}
+
+.txt-area{width:100%;min-height:180px;background:var(--code);border:1px solid var(--border);border-radius:9px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);outline:none;resize:vertical;transition:border-color .2s,box-shadow .2s;line-height:1.7}
+.txt-area:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.txt-area::placeholder{color:var(--text-3)}
+
+.flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;align-items:center}
+.flags-lb{font-size:11px;color:var(--text-3);margin-right:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.fl{width:34px;height:28px;border-radius:6px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;background:var(--surface-2);border:1px solid var(--border);color:var(--text-3);transition:all .15s;user-select:none}
+.fl:hover{border-color:var(--border-hover);color:var(--text-2)}
+.fl.on{background:var(--accent-sub);border-color:var(--accent);color:var(--accent)}
+
+.val{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:12px;font-weight:500;min-height:20px;transition:all .2s}
+.val.ok{color:var(--ok)}.val.err{color:var(--err)}.val.idle{color:var(--text-3)}
+.val svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+.acts{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--surface-3);border-color:var(--border-hover);color:var(--text)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-a{background:var(--accent-sub);border-color:var(--accent);color:var(--accent)}
+.btn-a:hover{background:var(--accent);color:#000}
+.btn-d{color:var(--err);border-color:transparent}
+.btn-d:hover{background:rgba(239,68,68,.08);border-color:var(--err)}
+
+.grid2{display:grid;grid-template-columns:1fr 280px;gap:16px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.st{background:var(--surface-2);border-radius:7px;padding:8px 10px;text-align:center}
+.st-v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--accent);line-height:1.2}
+.st-l{font-size:10px;color:var(--text-3);margin-top:1px;text-transform:uppercase;letter-spacing:.3px}
+
+.res{background:var(--code);border:1px solid var(--border);border-radius:9px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-all;min-height:60px;max-height:360px;overflow-y:auto;color:var(--text-2);transition:border-color .2s}
+.res:empty::before{content:attr(data-empty);color:var(--text-3);font-style:italic}
+.mhl{background:var(--match-bg);border-bottom:2px solid var(--match-bd);border-radius:2px;padding:1px 0;cursor:pointer;transition:background .12s;display:inline}
+.mhl:hover{background:var(--match-bd)}
+.ghl{background:var(--grp-bg);border-bottom:2px solid var(--grp-bd);border-radius:2px;padding:1px 0;cursor:pointer}
+.nomatch{color:var(--text-3);font-style:italic}
+
+.insp{margin-top:10px;overflow:hidden;max-height:0;opacity:0;transition:max-height .25s ease,opacity .25s ease}
+.insp.open{max-height:400px;opacity:1}
+.insp-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.insp-i{background:var(--surface-2);border-radius:7px;padding:8px 12px}
+.insp-l{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.3px}
+.insp-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-top:1px;word-break:break-all}
+.insp-v.gv{color:#2dd4a8}
+
+.expl{display:flex;flex-direction:column;gap:1px}
+.expl-i{display:grid;grid-template-columns:130px 1fr;gap:10px;padding:8px 12px;border-radius:6px;transition:background .12s;align-items:start}
+.expl-i:hover{background:var(--surface-2)}
+.expl-t{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-sub);padding:3px 8px;border-radius:5px;text-align:center;word-break:break-all}
+.expl-d{font-size:12px;color:var(--text-2);line-height:1.5}
+.expl-i.ind{padding-left:28px}
+.expl-i.ind .expl-t{font-size:11px;padding:2px 6px}
+
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}
+.ex-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text-2);transition:all .15s;text-align:center}
+.ex-btn:hover{background:var(--accent-sub);border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.ex-btn:active{transform:translateY(0) scale(.97)}
+.ex-ic{font-size:18px;width:36px;height:36px;display:grid;place-items:center;background:var(--surface-3);border-radius:7px;transition:background .15s}
+.ex-btn:hover .ex-ic{background:var(--accent-sub)}
+
+.ch-cat{margin-bottom:6px;border:1px solid var(--border);border-radius:9px;overflow:hidden;transition:border-color .2s}
+.ch-cat:hover{border-color:var(--border-hover)}
+.ch-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);cursor:pointer;user-select:none;transition:background .12s}
+.ch-hd:hover{background:var(--surface-3)}
+.ch-hd h3{font-size:13px;font-weight:600}
+.ch-chev{width:16px;height:16px;stroke:var(--text-3);fill:none;stroke-width:2;transition:transform .2s}
+.ch-cat.open .ch-chev{transform:rotate(180deg)}
+.ch-bd{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.ch-cat.open .ch-bd{max-height:1500px}
+.ch-row{display:grid;grid-template-columns:110px 1fr 140px;gap:10px;padding:8px 16px;border-top:1px solid var(--border);font-size:12px;align-items:center}
+.ch-syn{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent);background:var(--accent-sub);padding:3px 8px;border-radius:5px;text-align:center;font-size:11px}
+.ch-mean{color:var(--text-2)}
+.ch-ex{font-family:'JetBrains Mono',monospace;color:var(--text-3);font-size:10px;text-align:right}
+
+.sv-search{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;outline:none;transition:border-color .2s;margin-bottom:10px}
+.sv-search:focus{border-color:var(--accent)}
+.sv-list{display:flex;flex-direction:column;gap:5px;max-height:360px;overflow-y:auto;margin-bottom:10px}
+.sv-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;transition:all .15s;flex-wrap:wrap}
+.sv-item:hover{border-color:var(--border-hover);background:var(--surface-3)}
+.sv-info{flex:1;min-width:0}
+.sv-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-pat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.sv-acts{display:flex;gap:3px;flex-shrink:0}
+.sv-btn{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;border:1px solid transparent;transition:all .15s;color:var(--text-2)}
+.sv-btn:hover{background:var(--surface-3);border-color:var(--border)}
+.sv-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-btn.fav.on svg{fill:var(--accent);stroke:var(--accent)}
+.sv-btn.del:hover{color:var(--err)}
+.sv-empty{text-align:center;padding:30px 16px;color:var(--text-3);font-size:13px}
+.sv-acts-row{display:flex;gap:6px;flex-wrap:wrap}
+
+.modal-ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.modal-ov.open{opacity:1;visibility:visible}
+.modal-c{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;transform:scale(.96) translateY(8px);transition:transform .2s}
+.modal-ov.open .modal-c{transform:scale(1) translateY(0)}
+.modal-t{font-size:17px;font-weight:700;margin-bottom:16px}
+.modal-in{width:100%;background:var(--code);border:1px solid var(--border);border-radius:7px;padding:10px 14px;font-size:13px;outline:none;transition:border-color .2s;margin-bottom:10px}
+.modal-in:focus{border-color:var(--accent)}
+.modal-ta{width:100%;min-height:100px;background:var(--code);border:1px solid var(--border);border-radius:7px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;resize:vertical;transition:border-color .2s;margin-bottom:10px}
+.modal-ta:focus{border-color:var(--accent)}
+.modal-acts{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.modal-fl{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);cursor:pointer;transition:all .15s;margin-bottom:10px}
+.modal-fl:hover{background:var(--surface-3);border-color:var(--border-hover)}
+.modal-fl input{display:none}
+.modal-pv{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);background:var(--code);border-radius:7px;padding:8px 12px;margin-bottom:10px;word-break:break-all;max-height:60px;overflow-y:auto}
+
+.toast-box{position:fixed;bottom:20px;right:20px;z-index:300;display:flex;flex-direction:column-reverse;gap:6px;pointer-events:none}
+.toast{pointer-events:auto;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 16px;font-size:12px;font-weight:500;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;gap:8px;animation:tin .25s ease both;min-width:200px;max-width:340px}
+.toast.out{animation:tout .2s ease both}
+.toast-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.toast-dot.ok{background:var(--ok)}.toast-dot.err{background:var(--err)}.toast-dot.info{background:var(--accent)}
+@keyframes tin{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes tout{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.96)}}
+
+.ftr{text-align:center;padding:28px 24px;color:var(--text-3);font-size:12px;position:relative;z-index:1}
+.ftr b{color:var(--accent);font-weight:600}
+
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fi{animation:fi .35s ease both}.fi1{animation-delay:.04s}.fi2{animation-delay:.08s}.fi3{animation-delay:.12s}.fi4{animation-delay:.16s}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.orb{display:none}}
+@media(min-width:1024px){.hdr-sub{display:block}}
+@media(max-width:768px){
+  .hdr{padding:0 16px}.hdr-in{height:52px}.logo-t{font-size:17px}.wrap{padding:16px}.sec{margin-bottom:20px}.card{padding:14px}
+  .rx-in{font-size:14px;padding:11px 14px 11px 24px}.rx-del{font-size:15px;left:9px}
+  .txt-area{min-height:130px;font-size:12px}.res{font-size:12px;padding:10px 14px}
+  .ex-grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:5px}.ex-btn{padding:9px 5px;font-size:11px}.ex-ic{width:30px;height:30px;font-size:15px}
+  .ch-row{grid-template-columns:80px 1fr}.ch-ex{display:none}
+  .expl-i{grid-template-columns:90px 1fr;gap:6px;padding:6px 8px}.insp-g{grid-template-columns:1fr 1fr}
+  .toast-box{bottom:12px;right:12px;left:12px}.toast{min-width:auto;max-width:100%}
+}
+@media(max-width:480px){.ex-grid{grid-template-columns:repeat(3,1fr)}.acts{gap:3px}.btn{padding:5px 8px;font-size:11px}}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1" aria-hidden="true"></div>
+<div class="orb orb-2" aria-hidden="true"></div>
+
+<header class="hdr" role="banner">
+  <div class="hdr-in">
+    <div class="logo">
+      <div class="logo-box" aria-hidden="true">.*</div>
+      <div class="logo-t">Regex<b>Lab</b></div>
+    </div>
+    <div class="hdr-r">
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+        <svg id="sunIco" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="moonIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- Pattern Input -->
+  <section class="sec fi" aria-label="Regex input">
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-lb">Pattern</span>
+        <div class="acts" style="margin:0">
+          <button class="btn" id="copyRx" title="Copy regex (Ctrl+Shift+C)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button>
+          <button class="btn btn-a" id="saveBtn" title="Save pattern (Ctrl+S)"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save</button>
+          <button class="btn btn-d" id="clearBtn" title="Clear all (Ctrl+L)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>Clear</button>
+        </div>
+      </div>
+      <div class="rx-wrap">
+        <span class="rx-del" aria-hidden="true">/</span>
+        <input type="text" class="rx-in" id="rxIn" placeholder="Enter regex pattern..." spellcheck="false" autocomplete="off" aria-label="Regex pattern">
+      </div>
+      <div class="flags" role="group" aria-label="Regex flags">
+        <span class="flags-lb">Flags:</span>
+        <button class="fl" data-f="g" title="Global">g</button>
+        <button class="fl" data-f="i" title="Case insensitive">i</button>
+        <button class="fl" data-f="m" title="Multiline">m</button>
+        <button class="fl" data-f="s" title="DotAll">s</button>
+        <button class="fl" data-f="u" title="Unicode">u</button>
+        <button class="fl" data-f="y" title="Sticky">y</button>
+      </div>
+      <div class="val idle" id="val" role="status" aria-live="polite"><span>Enter a regex pattern to begin</span></div>
+    </div>
+  </section>
+
+  <!-- Test Text + Stats -->
+  <section class="sec fi fi1" aria-label="Test text and statistics">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hd">
+          <span class="card-lb">Test Text</span>
+          <button class="btn" id="copyTxt" title="Copy test text"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button>
+        </div>
+        <textarea class="txt-area" id="txtIn" placeholder="Type or paste text here..." spellcheck="false" aria-label="Test text"></textarea>
+      </div>
+      <div class="card">
+        <div class="card-hd"><span class="card-lb">Statistics</span></div>
+        <div class="stats">
+          <div class="st"><div class="st-v" id="sMatch">0</div><div class="st-l">Matches</div></div>
+          <div class="st"><div class="st-v" id="sGrp">0</div><div class="st-l">Groups</div></div>
+          <div class="st"><div class="st-v" id="sTime">0ms</div><div class="st-l">Exec Time</div></div>
+          <div class="st"><div class="st-v" id="sRxLen">0</div><div class="st-l">Pattern Len</div></div>
+          <div class="st"><div class="st-v" id="sChars">0</div><div class="st-l">Characters</div></div>
+          <div class="st"><div class="st-v" id="sWords">0</div><div class="st-l">Words</div></div>
+          <div class="st"><div class="st-v" id="sLines">0</div><div class="st-l">Lines</div></div>
+          <div class="st"><div class="st-v" id="sTxtLen">0</div><div class="st-l">Text Len</div></div>
+        </div>
+        <div class="acts" style="margin-top:10px;justify-content:center">
+          <button class="btn" id="copyMatches" title="Copy all matches"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy Matches</button>
+          <button class="btn" id="copyExpl" title="Copy explanation"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy Explanation</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="sec fi fi2" aria-label="Match results">
+    <div class="card">
+      <div class="card-hd"><span class="card-lb">Highlighted Results</span></div>
+      <div class="res" id="resArea" data-empty="Matches will appear here..." role="region" aria-live="polite"></div>
+      <div class="insp" id="insp">
+        <div class="card-hd" style="margin-top:4px"><span class="card-lb">Match Inspector</span></div>
+        <div class="insp-g" id="inspG"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explanation -->
+  <section class="sec fi fi3" aria-label="Regex explanation">
+    <div class="card">
+      <div class="card-hd"><span class="card-lb">Explanation</span></div>
+      <div class="expl" id="explList" role="region" aria-live="polite">
+        <div style="color:var(--text-3);font-size:13px;padding:6px 0">Enter a regex pattern to see its explanation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section class="sec fi fi4" aria-label="Quick examples">
+    <h2 class="sec-t">Quick Examples</h2>
+    <div class="ex-grid" id="exGrid" role="list"></div>
+  </section>
+
+  <!-- Cheatsheet -->
+  <section class="sec" aria-label="Regex cheatsheet">
+    <h2 class="sec-t">Regex Cheatsheet</h2>
+    <div id="chCtn"></div>
+  </section>
+
+  <!-- Saved Patterns -->
+  <section class="sec" aria-label="Saved patterns">
+    <h2 class="sec-t">Saved Patterns</h2>
+    <div class="card">
+      <input type="text" class="sv-search" id="svSearch" placeholder="Search saved patterns..." aria-label="Search saved patterns">
+      <div class="sv-list" id="svList" role="list">
+        <div class="sv-empty">No saved patterns yet. Use Save to store your regex patterns.</div>
+      </div>
+      <div class="sv-acts-row">
+        <button class="btn" id="expBtn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export JSON</button>
+        <button class="btn" id="impBtn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Import JSON</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">Built with vanilla HTML, CSS & JavaScript — <b>RegexLab</b></footer>
+
+<!-- Save Modal -->
+<div class="modal-ov" id="saveModal" role="dialog" aria-modal="true" aria-labelledby="saveMT">
+  <div class="modal-c">
+    <h2 class="modal-t" id="saveMT">Save Pattern</h2>
+    <input type="text" class="modal-in" id="saveName" placeholder="Pattern name..." aria-label="Pattern name" maxlength="100">
+    <div class="modal-pv" id="savePv"></div>
+    <div class="modal-acts">
+      <button class="btn" id="saveNo">Cancel</button>
+      <button class="btn btn-a" id="saveYes">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import Modal -->
+<div class="modal-ov" id="impModal" role="dialog" aria-modal="true" aria-labelledby="impMT">
+  <div class="modal-c">
+    <h2 class="modal-t" id="impMT">Import Patterns</h2>
+    <label class="modal-fl">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Choose JSON file
+      <input type="file" id="impFile" accept=".json">
+    </label>
+    <div style="text-align:center;color:var(--text-3);font-size:11px;margin-bottom:6px">or paste JSON below</div>
+    <textarea class="modal-ta" id="impTa" placeholder='[{"name":"...","pattern":"...","flags":"...","text":"..."}]' aria-label="JSON data"></textarea>
+    <div class="modal-acts">
+      <button class="btn" id="impNo">Cancel</button>
+      <button class="btn btn-a" id="impYes">Import</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-box" id="toastBox" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   RegexLab — Production Build
+   ============================================================ */
+
+// --- Utilities ---
+const $ = s => document.getElementById(s);
+const $$ = s => document.querySelectorAll(s);
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+
+function debounce(fn, ms) {
+  let t;
+  return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+}
+
+// --- Toast ---
+function toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<span class="toast-dot ${type}"></span><span>${esc(msg)}</span>`;
+  $('toastBox').appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 220); }, 2400);
+}
+
+// --- Theme ---
+function initTheme() {
+  const saved = localStorage.getItem('rl-theme') || 'dark';
+  applyTheme(saved);
+  $('themeBtn').addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('rl-theme', next);
+    toast('Theme changed', 'info');
+  });
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $('sunIco').style.display = t === 'light' ? 'block' : 'none';
+  $('moonIco').style.display = t === 'dark' ? 'block' : 'none';
+}
+
+// --- State (single flat object) ---
+const S = {
+  pattern: '', flags: '', text: '',
+  valid: null, matches: [], execTime: 0, groupCount: 0,
+  saved: JSON.parse(localStorage.getItem('rl-saved') || '[]'),
+  saveMode: 'save', renameId: null, lastExplanation: []
+};
+
+// --- Regex Engine ---
+function validateRx(pat, flags) {
+  if (!pat) return { valid: null, error: null };
+  try { new RegExp(pat, flags); return { valid: true, error: null }; }
+  catch(e) { return { valid: false, error: e.message }; }
+}
+
+function matchAll(rx, text) {
+  if (!rx || !text) return [];
+  const flags = rx.global ? rx.flags : rx.flags + 'g';
+  try { return [...text.matchAll(new RegExp(rx.source, flags))]; }
+  catch(e) { return []; }
+}
+
+function countGroups(pat) {
+  let n = 0, inCls = false;
+  for (let i = 0; i < pat.length; i++) {
+    const c = pat[i];
+    if (c === '\\' && i + 1 < pat.length) { i++; continue; }
+    if (c === '[' && !inCls) { inCls = true; continue; }
+    if (c === ']' && inCls) { inCls = false; continue; }
+    if (c === '(' && !inCls) {
+      if (pat[i+1] === '?') {
+        const m = pat[i+2];
+        if (m === ':' || m === '=' || m === '!') continue;
+        if (m === '<' && (pat[i+3] === '=' || pat[i+3] === '!')) continue;
+        if (m === '<') { n++; continue; }
+        continue;
+      }
+      n++;
+    }
+  }
+  return n;
+}
+
+// --- Regex Explanation (robust tokenizer) ---
+function explainRegex(pattern) {
+  if (!pattern) return [];
+  const tokens = [];
+  let i = 0;
+
+  while (i < pattern.length) {
+    const c = pattern[i];
+
+    // Escaped sequences
+    if (c === '\\' && i + 1 < pattern.length) {
+      const nx = pattern[i + 1];
+      const sh = { d:'Digit [0-9]', D:'Non-digit [^0-9]', w:'Word char [a-zA-Z0-9_]', W:'Non-word [^a-zA-Z0-9_]', s:'Whitespace', S:'Non-whitespace' };
+      const an = { b:'Word boundary', B:'Non-word boundary' };
+      const sp = { n:'Newline (\\n)', t:'Tab (\\t)', r:'Carriage return (\\r)', f:'Form feed', v:'Vertical tab', '0':'Null' };
+      let desc;
+      if (sh[nx]) desc = sh[nx];
+      else if (an[nx]) desc = an[nx];
+      else if (sp[nx]) desc = sp[nx];
+      else desc = `Literal "${nx}" (escaped)`;
+      tokens.push({ t: '\\' + nx, d: desc, ind: 0 });
+      i += 2; continue;
+    }
+
+    // Character class [...]
+    if (c === '[') {
+      let j = i + 1;
+      if (j < pattern.length && pattern[j] === '^') j++;
+      if (j < pattern.length && pattern[j] === ']') j++;
+      while (j < pattern.length && pattern[j] !== ']') {
+        if (pattern[j] === '\\' && j + 1 < pattern.length) j += 2; else j++;
+      }
+      const cls = pattern.substring(i, j + 1);
+      const neg = pattern[i + 1] === '^';
+      const inner = neg ? cls.slice(2, -1) : cls.slice(1, -1);
+      // Parse ranges for description
+      const parts = [];
+      let ri = 0;
+      while (ri < inner.length) {
+        if (inner[ri] === '\\' && ri + 1 < inner.length) { parts.push(inner[ri] + inner[ri+1]); ri += 2; }
+        else if (ri + 2 < inner.length && inner[ri+1] === '-') { parts.push(inner[ri] + '-' + inner[ri+2]); ri += 3; }
+        else { parts.push(inner[ri]); ri++; }
+      }
+      tokens.push({ t: cls, d: (neg ? 'NOT in set: ' : 'Char class: ') + parts.join(', '), ind: 0 });
+      i = j + 1; continue;
+    }
+
+    // Groups (...)
+    if (c === '(') {
+      let gtype = 'Capturing group';
+      let innerStart = i + 1;
+      if (pattern[i+1] === '?' && i + 2 < pattern.length) {
+        const m = pattern[i+2];
+        if (m === ':') { gtype = 'Non-capturing group'; innerStart = i + 3; }
+        else if (m === '=') { gtype = 'Positive lookahead'; innerStart = i + 3; }
+        else if (m === '!') { gtype = 'Negative lookahead'; innerStart = i + 3; }
+        else if (m === '<' && i + 3 < pattern.length) {
+          if (pattern[i+3] === '=') { gtype = 'Positive lookbehind'; innerStart = i + 4; }
+          else if (pattern[i+3] === '!') { gtype = 'Negative lookbehind'; innerStart = i + 4; }
+          else { gtype = 'Named group'; innerStart = i + 3; }
+        }
+      }
+      // Find matching )
+      let depth = 1, j = innerStart;
+      while (j < pattern.length && depth > 0) {
+        if (pattern[j] === '\\' && j + 1 < pattern.length) { j += 2; continue; }
+        if (pattern[j] === '[') {
+          j++;
+          while (j < pattern.length && pattern[j] !== ']') {
+            if (pattern[j] === '\\' && j + 1 < pattern.length) j += 2; else j++;
+          }
+          j++; continue;
+        }
+        if (pattern[j] === '(') depth++;
+        if (pattern[j] === ')') depth--;
+        j++;
+      }
+      const gstr = pattern.substring(i, j);
+      const inner = pattern.substring(innerStart, j - 1);
+      tokens.push({ t: gstr, d: `${gtype}${inner ? ': ' + inner : ''}`, ind: 0 });
+      // Recursively explain inner if reasonable size
+      if (inner.length > 1 && inner.length < 50) {
+        explainRegex(inner).forEach(tk => { tk.ind = 1; tokens.push(tk); });
+      }
+      i = j; continue;
+    }
+
+    // Quantifiers
+    if (c === '{') {
+      let j = i + 1;
+      while (j < pattern.length && pattern[j] !== '}') j++;
+      const qs = pattern.substring(i, j + 1);
+      const inner = qs.slice(1, -1);
+      const p = inner.split(',');
+      let desc = 'Quantifier: ';
+      if (p.length === 1) desc += `Exactly ${p[0]} times`;
+      else if (!p[1]) desc += `${p[0]} or more`;
+      else desc += `${p[0]} to ${p[1]} times`;
+      if (j + 1 < pattern.length && pattern[j+1] === '?') {
+        desc += ' (lazy)';
+        tokens.push({ t: qs + '?', d: desc, ind: 0 });
+        i = j + 2; continue;
+      }
+      tokens.push({ t: qs, d: desc, ind: 0 });
+      i = j + 1; continue;
+    }
+    if ('*+?'.includes(c)) {
+      const lazy = i + 1 < pattern.length && pattern[i+1] === '?';
+      const labels = {
+        '*': lazy ? 'Zero or more (lazy)' : 'Zero or more (greedy)',
+        '+': lazy ? 'One or more (lazy)' : 'One or more (greedy)',
+        '?': lazy ? 'Zero or one (lazy)' : 'Zero or one (optional)'
+      };
+      tokens.push({ t: lazy ? c + '?' : c, d: labels[c], ind: 0 });
+      i += lazy ? 2 : 1; continue;
+    }
+
+    // Anchors
+    if (c === '^') { tokens.push({ t: '^', d: 'Start of string (or line with m flag)', ind: 0 }); i++; continue; }
+    if (c === '$') { tokens.push({ t: '$', d: 'End of string (or line with m flag)', ind: 0 }); i++; continue; }
+
+    // Dot
+    if (c === '.') { tokens.push({ t: '.', d: 'Any character (except newline, unless s flag)', ind: 0 }); i++; continue; }
+
+    // Alternation
+    if (c === '|') { tokens.push({ t: '|', d: 'Alternation (OR)', ind: 0 }); i++; continue; }
+
+    // Literal
+    tokens.push({ t: c, d: `Literal "${c}"`, ind: 0 });
+    i++;
+  }
+  return tokens;
+}
+
+// --- UI Rendering ---
+function renderValidation(r) {
+  const el = $('val');
+  if (r.valid === null) { el.className = 'val idle'; el.innerHTML = '<span>Enter a regex pattern to begin</span>'; }
+  else if (r.valid) { el.className = 'val ok'; el.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Valid Regex</span>'; }
+  else { el.className = 'val err'; el.innerHTML = `<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>${esc(r.error)}</span>`; }
+}
+
+function renderResults(matches) {
+  const area = $('resArea');
+  const text = S.text;
+  if (!S.valid || !text) { area.innerHTML = text ? esc(text) : ''; return; }
+  if (!matches.length) { area.innerHTML = `<span class="nomatch">No matches found</span>\n${esc(text)}`; return; }
+
+  let html = '', last = 0;
+  matches.forEach((m, idx) => {
+    if (m.index > last) html += esc(text.substring(last, m.index));
+    if (!m[0].length) { last = m.index; return; }
+    // Build match with group highlighting
+    const groups = [];
+    for (let i = 1; i < m.length; i++) {
+      if (m[i] !== undefined) groups.push({ i, v: m[i] });
+    }
+    if (!groups.length) {
+      html += `<span class="mhl" data-m="${idx}">${esc(m[0])}</span>`;
+    } else {
+      // Find group positions within full match
+      const positions = [];
+      let sf = 0;
+      for (const g of groups) {
+        const pos = m[0].indexOf(g.v, sf);
+        if (pos !== -1) { positions.push({ s: pos, e: pos + g.v.length, gi: g.i }); sf = pos + g.v.length; }
+      }
+      positions.sort((a, b) => a.s - b.s);
+      let le = 0;
+      for (const p of positions) {
+        if (p.s > le) html += `<span class="mhl" data-m="${idx}">${esc(m[0].substring(le, p.s))}</span>`;
+        html += `<span class="ghl mhl" data-m="${idx}" data-g="${p.gi}">${esc(m[0].substring(p.s, p.e))}</span>`;
+        le = p.e;
+      }
+      if (le < m[0].length) html += `<span class="mhl" data-m="${idx}">${esc(m[0].substring(le))}</span>`;
+    }
+    last = m.index + m[0].length;
+  });
+  if (last < text.length) html += esc(text.substring(last));
+  area.innerHTML = html;
+}
+
+function renderInspector(match) {
+  const panel = $('insp'), grid = $('inspG');
+  if (!match) { panel.classList.remove('open'); return; }
+  panel.classList.add('open');
+  let h = `<div class="insp-i"><div class="insp-l">Matched Text</div><div class="insp-v">${esc(match[0] || '(empty)')}</div></div>`;
+  h += `<div class="insp-i"><div class="insp-l">Start</div><div class="insp-v">${match.index}</div></div>`;
+  h += `<div class="insp-i"><div class="insp-l">End</div><div class="insp-v">${match.index + match[0].length}</div></div>`;
+  h += `<div class="insp-i"><div class="insp-l">Length</div><div class="insp-v">${match[0].length}</div></div>`;
+  for (let i = 1; i < match.length; i++) {
+    let name = `Group ${i}`;
+    if (match.groups) {
+      const key = Object.keys(match.groups).find(k => match.groups[k] === match[i]);
+      if (key) name = `Group "${key}"`;
+    }
+    h += `<div class="insp-i"><div class="insp-l">${esc(name)}</div><div class="insp-v gv">${match[i] !== undefined ? esc(match[i]) : '(undefined)'}</div></div>`;
+  }
+  grid.innerHTML = h;
+}
+
+function renderStats() {
+  $('sMatch').textContent = S.matches.length;
+  $('sGrp').textContent = S.groupCount;
+  $('sTime').textContent = S.execTime.toFixed(2) + 'ms';
+  $('sRxLen').textContent = S.pattern.length;
+  $('sChars').textContent = S.text.length;
+  $('sTxtLen').textContent = S.text.length;
+  $('sWords').textContent = S.text.trim() ? S.text.trim().split(/\s+/).length : 0;
+  $('sLines').textContent = S.text ? S.text.split('\n').length : 0;
+}
+
+function renderExplanation() {
+  const el = $('explList');
+  if (!S.pattern) { el.innerHTML = '<div style="color:var(--text-3);font-size:13px;padding:6px 0">Enter a regex pattern to see its explanation</div>'; return; }
+  const tokens = explainRegex(S.pattern);
+  S.lastExplanation = tokens;
+  if (!tokens.length) { el.innerHTML = '<div style="color:var(--text-3);font-size:13px;padding:6px 0">No tokens to explain</div>'; return; }
+  el.innerHTML = tokens.map(t =>
+    `<div class="expl-i${t.ind ? ' ind' : ''}"><div class="expl-t">${esc(t.t)}</div><div class="expl-d">${esc(t.d)}</div></div>`
+  ).join('');
+}
+
+// --- Main Update (debounced) ---
+const run = debounce(() => {
+  S.pattern = $('rxIn').value;
+  S.text = $('txtIn').value;
+
+  const v = validateRx(S.pattern, S.flags);
+  S.valid = v.valid;
+  renderValidation(v);
+
+  if (v.valid) {
+    try {
+      const rx = new RegExp(S.pattern, S.flags);
+      S.groupCount = countGroups(S.pattern);
+      const t0 = performance.now();
+      S.matches = matchAll(rx, S.text);
+      S.execTime = performance.now() - t0;
+      renderResults(S.matches);
+      renderExplanation();
+    } catch(e) {
+      S.matches = []; S.execTime = 0;
+      renderResults([]);
+    }
+  } else {
+    S.matches = []; S.execTime = 0;
+    S.groupCount = S.pattern ? countGroups(S.pattern) : 0;
+    renderResults([]);
+    renderExplanation();
+  }
+
+  renderStats();
+  renderInspector(null);
+}, 60);
+
+// --- Flags ---
+function initFlags() {
+  $$('.fl').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('on');
+      S.flags = [...$$('.fl.on')].map(b => b.dataset.f).join('');
+      run();
+    });
+  });
+}
+
+// --- Match click inspector ---
+function initResultClicks() {
+  $('resArea').addEventListener('click', e => {
+    const hl = e.target.closest('.mhl');
+    if (!hl) return;
+    const idx = parseInt(hl.dataset.m);
+    if (S.matches[idx]) renderInspector(S.matches[idx]);
+  });
+}
+
+// --- Clipboard ---
+function copyText(str, label) {
+  navigator.clipboard.writeText(str).then(() => toast(`${label} copied`, 'ok')).catch(() => toast('Copy failed', 'err'));
+}
+
+// --- Examples Data ---
+const EXAMPLES = [
+  { name:'Email', icon:'@', pattern:'[\\w.+-]+@[\\w-]+\\.[\\w.]+', flags:'gi', text:'Contact us at hello@example.com or support@company.co.uk for more info.' },
+  { name:'Phone', icon:'\u260E', pattern:'\\+?\\d[\\d\\s()-]{7,14}\\d', flags:'g', text:'Call us at +1 (555) 123-4567 or 555-987-6543 or 020 7946 0958.' },
+  { name:'Username', icon:'U', pattern:'^[a-zA-Z0-9_-]{3,16}$', flags:'gm', text:'john_doe123\nalice\nbob_the_builder99\nab\nway_too_long_username_here' },
+  { name:'Password', icon:'#', pattern:'(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}', flags:'g', text:'Weak: pass\nMedium: Password1\nStrong: Str0ng!Pass\nNoGood: 12345678' },
+  { name:'URL', icon:'\u{1F310}', pattern:'https?://[\\w\\-._~:/?#@!$&\'()*+,;=%]+', flags:'gi', text:'Visit https://example.com/path?q=test or http://site.org and ftp://invalid.com' },
+  { name:'IP Address', icon:'\u{1F4E1}', pattern:'\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b', flags:'g', text:'Servers at 192.168.1.1, 10.0.0.255, and 999.999.999.999 are here.' },
+  { name:'Date', icon:'\u{1F4C5}', pattern:'\\d{4}[-/](?:0[1-9]|1[0-2])[-/](?:0[1-9]|[12]\\d|3[01])', flags:'g', text:'Dates: 2024-01-15, 2023/12/31, 99-99-99, 2024-06-01' },
+  { name:'Hex Color', icon:'\u{1F3A8}', pattern:'#(?:[0-9a-fA-F]{3}){1,2}\\b', flags:'gi', text:'Colors: #ff5733, #333, #00FF00, #abcdef, #12345' },
+  { name:'HTML Tag', icon:'<>', pattern:'<(/?[a-zA-Z][a-zA-Z0-9]*)\\b[^>]*>', flags:'g', text:'<div class="main">\n  <h1>Title</h1>\n  <p>Text</p>\n</div>' },
+  { name:'Number', icon:'0', pattern:'-?\\d+(?:\\.\\d+)?', flags:'g', text:'Values: 42, -3.14, 0.5, 1000, .75, 1e5' },
+  { name:'Credit Card', icon:'\u{1F4B3}', pattern:'\\b(?:\\d[ -]*?){13,19}\\b', flags:'g', text:'Cards: 4111 1111 1111 1111, 5500-0000-0000-0004, 1234' },
+  { name:'Time', icon:'\u{23F0}', pattern:'(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?', flags:'g', text:'Times: 09:30, 23:59:59, 00:00, 25:00 (invalid)' }
+];
+
+function renderExamples() {
+  $('exGrid').innerHTML = EXAMPLES.map((ex, i) =>
+    `<button class="ex-btn" role="listitem" data-idx="${i}"><div class="ex-ic">${ex.icon}</div>${ex.name}</button>`
+  ).join('');
+  $('exGrid').addEventListener('click', e => {
+    const btn = e.target.closest('.ex-btn');
+    if (!btn) return;
+    const ex = EXAMPLES[parseInt(btn.dataset.idx)];
+    $('rxIn').value = ex.pattern;
+    $('txtIn').value = ex.text;
+    // Set flags
+    $$('.fl').forEach(f => f.classList.toggle('on', ex.flags.includes(f.dataset.f)));
+    S.flags = ex.flags;
+    run();
+    toast(`Loaded: ${ex.name}`, 'info');
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// --- Cheatsheet Data ---
+const CHEATSHEET = [
+  { cat:'Anchors', items:[
+    { s:'^', m:'Start of string/line', e:'^Hello' },
+    { s:'$', m:'End of string/line', e:'world$' },
+    { s:'\\b', m:'Word boundary', e:'\\bcat\\b' },
+    { s:'\\B', m:'Non-word boundary', e:'\\Bcat\\B' }
+  ]},
+  { cat:'Character Classes', items:[
+    { s:'[abc]', m:'Any of a, b, c', e:'[aeiou]' },
+    { s:'[^abc]', m:'Not a, b, or c', e:'[^0-9]' },
+    { s:'[a-z]', m:'Range a to z', e:'[A-Za-z]' },
+    { s:'.', m:'Any char (except \\n)', e:'a.c' },
+    { s:'\\d', m:'Digit [0-9]', e:'\\d+' },
+    { s:'\\D', m:'Non-digit', e:'\\D+' },
+    { s:'\\w', m:'Word char [a-zA-Z0-9_]', e:'\\w+' },
+    { s:'\\W', m:'Non-word char', e:'\\W+' },
+    { s:'\\s', m:'Whitespace', e:'\\s+' },
+    { s:'\\S', m:'Non-whitespace', e:'\\S+' }
+  ]},
+  { cat:'Quantifiers', items:[
+    { s:'*', m:'Zero or more', e:'ab*c' },
+    { s:'+', m:'One or more', e:'ab+c' },
+    { s:'?', m:'Zero or one (optional)', e:'colou?r' },
+    { s:'{n}', m:'Exactly n times', e:'a{3}' },
+    { s:'{n,}', m:'n or more times', e:'a{2,}' },
+    { s:'{n,m}', m:'n to m times', e:'a{2,5}' },
+    { s:'*?', m:'Zero or more (lazy)', e:'a.*?b' },
+    { s:'+?', m:'One or more (lazy)', e:'a.+?b' }
+  ]},
+  { cat:'Groups & Lookaround', items:[
+    { s:'(abc)', m:'Capturing group', e:'(ab)+' },
+    { s:'(?:abc)', m:'Non-capturing group', e:'(?:ab)+' },
+    { s:'(?=abc)', m:'Positive lookahead', e:'\\d(?=px)' },
+    { s:'(?!abc)', m:'Negative lookahead', e:'\\d(?!px)' },
+    { s:'(?<=abc)', m:'Positive lookbehind', e:'(?<=\\$)\\d+' },
+    { s:'(?<!abc)', m:'Negative lookbehind', e:'(?<!\\$)\\d+' },
+    { s:'(?<name>abc)', m:'Named group', e:'(?<yr>\\d{4})' }
+  ]},
+  { cat:'Special Characters', items:[
+    { s:'\\n', m:'Newline', e:'line1\\nline2' },
+    { s:'\\t', m:'Tab', e:'col1\\tcol2' },
+    { s:'\\r', m:'Carriage return', e:'\\r\\n' },
+    { s:'\\\\', m:'Literal backslash', e:'C:\\\\path' },
+    { s:'\\.|\\*|\\+', m:'Escape special char', e:'2\\.0' },
+    { s:'|', m:'Alternation (OR)', e:'cat|dog' }
+  ]}
+];
+
+function renderCheatsheet() {
+  $('chCtn').innerHTML = CHEATSHEET.map((cat, ci) =>
+    `<div class="ch-cat${ci === 0 ? ' open' : ''}">
+      <div class="ch-hd"><h3>${cat.cat}</h3><svg class="ch-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="ch-bd">${cat.items.map(it =>
+        `<div class="ch-row"><span class="ch-syn">${esc(it.s)}</span><span class="ch-mean">${it.m}</span><span class="ch-ex">${esc(it.e)}</span></div>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+  $('chCtn').addEventListener('click', e => {
+    const hd = e.target.closest('.ch-hd');
+    if (!hd) return;
+    hd.parentElement.classList.toggle('open');
+  });
+}
+
+// --- Saved Patterns ---
+function persistSaved() {
+  localStorage.setItem('rl-saved', JSON.stringify(S.saved));
+}
+
+function renderSaved(filter = '') {
+  const list = $('svList');
+  const filtered = filter
+    ? S.saved.filter(p => p.name.toLowerCase().includes(filter) || p.pattern.toLowerCase().includes(filter))
+    : S.saved;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="sv-empty">${filter ? 'No patterns match your search.' : 'No saved patterns yet. Use Save to store your regex patterns.'}</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(p =>
+    `<div class="sv-item" data-id="${p.id}">
+      <div class="sv-info">
+        <div class="sv-name">${esc(p.name)}</div>
+        <div class="sv-pat">/${esc(p.pattern)}/${p.flags || ''}</div>
+      </div>
+      <div class="sv-acts">
+        <button class="sv-btn" data-act="load" title="Load pattern"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        <button class="sv-btn fav${p.fav ? ' on' : ''}" data-act="fav" title="Favorite"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+        <button class="sv-btn" data-act="rename" title="Rename"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="sv-btn del" data-act="del" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function initSaved() {
+  renderSaved();
+
+  $('svSearch').addEventListener('input', debounce(e => renderSaved(e.target.value.toLowerCase()), 150));
+
+  $('svList').addEventListener('click', e => {
+    const btn = e.target.closest('.sv-btn');
+    if (!btn) return;
+    const item = btn.closest('.sv-item');
+    const id = item.dataset.id;
+    const pat = S.saved.find(p => p.id === id);
+    if (!pat) return;
+
+    switch (btn.dataset.act) {
+      case 'load':
+        $('rxIn').value = pat.pattern;
+        if (pat.text) $('txtIn').value = pat.text;
+        $$('.fl').forEach(f => f.classList.toggle('on', (pat.flags || '').includes(f.dataset.f)));
+        S.flags = pat.flags || '';
+        run();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        toast(`Loaded: ${pat.name}`, 'ok');
+        break;
+      case 'fav':
+        pat.fav = !pat.fav;
+        persistSaved();
+        renderSaved($('svSearch').value.toLowerCase());
+        break;
+      case 'rename':
+        S.saveMode = 'rename';
+        S.renameId = id;
+        $('saveMT').textContent = 'Rename Pattern';
+        $('saveName').value = pat.name;
+        $('savePv').textContent = `/${pat.pattern}/${pat.flags || ''}`;
+        $('saveModal').classList.add('open');
+        $('saveName').focus();
+        break;
+      case 'del':
+        S.saved = S.saved.filter(p => p.id !== id);
+        persistSaved();
+        renderSaved($('svSearch').value.toLowerCase());
+        toast('Pattern deleted', 'ok');
+        break;
+    }
+  });
+}
+
+// --- Modals ---
+function initModals() {
+  // Save modal
+  $('saveBtn').addEventListener('click', () => {
+    if (!S.pattern) { toast('Enter a pattern first', 'err'); return; }
+    S.saveMode = 'save';
+    S.renameId = null;
+    $('saveMT').textContent = 'Save Pattern';
+    $('saveName').value = '';
+    $('savePv').textContent = `/${S.pattern}/${S.flags}`;
+    $('saveModal').classList.add('open');
+    $('saveName').focus();
+  });
+
+  $('saveNo').addEventListener('click', () => $('saveModal').classList.remove('open'));
+  $('saveModal').addEventListener('click', e => { if (e.target === $('saveModal')) $('saveModal').classList.remove('open'); });
+
+  $('saveYes').addEventListener('click', () => {
+    const name = $('saveName').value.trim();
+    if (!name) { toast('Enter a name', 'err'); return; }
+    if (S.saveMode === 'rename') {
+      const pat = S.saved.find(p => p.id === S.renameId);
+      if (pat) { pat.name = name; persistSaved(); renderSaved($('svSearch').value.toLowerCase()); toast('Renamed', 'ok'); }
+    } else {
+      S.saved.unshift({ id: uid(), name, pattern: S.pattern, flags: S.flags, text: S.text, fav: false, ts: Date.now() });
+      persistSaved();
+      renderSaved($('svSearch').value.toLowerCase());
+      toast('Pattern saved', 'ok');
+    }
+    $('saveModal').classList.remove('open');
+  });
+
+  // Import modal
+  $('impBtn').addEventListener('click', () => {
+    $('impTa').value = '';
+    $('impFile').value = '';
+    $('impModal').classList.add('open');
+  });
+
+  $('impNo').addEventListener('click', () => $('impModal').classList.remove('open'));
+  $('impModal').addEventListener('click', e => { if (e.target === $('impModal')) $('impModal').classList.remove('open'); });
+
+  $('impFile').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => { $('impTa').value = ev.target.result; };
+    reader.readAsText(file);
+  });
+
+  $('impYes').addEventListener('click', () => {
+    const raw = $('impTa').value.trim();
+    if (!raw) { toast('Paste or select JSON first', 'err'); return; }
+    try {
+      let arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) arr = [arr];
+      let count = 0;
+      arr.forEach(item => {
+        if (item.pattern && typeof item.pattern === 'string') {
+          S.saved.push({
+            id: uid(), name: item.name || 'Imported',
+            pattern: item.pattern, flags: item.flags || '',
+            text: item.text || '', fav: false, ts: Date.now()
+          });
+          count++;
+        }
+      });
+      persistSaved();
+      renderSaved($('svSearch').value.toLowerCase());
+      $('impModal').classList.remove('open');
+      toast(`Imported ${count} pattern${count !== 1 ? 's' : ''}`, 'ok');
+    } catch(e) {
+      toast('Invalid JSON format', 'err');
+    }
+  });
+
+  // Enter key in save name input
+  $('saveName').addEventListener('keydown', e => {
+    if (e.key === 'Enter') $('saveYes').click();
+    if (e.key === 'Escape') $('saveModal').classList.remove('open');
+  });
+
+  // Escape to close modals
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      $('saveModal').classList.remove('open');
+      $('impModal').classList.remove('open');
+    }
+  });
+}
+
+// --- Export ---
+function initExport() {
+  $('expBtn').addEventListener('click', () => {
+    if (!S.saved.length) { toast('No patterns to export', 'err'); return; }
+    const json = JSON.stringify(S.saved.map(p => ({ name: p.name, pattern: p.pattern, flags: p.flags, text: p.text })), null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'regexlab-patterns.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('Patterns exported', 'ok');
+  });
+}
+
+// --- Action Buttons ---
+function initActions() {
+  $('copyRx').addEventListener('click', () => {
+    if (!S.pattern) { toast('No pattern to copy', 'err'); return; }
+    copyText(`/${S.pattern}/${S.flags}`, 'Regex');
+  });
+
+  $('copyTxt').addEventListener('click', () => {
+    if (!S.text) { toast('No text to copy', 'err'); return; }
+    copyText(S.text, 'Text');
+  });
+
+  $('copyMatches').addEventListener('click', () => {
+    if (!S.matches.length) { toast('No matches to copy', 'err'); return; }
+    copyText(S.matches.map(m => m[0]).join('\n'), 'Matches');
+  });
+
+  $('copyExpl').addEventListener('click', () => {
+    if (!S.lastExplanation.length) { toast('No explanation to copy', 'err'); return; }
+    copyText(S.lastExplanation.map(t => `${t.t}  →  ${t.d}`).join('\n'), 'Explanation');
+  });
+
+  $('clearBtn').addEventListener('click', () => {
+    $('rxIn').value = '';
+    $('txtIn').value = '';
+    $$('.fl').forEach(f => f.classList.remove('on'));
+    S.flags = '';
+    run();
+    toast('Cleared', 'info');
+  });
+}
+
+// --- Keyboard Shortcuts ---
+function initShortcuts() {
+  document.addEventListener('keydown', e => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.shiftKey && e.key === 'C') { e.preventDefault(); $('copyRx').click(); }
+    if (mod && e.key === 's') { e.preventDefault(); $('saveBtn').click(); }
+    if (mod && e.key === 'l') { e.preventDefault(); $('clearBtn').click(); }
+  });
+}
+
+// --- Initialize ---
+function init() {
+  initTheme();
+  initFlags();
+  initResultClicks();
+  renderExamples();
+  renderCheatsheet();
+  initSaved();
+  initModals();
+  initExport();
+  initActions();
+  initShortcuts();
+
+  // Wire up main inputs
+  $('rxIn').addEventListener('input', run);
+  $('txtIn').addEventListener('input', run);
+
+  // Initial render
+  renderStats();
+}
+
+init();
+</script>
+</body>
+</html>

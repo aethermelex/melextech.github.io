@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend vs Database - What's the Difference and Why It Matters - MELEX IT</title>
+    <meta name="description" content="Backend and database are not the same thing. One processes requests, the other stores data. Here's what each actually does, how they work together, and the mistakes that cause real production problems.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://melextech.dev/post/backend-vs-database">
+    <meta name="author" content="Melalew Mengistu">
+    <meta name="keywords" content="Backend vs Database, difference between backend and database, what is a backend, what is a database, how backends work, how databases work, web architecture explained, server vs database">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Backend vs Database - What's the Difference and Why It Matters">
+    <meta property="og:description" content="Backend and database are not the same thing. One processes requests, the other stores data. Here's what each actually does and the mistakes that cause real problems.">
+    <meta property="og:url" content="https://melextech.dev/post/backend-vs-database">
+    <meta property="og:image" content="https://melextech.dev/guide/img/backend-vs-database.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MELEX IT">
+    <meta property="article:published_time" content="2026-07-10T08:00:00Z">
+<meta property="article:modified_time" content="2026-07-10T08:00:00Z">
+    <meta property="article:section" content="Tech Education">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="Backend">
+    <meta property="article:tag" content="Database">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Backend vs Database — What's the Difference and Why It Matters">
+    <meta name="twitter:description" content="Backend and database are not the same thing. One processes requests, the other stores data. Here's what each actually does and the mistakes that cause real problems.">
+    <meta name="twitter:image" content="https://melextech.dev/guide/img/backend-vs-database.webp">
+    <meta name="twitter:site" content="@melextech">
+    <meta name="twitter:creator" content="@melextech">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Backend vs Database — What's the Difference and Why It Matters",
+        "description": "Backend and database are not the same thing. One processes requests, the other stores data. Here's what each actually does, how they work together, and the mistakes that cause real production problems.",
+        "image": "https://melextech.dev/guide/img/backend-vs-database.webp",
+        "datePublished": "2026-07-10T08:00:00Z",
+        "dateModified": "2026-07-10T08:00:00Z",
+        "author": {
+            "@type": "Person",
+            "name": "Melalew Mengistu",
+            "url": "https://melextech.dev"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MELEX IT",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://melextech.dev/logo.webp"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://melextech.dev/post/backend-vs-database"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Can a backend exist without a database?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Static sites, API proxies, calculation tools, and webhook receivers all run backend code without storing anything. Any application that processes information in real-time without needing to remember it later doesn't require a database."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which is harder to learn: backend or database?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "They require different skills. Backend development involves learning a programming language, understanding HTTP, and structuring application code. Database work requires understanding data modeling, normalization, and query optimization. Neither is inherently harder — but poorly designed data models are usually more expensive to fix than poorly structured backend code."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Firebase a backend or a database?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Firebase is a Backend-as-a-Service platform. It includes a database (Cloud Firestore and Realtime Database), but also provides authentication, hosting, cloud functions, and file storage. Calling it just a database undersells what it does. Calling it just a backend oversimplifies it. It replaces the need to build and manage your own backend infrastructure."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can a database work without a backend?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Technically yes — tools like Firebase, Supabase, and Appwrite let your frontend application talk directly to a database. This works for prototypes and simple apps. The risk is that without a backend layer, business logic and validation live in the frontend where users can bypass them. For anything handling payments, user-generated content, or sensitive data, add a backend."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What happens when the database goes down vs the backend?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "When the backend goes down, nothing works — no requests are processed at all. Users see connection errors or timeouts. When the database goes down but the backend is running, the backend can still respond to requests that don't need data (like returning a cached homepage). But any request that reads or writes data will fail, often with a 500 error. The symptoms overlap, which is why people confuse the two."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Should I learn backend or database first?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "If you want to build full applications, start with a backend framework — you'll naturally encounter databases when you need to persist data, and learning SQL in that context is more effective than in isolation. If you're going into data analysis or working with existing backend systems, learn databases and SQL first. Either way, you'll need both within a few weeks of serious learning."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://melextech.dev"},
+            {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://melextech.dev/guide"},
+            {"@type": "ListItem", "position": 3, "name": "Backend vs Database", "item": "https://melextech.dev/post/backend-vs-database"}
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="../logo.webp">
+</head>
+<style>
+:root{
+    --accent:#2DD4BF;--accent-hover:#14B8A6;--accent-soft:#ecfeff;--accent-border:#a5f3fc;
+    --dark:#0F172A;--dark-card:rgba(255,255,255,.06);--dark-border:rgba(255,255,255,.1);
+    --dark-muted:#94A3B8;
+    --fg:#1F2937;--fg-sub:#4B5563;--fg-light:#6B7280;--fg-muted:#9CA3AF;--fg-faint:#D1D5DB;
+    --surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+    --border:#F3F4F6;--border-2:#E5E7EB;--border-3:#D1D5DB;
+    --nav-h:64px;--radius:12px;--radius-sm:8px;--radius-xs:6px;
+    --warn:#FEF3C7;--warn-border:#F59E0B;--warn-text:#92400E;--warn-strong:#78350F;
+    --tip:#F0FDF4;--tip-border:#22C55E;--tip-text:#166534;--tip-strong:#14532D;
+    --info:#EFF6FF;--info-border:#3B82F6;--info-text:#1E40AF;--info-strong:#1E3A8A;
+    --danger:#FEF2F2;--danger-border:#EF4444;--danger-text:#991B1B;--danger-strong:#7F1D1D;
+    --progress-h:3px;
+    --story-warm:#FFFBF5;--story-warm-border:#F5E6D3;--story-warm-accent:#C2713A;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:calc(var(--nav-h) + 20px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--fg);line-height:1.8;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+ul{list-style:none}
+::selection{background:var(--accent);color:#fff}
+
+.scroll-progress{position:fixed;top:var(--nav-h);left:0;width:0;height:var(--progress-h);background:linear-gradient(90deg,var(--accent),#22d3ee);z-index:101;will-change:width}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.header-container{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.logo-icon img{width:100%;height:100%;object-fit:contain}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;color:var(--dark)}
+.nav{display:flex;gap:2px}
+.nav-link{font-size:.88rem;font-weight:500;color:var(--fg-light);padding:7px 14px;border-radius:var(--radius-sm);transition:color .15s,background .15s}
+.nav-link:hover,.nav-link.active{color:var(--dark);background:var(--surface-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-size:.82rem;font-weight:600;background:var(--accent);color:#fff;border-radius:var(--radius-sm);transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary svg{width:15px;height:15px}
+.mobile-menu-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px}
+.menu-line{width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .25s}
+.mobile-menu-btn.active .menu-line:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.mobile-menu-btn.active .menu-line:nth-child(2){opacity:0}
+.mobile-menu-btn.active .menu-line:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.mobile-nav{position:fixed;inset:0;z-index:105;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);display:flex;flex-direction:column;padding:90px 32px 40px;transform:translateY(-100%);opacity:0;visibility:hidden;transition:all .3s ease}
+.mobile-nav.open{transform:translateY(0);opacity:1;visibility:visible}
+.mobile-nav a{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:600;color:var(--dark);padding:16px 0;border-bottom:1px solid var(--border);display:block}
+.mobile-nav .btn-primary{margin-top:24px;justify-content:center;padding:14px;font-size:.95rem}
+
+.breadcrumb{max-width:1200px;margin:0 auto;padding:calc(var(--nav-h) + 16px) 24px 0;font-size:.78rem;color:var(--fg-muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.breadcrumb a{color:var(--fg-light);transition:color .15s}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb svg{width:12px;height:12px;color:var(--fg-faint);flex-shrink:0}
+
+.page-layout{display:flex;gap:48px;max-width:1200px;margin:0 auto;padding:28px 24px 48px}
+.content-col{flex:1;min-width:0;max-width:680px}
+.sidebar-col{width:300px;flex-shrink:0}
+.sidebar-sticky{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;scrollbar-width:none}
+.sidebar-sticky::-webkit-scrollbar{display:none}
+
+.hero{padding-bottom:36px}
+.hero .reassure{font-size:.82rem;color:var(--fg-muted);margin-bottom:14px;letter-spacing:.01em}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,4vw,1.85rem);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:14px;letter-spacing:-.03em}
+.hero .problem{font-size:.94rem;color:var(--fg-light);line-height:1.75}
+.hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--fg-faint);align-items:center}
+.hero .meta-item{display:flex;align-items:center;gap:5px}
+.hero .meta svg{width:13px;height:13px}
+
+.story-opener{
+    background:var(--story-warm);
+    border:1px solid var(--story-warm-border);
+    border-radius:var(--radius);
+    padding:28px 28px 24px;
+    margin-bottom:36px;
+    position:relative;
+    overflow:hidden;
+}
+.story-opener::before{
+    content:'\201C';
+    position:absolute;
+    top:-8px;left:16px;
+    font-size:5rem;
+    font-family:Georgia,serif;
+    color:var(--story-warm-accent);
+    opacity:.15;
+    line-height:1;
+}
+.story-opener p{
+    font-size:.92rem;
+    color:#5C4A3A;
+    line-height:1.85;
+    margin-bottom:12px;
+    position:relative;
+}
+.story-opener p:last-child{margin-bottom:0}
+
+.explain-block{
+    background:var(--info);
+    border:1px solid #BFDBFE;
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin-bottom:36px;
+}
+.explain-block .explain-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--info-border);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.explain-block .explain-label svg{width:14px;height:14px}
+.explain-block p{
+    font-size:.88rem;
+    color:var(--info-text);
+    line-height:1.85;
+    margin-bottom:10px;
+}
+.explain-block p:last-child{margin-bottom:0}
+.explain-block strong{color:var(--info-strong);font-weight:600}
+
+.audience-box{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 24px;
+    margin-bottom:36px;
+}
+.audience-box .audience-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--fg-muted);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.audience-box .audience-label svg{width:14px;height:14px}
+.audience-box ul{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+.audience-box li{
+    font-size:.85rem;
+    color:var(--fg-sub);
+    line-height:1.6;
+    padding-left:20px;
+    position:relative;
+}
+.audience-box li::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:10px;
+    height:10px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232DD4BF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.approach-overview{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 24px;
+    margin-bottom:36px;
+}
+.approach-overview .approach-label{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--fg-muted);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.approach-overview .approach-label svg{width:14px;height:14px}
+.approach-overview p{
+    font-size:.87rem;
+    color:var(--fg-sub);
+    line-height:1.8;
+    margin-bottom:12px;
+}
+.approach-overview p:last-child{margin-bottom:0}
+.approach-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:8px;
+}
+.approach-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:.85rem;
+    color:var(--fg-sub);
+    line-height:1.6;
+}
+.approach-item .approach-num{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    border:1.5px solid var(--accent-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.7rem;
+    font-weight:700;
+    color:var(--accent);
+    flex-shrink:0;
+    margin-top:2px;
+}
+.approach-item .approach-num.deep{
+    background:#FEF3C7;
+    border-color:#FDE68A;
+    color:#B45309;
+}
+
+.content-col h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);margin:40px 0 16px;letter-spacing:-.02em;line-height:1.3;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.content-col h2:first-of-type{margin-top:0}
+.content-col h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:28px 0 10px;line-height:1.35}
+.content-col p{font-size:.9rem;color:var(--fg-sub);line-height:1.85;margin-bottom:14px}
+.content-col p:last-child{margin-bottom:0}
+.content-col strong{color:var(--dark);font-weight:600}
+.content-col code{background:var(--surface-2);padding:2px 7px;border-radius:5px;font-size:.83em;font-family:'SF Mono',Consolas,monospace;color:var(--fg)}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list){list-style:disc;padding-left:20px;margin:12px 0 16px}
+.content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li{font-size:.88rem;color:var(--fg-sub);line-height:1.8;margin-bottom:4px}
+
+.effect-note{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 16px;
+    border-radius:var(--radius-sm);
+    margin:16px 0;
+    font-size:.82rem;
+    line-height:1.7;
+}
+.effect-note.neutral{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--fg-sub);
+}
+.effect-note.caution{
+    background:var(--warn);
+    border-left:3px solid var(--warn-border);
+    color:var(--warn-text);
+}
+.effect-note.caution strong{color:var(--warn-strong)}
+.effect-note.good{
+    background:var(--tip);
+    border-left:3px solid var(--tip-border);
+    color:var(--tip-text);
+}
+.effect-note.good strong{color:var(--tip-strong)}
+.effect-note svg{
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+    margin-top:2px;
+}
+
+.help-ending{
+    text-align:center;
+    padding:36px 24px;
+    background:linear-gradient(135deg,#F8FAFC,#F1F5F9);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-top:40px;
+}
+.help-ending .help-ending-icon{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    border:1.5px solid var(--accent-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 16px;
+}
+.help-ending .help-ending-icon svg{
+    width:22px;
+    height:22px;
+    color:var(--accent);
+}
+.help-ending h2{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--dark);
+    margin-bottom:8px;
+    border:none;
+    padding:0;
+}
+.help-ending>p{
+    font-size:.85rem;
+    color:var(--fg-light);
+    margin-bottom:20px;
+    max-width:420px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.help-ending .help-reassure{
+    font-size:.82rem;
+    color:var(--fg-muted);
+    margin-top:16px;
+    line-height:1.6;
+}
+.quick-summary{background:linear-gradient(135deg,#ecfeff,#f0f9ff);border:1px solid var(--accent-border);border-radius:var(--radius);padding:22px 24px;margin-bottom:36px}
+.quick-summary .qs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.quick-summary .qs-label svg{width:14px;height:14px}
+.quick-summary ul{display:flex;flex-direction:column;gap:6px}
+.quick-summary li{font-size:.85rem;color:var(--fg-sub);line-height:1.6;padding-left:18px;position:relative}
+.quick-summary li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.quick-summary li strong{color:var(--dark);font-weight:600}
+
+.ad-block{border:1.5px dashed var(--border-2);border-radius:var(--radius-sm);padding:32px 14px;text-align:center;color:var(--fg-faint);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px;background:var(--surface-2)}
+.ad-block.in-content{margin:32px 0}
+.ad-block.micro{margin:20px 0;padding:20px 14px}
+
+.video-section{margin-bottom:36px}
+.video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
+.video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);border:1px solid var(--border);background:#0F172A}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
+.toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-card .toc-title svg{width:16px;height:16px;color:var(--accent)}
+.toc-list{display:flex;flex-direction:column;gap:2px}
+.toc-link{display:block;font-size:.84rem;color:var(--fg-light);padding:7px 10px;border-radius:var(--radius-xs);transition:all .15s;line-height:1.4;border-left:2px solid transparent}
+.toc-link:hover{color:var(--dark);background:var(--surface-2)}
+.toc-link.active{color:var(--accent);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
+
+@media(min-width:901px){
+    .toc-card#tocInline{display:none}
+    .toc-card.sidebar-toc{display:block}
+}
+@media(max-width:900px){
+    .toc-card#tocInline{display:block}
+    .toc-card.sidebar-toc{display:none!important}
+}
+
+.callout{padding:14px 18px;border-radius:var(--radius-sm);margin:16px 0;font-size:.84rem;line-height:1.75;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+.callout-icon svg{width:20px;height:20px}
+.callout-content{flex:1}
+.callout-content p{margin:0;font-size:inherit;line-height:inherit}
+.callout-content strong{font-weight:600}
+.callout.warn{background:var(--warn);border-left:3px solid var(--warn-border);color:var(--warn-text)}
+.callout.warn strong{color:var(--warn-strong)}
+.callout.warn .callout-icon svg{stroke:var(--warn-border);fill:none}
+.callout.tip{background:var(--tip);border-left:3px solid var(--tip-border);color:var(--tip-text)}
+.callout.tip strong{color:var(--tip-strong)}
+.callout.tip .callout-icon svg{stroke:var(--tip-border);fill:none}
+.callout.info{background:var(--info);border-left:3px solid var(--info-border);color:var(--info-text)}
+.callout.info strong{color:var(--info-strong)}
+.callout.info .callout-icon svg{stroke:var(--info-border);fill:none}
+.callout.danger{background:var(--danger);border-left:3px solid var(--danger-border);color:var(--danger-text)}
+.callout.danger strong{color:var(--danger-strong)}
+.callout.danger .callout-icon svg{stroke:var(--danger-border);fill:none}
+
+.comparison{margin:32px 0;overflow-x:auto}
+.comparison h2{margin-bottom:16px}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
+.comparison thead{background:var(--surface-2)}
+.comparison th{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:var(--dark);text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.82rem}
+.comparison td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--fg-sub);line-height:1.5}
+.comparison tbody tr:last-child td{border-bottom:none}
+.comparison tbody tr:hover{background:var(--surface-2)}
+.comparison .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.comparison .badge.green{background:#DCFCE7;color:#166534}
+.comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
+.comparison .badge.red{background:#FEE2E2;color:#991B1B}
+.comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
+
+.tools-section{margin:32px 0}
+.tools-section h2{margin-bottom:16px}
+.tools-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.tool-card{display:flex;gap:14px;align-items:center;padding:16px;border:1px solid var(--border);border-radius:var(--radius);transition:all .15s;background:var(--surface)}
+.tool-card:hover{border-color:var(--border-2);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.tool-icon{width:44px;height:44px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+.tool-info{flex:1;min-width:0}
+.tool-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.tool-info p{font-size:.78rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.faq-section{margin:36px 0}
+.faq-section h2{margin-bottom:16px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--accent-border)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;cursor:pointer;transition:background .15s;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--dark);line-height:1.4}
+.faq-q:hover{background:var(--surface-2)}
+.faq-q svg{width:18px;height:18px;color:var(--fg-muted);flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 18px 16px;font-size:.86rem;color:var(--fg-sub);line-height:1.8}
+.faq-a-inner p{margin:0}
+
+.share-bar{display:flex;align-items:center;gap:8px;margin:24px 0;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.share-bar span{font-size:.78rem;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.share-btn{width:34px;height:34px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:all .15s;background:var(--surface)}
+.share-btn:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.share-btn svg{width:15px;height:15px;color:var(--fg-light)}
+.share-btn.copy{width:auto;height:auto;padding:8px 16px;font-size:.72rem;font-weight:700;color:var(--fg-light);letter-spacing:.02em}
+.share-btn.copy.copied{background:var(--tip);border-color:var(--tip-border);color:var(--tip-text)}
+
+.author-bio{display:flex;gap:16px;padding:20px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);margin:32px 0;align-items:center}
+.author-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.author-info h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:2px}
+.author-info p{font-size:.8rem;color:var(--fg-light);margin:0;line-height:1.5}
+
+.help{text-align:center;padding:32px 0 0;border-top:1px solid var(--border)}
+.help h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:6px;border:none;padding:0}
+.help>p{font-size:.82rem;color:var(--fg-muted);margin-bottom:20px}
+.help-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.help-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-size:.83rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border-2);color:var(--fg-sub);transition:all .15s}
+.help-btn:hover{border-color:var(--fg-faint);background:var(--surface-2)}
+.help-btn svg{width:15px;height:15px}
+.help-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.help-btn.primary:hover{background:var(--accent-hover)}
+
+.promo-card{border-radius:var(--radius);padding:20px;border:1px solid var(--border);transition:border-color .15s;display:block}
+.promo-card:hover{border-color:var(--border-2)}
+.promo-card .promo-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.promo-card .promo-icon svg{width:22px;height:22px}
+.promo-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.promo-card p{font-size:.8rem;color:var(--fg-light);line-height:1.6;margin-bottom:16px}
+.promo-card .promo-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:all .15s}
+.promo-card .promo-btn svg{width:14px;height:14px}
+
+.promo-card.aff{background:var(--surface);border-color:var(--border)}
+.promo-card.aff .promo-icon{background:var(--surface-2);border:1px solid var(--border)}
+.promo-card.aff .promo-icon svg{stroke:var(--fg-light);fill:none}
+.promo-card.aff .promo-btn{background:var(--dark);color:#fff}
+.promo-card.aff .promo-btn:hover{background:#1E293B}
+
+.mobile-cta{position:fixed;bottom:0;left:0;right:0;z-index:99;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transform:translateY(100%);opacity:0;transition:all .3s ease;pointer-events:none}
+.mobile-cta.vis{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-cta .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;font-size:.82rem;font-weight:600;border-radius:var(--radius-sm);transition:background .15s}
+.mobile-cta .cta-btn svg{width:14px;height:14px}
+.mobile-cta .cta-btn.primary{background:var(--accent);color:#fff}
+.mobile-cta .cta-btn.primary:hover{background:var(--accent-hover)}
+.mobile-cta .cta-btn.secondary{background:var(--surface);border:1px solid var(--border-2);color:var(--fg-sub)}
+.mobile-cta .cta-btn.secondary:hover{background:var(--surface-2)}
+@media(min-width:901px){.mobile-cta{display:none!important}}
+
+.footer{background:var(--dark);padding:56px 0 28px}
+.footer .container{max-width:1200px;margin:0 auto;padding:0 24px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{margin-bottom:4px}
+.footer-brand .logo-text{color:#fff}
+.footer-tagline{color:var(--dark-muted);margin:12px 0 20px;max-width:260px;line-height:1.6;font-size:.86rem}
+.social-links{display:flex;gap:8px}
+.social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-sm);transition:all .15s}
+.social-link:hover{background:var(--accent);border-color:var(--accent)}
+.social-link svg{width:16px;height:16px;fill:var(--dark-muted)}
+.social-link:hover svg{fill:#fff}
+.footer-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;color:#fff;margin-bottom:18px}
+.footer-links ul{display:flex;flex-direction:column;gap:12px}
+.footer-links a{color:var(--dark-muted);font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--dark-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color:#475569;font-size:.78rem}
+.footer-bottom a{color:var(--dark-muted);transition:color .15s}
+.footer-bottom a:hover{color:var(--accent)}
+
+.stp{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stp.vis{opacity:1;visibility:visible}
+.stp:hover{background:var(--surface-2);border-color:var(--fg-faint);transform:translateY(-2px)}
+.stp svg{width:18px;height:18px;color:var(--fg-light)}
+@media(max-width:900px){.stp{bottom:70px}}
+
+@media(max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:900px){
+    .header-actions .btn-primary{display:none}
+    .mobile-menu-btn{display:flex}
+    .nav{display:none}
+    .page-layout{flex-direction:column;gap:32px}
+    .content-col{max-width:100%}
+    .sidebar-col{width:100%}
+    .sidebar-sticky{position:static;flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
+    .promo-card{flex:1;min-width:200px}
+    .footer-grid{grid-template-columns:1fr;text-align:center}
+    .footer-brand{display:flex;flex-direction:column;align-items:center}
+    .footer-tagline{margin:12px auto 20px}
+    .social-links{justify-content:center}
+    .footer-bottom{justify-content:center;text-align:center}
+}
+@media(max-width:480px){
+    .breadcrumb{padding-left:18px;padding-right:18px}
+    .page-layout{padding-left:18px;padding-right:18px}
+    .hero h1{font-size:1.35rem}
+    .help-options{flex-direction:column}
+    .help-btn{justify-content:center}
+    .sidebar-sticky{flex-direction:column}
+    .promo-card{min-width:auto}
+    .comparison table{font-size:.78rem}
+    .comparison th,.comparison td{padding:9px 10px}
+    .mobile-cta{gap:8px;padding:8px 14px}
+    .mobile-cta .cta-btn{padding:8px 14px;font-size:.78rem}
+    .story-opener{padding:22px 20px 20px}
+    .help-ending{padding:28px 20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent-dark);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Toggle visibility of icons depending on active theme */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+html:not([data-theme="dark"]) .sun-icon { display: none; }
+html:not([data-theme="dark"]) .moon-icon { display: block; }
+
+
+/* --- Dark Mode Color Overrides --- */
+[data-theme="dark"] {
+    --bg: #0B0F19;
+    --bg-alt: #131A2B;
+    --surface: #0F1623;
+    --surface-2: #151D2E;
+    --surface-3: #1A2338;
+    --fg: #E2E8F0;
+    --fg-sub: #CBD5E1;
+    --fg-light: #94A3B8;
+    --fg-muted: #8B9AB5;
+    --fg-faint: #5A6A82;
+    --dark: #F1F5F9;
+    --border: #1A2336;
+    --border-2: #263044;
+    --border-3: #374460;
+    --dark-card: rgba(255,255,255,0.04);
+    --dark-border: rgba(255,255,255,0.08);
+    --dark-muted: #7B8DA4;
+    --accent-soft: rgba(45, 212, 191, 0.1);
+    --accent-border: rgba(45, 212, 191, 0.25);
+    --warn: rgba(245, 158, 11, 0.08);
+    --warn-border: #F59E0B;
+    --warn-text: #FCD34D;
+    --warn-strong: #FBBF24;
+    --tip: rgba(34, 197, 94, 0.08);
+    --tip-border: #22C55E;
+    --tip-text: #86EFAC;
+    --tip-strong: #4ADE80;
+    --info: rgba(59, 130, 246, 0.08);
+    --info-border: #60A5FA;
+    --info-text: #93C5FD;
+    --info-strong: #60A5FA;
+    --danger: rgba(239, 68, 68, 0.08);
+    --danger-border: #EF4444;
+    --danger-text: #FCA5A5;
+    --danger-strong: #F87171;
+    --story-warm: rgba(194, 113, 58, 0.06);
+    --story-warm-border: rgba(194, 113, 58, 0.2);
+    --story-warm-accent: #D97706;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.5);
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme switching */
+html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Header --- */
+[data-theme="dark"] .header {
+    background: rgba(15, 22, 35, 0.85) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    background: rgba(11, 15, 25, 0.95) !important;
+}
+[data-theme="dark"] .logo-text {
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .nav-link {
+    color: #94A3B8;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F1F5F9;
+    background: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .menu-line {
+    background: #F1F5F9;
+}
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #263044;
+    color: #E2E8F0;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+    border-color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+    color: var(--accent);
+}
+
+/* --- Mobile Nav --- */
+[data-theme="dark"] .mobile-nav {
+    background: rgba(15, 22, 35, 0.98) !important;
+}
+[data-theme="dark"] .mobile-nav a {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+
+/* --- Mobile CTA --- */
+[data-theme="dark"] .mobile-cta {
+    background: rgba(15, 22, 35, 0.95) !important;
+    border-top-color: #1A2336 !important;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary {
+    background: #151D2E;
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .mobile-cta .cta-btn.secondary:hover {
+    background: #1E293B;
+}
+
+/* --- Breadcrumb --- */
+[data-theme="dark"] .breadcrumb {
+    color: #5A6A82;
+}
+[data-theme="dark"] .breadcrumb a {
+    color: #7B8DA4;
+}
+[data-theme="dark"] .breadcrumb a:hover {
+    color: var(--accent);
+}
+[data-theme="dark"] .breadcrumb svg {
+    color: #374460;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .content-col strong {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .content-col code {
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #263044;
+}
+[data-theme="dark"] .content-col p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col ul:not(.toc-list):not(.similar):not(.faq-list):not(.qs-list):not(.prereqs-list):not(.approach-list):not(.audience-list) li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .content-col h2 {
+    border-bottom-color: #1A2336;
+}
+
+[data-theme="dark"] .hero .reassure {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .problem {
+    color: #94A3B8;
+}
+[data-theme="dark"] .hero .meta {
+    color: #5A6A82;
+}
+[data-theme="dark"] .hero .meta svg {
+    color: #5A6A82;
+}
+
+/* --- Story Opener --- */
+[data-theme="dark"] .story-opener p {
+    color: #D4C4B0;
+}
+[data-theme="dark"] .story-opener::before {
+    color: #D97706;
+    opacity: 0.25;
+}
+
+/* --- Explain Block --- */
+[data-theme="dark"] .explain-block {
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* --- Quick Summary --- */
+[data-theme="dark"] .quick-summary {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.05), rgba(56, 189, 248, 0.05));
+}
+[data-theme="dark"] .quick-summary li {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .quick-summary li strong {
+    color: #F1F5F9;
+}
+
+/* --- Audience Box --- */
+[data-theme="dark"] .audience-box {
+    background: #131A2B;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .audience-box li {
+    color: #CBD5E1;
+}
+
+/* --- Approach Overview --- */
+[data-theme="dark"] .approach-overview {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .approach-overview p {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-item {
+    color: #CBD5E1;
+}
+[data-theme="dark"] .approach-num {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.25);
+}
+[data-theme="dark"] .approach-num.deep {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+}
+
+/* --- Effect Notes --- */
+[data-theme="dark"] .effect-note.neutral {
+    background: #151D2E;
+    border-color: #1A2336;
+    color: #CBD5E1;
+}
+
+/* --- Help Ending --- */
+[data-theme="dark"] .help-ending {
+    background: linear-gradient(135deg, #111827, #0F172A);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .help-ending .help-reassure {
+    color: #5A6A82;
+}
+
+/* --- Video --- */
+[data-theme="dark"] .video-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .video-caption {
+    color: #5A6A82;
+}
+
+/* --- TOC --- */
+[data-theme="dark"] .toc-card {
+    background: var(--surface);
+    border-color: #1A2336;
+}
+[data-theme="dark"] .toc-link:hover {
+    color: #F1F5F9;
+    background: #151D2E;
+}
+[data-theme="dark"] .toc-link.active {
+    color: var(--accent);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+/* --- Comparison Table --- */
+[data-theme="dark"] .table-wrapper {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .comparison thead {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison th {
+    color: #F1F5F9;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison td {
+    color: #CBD5E1;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .comparison tbody tr:last-child td {
+    border-bottom: none;
+}
+[data-theme="dark"] .comparison tbody tr:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .comparison .badge.green {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86EFAC;
+}
+[data-theme="dark"] .comparison .badge.yellow {
+    background: rgba(245, 158, 11, 0.15);
+    color: #FCD34D;
+}
+[data-theme="dark"] .comparison .badge.red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #FCA5A5;
+}
+[data-theme="dark"] .comparison .badge.blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93C5FD;
+}
+
+/* --- Tool Cards --- */
+[data-theme="dark"] .tool-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .tool-card:hover {
+    border-color: #263044;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .tool-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+
+/* --- FAQ --- */
+[data-theme="dark"] .faq-item {
+    border-color: #1A2336;
+}
+[data-theme="dark"] .faq-item.open {
+    border-color: rgba(45, 212, 191, 0.3);
+}
+[data-theme="dark"] .faq-q {
+    color: #F1F5F9;
+}
+[data-theme="dark"] .faq-q:hover {
+    background: #151D2E;
+}
+[data-theme="dark"] .faq-q svg {
+    color: #5A6A82;
+}
+[data-theme="dark"] .faq-item.open .faq-q svg {
+    color: var(--accent);
+}
+[data-theme="dark"] .faq-a-inner {
+    color: #CBD5E1;
+}
+
+/* --- Share Bar --- */
+[data-theme="dark"] .share-bar {
+    border-top-color: #1A2336;
+    border-bottom-color: #1A2336;
+}
+[data-theme="dark"] .share-bar span {
+    color: #5A6A82;
+}
+[data-theme="dark"] .share-btn {
+    background: #151D2E;
+    border-color: #263044;
+}
+[data-theme="dark"] .share-btn:hover {
+    border-color: #374460;
+    background: #1E293B;
+}
+[data-theme="dark"] .share-btn svg {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy {
+    color: #94A3B8;
+}
+[data-theme="dark"] .share-btn.copy.copied {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86EFAC;
+}
+
+/* --- Author Bio --- */
+[data-theme="dark"] .author-bio {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .author-avatar {
+    background: #1E293B;
+}
+
+/* --- Help Section --- */
+[data-theme="dark"] .help {
+    border-top-color: #1A2336;
+}
+[data-theme="dark"] .help-btn {
+    border-color: #263044;
+    color: #CBD5E1;
+}
+[data-theme="dark"] .help-btn:hover {
+    border-color: #374460;
+    background: #151D2E;
+}
+
+/* --- Promo Cards --- */
+[data-theme="dark"] .promo-card {
+    background: #0F1623;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card:hover {
+    border-color: #263044;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon {
+    background: #151D2E;
+    border-color: #1A2336;
+}
+[data-theme="dark"] .promo-card.aff .promo-icon svg {
+    stroke: #94A3B8;
+}
+[data-theme="dark"] .promo-card.aff .promo-btn {
+    background: var(--accent);
+}
+
+/* --- Ad Block --- */
+[data-theme="dark"] .ad-block {
+    border-color: #263044;
+    background: #131A2B;
+    color: #374460;
+}
+
+/* --- Scroll to Top --- */
+[data-theme="dark"] .stp {
+    background: #1E293B;
+    border-color: #263044;
+}
+[data-theme="dark"] .stp:hover {
+    background: #263044;
+    border-color: #374460;
+}
+[data-theme="dark"] .stp svg {
+    color: #94A3B8;
+}
+
+/* --- Footer --- */
+[data-theme="dark"] .footer {
+    background: #080C14 !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255,255,255,0.06);
+    color: #374460;
+}
+[data-theme="dark"] .footer-bottom a {
+    color: #5A6A82;
+}
+
+/* --- Sections with hardcoded light backgrounds --- */
+[data-theme="dark"] .features,
+[data-theme="dark"] .products {
+    background: #0B0F19 !important;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+    [data-theme="dark"] .nav {
+        background: var(--surface) !important;
+    }
+    .theme-toggle-btn {
+        margin-right: 4px;
+    }
+}
+</style>
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
+    const copyBtns = document.querySelectorAll('.share-btn.copy');
+    copyBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const url = window.location.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(function() {
+                    showCopied(btn);
+                }).catch(function() {
+                    fallbackCopy(url, btn);
+                });
+            } else {
+                fallbackCopy(url, btn);
+            }
+        });
+    });
+
+    function showCopied(btn) {
+        const originalText = btn.textContent;
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(function() {
+            btn.classList.remove('copied');
+            btn.textContent = originalText;
+        }, 2000);
+    }
+
+    function fallbackCopy(text, btn) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '-9999px';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            showCopied(btn);
+        } catch (e) {
+            btn.textContent = 'Failed';
+            setTimeout(function() {
+                btn.textContent = 'COPY LINK';
+            }, 2000);
+        }
+        document.body.removeChild(textarea);
+    }
+});
+</script>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<header class="header" role="banner">
+    <div class="header-container">
+        <a href="../index.html" class="logo" aria-label="Home">
+            <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+            <span class="logo-text">MELEX IT</span>
+        </a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../guide" class="nav-link">Guides</a>
+            <a href="../product" class="nav-link">Products</a>
+            <a href="../services.html" class="nav-link">Services</a>
+            <a href="../about.html" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.22" x2="5.64" y2="17.78"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+</button>
+
+            <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                <span>JOIN US</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../guide">Guide</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <a href="../guide/?search=Programming">Programming</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span>Backend vs Database</span>
+</nav>
+
+<main class="page-layout">
+
+    <div class="content-col">
+        <article itemscope itemtype="https://schema.org/Article">
+
+            <section class="hero">
+                <p class="reassure">WEB ARCHITECTURE EXPLAINED</p>
+                <h1 itemprop="headline">Backend vs Database: What's the Difference and Why It Matters</h1>
+                <p class="problem" itemprop="description">You hear "server is down" and "database overloaded" used interchangeably. They're not the same thing. One processes your requests. The other stores your data. Knowing which is which changes how you debug problems, hire engineers, and build software.</p>
+                <div class="meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        July 10, 2026
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Melalew Mengistu
+                    </span>
+                </div>
+            </section>
+
+            <div class="story-opener">
+                <p>Last month, an e-commerce company lost $40,000 in revenue during a flash sale. Their monitoring dashboard showed a red alert, and the on-call engineer spent 45 minutes restarting the backend server twice before realizing the actual problem was a locked database table. The backend was running fine. It just couldn't read any data.</p>
+                <p>This kind of confusion costs teams time and money regularly. Not because the concepts are difficult, but because people learn them from sources that blur the line between processing logic and data storage. By the end of this guide, you'll know exactly which component does what, how they communicate, and what fails when something goes wrong.</p>
+            </div>
+
+            <div class="explain-block">
+                <div class="explain-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    The Core Distinction
+                </div>
+                <p>A <strong>backend</strong> is an application running on a server that receives HTTP requests, executes your business logic, and sends responses back. It's code you write in Python, JavaScript, Java, Go, or similar languages. When you submit a login form, the backend checks your credentials and decides whether to let you in.</p>
+                <p>A <strong>database</strong> is a specialized software system designed to store, organize, and retrieve data efficiently. It's not application code it's a data management engine with its own query language. PostgreSQL, MySQL, and MongoDB are databases. They don't make decisions. They store data and return it when queried.</p>
+                <p>The confusion happens because both typically run on the same physical server in small-to-medium deployments. But they're separate processes, often started independently, and they fail for completely different reasons.</p>
+            </div>
+
+            <div class="quick-summary">
+                <div class="qs-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Quick Summary
+                </div>
+                <ul class="qs-list">
+                    <li><strong>Backend:</strong> Code that receives requests, applies business rules, and returns responses.</li>
+                    <li><strong>Database:</strong> A storage engine that persists data and retrieves it on demand.</li>
+                    <li><strong>They communicate</strong> through queries the backend asks, the database answers.</li>
+                </ul>
+            </div>
+
+            <div class="audience-box">
+                <div class="audience-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Who This Is For
+                </div>
+                <ul class="audience-list">
+                    <li>Developers choosing a tech stack and deciding what to prioritize.</li>
+                    <li>Technical founders figuring out what to hire for first.</li>
+                    <li>Anyone debugging a "server down" issue without knowing where to look.</li>
+                </ul>
+            </div>
+
+            <div class="approach-overview">
+                <div class="approach-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    What We Cover
+                </div>
+                <p>Each section below focuses on one component, then we look at how they interact in a real request.</p>
+                <div class="approach-list">
+                    <div class="approach-item">
+                        <span class="approach-num">1</span>
+                        <span>What a database actually does (and when it becomes the bottleneck)</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num">2</span>
+                        <span>What a backend actually does (and where most bugs live)</span>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-num deep">3</span>
+                        <span>How they communicate, where they fail, and what you should learn first</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-section">
+                <h2>Visual Explanation</h2>
+                <div class="video-wrapper">
+                   <iframe width="560" height="315" src="https://www.youtube.com/embed/sDlCSIDwpDs?si=3Ifn_2h-asCdbN3B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <p class="video-caption">A walkthrough of how server-side code and data storage fit together in a web application.</p>
+            </div>
+
+            <div class="toc-card" id="tocInline">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    Table of Contents
+                </div>
+                <div class="toc-list" id="tocListInline">
+                    <a href="#what-database" class="toc-link">What a Database Actually Does</a>
+                    <a href="#what-backend" class="toc-link">What a Backend Actually Does</a>
+                    <a href="#how-they-work" class="toc-link">How They Work Together</a>
+                    <a href="#key-differences" class="toc-link">Key Differences</a>
+                    <a href="#one-without-other" class="toc-link">Can You Use One Without the Other?</a>
+                    <a href="#common-mistakes" class="toc-link">Common Mistakes That Cause Real Problems</a>
+                    <a href="#which-first" class="toc-link">Which Should You Learn First?</a>
+                    <a href="#tools" class="toc-link">Tools and Technologies</a>
+                    <a href="#faq" class="toc-link">Frequently Asked Questions</a>
+                </div>
+            </div>
+
+            <h2 id="what-database">What a Database Actually Does</h2>
+
+            <p>A database stores your data and gives it back when asked. That's the core function, but the specifics matter a lot in practice.</p>
+
+            <p>When you create an account on a website, your email, password hash, and profile details get written to a database. When you log in the next day, the database produces that data. When you search for a product, the database filters through records and returns matching rows. Every piece of persistent information your application handles lives in a database.</p>
+
+            <p>Databases handle four operations: create, read, update, and delete commonly abbreviated as CRUD. They don't process payments. They don't send emails. They don't enforce rules like "a user can't add more than 5 items to their cart." Those are backend responsibilities. The database stores data and retrieves it.</p>
+
+            <h3>SQL vs NoSQL - when each one matters</h3>
+
+            <p><strong>SQL databases</strong> (PostgreSQL, MySQL, SQLite) organize data into tables with strict schemas. Every row has the same columns, and relationships between tables are defined explicitly. Use SQL when your data has clear structure users have posts, posts have comments, orders have line items. The relationships are predictable and well-defined, and you need to query across those relationships reliably.</p>
+
+            <p><strong>NoSQL databases</strong> serve different purposes. <strong>MongoDB</strong> stores JSON-like documents without a fixed schema useful when your data structure changes frequently or when each record has different fields. <strong>Redis</strong> is an in-memory key-value store used for caching, session storage, and real-time leaderboards where speed matters more than persistence. <strong>Cassandra</strong> handles massive write loads across distributed servers used by companies like Netflix for high-volume event data.</p>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>A common mistake:</strong> storing entire JSON blobs in a single database column "for flexibility." This works until you need to query a field inside that blob then your queries become slow and unindexable. Structure your data based on how you'll read it, not just how you write it.</p>
+                </div>
+            </div>
+
+            <p>Database performance is usually determined by <strong>indexes</strong> data structures that let the database find rows without scanning the entire table. A query that takes 12 seconds on an unindexed column might take 2 milliseconds with a proper index. Most database performance problems in production come down to missing indexes, not hardware limitations.</p>
+
+            <div class="ad-block in-content" aria-hidden="true">Advertisement</div>
+
+            <h2 id="what-backend">What a Backend Actually Does</h2>
+
+            <p>A backend is code that runs on a server. It listens for incoming HTTP requests, decides what to do with them, and sends back a response. That response might be HTML, JSON data, a file, or an error status code.</p>
+
+            <p>When you click "Add to Cart" on an e-commerce site, your browser sends a request to the backend. The backend then performs a sequence of operations: verifies you're logged in, checks if the item is in stock, applies any discount rules, updates your cart in the database, and returns a response telling your browser to update the cart count displayed on the page.</p>
+
+            <p>None of that decision-making happens in the database. The database just stores and returns data. The backend orchestrates the entire flow.</p>
+
+            <h3>Backend components you'll actually work with</h3>
+
+            <ul>
+                <li><strong>Routes / Endpoints:</strong> Define which URL maps to which logic. <code>POST /api/cart</code> triggers the add-to-cart function. <code>GET /api/products</code> triggers the product listing function.</li>
+                <li><strong>Middleware:</strong> Code that runs before your main logic authentication checks, rate limiting, request logging, CORS handling. If middleware rejects the request, your handler never runs.</li>
+                <li><strong>Controllers / Handlers:</strong> Functions that handle specific requests parse the input, call the right services, format the response.</li>
+                <li><strong>Services:</strong> Where the actual business logic lives calculate tax, check inventory levels, send confirmation emails, process refunds.</li>
+                <li><strong>Data access layer:</strong> Code that talks to the database constructs queries, maps database rows to application objects, handles connection management.</li>
+            </ul>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content">
+                    <p><strong>Practical tip:</strong> keep your business logic in the service layer, not in controllers or database queries. When a pricing rule changes, you want to update one function not hunt through 15 controller files and 30 SQL queries.</p>
+                </div>
+            </div>
+
+            <div class="callout warn">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>A common mistake:</strong> putting business logic in database stored procedures. It seems efficient to keep logic "close to the data," but now your rules are locked to a specific database engine, your backend has no clear structure, and debugging requires switching between two different languages. Keep logic in the backend code. Use the database for storage and retrieval.</p>
+                </div>
+            </div>
+
+            <h2 id="how-they-work">How They Work Together</h2>
+
+            <p>Here's what actually happens when you search for "wireless headphones" on a product page:</p>
+
+            <p><strong>Step 1.</strong> Your browser sends <code>GET /api/products?query=wireless+headphones</code> to the backend server.</p>
+
+            <p><strong>Step 2.</strong> The backend receives the request. Middleware checks if you're authenticated (for personalized results) and whether you're within rate limits.</p>
+
+            <p><strong>Step 3.</strong> The search handler sanitizes the input strips out anything that could cause SQL injection, trims whitespace, validates the query length.</p>
+
+            <p><strong>Step 4.</strong> The backend constructs a database query and sends it: <code>SELECT * FROM products WHERE name ILIKE '%wireless%' AND name ILIKE '%headphones%' AND in_stock = true LIMIT 20</code></p>
+
+            <p><strong>Step 5.</strong> The database executes the query, uses indexes to find matching rows without scanning the entire table, and returns 20 product records.</p>
+
+            <p><strong>Step 6.</strong> The backend receives those records, filters out any your account has previously purchased (possibly a second query or an in-memory check), sorts by relevance, and formats the response as JSON.</p>
+
+            <p><strong>Step 7.</strong> Your browser receives the JSON and renders the product list on screen.</p>
+
+            <p>The backend and database communicated at least once in this flow. The backend decided <em>what</em> to search for, <em>how</em> to handle the results, and <em>what format</em> to return. The database just executed the queries it received.</p>
+
+            <h3>Connection pooling a detail that matters in production</h3>
+
+            <p>Opening a new database connection for every request is slow — typically 5 to 50 milliseconds per connection. If your backend opens a fresh connection each time, you'll hit performance limits quickly under load.</p>
+
+            <p>Connection pooling maintains a set of reusable connections. Your backend checks out a connection from the pool, uses it, and returns it. Most frameworks handle this automatically, but <strong>misconfiguring the pool size is a common cause of production outages</strong>. Set it too small and requests queue up waiting for an available connection. Set it too large and the database runs out of connection slots and starts rejecting new ones.</p>
+
+            <div class="callout info">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="callout-content">
+                    <p><strong>Rule of thumb:</strong> set your connection pool to 70–80% of the database's <code>max_connections</code> value. This leaves room for administrative queries, monitoring tools, and emergency access without hitting the hard limit.</p>
+                </div>
+            </div>
+
+            <div class="ad-block in-content" aria-hidden="true">Advertisement</div>
+
+            <h2 id="key-differences">Key Differences</h2>
+
+            <div class="comparison">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Backend</th>
+                                <th>Database</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Purpose</strong></td>
+                                <td>Process requests and enforce business rules</td>
+                                <td>Store, organize, and retrieve data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>What you write</strong></td>
+                                <td>Application code (Python, JS, Go, Java)</td>
+                                <td>Queries and schemas (SQL, MQL)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Output</strong></td>
+                                <td>HTTP responses (JSON, HTML, files)</td>
+                                <td>Data sets (rows, documents, key-value pairs)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fails when</strong></td>
+                                <td>Code has bugs, server runs out of memory, unhandled exceptions</td>
+                                <td>Disk is full, connections exhausted, a query locks a table</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Examples</strong></td>
+                                <td>Express.js, Django, Spring Boot, FastAPI</td>
+                                <td>PostgreSQL, MySQL, MongoDB, Redis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Replaced by</strong></td>
+                                <td>A different backend framework or language</td>
+                                <td>A different database engine or hosting service</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Can see the internet?</strong></td>
+                                <td><span class="badge green">Yes</span> — receives HTTP requests directly</td>
+                                <td><span class="badge red">No</span> — only accessible to the backend</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p>The last row is worth emphasizing. In a properly configured system, the database is <strong>never exposed to the internet</strong>. It sits on a private network, and only the backend can reach it. If your database has a public IP address and accepts connections from anywhere, that's a critical security issue regardless of whether you have a password set.</p>
+
+            <h2 id="one-without-other">Can You Use One Without the Other?</h2>
+
+            <h3>Backend without a database</h3>
+
+            <p>Yes, and it's more common than you might expect:</p>
+            <ul>
+                <li><strong>Static site generators</strong> build HTML at deploy time no runtime data needed.</li>
+                <li><strong>API proxies</strong> receive requests and forward them to other services without storing anything.</li>
+                <li><strong>Calculation tools</strong> — currency converters, unit converters, mortgage calculators process input and return results instantly.</li>
+                <li><strong>Webhook receivers</strong> accept events from external services, process them, and forward to another endpoint.</li>
+                <li><strong>Image processing services</strong> receive an image, resize it, and return the result without saving a copy.</li>
+            </ul>
+
+            <p>If your application doesn't need to remember anything between requests, you don't need a database.</p>
+
+            <h3>Database without a backend</h3>
+
+            <p>Technically possible, but it comes with trade-offs. Tools like <strong>Firebase</strong>, <strong>Supabase</strong>, and <strong>Appwrite</strong> let your frontend application talk directly to a database through SDKs. No backend code required.</p>
+
+            <p>This works well for prototypes and simple apps a personal project, a hackathon submission, or an internal tool with trusted users. The problem surfaces when you need to enforce business logic. Without a backend layer, your validation lives in the frontend where any user can open DevTools and bypass it. Someone can submit malformed data, skip required fields, or exploit edge cases your frontend doesn't handle.</p>
+
+            <div class="effect-note caution">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <div><strong>For anything handling payments, user-generated content, or sensitive data, add a backend.</strong> The cost of building one is far less than the cost of cleaning up bad data or dealing with a security incident.</div>
+            </div>
+
+            <div class="effect-note neutral">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div><strong>Trade-off:</strong> Backend-as-a-Service tools reduce initial development time from weeks to days. But as your app grows beyond basic CRUD operations, you'll likely need to add a backend anyway and migrating logic from client-side code to server-side code is significantly harder than building it server-side from the start.</div>
+            </div>
+
+            <h2 id="common-mistakes">Common Mistakes That Cause Real Problems</h2>
+
+            <p>These aren't theoretical. Every one of them shows up regularly in production systems.</p>
+
+            <h3>1. Exposing the database directly to the internet</h3>
+            <p>Even with Firebase's security rules or Supabase's Row Level Security, you're trusting client-side validation. A determined user can inspect your frontend code, understand your rules, and craft requests that exploit edge cases. If the data matters, validate it on a backend before it reaches the database.</p>
+
+            <h3>2. The N+1 query problem</h3>
+            <p>Your backend fetches 100 orders, then runs a separate database query for each order's line items. That's 101 queries instead of 2 (one for orders, one for all related items). On a small dataset this is invisible. On a production table with concurrent users, it turns a 50ms response into a 5-second one and can exhaust your connection pool. Fix it with eager loading, JOINs, or a DataLoader pattern.</p>
+
+            <h3>3. Not adding database indexes</h3>
+            <p>Your query filters by <code>user_id</code> and <code>created_at</code>, but neither column has an index. The database scans every row in the table to find matches. On a table with 10 million rows, the difference between an indexed and unindexed query is often 2 milliseconds versus 12 seconds. Add indexes for every column you use in WHERE clauses, JOIN conditions, and ORDER BY clauses.</p>
+
+            <h3>4. Storing passwords in plain text</h3>
+            <p>This isn't strictly a backend-vs-database issue, but it happens because developers don't understand the separation. The backend should hash passwords with bcrypt or Argon2 <em>before</em> sending them to the database. The database should never see a plain text password. If you can read user passwords in your database viewer, you have a critical vulnerability.</p>
+
+            <h3>5. Ignoring connection limits</h3>
+            <p>Your backend spawns 500 concurrent connections to a PostgreSQL database configured for 100 max connections. Requests start failing with "too many connections" errors. The fix is straightforward: set your connection pool size to 70–80% of the database max, and monitor pool utilization in your dashboards.</p>
+
+            <h3>6. Treating the database as a queue</h3>
+            <p>Some teams insert "job" records into a database table and have workers poll it for tasks. This works at small scale but becomes unreliable under load — polling wastes connections, deadlocks occur when multiple workers grab the same row, and there's no built-in retry or dead-letter handling. Use a proper message queue (RabbitMQ, SQS, Redis Streams) for async work.</p>
+
+            <h2 id="which-first">Which Should You Learn First?</h2>
+
+            <p>It depends on what you're trying to do, but here's a practical breakdown:</p>
+
+            <p><strong>Learn databases first if</strong> you're going into data analysis, building internal tools on top of existing systems, or working as a data engineer. Understanding data modeling normalization, indexes, foreign keys, query performance  transfers to any backend language you pick up later. You'll write better backend code because you'll understand what the database is actually doing with your queries.</p>
+
+            <p><strong>Learn backend first if</strong> you want to build complete applications end-to-end. You'll naturally hit a point where you need to persist data, and learning SQL in that context "I need to store this user object, how do I structure the table?" is more effective than learning SQL in isolation with abstract examples.</p>
+
+            <p><strong>Learn them together if</strong> you're following a project-based course or tutorial. Most full-stack paths do this, and it works because you see the connection between your backend code and the database queries immediately. The risk is that you might not understand either deeply enough so revisit the fundamentals after you have the big picture.</p>
+
+            <div class="callout tip">
+                <div class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="callout-content">
+                    <p><strong>A practical starting point:</strong> spend two weeks learning basic SQL SELECT, JOIN, WHERE, GROUP BY, indexes  and fundamental data modeling. Then pick a backend framework (Express, Django, or FastAPI are good starting points) and build something that needs to store data. You'll reinforce the SQL knowledge immediately and see why the backend-database separation exists.</p>
+                </div>
+            </div>
+
+            <div class="tools-section" id="tools">
+                <h2>Tools and Technologies</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M12 2c-4 2-6 6-6 10 0 5 3 8 6 10 3-2 6-5 6-10 0-4-2-8-6-10zm-2 6c2-2 5-1 6 1-1-1-3-1-4 0-1 1-1 2 0 3 2 2 5 0 5 3 0 2-2 4-5 4-2 0-3-1-4-2 1 1 3 1 4 0 1-1 1-2 0-3-2-2-5 0-5-3 0-1 1-2 3-3z"/>
+</svg></div>
+                        <div class="tool-info">
+                            <h4>Django</h4>
+                            <p>Python backend framework with a built-in ORM. Good for learning because the database layer is abstracted you write Python, it generates SQL.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <circle cx="12" cy="12" r="10"/>
+</svg></div>
+                        <div class="tool-info">
+                            <h4>Express.js</h4>
+                            <p>Minimal Node.js framework. You choose your own database library, which means you'll learn how the connection actually works.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M8 4c-2 0-4 2-4 5v5c0 2 2 4 4 4h2v2h2v-2h2c3 0 6-3 6-7 0-5-4-7-8-7H8zm1 3h3c3 0 5 2 5 4s-2 4-5 4H9V7z"/>
+</svg>
+                        </div>
+                        <div class="tool-info">
+                            <h4>PostgreSQL</h4>
+                            <p>The most capable open-source SQL database. Supports JSON columns, full-text search, and advanced indexing. Start here if you're learning databases.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M12 2C9 6 8 9 8 13c0 4 2 7 4 9 2-2 4-5 4-9 0-4-1-7-4-11z"/>
+</svg></div>
+                        <div class="tool-info">
+                            <h4>MongoDB</h4>
+                            <p>Document-based NoSQL database. Lower barrier to entry if you're comfortable with JSON, but you'll still need to learn indexing and query optimization.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M13 2L4 14h6l-1 8 11-14h-6l-1-6z"/>
+</svg></div>
+                        <div class="tool-info">
+                            <h4>Redis</h4>
+                            <p>In-memory data store used for caching, sessions, and real-time features. You'll encounter it in almost every production backend stack.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7zm0 7l-1.5 3.5L7 14l3.5 1.5L12 19l1.5-3.5L17 14l-3.5-1.5L12 9z"/>
+</svg></div>
+                        <div class="tool-info">
+                            <h4>FastAPI</h4>
+                            <p>Modern Python framework with automatic API documentation. Pairs well with SQLAlchemy for database access. Good for APIs and microservices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Can a backend exist without a database?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>Yes. Static sites, API proxies, calculation tools, and webhook receivers all run backend code without storing anything. Any application that processes information in real-time without needing to remember it later doesn't require a database.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Which is harder to learn: backend or database?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>They require different skills. Backend development involves learning a programming language, understanding HTTP, and structuring application code. Database work requires understanding data modeling, normalization, and query optimization. Neither is inherently harder but poorly designed data models are usually more expensive to fix than poorly structured backend code, because changing a database schema affects every piece of code that touches it.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Is Firebase a backend or a database?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>Firebase is a Backend-as-a-Service platform. It includes a database (Cloud Firestore and Realtime Database), but also provides authentication, hosting, cloud functions, and file storage. Calling it just a database undersells what it does. Calling it just a backend oversimplifies it. It replaces the need to build and manage your own backend infrastructure.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Can a database work without a backend?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>Technically yes tools like Firebase, Supabase, and Appwrite let your frontend application talk directly to a database. This works for prototypes and simple apps. The risk is that without a backend layer, business logic and validation live in the frontend where users can bypass them. For anything handling payments, user-generated content, or sensitive data, add a backend between your frontend and the database.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>What happens when the database goes down vs the backend?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>When the backend goes down, nothing works no requests are processed at all. Users see connection errors or timeouts regardless of what they're trying to do. When the database goes down but the backend is still running, the backend can still respond to requests that don't need data like returning a cached homepage or a static error page. But any request that reads or writes data will fail, typically with a 500 error. The symptoms overlap, which is exactly why people confuse the two.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" aria-expanded="false">
+                            <span>Should I learn backend or database first?</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <div class="faq-a" aria-hidden="true">
+                            <div class="faq-a-inner">
+                                <p>If you want to build full applications, start with a backend framework you'll naturally encounter databases when you need to persist data, and learning SQL in that context is more effective than in isolation. If you're going into data analysis or working with existing backend systems, learn databases and SQL first. Either way, you'll need both within a few weeks of serious learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="share-bar">
+                <span>Share</span>
+                <button class="share-btn" aria-label="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </button>
+                <button class="share-btn" aria-label="Share on LinkedIn" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank','width=550,height=435')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </button>
+                <button class="share-btn copy" id="copyLink" aria-label="Copy link">COPY LINK</button>
+            </div>
+
+            <div class="author-bio">
+                <div class="author-avatar">
+                    <img src="../img/founder-mx.webp" alt="Melalew Mengistu" loading="lazy" width="52" height="52">
+                </div>
+                <div class="author-info">
+                    <h4>Melalew Mengistu</h4>
+                    <p>Web developer and cybersecurity specialist, helping people solve technology problems through practical, accessible guidance.</p>
+                </div>
+            </div>
+
+            <div class="help">
+                <h2>Still Have Questions?</h2>
+                <p>Ask in our community and get a direct answer.</p>
+                <div class="help-options">
+                    <a href="https://t.me/melexit" class="help-btn primary" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Join Our Community
+                    </a>
+                </div>
+            </div>
+
+            <div class="help-ending">
+                <div class="help-ending-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <h2>That's the Full Picture</h2>
+                <p>The backend processes. The database stores. They're separate systems that communicate through queries, and knowing which one is causing your problem is half the battle.</p>
+                <p class="help-reassure">If this saved you time, share it with someone who's still saying "the server is down" when they mean the database.</p>
+            </div>
+
+        </article>
+    </div>
+
+    <aside class="sidebar-col">
+        <div class="sidebar-sticky">
+
+            <div class="toc-card sidebar-toc" id="tocSidebar">
+                <div class="toc-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    On This Page
+                </div>
+                <div class="toc-list" id="tocListSidebar">
+                    <a href="#what-database" class="toc-link">What a Database Actually Does</a>
+                    <a href="#what-backend" class="toc-link">What a Backend Actually Does</a>
+                    <a href="#how-they-work" class="toc-link">How They Work Together</a>
+                    <a href="#key-differences" class="toc-link">Key Differences</a>
+                    <a href="#one-without-other" class="toc-link">One Without the Other</a>
+                    <a href="#common-mistakes" class="toc-link">Common Mistakes</a>
+                    <a href="#which-first" class="toc-link">Which to Learn First</a>
+                    <a href="#tools" class="toc-link">Tools and Technologies</a>
+                    <a href="#faq" class="toc-link">FAQ</a>
+                </div>
+            </div>
+
+            <div class="promo-card aff">
+                <div class="promo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <h3>Recommended Hosting</h3>
+                <p>Reliable cloud hosting for your backend and database projects.</p>
+                <a href="https://my.yegara.com/index.php?aff=19198" class="promo-btn">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+    <a href="/product" class="cta-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        View Hosting Plans
+    </a>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Home">
+                    <div class="logo-icon"><img src="../logo.webp" alt="" width="32" height="32"></div>
+                    <span class="logo-text">MELEX IT</span>
+                </a>
+                <p class="footer-tagline">Helping you understand technology, one practical skill at a time.</p>
+                <div class="social-links">
+                    <a href="https://t.me/melexit" class="social-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@melextech" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://tiktok.com/@solvex.melex" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.93a8.28 8.28 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.34z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Guides</h3>
+                <ul>
+                    <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
+                    <li><a href="../post/what-is-an-api">What Is an API</a></li>
+                    <li><a href="../post/what-is-cybersecurity">What is Cybersecurity</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Products</h3>
+                <ul>
+                    <li><a href="../product/melasec">MelaSec</a></li>
+                    <li><a href="../product/unitpro">UnitPro</a></li>
+                    <li><a href="../product/regexlab">RegexLab</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Company</h3>
+                <ul>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../services.html">Services</a></li>
+                    <li><a href="../contact.html" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MELEX IT. All rights reserved.</span>
+            <a href="../legal/privacy.html">Privacy Policy</a>
+        </div>
+    </div>
+</footer>
+
+<button class="stp" id="scrollToTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script>
+(function(){
+    var scrollProgress=document.getElementById('scrollProgress');
+    var scrollToTop=document.getElementById('scrollToTop');
+    var mobileMenuBtn=document.getElementById('mobileMenuBtn');
+    var mobileNav=document.getElementById('mobileNav');
+    var mobileCta=document.getElementById('mobileCta');
+    var copyBtn=document.getElementById('copyLink');
+
+    window.addEventListener('scroll',function(){
+        var scrollTop=window.pageYOffset||document.documentElement.scrollTop;
+        var docHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+        var progress=docHeight>0?(scrollTop/docHeight)*100:0;
+        scrollProgress.style.width=progress+'%';
+
+        if(scrollTop>400){
+            scrollToTop.classList.add('vis');
+        }else{
+            scrollToTop.classList.remove('vis');
+        }
+
+        if(scrollTop>600){
+            mobileCta.classList.add('vis');
+        }else{
+            mobileCta.classList.remove('vis');
+        }
+    },{passive:true});
+
+    scrollToTop.addEventListener('click',function(){
+        window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    mobileMenuBtn.addEventListener('click',function(){
+        var isOpen=mobileNav.classList.contains('open');
+        if(isOpen){
+            mobileNav.classList.remove('open');
+            mobileNav.setAttribute('aria-hidden','true');
+            mobileMenuBtn.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded','false');
+            document.body.style.overflow='';
+        }else{
+            mobileNav.classList.add('open');
+            mobileNav.setAttribute('aria-hidden','false');
+            mobileMenuBtn.classList.add('active');
+            mobileMenuBtn.setAttribute('aria-expanded','true');
+            document.body.style.overflow='hidden';
+        }
+    });
+
+    if(copyBtn){
+        copyBtn.addEventListener('click',function(){
+            navigator.clipboard.writeText(location.href).then(function(){
+                copyBtn.textContent='COPIED';
+                copyBtn.classList.add('copied');
+                setTimeout(function(){
+                    copyBtn.textContent='COPY LINK';
+                    copyBtn.classList.remove('copied');
+                },2000);
+            });
+        });
+    }
+
+    document.querySelectorAll('.faq-q').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            var item=btn.parentElement;
+            var answer=item.querySelector('.faq-a');
+            var inner=answer.querySelector('.faq-a-inner');
+            var isOpen=item.classList.contains('open');
+
+            document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+                if(openItem!==item){
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+                    openItem.querySelector('.faq-a').setAttribute('aria-hidden','true');
+                    openItem.querySelector('.faq-a').style.maxHeight='0';
+                }
+            });
+
+            if(isOpen){
+                item.classList.remove('open');
+                btn.setAttribute('aria-expanded','false');
+                answer.setAttribute('aria-hidden','true');
+                answer.style.maxHeight='0';
+            }else{
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded','true');
+                answer.setAttribute('aria-hidden','false');
+                answer.style.maxHeight=inner.scrollHeight+'px';
+            }
+        });
+    });
+
+    function updateToc(){
+        var sections=document.querySelectorAll('.content-col h2[id]');
+        var scrollPos=window.pageYOffset+120;
+        var activeId='';
+
+        sections.forEach(function(section){
+            if(section.offsetTop<=scrollPos){
+                activeId=section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('.toc-link').forEach(function(link){
+            var href=link.getAttribute('href');
+            if(href==='#'+activeId){
+                link.classList.add('active');
+            }else{
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll',updateToc,{passive:true});
+    updateToc();
+})();
+</script>
+
+</body>
+</html>
