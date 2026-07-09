@@ -947,7 +947,7 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
                 <div class="meta">
                     <span class="meta-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        June 10, 2026
+                        July 10, 2026
                     </span>
                     <span class="meta-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -1379,6 +1379,67 @@ updateStp();
 updateMobileCta();
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
+    /* ── FAQ Accordion ── */
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-a');
+            const inner = answer.querySelector('.faq-a-inner');
+            const isOpen = item.classList.contains('open');
+
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+                }
+            });
+
+            // Toggle current item
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = '0';
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
+    });
+
+    /* ── Scroll Progress Bar ── */
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+        }, { passive: true });
+    }
+
+    /* ── Scroll-to-Top Button ── */
+    const stpBtn = document.querySelector('.stp');
+    if (stpBtn) {
+        window.addEventListener('scroll', () => {
+            stpBtn.classList.toggle('vis', window.scrollY > 600);
+        }, { passive: true });
+        stpBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ── Mobile CTA visibility ── */
+    const mobileCta = document.querySelector('.mobile-cta');
+    if (mobileCta) {
+        window.addEventListener('scroll', () => {
+            mobileCta.classList.toggle('vis', window.scrollY > 800);
+        }, { passive: true });
+    }
+
+});
+</script>
 </body>
 </html>

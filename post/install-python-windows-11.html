@@ -1716,12 +1716,12 @@ print(response.status_code)</code></pre>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                     </div>
                     <h2>Installation Failed?</h2>
-                    <p>Getting a specific error code or permission issue? Post in the MELEX IT community with your exact error message and we'll help you troubleshoot it.</p>
+                    <p>Getting a specific error code or permission issue? Post in the MELEX TECH COMMUNITY with your exact error message and we'll help you troubleshoot it.</p>
                     <a href="https://t.me/melexit" class="btn-primary" target="_blank" rel="noopener noreferrer" style="display:inline-flex">
                         <span>Ask on Telegram</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </a>
-                    <p class="help-reassure">Free help from the MELEX IT community. No signup required.</p>
+                    <p class="help-reassure">Free help from the MELEX TECH COMMUNITY.</p>
                 </div>
 
             </div>
@@ -1915,26 +1915,197 @@ print(response.status_code)</code></pre>
     updateToc();
 })();
 
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-// ── Error cards accordion ──
-document.querySelectorAll('[data-error]').forEach(card => {
-    const btn = card.querySelector('.error-card-header');
-    const body = card.querySelector('.error-card-body');
-    btn.addEventListener('click', () => {
-        const isOpen = card.classList.contains('open');
-        document.querySelectorAll('[data-error].open').forEach(openCard => {
-            openCard.classList.remove('open');
-            openCard.querySelector('.error-card-header').setAttribute('aria-expanded', 'false');
-            openCard.querySelector('.error-card-body').style.maxHeight = '0';
+    /* ── Scroll Progress Bar ── */
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+        }, { passive: true });
+    }
+
+    /* ── Scroll-to-Top Button ── */
+    const stpBtn = document.querySelector('.stp');
+    if (stpBtn) {
+        window.addEventListener('scroll', () => {
+            stpBtn.classList.toggle('vis', window.scrollY > 600);
+        }, { passive: true });
+        stpBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-        if (!isOpen) {
-            card.classList.add('open');
-            btn.setAttribute('aria-expanded', 'true');
-            body.style.maxHeight = body.scrollHeight + 'px';
-        }
+    }
+
+    /* ── FAQ Accordion ── */
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-a');
+            const inner = answer.querySelector('.faq-a-inner');
+            const isOpen = item.classList.contains('open');
+
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+                }
+            });
+
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = '0';
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
     });
+
+    /* ── Error Cards Accordion ── */
+    document.querySelectorAll('.error-card-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const card = header.closest('.error-card');
+            const body = card.querySelector('.error-card-body');
+            const inner = body.querySelector('.error-card-body-inner');
+            const isOpen = card.classList.contains('open');
+
+            document.querySelectorAll('.error-card.open').forEach(openCard => {
+                if (openCard !== card) {
+                    openCard.classList.remove('open');
+                    openCard.querySelector('.error-card-body').style.maxHeight = '0';
+                }
+            });
+
+            if (isOpen) {
+                card.classList.remove('open');
+                body.style.maxHeight = '0';
+            } else {
+                card.classList.add('open');
+                body.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
+    });
+
+    /* ── Lazy YouTube Video Loader ── */
+    document.querySelectorAll('.video-lazy').forEach(wrapper => {
+        const videoId = wrapper.getAttribute('data-video');
+        if (!videoId) return;
+
+        wrapper.addEventListener('click', () => {
+            if (wrapper.classList.contains('playing')) return;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            iframe.title = 'YouTube video player';
+
+            wrapper.appendChild(iframe);
+            wrapper.classList.add('playing');
+        });
+    });
+
+    /* ── Copy Link Button ── */
+    const copyBtn = document.querySelector('.share-btn.copy');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+            const url = window.location.href;
+            try {
+                await navigator.clipboard.writeText(url);
+            } catch {
+                const ta = document.createElement('textarea');
+                ta.value = url;
+                ta.style.cssText = 'position:fixed;opacity:0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            const orig = copyBtn.textContent;
+            copyBtn.textContent = 'COPIED!';
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.textContent = orig;
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
+    /* ── Active TOC Highlighting ── */
+    const tocLinks = document.querySelectorAll('.toc-link');
+    if (tocLinks.length) {
+        const allHeadings = document.querySelectorAll('.content-col h2, .content-col h3');
+        const idMap = {};
+
+        allHeadings.forEach(heading => {
+            if (!heading.id) {
+                let slug = heading.textContent
+                    .toLowerCase().trim()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+                if (idMap[slug]) {
+                    idMap[slug]++;
+                    slug = slug + '-' + idMap[slug];
+                } else {
+                    idMap[slug] = 1;
+                }
+                heading.id = slug;
+            }
+        });
+
+        const headings = [];
+        tocLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const target = document.getElementById(href.substring(1));
+                if (target) {
+                    headings.push({ el: target, link: link });
+                } else {
+                    const linkText = link.textContent.trim().toLowerCase();
+                    allHeadings.forEach(heading => {
+                        if (
+                            heading.id &&
+                            heading.textContent.trim().toLowerCase() === linkText &&
+                            !headings.find(h => h.el === heading)
+                        ) {
+                            link.setAttribute('href', '#' + heading.id);
+                            headings.push({ el: heading, link: link });
+                        }
+                    });
+                }
+            }
+        });
+
+        if (headings.length) {
+            const tocObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        const match = headings.find(h => h.el === entry.target);
+                        if (match) match.link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+            headings.forEach(h => tocObserver.observe(h.el));
+        }
+    }
+
+    /* ── Mobile CTA visibility ── */
+    const mobileCta = document.querySelector('.mobile-cta');
+    if (mobileCta) {
+        window.addEventListener('scroll', () => {
+            mobileCta.classList.toggle('vis', window.scrollY > 800);
+        }, { passive: true });
+    }
+
 });
 </script>
-
 </body>
 </html>

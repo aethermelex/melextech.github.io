@@ -1139,136 +1139,175 @@ html:not([data-theme="dark"]) .moon-icon{display:block}
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", () => {
 
-    /* === Theme Toggle === */
-    var themeBtn = document.getElementById('themeToggleBtn');
+    /* ===============================
+       Theme Toggle
+    =============================== */
+    const root = document.documentElement;
+    const themeBtn = document.getElementById("themeToggleBtn");
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+        root.setAttribute("data-theme", savedTheme);
+    }
+
     if (themeBtn) {
-        themeBtn.addEventListener('click', function() {
-            var current = document.documentElement.getAttribute('data-theme') || 'light';
-            var next = current === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
+        themeBtn.addEventListener("click", () => {
+            const current = root.getAttribute("data-theme") || "light";
+            const next = current === "light" ? "dark" : "light";
+
+            root.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
         });
     }
 
-    /* === Scroll Progress Bar === */
-    var progressBar = document.getElementById('scrollProgress');
+    /* ===============================
+       Scroll Progress
+    =============================== */
+    const progressBar = document.getElementById("scrollProgress");
+
     if (progressBar) {
-        window.addEventListener('scroll', function() {
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-            progressBar.style.width = percent + '%';
+        window.addEventListener("scroll", () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+            progressBar.style.width = percent + "%";
         }, { passive: true });
     }
 
-        // Close on link click
-        mobileNav.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                mobileNav.classList.remove('open');
-                menuBtn.classList.remove('active');
-                menuBtn.setAttribute('aria-expanded', 'false');
-                mobileNav.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            });
-        });
-    }
+    /* ===============================
+       Copy Link
+    =============================== */
+    const copyBtn = document.getElementById("copyLinkBtn");
 
-    /* === FAQ Accordion === */
-    document.querySelectorAll('.faq-q').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var item = btn.parentElement;
-            var answer = item.querySelector('.faq-a');
-            var inner = item.querySelector('.faq-a-inner');
-            var isOpen = item.classList.contains('open');
-
-            // Close all others
-            document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
-                if (openItem !== item) {
-                    openItem.classList.remove('open');
-                    openItem.querySelector('.faq-a').style.maxHeight = '0';
-                }
-            });
-
-            if (isOpen) {
-                item.classList.remove('open');
-                answer.style.maxHeight = '0';
-            } else {
-                item.classList.add('open');
-                answer.style.maxHeight = inner.scrollHeight + 'px';
-            }
-        });
-    });
-
-    /* === TOC Active Highlighting === */
-    var tocLinks = document.querySelectorAll('.toc-link');
-    var headings = [];
-    tocLinks.forEach(function(link) {
-        var id = link.getAttribute('href').replace('#', '');
-        var el = document.getElementById(id);
-        if (el) headings.push({ el: el, link: link });
-    });
-
-    if (headings.length) {
-        window.addEventListener('scroll', function() {
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            var active = null;
-            for (var i = headings.length - 1; i >= 0; i--) {
-                if (headings[i].el.offsetTop - 120 <= scrollTop) {
-                    active = headings[i];
-                    break;
-                }
-            }
-            tocLinks.forEach(function(l) { l.classList.remove('active'); });
-            if (active) active.link.classList.add('active');
-        }, { passive: true });
-    }
-
-    /* === Copy Link Button === */
-    var copyBtn = document.getElementById('copyLinkBtn');
     if (copyBtn) {
-        copyBtn.addEventListener('click', function() {
-            navigator.clipboard.writeText(location.href).then(function() {
-                copyBtn.classList.add('copied');
-                copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"></polyline></svg> COPIED';
-                setTimeout(function() {
-                    copyBtn.classList.remove('copied');
-                    copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> COPY LINK';
-                }, 2000);
+        copyBtn.addEventListener("click", async () => {
+
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+            } catch {
+                const textarea = document.createElement("textarea");
+
+                textarea.value = window.location.href;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                document.execCommand("copy");
+
+                textarea.remove();
+            }
+
+            copyBtn.classList.add("copied");
+
+            const original = copyBtn.innerHTML;
+
+            copyBtn.innerHTML = `
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     style="width:14px;height:14px">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                COPIED
+            `;
+
+            setTimeout(() => {
+                copyBtn.classList.remove("copied");
+                copyBtn.innerHTML = original;
+            }, 2000);
+
+        });
+    }
+
+    /* ===============================
+       Table of Contents
+    =============================== */
+    const tocLinks = document.querySelectorAll(".toc-link");
+
+    if (tocLinks.length) {
+
+        const observer = new IntersectionObserver(entries => {
+
+            entries.forEach(entry => {
+
+                if (!entry.isIntersecting) return;
+
+                tocLinks.forEach(link => link.classList.remove("active"));
+
+                const activeLink = document.querySelector(
+                    `.toc-link[href="#${entry.target.id}"]`
+                );
+
+                if (activeLink) {
+                    activeLink.classList.add("active");
+                }
+
+            });
+
+        }, {
+            rootMargin: "-80px 0px -60% 0px",
+            threshold: 0
+        });
+
+        tocLinks.forEach(link => {
+
+            const href = link.getAttribute("href");
+
+            if (!href?.startsWith("#")) return;
+
+            const target = document.querySelector(href);
+
+            if (target) {
+                observer.observe(target);
+            }
+
+        });
+
+    }
+
+    /* ===============================
+       Scroll To Top
+    =============================== */
+    const scrollBtn = document.getElementById("scrollToTop");
+
+    if (scrollBtn) {
+
+        window.addEventListener("scroll", () => {
+            scrollBtn.classList.toggle("vis", window.scrollY > 600);
+        }, { passive: true });
+
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
             });
         });
+
     }
 
-    /* === Scroll to Top === */
-    var stpBtn = document.getElementById('scrollToTop');
-    if (stpBtn) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 600) {
-                stpBtn.classList.add('vis');
-            } else {
-                stpBtn.classList.remove('vis');
-            }
-        }, { passive: true });
-        stpBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
+    /* ===============================
+       Mobile CTA
+    =============================== */
+    const mobileCTA = document.getElementById("mobileCta");
 
-    /* === Mobile CTA Visibility === */
-    var mobileCta = document.getElementById('mobileCta');
-    if (mobileCta) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 800) {
-                mobileCta.classList.add('vis');
-            } else {
-                mobileCta.classList.remove('vis');
-            }
+    if (mobileCTA) {
+
+        window.addEventListener("scroll", () => {
+            mobileCTA.classList.toggle("vis", window.scrollY > 800);
         }, { passive: true });
+
     }
 
 });
 </script>
-
 </body>
 </html>

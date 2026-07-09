@@ -1456,7 +1456,7 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
                     <span>Ask on Telegram</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 </a>
-                <p class="help-reassure">Free help from the MELEX IT community. No signup required.</p>
+                <p class="help-reassure">Free help from the MELEX TECH COMMUNITY.</p>
             </div>
 
         </article>
@@ -1667,6 +1667,142 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     updateToc();
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
+    /* ── Scroll Progress Bar ── */
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+        }, { passive: true });
+    }
+
+    /* ── Scroll-to-Top Button ── */
+    const stpBtn = document.querySelector('.stp');
+    if (stpBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                stpBtn.classList.add('vis');
+            } else {
+                stpBtn.classList.remove('vis');
+            }
+        }, { passive: true });
+        stpBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ── FAQ Accordion ── */
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-a');
+            const inner = answer.querySelector('.faq-a-inner');
+            const isOpen = item.classList.contains('open');
+
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+                }
+            });
+
+            // Toggle current item
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = '0';
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
+    });
+
+    /* ── Copy Link Button ── */
+    const copyBtn = document.querySelector('.share-btn.copy');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                copyBtn.classList.add('copied');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'COPIED!';
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                // Fallback for older browsers or non-HTTPS
+                const textarea = document.createElement('textarea');
+                textarea.value = window.location.href;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                copyBtn.classList.add('copied');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'COPIED!';
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }
+        });
+    }
+
+    /* ── Active TOC Highlighting on Scroll ── */
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const headings = [];
+
+    if (tocLinks.length > 0) {
+        tocLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const target = document.getElementById(href.substring(1));
+                if (target) {
+                    headings.push({ el: target, link: link });
+                }
+            }
+        });
+
+        if (headings.length > 0) {
+            const tocObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        const match = headings.find(h => h.el === entry.target);
+                        if (match) match.link.classList.add('active');
+                    }
+                });
+            }, {
+                rootMargin: '-80px 0px -60% 0px',
+                threshold: 0
+            });
+
+            headings.forEach(h => tocObserver.observe(h.el));
+        }
+    }
+
+    /* ── Mobile CTA visibility on scroll ── */
+    const mobileCta = document.querySelector('.mobile-cta');
+    if (mobileCta) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 800) {
+                mobileCta.classList.add('vis');
+            } else {
+                mobileCta.classList.remove('vis');
+            }
+        }, { passive: true });
+    }
+
+});
+</script>
 </body>
 </html>

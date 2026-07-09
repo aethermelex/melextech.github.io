@@ -1981,6 +1981,93 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     updateToc();
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
+    /* ── FAQ Accordion ── */
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-a');
+            const inner = answer.querySelector('.faq-a-inner');
+            const isOpen = item.classList.contains('open');
+
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+                }
+            });
+
+            // Toggle current item
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = '0';
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = inner.scrollHeight + 'px';
+            }
+        });
+    });
+
+    /* ── Scroll Progress Bar ── */
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = percent + '%';
+        }, { passive: true });
+    }
+
+    /* ── Scroll-to-Top Button ── */
+    const stpBtn = document.querySelector('.stp');
+    if (stpBtn) {
+        window.addEventListener('scroll', () => {
+            stpBtn.classList.toggle('vis', window.scrollY > 600);
+        }, { passive: true });
+        stpBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ── Mobile Menu Toggle ── */
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (menuBtn && mobileNav) {
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('open');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        });
+        // Close menu when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                mobileNav.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    /* ── Mobile CTA visibility ── */
+    const mobileCta = document.querySelector('.mobile-cta');
+    if (mobileCta) {
+        window.addEventListener('scroll', () => {
+            mobileCta.classList.toggle('vis', window.scrollY > 800);
+        }, { passive: true });
+    }
+
+});
+</script>
+
+<!-- Scroll-to-top button (CSS exists but HTML was missing) -->
+<button class="stp" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+</body>
 </body>
 </html>
