@@ -257,6 +257,8 @@ ul{list-style:none}
 /* Mobile: prevent comparison table overflow glitches */
 @media(max-width:480px){
     .comparison{overflow-x:clip}
+}
+
 .comparison h2{margin-bottom:16px}
 .table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .comparison table{width:100%;border-collapse:collapse;font-size:.84rem}
@@ -270,7 +272,6 @@ ul{list-style:none}
 .comparison .badge.yellow{background:#FEF9C3;color:#854D0E}
 .comparison .badge.red{background:#FEE2E2;color:#991B1B}
 .comparison .badge.blue{background:#DBEAFE;color:#1E40AF}
-}
 
 .pick-pros{margin:14px 0 0}
 .pick-pros h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);margin-bottom:8px}
@@ -511,34 +512,18 @@ html,body,header,.nav{transition:background-color .3s ease,color .3s ease,border
     .story-opener{padding:22px 20px 20px}
     .arch-flow{flex-wrap:wrap;justify-content:center}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const themeToggleBtn = document.getElementById("themeToggleBtn");
-
-    if (!themeToggleBtn) return;
-
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        transition-duration:.01ms!important;
+        animation-duration:.01ms!important;
     }
 
-    themeToggleBtn.addEventListener("click", () => {
-        const isDark =
-            document.documentElement.getAttribute("data-theme") === "dark";
+    html{
+        scroll-behavior:auto;
+    }
 
-        if (isDark) {
-            document.documentElement.removeAttribute("data-theme");
-            localStorage.setItem("theme", "light");
-        } else {
-            document.documentElement.setAttribute("data-theme", "dark");
-            localStorage.setItem("theme", "dark");
-        }
-    });
-});
-</script>
+    }
+</style>
 <body>
 
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -1137,7 +1122,7 @@ Connection: keep-alive</code></pre>
                 <ul>
                     <li><a href="../post/frontend-vs-backend">Frontend vs Backend</a></li>
                     <li><a href="../post/backend-vs-database">Backend Vs Database</a></li>
-                    <li><a href="../post/what-is-an-api">What Is an API</a></li>
+                    <li><a href="../post/what-is-api">What Is an API</a></li>
                 </ul>
             </div>
             <div class="footer-links">
@@ -1199,18 +1184,23 @@ Connection: keep-alive</code></pre>
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        scrollProg.style.width = progress + '%';
 
-        if (scrollTop > 600) {
-            stpBtn.classList.add('vis');
-        } else {
-            stpBtn.classList.remove('vis');
+        if (scrollProg) scrollProg.style.width = progress + '%';
+
+        if (stpBtn) {
+            if (scrollTop > 600) {
+                stpBtn.classList.add('vis');
+            } else {
+                stpBtn.classList.remove('vis');
+            }
         }
 
-        if (scrollTop > 800) {
-            mobileCta.classList.add('vis');
-        } else {
-            mobileCta.classList.remove('vis');
+        if (mobileCta) {
+            if (scrollTop > 800) {
+                mobileCta.classList.add('vis');
+            } else {
+                mobileCta.classList.remove('vis');
+            }
         }
 
         var current = '';
@@ -1231,9 +1221,11 @@ Connection: keep-alive</code></pre>
     window.addEventListener('scroll', onScroll, {passive: true});
     onScroll();
 
-    stpBtn.addEventListener('click', function() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    });
+    if (stpBtn) {
+        stpBtn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', function() {
