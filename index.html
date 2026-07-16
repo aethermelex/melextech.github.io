@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MELEX IT — Cybersecurity, Programming & Technology</title>
-<meta name="description" content="The personal website of Melalew Mengistu (MELEX). Explore cybersecurity, programming, Linux, networking, web development, technology insights, tutorials, and digital projects." />
+        <title>MELEX IT | Cybersecurity, Programming & Technology</title>
+<meta name="description" content="Hands-on cybersecurity tutorials, Linux tips, and programming guides by Melalew Mengistu. Level up your tech skills at MELEX IT today." />
 <meta name="keywords" content="MELEX IT, cybersecurity, programming, Linux, networking, Python, Technology, Tech Blog" />
 <meta name="author" content="MELEX IT" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://melextech.dev/" />
-<meta property="og:title" content="MELEX IT — Cybersecurity & Technology" />
-<meta property="og:description" content="Personal website of Melalew Mengistu (MELEX). Sharing cybersecurity knowledge, programming tutorials, technology insights, and innovative digital projects." />
+<meta property="og:title" content="MELEX IT | Cybersecurity & Technology" />
+<meta property="og:description" content="Cybersecurity knowledge, programming tutorials, and tech insights by Melalew Mengistu. Explore innovative digital projects at MELEX IT." />
 <meta property="og:image" content="https://melextech.dev/img/man.webp" />
 <meta property="og:url" content="https://melextech.dev/" />
 <meta property="og:type" content="website" />
@@ -1216,31 +1216,61 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 
         <script type="application/ld+json">
             [
-                {
-                    "@context": "https://schema.org",
-                    "@type": "Person",
-                    "name": "MELEX IT",
-                    "url": "https://melextech.dev",
-                    "logo": "https://melextech.dev/logo.webp",
-                    "description": "Precise knowledge for the modern digital era. Guides on technology, cybersecurity, and programming.",
-                    "sameAs": [
-                        "https://www.youtube.com/@MELEXTECH",
-                        "https://www.instagram.com/MELEXTECH",
-                        "https://t.me/melexit"
-                    ]
-                },
-                {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": "https://melextech.dev/#website",
-  "url": "https://melextech.dev/",
-  "name": "MELEX IT",
-  "alternateName": [
-    "Melex IT",
-    "MELEX"
-  ]
-}
-            ]
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://melextech.dev/#person",
+        "name": "Melalew Mengistu",
+        "alternateName": "MELEX",
+        "url": "https://melextech.dev",
+        "image": "https://melextech.dev/img/founder-mx.webp",
+        "knowsAbout": [
+            "Web Application Security",
+            "Linux System Administration",
+            "Python Programming",
+            "Computer Networking",
+            "Web Development",
+            "Graphic Design",
+            "Copywriting"
+        ],
+        "sameAs": [
+            "https://www.youtube.com/@MELEXTECH",
+            "https://www.instagram.com/MELEXTECH",
+            "https://t.me/melexit"
+        ]
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://melextech.dev/#organization",
+        "name": "MELEX IT",
+        "url": "https://melextech.dev",
+        "logo": "https://melextech.dev/logo.webp",
+        "founder": {
+            "@id": "https://melextech.dev/#person"
+        }
+    },
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://melextech.dev/#website",
+        "url": "https://melextech.dev/",
+        "name": "MELEX IT",
+        "alternateName": ["MELEX", "MELEX IT"],
+        "description": "Cybersecurity tutorials, Linux guides, web development, graphic design, copywriting, and programming projects by MELEX IT.",
+        "publisher": {
+            "@id": "https://melextech.dev/#organization"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://melextech.dev/guide/?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+]
         </script>
 
         <script>
@@ -1255,7 +1285,6 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            // Get current active theme state
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             let newTheme = 'light';
             
