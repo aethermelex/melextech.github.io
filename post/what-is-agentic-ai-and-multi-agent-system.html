@@ -253,16 +253,31 @@ ul{list-style:none}
 
 .video-section{margin-bottom:36px}
 .video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
-.video-lazy{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);background:#0F172A;cursor:pointer;border:1px solid var(--border)}
-.video-lazy img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .3s}
-.video-lazy:hover img{opacity:.5}
-.video-lazy iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(255,255,255,.95);border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-.video-lazy:hover .video-play{transform:translate(-50%,-50%) scale(1.08);background:#fff}
-.video-play svg{width:22px;height:22px;margin-left:3px;fill:var(--dark)}
-.video-lazy.playing .video-play,
-.video-lazy.playing img{display:none}
-.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+.video-wrapper{
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%; /* 16:9 */
+    height:0;
+    overflow:hidden;
+    border-radius:var(--radius);
+    background:#0F172A;
+    border:1px solid var(--border);
+}
+.video-wrapper iframe{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+}
+.video-caption{
+    margin-top:10px;
+    font-size:.78rem;
+    color:var(--fg-muted);
+    line-height:1.6;
+}
 
 .toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
 .toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -1182,13 +1197,12 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
             </div>
 
             <div class="video-section">
-                <h2>Watch the Explanation</h2>
-                <div class="video-lazy" data-video-id="15_pppse4fY" role="button" tabindex="0" aria-label="Play video">
-                    <img src="https://img.youtube.com/vi/15_pppse4fY/hqdefault.jpg" alt="Video thumbnail" loading="lazy">
-                    
-                </div>
-                <p class="video-caption">A walkthrough of how Agentic AI and Multi-Agent Systems work in practice.</p>
-            </div>
+    <h2>See It In Action</h2>
+    <div class="video-wrapper">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/15_pppse4fY?si=yJGB1oaDkMYSCTG-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="video-caption">A quick breakdown of how agentic AI differs from traditional chatbot interactions.</p>
+</div>
 
             <div class="toc-card" id="tocInline">
                 <div class="toc-title">
@@ -1696,29 +1710,8 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 <script>
 (function(){
     var sp=document.getElementById('scrollProgress');
-    var stp=document.getElementById('scrollToTop');
-    var mcb=document.getElementById('mobileMenuBtn');
-    var mn=document.getElementById('mobileNav');
     var mcta=document.getElementById('mobileCta');
     var clb=document.getElementById('copyLinkBtn');
-
-    window.addEventListener('scroll',function(){
-        var s=document.documentElement.scrollTop;
-        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-        if(h>0){sp.style.width=(s/h*100)+'%';}
-        if(s>400){stp.classList.add('vis');}else{stp.classList.remove('vis');}
-        if(s>1200){mcta.classList.add('vis');}else{mcta.classList.remove('vis');}
-    },{passive:true});
-
-    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-
-    mcb.addEventListener('click',function(){
-        var open=mn.classList.toggle('open');
-        mcb.classList.toggle('active');
-        mcb.setAttribute('aria-expanded',open);
-        mn.setAttribute('aria-hidden',!open);
-        document.body.style.overflow=open?'hidden':'';
-    });
 
     document.querySelectorAll('.faq-q').forEach(function(btn){
         btn.addEventListener('click',function(){
@@ -1770,25 +1763,6 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
             });
         });
     }
-
-    document.querySelectorAll('.video-lazy').forEach(function(container){
-        function loadVideo(){
-            if(container.classList.contains('playing'))return;
-            var videoId=container.getAttribute('data-video-id');
-            if(!videoId)return;
-            var iframe=document.createElement('iframe');
-            iframe.src='https://www.youtube.com/embed/'+videoId+'?autoplay=1&rel=0';
-            iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-            iframe.allowFullscreen=true;
-            iframe.title='YouTube video player';
-            container.appendChild(iframe);
-            container.classList.add('playing');
-        }
-        container.addEventListener('click',loadVideo);
-        container.addEventListener('keydown',function(e){
-            if(e.key==='Enter'||e.key===' '){e.preventDefault();loadVideo();}
-        });
-    });
 })();
 </script>
 <script>

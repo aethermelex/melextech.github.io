@@ -1655,30 +1655,8 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 
 <script>
 (function(){
-    var sp=document.getElementById('scrollProgress');
-    var stp=document.getElementById('scrollToTop');
-    var mcb=document.getElementById('mobileMenuBtn');
-    var mn=document.getElementById('mobileNav');
     var mcta=document.getElementById('mobileCta');
     var clb=document.getElementById('copyLinkBtn');
-
-    window.addEventListener('scroll',function(){
-        var s=document.documentElement.scrollTop;
-        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-        if(h>0){sp.style.width=(s/h*100)+'%';}
-        if(s>400){stp.classList.add('vis');}else{stp.classList.remove('vis');}
-        if(s>1200){mcta.classList.add('vis');}else{mcta.classList.remove('vis');}
-    },{passive:true});
-
-    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-
-    mcb.addEventListener('click',function(){
-        var open=mn.classList.toggle('open');
-        mcb.classList.toggle('active');
-        mcb.setAttribute('aria-expanded',open);
-        mn.setAttribute('aria-hidden',!open);
-        document.body.style.overflow=open?'hidden':'';
-    });
 
     document.querySelectorAll('.faq-q').forEach(function(btn){
         btn.addEventListener('click',function(){

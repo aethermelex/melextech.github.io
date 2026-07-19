@@ -1518,35 +1518,9 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 
 <script>
 (function(){
-    var sp=document.getElementById('scrollProgress');
-    var stp=document.getElementById('scrollToTop');
     var mcta=document.getElementById('mobileCta');
-    var mbtn=document.getElementById('mobileMenuBtn');
-    var mnav=document.getElementById('mobileNav');
     var copyBtn=document.getElementById('copyLinkBtn');
     var copyTxt=document.getElementById('copyLinkText');
-
-    function onScroll(){
-        var s=window.scrollY||document.documentElement.scrollTop;
-        var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-        var p=h>0?s/h:0;
-        sp.style.width=(p*100)+'%';
-        stp.classList.toggle('vis',s>400);
-        if(mcta)mcta.classList.toggle('vis',s>800);
-    }
-    window.addEventListener('scroll',onScroll,{passive:true});
-    onScroll();
-
-    stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
-
-    mbtn.addEventListener('click',function(){
-        var o=mnav.classList.contains('open');
-        mnav.classList.toggle('open');
-        mbtn.classList.toggle('active');
-        mbtn.setAttribute('aria-expanded',!o);
-        mnav.setAttribute('aria-hidden',o);
-        document.body.style.overflow=o?'':'hidden';
-    });
 
     var faqItems=document.querySelectorAll('.faq-item');
     faqItems.forEach(function(item){

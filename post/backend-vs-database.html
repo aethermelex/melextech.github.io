@@ -1867,52 +1867,8 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 
 <script>
 (function(){
-    var scrollProgress=document.getElementById('scrollProgress');
-    var scrollToTop=document.getElementById('scrollToTop');
-    var mobileMenuBtn=document.getElementById('mobileMenuBtn');
-    var mobileNav=document.getElementById('mobileNav');
     var mobileCta=document.getElementById('mobileCta');
     var copyBtn=document.getElementById('copyLink');
-
-    window.addEventListener('scroll',function(){
-        var scrollTop=window.pageYOffset||document.documentElement.scrollTop;
-        var docHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-        var progress=docHeight>0?(scrollTop/docHeight)*100:0;
-        scrollProgress.style.width=progress+'%';
-
-        if(scrollTop>400){
-            scrollToTop.classList.add('vis');
-        }else{
-            scrollToTop.classList.remove('vis');
-        }
-
-        if(scrollTop>600){
-            mobileCta.classList.add('vis');
-        }else{
-            mobileCta.classList.remove('vis');
-        }
-    },{passive:true});
-
-    scrollToTop.addEventListener('click',function(){
-        window.scrollTo({top:0,behavior:'smooth'});
-    });
-
-    mobileMenuBtn.addEventListener('click',function(){
-        var isOpen=mobileNav.classList.contains('open');
-        if(isOpen){
-            mobileNav.classList.remove('open');
-            mobileNav.setAttribute('aria-hidden','true');
-            mobileMenuBtn.classList.remove('active');
-            mobileMenuBtn.setAttribute('aria-expanded','false');
-            document.body.style.overflow='';
-        }else{
-            mobileNav.classList.add('open');
-            mobileNav.setAttribute('aria-hidden','false');
-            mobileMenuBtn.classList.add('active');
-            mobileMenuBtn.setAttribute('aria-expanded','true');
-            document.body.style.overflow='hidden';
-        }
-    });
 
     if(copyBtn){
         copyBtn.addEventListener('click',function(){
@@ -2064,7 +2020,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- Scroll-to-top button (CSS exists but HTML was missing) -->
 <button class="stp" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
 </button>

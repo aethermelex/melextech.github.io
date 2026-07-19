@@ -492,16 +492,32 @@ ul{list-style:none}
 
 .video-section{margin-bottom:36px}
 .video-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:14px;letter-spacing:-.01em}
-.video-lazy{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);background:#0F172A;border:1px solid var(--border)}
-.video-lazy img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .3s}
-.video-lazy:hover img{opacity:.5}
-.video-lazy iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(255,255,255,.95);border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 4px 20px rgba(0,0,0,.3);pointer-events:none}
-.video-lazy:hover .video-play{transform:translate(-50%,-50%) scale(1.08);background:#fff}
-.video-play svg{width:22px;height:22px;margin-left:3px;fill:var(--dark)}
-.video-lazy.playing .video-play,
-.video-lazy.playing img{display:none}
-.video-caption{margin-top:10px;font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+/* ── CSS-ONLY YouTube Embed ── */
+.video-wrapper{
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%; /* 16:9 */
+    height:0;
+    overflow:hidden;
+    border-radius:var(--radius);
+    background:#0F172A;
+    border:1px solid var(--border);
+}
+.video-wrapper iframe{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+}
+.video-caption{
+    margin-top:10px;
+    font-size:.78rem;
+    color:var(--fg-muted);
+    line-height:1.6;
+}
 
 .toc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:36px}
 .toc-card .toc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -1341,12 +1357,12 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
             </div>
 
             <div class="video-section">
-                <h2>Watch the Explanation</h2>
-                <div class="video-lazy" id="videoContainer" role="button" tabindex="0" aria-label="Play video about cloud computing">
-                    <img src="https://img.youtube.com/vi/ZaA0kNm18pE/hqdefault.jpg" alt="Cloud computing video explanation thumbnail" loading="lazy" width="480" height="360">
-                </div>
-                <p class="video-caption">A visual breakdown of how cloud computing works and why it matters.</p>
-            </div>
+    <h2>See It In Action</h2>
+    <div class="video-wrapper">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/OQKYXcmSpFY?si=0zQFQgTAs02C9RKX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="video-caption">A visual breakdown of how cloud computing works and why it matters.</p>
+</div>
 
             <div class="toc-card" id="tocInline">
                 <div class="toc-title">
@@ -1837,26 +1853,6 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     },{passive:true});
 
     scrollToTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-
-    if(videoContainer){
-        function loadVideo(){
-            if(videoContainer.classList.contains('playing'))return;
-            var vid=videoContainer.getAttribute('data-video-id');
-            if(!vid)return;
-            videoContainer.classList.add('playing');
-            var iframe=document.createElement('iframe');
-            iframe.src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0';
-            iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-            iframe.setAttribute('allowfullscreen','');
-            iframe.setAttribute('title','Cloud computing explanation video');
-            videoContainer.appendChild(iframe);
-            videoContainer.removeAttribute('role');
-            videoContainer.removeAttribute('tabindex');
-            videoContainer.style.cursor='default';
-        }
-        videoContainer.addEventListener('click',loadVideo);
-        videoContainer.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();loadVideo();}});
-    }
 
     if(copyLink){
         copyLink.addEventListener('click',function(){

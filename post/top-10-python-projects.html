@@ -1319,126 +1319,184 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
 </button>
 
 <script>
-(function(){
-'use strict';
+document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
 
-var btn=document.getElementById('mobileMenuBtn'),nav=document.getElementById('mobileNav');
-function toggleNav(){
-    var open=nav.classList.toggle('open');
-    btn.classList.toggle('active');
-    btn.setAttribute('aria-expanded',String(open));
-    nav.setAttribute('aria-hidden',String(!open));
-    document.body.style.overflow=open?'hidden':'';
-}
-btn.addEventListener('click',toggleNav);
-nav.querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){if(nav.classList.contains('open'))toggleNav();});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open'))toggleNav();});
+    /* ============================
+       Mobile Navigation
+    ============================ */
 
-var progressBar=document.getElementById('scrollProgress');
-function updateProgress(){
-    var h=document.documentElement.scrollHeight-window.innerHeight;
-    progressBar.style.width=(h>0?(window.pageYOffset/h)*100:0)+'%';
-}
+    const menuBtn = document.getElementById("mobileMenuBtn");
+    const mobileNav = document.getElementById("mobileNav");
 
-var stp=document.getElementById('stp');
-function updateStp(){stp.classList.toggle('vis',window.pageYOffset>500);}
+    if (menuBtn && mobileNav) {
 
-var mobileCta=document.getElementById('mobileCta');
-function updateMobileCta(){
-    var heroH=document.querySelector('.hero');
-    if(!heroH)return;
-    mobileCta.classList.toggle('vis',window.pageYOffset>heroH.offsetHeight+200);
-}
+        const toggleNav = () => {
+            const open = mobileNav.classList.toggle("open");
 
-window.addEventListener('scroll',function(){updateProgress();updateStp();updateMobileCta();},{passive:true});
-stp.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+            menuBtn.classList.toggle("active", open);
+            menuBtn.setAttribute("aria-expanded", open);
+            mobileNav.setAttribute("aria-hidden", !open);
 
-document.querySelectorAll('.faq-item').forEach(function(item){
-    var q=item.querySelector('.faq-q');
-    var a=item.querySelector('.faq-a');
-    var inner=a?a.querySelector('.faq-a-inner'):null;
-    if(!q||!a||!inner)return;
-    q.addEventListener('click',function(){
-        var isOpen=item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(function(other){
-            other.classList.remove('open');
-            var oa=other.querySelector('.faq-a');
-            if(oa)oa.style.maxHeight='0';
-            var oq=other.querySelector('.faq-q');
-            if(oq)oq.setAttribute('aria-expanded','false');
-        });
-        if(!isOpen){
-            item.classList.add('open');
-            q.setAttribute('aria-expanded','true');
-            a.style.maxHeight=inner.scrollHeight+'px';
-        }
-    });
-});
+            document.body.style.overflow = open ? "hidden" : "";
+        };
 
-updateProgress();
-updateStp();
-updateMobileCta();
-})();
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+        menuBtn.addEventListener("click", toggleNav);
 
-    /* ── FAQ Accordion ── */
-    document.querySelectorAll('.faq-q').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.faq-item');
-            const answer = item.querySelector('.faq-a');
-            const inner = answer.querySelector('.faq-a-inner');
-            const isOpen = item.classList.contains('open');
-
-            // Close all other FAQ items
-            document.querySelectorAll('.faq-item.open').forEach(openItem => {
-                if (openItem !== item) {
-                    openItem.classList.remove('open');
-                    openItem.querySelector('.faq-a').style.maxHeight = '0';
+        mobileNav.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                if (mobileNav.classList.contains("open")) {
+                    toggleNav();
                 }
             });
+        });
 
-            // Toggle current item
-            if (isOpen) {
-                item.classList.remove('open');
-                answer.style.maxHeight = '0';
-            } else {
-                item.classList.add('open');
-                answer.style.maxHeight = inner.scrollHeight + 'px';
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape" && mobileNav.classList.contains("open")) {
+                toggleNav();
             }
         });
+
+    }
+
+    /* ============================
+       Elements
+    ============================ */
+
+    const progressBar = document.getElementById("scrollProgress");
+    const scrollTopBtn =
+        document.getElementById("stp") ||
+        document.querySelector(".stp");
+
+    const mobileCTA =
+        document.getElementById("mobileCta") ||
+        document.querySelector(".mobile-cta");
+
+    const hero = document.querySelector(".hero");
+
+    /* ============================
+       Scroll Functions
+    ============================ */
+
+    function updateProgress() {
+
+        if (!progressBar) return;
+
+        const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+
+        const percent =
+            docHeight > 0
+                ? (window.scrollY / docHeight) * 100
+                : 0;
+
+        progressBar.style.width = percent + "%";
+    }
+
+    function updateScrollTop() {
+
+        if (!scrollTopBtn) return;
+
+        scrollTopBtn.classList.toggle(
+            "vis",
+            window.scrollY > 600
+        );
+    }
+
+    function updateMobileCTA() {
+
+        if (!mobileCTA || !hero) return;
+
+        mobileCTA.classList.toggle(
+            "vis",
+            window.scrollY > hero.offsetHeight + 200
+        );
+    }
+
+    function handleScroll() {
+        updateProgress();
+        updateScrollTop();
+        updateMobileCTA();
+    }
+
+    window.addEventListener("scroll", handleScroll, {
+        passive: true
     });
 
-    /* ── Scroll Progress Bar ── */
-    const progressBar = document.getElementById('scrollProgress');
-    if (progressBar) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-            progressBar.style.width = percent + '%';
-        }, { passive: true });
-    }
+    handleScroll();
 
-    /* ── Scroll-to-Top Button ── */
-    const stpBtn = document.querySelector('.stp');
-    if (stpBtn) {
-        window.addEventListener('scroll', () => {
-            stpBtn.classList.toggle('vis', window.scrollY > 600);
-        }, { passive: true });
-        stpBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    /* ============================
+       Scroll To Top
+    ============================ */
+
+    if (scrollTopBtn) {
+
+        scrollTopBtn.addEventListener("click", () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
         });
+
     }
 
-    /* ── Mobile CTA visibility ── */
-    const mobileCta = document.querySelector('.mobile-cta');
-    if (mobileCta) {
-        window.addEventListener('scroll', () => {
-            mobileCta.classList.toggle('vis', window.scrollY > 800);
-        }, { passive: true });
-    }
+    /* ============================
+       FAQ Accordion
+    ============================ */
+
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+
+        const question = item.querySelector(".faq-q");
+        const answer = item.querySelector(".faq-a");
+        const inner = item.querySelector(".faq-a-inner");
+
+        if (!question || !answer || !inner) return;
+
+        answer.style.maxHeight = "0";
+
+        question.addEventListener("click", () => {
+
+            const isOpen = item.classList.contains("open");
+
+            faqItems.forEach(other => {
+
+                const q = other.querySelector(".faq-q");
+                const a = other.querySelector(".faq-a");
+
+                other.classList.remove("open");
+
+                if (a)
+                    a.style.maxHeight = "0";
+
+                if (q)
+                    q.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+            });
+
+            if (!isOpen) {
+
+                item.classList.add("open");
+
+                answer.style.maxHeight =
+                    inner.scrollHeight + "px";
+
+                question.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+            }
+
+        });
+
+    });
 
 });
 </script>

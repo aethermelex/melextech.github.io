@@ -6,13 +6,13 @@
     <title>Best VPNs for Windows 11 in 2026 (Privacy & Speed Tested) — MELEX IT</title>
     <meta name="description" content="Stop ISP tracking and bypass geo-blocks. We tested the top VPN services for speed, security, and Windows 11 compatibility in 2026.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://melextech.dev/post/Best-VPN-Windows-11-2026">
+    <link rel="canonical" href="https://melextech.dev/post/best-vpn-windows-11-2026">
     <meta name="author" content="MELEX IT">
     <meta name="keywords" content="best vpn 2026, windows 11 vpn, privacy, netflix vpn, secure browsing, nordvpn, surfshark, proton vpn">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Best VPNs for Windows 11 in 2026 (Privacy & Speed Tested)">
     <meta property="og:description" content="Your ISP sees every website you visit. These are the VPNs that actually protect your privacy without killing your speed on Windows 11.">
-    <meta property="og:url" content="https://melextech.dev/post/Best-VPN-Windows-11-2026">
+    <meta property="og:url" content="https://melextech.dev/post/best-vpn-windows-11-2026">
     <meta property="og:image" content="https://melextech.dev/guide/img/best-vpn-2026.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
     <meta property="article:published_time" content="2026-07-12T08:00:00Z">
 <meta property="article:modified_time" content="2026-07-12T14:30:00Z">
     <meta property="article:section" content="Security">
-    <meta property="article:tag" content="VPN">J
+    <meta property="article:tag" content="VPN">
     <meta property="article:tag" content="Privacy">
     <meta property="article:tag" content="Windows 11">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5844529746691162"
@@ -972,7 +972,6 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            // Get current active theme state
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             let newTheme = 'light';
             
@@ -1576,7 +1575,7 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     </div>
 </footer>
 
-<button class="stp" aria-label="Scroll to top">
+<button class="stp Sc" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
 </button>
 
@@ -1589,16 +1588,16 @@ html, body, header, .feature-card, .guide-card, .product-card, .ck-banner, .nav 
     var mobileCta=document.getElementById('mobileCta');
     var copyBtn=document.getElementById('copyLink');
 
-    window.addEventListener('scroll',function(){
-        var scrollTop=window.pageYOffset||document.documentElement.scrollTop;
-        var docHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-        var progress=docHeight>0?(scrollTop/docHeight)*100:0;
-        scrollProgress.style.width=progress+'%';
-        if(scrollTop>400){scrollToTop.classList.add('vis')}else{scrollToTop.classList.remove('vis')}
-        if(scrollTop>600){mobileCta.classList.add('vis')}else{mobileCta.classList.remove('vis')}
-    },{passive:true});
+    const scrollToTop = document.getElementById("scrollToTop");
 
-    scrollToTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+if (scrollToTop) {
+    scrollToTop.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+}
 
     mobileMenuBtn.addEventListener('click',function(){
         var isOpen=mobileNav.classList.contains('open');
